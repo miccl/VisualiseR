@@ -37,5 +37,6 @@ sysinfo.txt
 .idea/*
 
 # Google VR stuff & ioS stuff
-Assets/Assets/GoogleVR/Demos/*
+Assets/GoogleVR/Demos/*
 Assets/Plugins/iOs/*
+Assets/Photon Unity Networking/Demos/*
