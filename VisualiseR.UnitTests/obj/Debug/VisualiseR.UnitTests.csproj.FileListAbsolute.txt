@@ -1,0 +1,7 @@
+D:\Dokumente\1_Programmierung\Unity\Projekte\VisualiseR\VisualiseR.UnitTests\bin\Debug\VisualiseR.UnitTests.dll
+D:\Dokumente\1_Programmierung\Unity\Projekte\VisualiseR\VisualiseR.UnitTests\bin\Debug\VisualiseR.UnitTests.pdb
+D:\Dokumente\1_Programmierung\Unity\Projekte\VisualiseR\VisualiseR.UnitTests\bin\Debug\nunit.framework.dll
+D:\Dokumente\1_Programmierung\Unity\Projekte\VisualiseR\VisualiseR.UnitTests\bin\Debug\nunit.framework.xml
+D:\Dokumente\1_Programmierung\Unity\Projekte\VisualiseR\VisualiseR.UnitTests\obj\Debug\VisualiseR.UnitTests.csprojResolveAssemblyReference.cache
+D:\Dokumente\1_Programmierung\Unity\Projekte\VisualiseR\VisualiseR.UnitTests\obj\Debug\VisualiseR.UnitTests.dll
+D:\Dokumente\1_Programmierung\Unity\Projekte\VisualiseR\VisualiseR.UnitTests\obj\Debug\VisualiseR.UnitTests.pdb
