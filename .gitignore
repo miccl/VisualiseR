@@ -37,7 +37,7 @@ sysinfo.txt
 .idea/*
 
 # mystuff
-Assets/GoogleVR/Demos/*
-Assets/Plugins/iOs/*
-Assets/Photon Unity Networking/Demos/*
-Assets/UnityTestTools/Examples/*
+Assets/Community_Assets/GoogleVR/Demos/*
+Assets/Plugins/iOS/*
+Assets/Community_Assets/Photon Unity Networking/Demos/*
+Assets/Community_Assets/UnityTestTools/Examples/*
