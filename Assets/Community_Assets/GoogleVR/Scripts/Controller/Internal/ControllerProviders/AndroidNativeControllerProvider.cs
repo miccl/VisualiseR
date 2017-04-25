@@ -196,7 +196,7 @@ namespace Gvr.Internal {
       AndroidJavaObject activity = GvrActivityHelper.GetActivity(UNITY_PLAYER_CLASS);
       if (activity == null) {
         error = true;
-        errorDetails = "Failed to get Activity from Unity Player.";
+        errorDetails = "Failed to get Activity from Unity Players.";
         return;
       }
       androidContext = GvrActivityHelper.GetApplicationContext(activity);

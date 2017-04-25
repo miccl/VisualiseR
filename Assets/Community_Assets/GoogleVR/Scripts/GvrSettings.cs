@@ -67,7 +67,7 @@ public static class GvrSettings {
 #endif  // UNITY_EDITOR
 
   // The developer is expected to remember whether sustained performance mode is set
-  // at runtime, via the checkbox in Player Settings.
+  // at runtime, via the checkbox in Players Settings.
   // This state may be recorded here in a future release.
   public static bool SustainedPerformanceMode {
     set {

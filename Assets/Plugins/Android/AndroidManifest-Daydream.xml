@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
      Copyright 2016 Google Inc. All rights reserved.
 
@@ -37,7 +37,7 @@
 
         <activity
                 android:label="@string/app_name"
-                android:name="com.unity3d.player.UnityPlayerActivity"
+                android:name="com.unity3d.player.UnityPlayersActivity"
                 android:screenOrientation="landscape"
                 android:launchMode="singleTask"
                 android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale"

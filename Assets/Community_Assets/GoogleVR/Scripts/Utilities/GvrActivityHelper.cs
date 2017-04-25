@@ -24,12 +24,12 @@ public static class GvrActivityHelper
   public static AndroidJavaObject GetActivity(string javaClass) {
     AndroidJavaClass jc = new AndroidJavaClass(javaClass);
     if (jc == null) {
-      Debug.LogErrorFormat("Failed to get Unity Player class, {0}", javaClass);
+      Debug.LogErrorFormat("Failed to get Unity Players class, {0}", javaClass);
       return null;
     }
     AndroidJavaObject activity = jc.GetStatic<AndroidJavaObject>("currentActivity");
     if (activity == null) {
-      Debug.LogError("Failed to obtain Android Activity from Unity Player class.");
+      Debug.LogError("Failed to obtain Android Activity from Unity Players class.");
       return null;
     }
     return activity;
