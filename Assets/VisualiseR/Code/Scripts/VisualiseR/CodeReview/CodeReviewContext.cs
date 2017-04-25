@@ -1,24 +1,25 @@
-﻿using strange.examples.multiplecontexts.common;
-using strange.extensions.command.api;
+﻿using strange.extensions.command.api;
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using UnityEngine;
 using VisualiseR.Common;
 
-namespace VisualiseR.Main
+namespace VisualiseR.CodeReview
 {
-    public class MainContext : MVCSContext
+    public class CodeReviewContext : MVCSContext
     {
-        public MainContext(MonoBehaviour view) : base(view)
+        public CodeReviewContext(MonoBehaviour view) : base(view)
         {
         }
 
-        public MainContext(MonoBehaviour view, ContextStartupFlags flags) : base(view, flags)
+        public CodeReviewContext(MonoBehaviour view, ContextStartupFlags flags) : base(view, flags)
         {
         }
 
-        // Unbind the default EventCommandBinder and rebind the SignalCommandBinder
+        /// <summary>
+        /// Unbinds the default EventCommandBinder and rebind the SignalCommandBinder.
+        /// </summary>
         protected override void addCoreComponents()
         {
             base.addCoreComponents();
@@ -26,7 +27,10 @@ namespace VisualiseR.Main
             injectionBinder.Bind<ICommandBinder>().To<SignalCommandBinder>().ToSingleton();
         }
 
-        // Override Start so that we can fire the StartSignal
+        /// <summary>
+        /// Override Start so that we can fire the StartSignal
+        /// </summary>
+        /// <returns></returns>
         override public IContext Start()
         {
             base.Start();
@@ -35,6 +39,9 @@ namespace VisualiseR.Main
             return this;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
         protected override void mapBindings()
         {
             BindModels();
@@ -69,18 +76,15 @@ namespace VisualiseR.Main
         {
             if (this == firstContext)
             {
-                commandBinder.Bind<StartSignal>().To<StartCommand>().Once ();
+                commandBinder.Bind<StartSignal>().To<StartCommand>().Once();
             }
             else
             {
                 commandBinder.Bind<StartSignal>()
-                    .To<KillAudioListenerCommand>()
+//                    .To<KillAudioListenerCommand>()
                     .To<StartCommand>()
                     .Once();
             }
-
         }
-
-
     }
 }

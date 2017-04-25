@@ -2,7 +2,7 @@
 
 namespace VisualiseR.Main
 {
-	public class MainStartCommand : Command
+	public class StartCommand : Command
     {
         public override void Execute()
         {
