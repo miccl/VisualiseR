@@ -7,7 +7,7 @@ namespace VisualiseR.Common
     {
         public string Name { get; set; }
         public RoomType Type { get; set; }
-        public List<Player> Players { get; set; }
+        public List<IPlayer> Players { get; set; }
         public DateTime CreationDate { get; set; }
 
         public Room(string name, RoomType type) : this(name, type, DateTime.Now)
@@ -19,15 +19,15 @@ namespace VisualiseR.Common
             Name = name;
             Type = type;
             CreationDate = creationDate;
-            Players = new List<Player>();
+            Players = new List<IPlayer>();
         }
 
-        public void AddPlayer(Player player)
+        public void AddPlayer(IPlayer player)
         {
             Players.Add(player);
         }
 
-        public void RemovePlayer(Player player)
+        public void RemovePlayer(IPlayer player)
         {
             Players.Remove(player);
         }
@@ -38,13 +38,4 @@ namespace VisualiseR.Common
                 CreationDate);
         }
     }
-
-    public enum RoomType
-    {
-        CodeReview,
-        LiveCoding,
-        ArchitecturalReview,
-        Presentation,
-        Showroom
-    };
 }

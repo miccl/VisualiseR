@@ -6,7 +6,6 @@ namespace VisualiseR.Common
     {
         string Title { get; set; }
         DateTime CreationDate { get; set; }
-        string UriString { get; set; }
-
+        string Path { get; set; }
     }
 }

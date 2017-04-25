@@ -1,8 +1,18 @@
-﻿namespace VisualiseR.Common
+﻿using System;
+using System.Collections.Generic;
+
+namespace VisualiseR.Common
 {
-    //TODO wie viel muss die Schnittstelle vorgeben...
     public interface IRoom
     {
+        string Name { get; set; }
+        RoomType Type { get; set; }
+        List<IPlayer> Players { get; set; }
+        DateTime CreationDate { get; set; }
+
+        void AddPlayer(IPlayer player);
+
+        void RemovePlayer(IPlayer player);
 
     }
 }
