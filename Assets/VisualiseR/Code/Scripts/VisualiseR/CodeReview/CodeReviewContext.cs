@@ -1,8 +1,12 @@
-﻿using strange.extensions.command.api;
+﻿using System;
+using strange.examples.signals;
+using strange.extensions.command.api;
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using UnityEngine;
+using VisualiseR.Code.Scripts.VisualiseR.CodeReview.Controller;
+using VisualiseR.Code.Scripts.VisualiseR.Common.Controller;
 using VisualiseR.Common;
 
 namespace VisualiseR.CodeReview
@@ -39,15 +43,13 @@ namespace VisualiseR.CodeReview
             return this;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         protected override void mapBindings()
         {
             BindModels();
             BindServices();
             BindMediators();
             BindCommands();
+            BindSignals();
         }
 
 
@@ -69,7 +71,7 @@ namespace VisualiseR.CodeReview
 
         private void BindMediators()
         {
-            // TODO
+            mediationBinder.Bind<ScreenView>().To<ScreenMediator>();
         }
 
         private void BindCommands()
@@ -85,6 +87,14 @@ namespace VisualiseR.CodeReview
                     .To<StartCommand>()
                     .Once();
             }
+
+            commandBinder.Bind<LoadDiskDataSignal>().To<LoadDiskDataCommand>();
+        }
+
+        private void BindSignals()
+        {
+            injectionBinder.Bind<ScoreChangedSignal>().ToSingleton();
+            injectionBinder.Bind<MediumChangedSignal>().ToSingleton();
         }
     }
 }

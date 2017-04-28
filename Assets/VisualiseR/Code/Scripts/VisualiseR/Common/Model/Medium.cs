@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace VisualiseR.Common
 {
@@ -29,6 +30,16 @@ namespace VisualiseR.Common
         public void RemovePicture(IPicture picture)
         {
             Pictures.Remove(picture);
+        }
+
+        public IPicture GetPicture(int pos)
+        {
+            return Pictures.ElementAt(pos);
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Name: {0}, Pictures: {1}", Name, Pictures);
         }
     }
 }
