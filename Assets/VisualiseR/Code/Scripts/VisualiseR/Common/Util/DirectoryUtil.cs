@@ -4,8 +4,14 @@ using System.Linq;
 
 namespace VisualiseR.Common
 {
-    public class FileUtil
+    public class DirectoryUtil
     {
+        public static bool IsValidDirectory(string directoryPath)
+        {
+            return Directory.Exists(directoryPath) && !IsDirectoryEmpty(directoryPath);
+        }
+
+
         public static bool IsDirectoryEmpty(string path)
         {
             return !Directory.GetFileSystemEntries(path).Any();

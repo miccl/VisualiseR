@@ -13,18 +13,18 @@ namespace VisualiseR.Common
         public MediumChangedSignal _MediumChangedSignal { get; set; }
 
         [Inject]
-        public string _path { get; set; }
+        public string directoryPath { get; set; }
 
         public override void Execute()
         {
-            if (!Directory.Exists(_path) && FileUtil.IsDirectoryEmpty(_path))
+            if (!DirectoryUtil.IsDirectoryEmpty(directoryPath))
             {
                 //TODO implement error message
-                throw new FileNotFoundException(_path);
+                throw new FileNotFoundException(directoryPath);
             }
 
-            Medium medium = new Medium(Path.GetFileNameWithoutExtension(_path));
-            foreach (var filePath in Directory.GetFiles(_path))
+            Medium medium = new Medium(Path.GetFileNameWithoutExtension(directoryPath));
+            foreach (var filePath in Directory.GetFiles(directoryPath))
             {
                 Picture picture = new Picture(Path.GetFileNameWithoutExtension(filePath), filePath);
                 medium.AddPicture(picture);
@@ -32,5 +32,6 @@ namespace VisualiseR.Common
 
             _MediumChangedSignal.Dispatch(medium);
         }
+
     }
 }
