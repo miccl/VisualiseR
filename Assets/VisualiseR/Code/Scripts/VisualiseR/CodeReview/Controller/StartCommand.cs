@@ -1,5 +1,5 @@
 ﻿using strange.extensions.command.impl;
-using VisualiseR.Code.Scripts.VisualiseR.Common.Controller;
+using VisualiseR.Common;
 
 namespace VisualiseR.CodeReview
 {
@@ -16,8 +16,6 @@ namespace VisualiseR.CodeReview
         private void SetupPath()
         {
             string path = "D:/VisualiseR_Test/FullDirectory";
-            //            string path = "D:/VisualiseR_Test/EmptyDirectory";
-            //            string path = "D:/VisualiseR_Test/imgres.jpg";
 
             LoadDiskDataSignal.Dispatch(path);
         }

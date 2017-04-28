@@ -1,6 +1,6 @@
 ﻿using strange.extensions.signal.impl;
 
-namespace VisualiseR.Code.Scripts.VisualiseR.Common.Controller
+namespace VisualiseR.Common
 {
     public class LoadDiskDataSignal : Signal<string>
     {

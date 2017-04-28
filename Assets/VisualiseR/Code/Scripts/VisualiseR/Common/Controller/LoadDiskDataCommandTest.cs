@@ -1,10 +1,8 @@
 ﻿using System.IO;
 using NUnit.Framework;
 using strange.extensions.injector.api;
-using VisualiseR.Code.Scripts.VisualiseR.CodeReview.Controller;
-using VisualiseR.Common;
 
-namespace VisualiseR.Code.Scripts.VisualiseR.Common.Controller
+namespace VisualiseR.Common
 {
     [TestFixture]
     public class LoadDiskDataCommandTest

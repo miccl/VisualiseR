@@ -1,12 +1,10 @@
-﻿using System;
-using strange.examples.signals;
+﻿using strange.examples.signals;
 using strange.extensions.command.api;
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using UnityEngine;
 using VisualiseR.Code.Scripts.VisualiseR.CodeReview.Controller;
-using VisualiseR.Code.Scripts.VisualiseR.Common.Controller;
 using VisualiseR.Common;
 
 namespace VisualiseR.CodeReview
