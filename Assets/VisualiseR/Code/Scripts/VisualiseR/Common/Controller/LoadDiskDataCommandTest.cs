@@ -19,10 +19,10 @@ namespace VisualiseR.Code.Scripts.VisualiseR.Common.Controller
 
 
         [Test]
-        public void testEmptyPath()
+        public void testWrongPath()
         {
             //given
-            var loadDiskCommand = new LoadDiskDataCommand {_path = ""};
+            var loadDiskCommand = new LoadDiskDataCommand {_path = "asdasd"};
 
             //when
             Assert.That(() => loadDiskCommand.Execute(),
@@ -31,38 +31,38 @@ namespace VisualiseR.Code.Scripts.VisualiseR.Common.Controller
                 Throws.TypeOf<FileNotFoundException>());
         }
 
-        [Test]
-        public void testFilePath()
-        {
-            // given
-            var loadDiskCommand = new LoadDiskDataCommand {_path = "D:/VisualiseR_Test/imgres.jpg"};
-
-            //
-
-        }
-
-        [Test]
-        public void testEmptyFolderPath()
-        {
-            // given
-            var loadDiskCommand = new LoadDiskDataCommand {_path = "D:/VisualiseR_Test/EmptyDirectory"};
-
-            //when
-            loadDiskCommand.Execute();
-
-            //then
-        }
-
-        [Test]
-        public void testFullFolderPath()
-        {
-            // given
-            var loadDiskCommand = new LoadDiskDataCommand {_path = "D:/VisualiseR_Test/FullDirectory"};
-
-            //when
-            loadDiskCommand.Execute();
-
-            //then
-        }
+//        [Test]
+//        public void testFilePath()
+//        {
+//            // given
+//            var loadDiskCommand = new LoadDiskDataCommand {_path = "D:/VisualiseR_Test/imgres.jpg"};
+//
+//            //
+//
+//        }
+//
+//        [Test]
+//        public void testEmptyFolderPath()
+//        {
+//            // given
+//            var loadDiskCommand = new LoadDiskDataCommand {_path = "D:/VisualiseR_Test/EmptyDirectory"};
+//
+//            //when
+//            loadDiskCommand.Execute();
+//
+//            //then
+//        }
+//
+//        [Test]
+//        public void testFullFolderPath()
+//        {
+//            // given
+//            var loadDiskCommand = new LoadDiskDataCommand {_path = "D:/VisualiseR_Test/FullDirectory"};
+//
+//            //when
+//            loadDiskCommand.Execute();
+//
+//            //then
+//        }
     }
 }

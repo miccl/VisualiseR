@@ -5,16 +5,29 @@ namespace VisualiseR.Common
     [TestFixture]
     public class DownloadUtilTest
     {
-        [Test]
-        public void testCheckUrlValid()
+        [TestFixture]
+        public class CheckUrlValidMethod
         {
-            //given
-            string invalidUrl = "asd.de";
-            string validUrl = "http://www.google.de";
+            [Test]
+            public void checkInvalidUrls()
+            {
+                //given
+                string invalidUrl = "asd.de";
 
-            //then
-            Assert.IsFalse(DownloadUtil.CheckUrlValid(invalidUrl));
-            Assert.IsTrue(DownloadUtil.CheckUrlValid(validUrl));
+                //then
+                Assert.IsFalse(DownloadUtil.CheckUrlValid(invalidUrl));
+            }
+
+            [Test]
+            public void checkValidUrls()
+            {
+                //given
+                string validUrl = "http://www.google.de";
+
+                //then
+                Assert.IsTrue(DownloadUtil.CheckUrlValid(validUrl));
+            }
+
         }
 
 
