@@ -1,6 +1,4 @@
 ﻿using strange.extensions.mediation.impl;
-using UnityEngine;
-using VisualiseR.Code.Scripts.VisualiseR.CodeReview.Controller;
 using VisualiseR.Common;
 
 namespace VisualiseR.CodeReview

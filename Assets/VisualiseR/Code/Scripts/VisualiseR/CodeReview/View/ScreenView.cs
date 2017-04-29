@@ -1,20 +1,24 @@
 ﻿using System.Collections;
+using log4net;
 using strange.extensions.mediation.impl;
 using UnityEngine;
 using VisualiseR.Common;
 
+[assembly: log4net.Config.XmlConfigurator]
 namespace VisualiseR.CodeReview
 {
     public class ScreenView : View
     {
+        private static JCsLogger log;
+
         public Medium medium { get; set; }
         private IPicture currPicture;
         private int currPicturePos;
         private const string FILE_PREFIX = "file:///";
 
-        protected override void Awake()
+        protected override void Start()
         {
-            base.Awake();
+            log = new JCsLogger(typeof(ScreenView));
             SetupMedium();
         }
 

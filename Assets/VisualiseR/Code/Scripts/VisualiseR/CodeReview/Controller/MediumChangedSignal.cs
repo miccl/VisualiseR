@@ -1,7 +1,7 @@
 ﻿using strange.extensions.signal.impl;
 using VisualiseR.Common;
 
-namespace VisualiseR.Code.Scripts.VisualiseR.CodeReview.Controller
+namespace VisualiseR.CodeReview
 {
     public class MediumChangedSignal : Signal<Medium>
     {

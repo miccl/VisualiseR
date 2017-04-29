@@ -2,7 +2,7 @@
 
 namespace VisualiseR.Common
 {
-    public class LoadDiskDataSignal : Signal<string>
+    public class LoadAndConvertFilesSignal : Signal<string>
     {
 
     }

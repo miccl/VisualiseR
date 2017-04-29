@@ -4,7 +4,6 @@ using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using UnityEngine;
-using VisualiseR.Code.Scripts.VisualiseR.CodeReview.Controller;
 using VisualiseR.Common;
 
 namespace VisualiseR.CodeReview
@@ -86,7 +85,7 @@ namespace VisualiseR.CodeReview
                     .Once();
             }
 
-            commandBinder.Bind<LoadDiskDataSignal>().To<LoadDiskDataCommand>();
+            commandBinder.Bind<LoadAndConvertFilesSignal>().To<LoadDiskDataCommand>();
         }
 
         private void BindSignals()
