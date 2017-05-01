@@ -16,6 +16,7 @@ namespace VisualiseR.CodeReview
             mediumChangedSignal.AddListener(OnMediumChanged);
         }
 
+
         public override void OnRemove()
         {
             mediumChangedSignal.RemoveListener(OnMediumChanged);
@@ -23,7 +24,7 @@ namespace VisualiseR.CodeReview
 
         public void OnMediumChanged(Medium medium)
         {
-            view.medium = medium;
+            view._medium = medium;
             view.SetupMedium();
         }
     }

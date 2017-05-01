@@ -1822,7 +1822,7 @@
              All lag, jitter and loss is additional to the current, real network conditions.
              If the network is slow in reality, this will add even more lag.
              The jitter values will affect the lag positive and negative, so the lag settings
-             describe the medium lag even with jitter. The jitter influence is: [-jitter..+jitter].
+             describe the _medium lag even with jitter. The jitter influence is: [-jitter..+jitter].
              Packets "lost" due to OutgoingLossPercentage count for BytesOut and LostPackagesOut.
              Packets "lost" due to IncomingLossPercentage count for BytesIn and LostPackagesIn.
              </remarks>

@@ -2,7 +2,6 @@
 
 namespace VisualiseR.Common
 {
-    [TestFixture]
     public class DirectoryUtilTest
     {
         [TestFixture]

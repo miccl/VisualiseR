@@ -1,21 +1,18 @@
 using System;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace VisualiseR.Common
 {
     public class Picture : IPicture
     {
         public string Title { get; set; }
-        public DateTime CreationDate { get; set; }
         public string Path { get; set; }
 
-        public Picture(string title, string path)
+        public Picture([NotNull] string title,[NotNull] string path)
         {
             Title = title;
-            if (String.IsNullOrEmpty(path)) throw new ArgumentNullException("path");
             Path = path;
-            if (!File.Exists(Path)) throw new FileNotFoundException(Path);
-            CreationDate = File.GetCreationTime(Path);
         }
     }
 }

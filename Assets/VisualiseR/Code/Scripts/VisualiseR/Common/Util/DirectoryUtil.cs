@@ -12,9 +12,9 @@ namespace VisualiseR.Common
         }
 
 
-        public static bool IsDirectoryEmpty(string path)
+        public static bool IsDirectoryEmpty(string directoryPath)
         {
-            return !Directory.GetFileSystemEntries(path).Any();
+            return !Directory.GetFileSystemEntries(directoryPath).Any();
         }
     }
 }

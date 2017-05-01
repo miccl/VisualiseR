@@ -4,7 +4,6 @@ using strange.extensions.injector.api;
 
 namespace VisualiseR.Common
 {
-    [TestFixture]
     public class LoadAndConvertFilesCommandTest
     {
         //TODO mocken von Files mal probieren
@@ -14,7 +13,6 @@ namespace VisualiseR.Common
         // https://www.nunit.org/index.php?p=exceptionAsserts&r=2.5
 
         IInjectionBinder injectionBinder;
-
 
         [Test]
         public void testWrongPath()

@@ -1,18 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using JetBrains.Annotations;
 using strange.extensions.command.impl;
+using UnityEngine;
 using VisualiseR.CodeReview;
 
 namespace VisualiseR.Common
 {
     /// <summary>
-    /// Loads the files from Disk and creates medium model.
+    /// Loads the files from Disk and creates _medium model.
     /// </summary>
     public class LoadDiskDataCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(LoadDiskDataCommand));
-
 
         [Inject]
         public MediumChangedSignal _MediumChangedSignal { get; set; }
@@ -20,31 +22,39 @@ namespace VisualiseR.Common
         [Inject]
         public string _directoryPath { get; set; }
 
-
         private ImageConversionStrategy _conversion;
 
         public override void Execute()
         {
-            if (!DirectoryUtil.IsValidDirectory(_directoryPath))
-            {
-                //TODO implement error message
-                throw new FileNotFoundException(_directoryPath);
-            }
+//            if (!DirectoryUtil.IsValidDirectory(_directoryPath))
+//            {
+//                //TODO implement error message
+//                throw new FileNotFoundException(_directoryPath);
+//            }
 
             List<string> convertedFilePaths = new List<string>();
-            foreach (var filePath in Directory.GetFiles(_directoryPath))
+
+            if (WebUtil.CheckUrlValid(_directoryPath))
             {
-                var convertedFilePath = ConvertFile(filePath);
-                if (convertedFilePath != null)
+                convertedFilePaths.Add(DownloadWeb(_directoryPath));
+            }
+            else
+            {
+                foreach (var filePath in Directory.GetFiles(_directoryPath))
                 {
-                    convertedFilePaths.Add(convertedFilePath);
+                    var convertedFilePath = ConvertFile(filePath);
+                    if (convertedFilePath != null)
+                    {
+                        convertedFilePaths.Add(convertedFilePath);
+                    }
                 }
             }
 
 
+
             var medium = ConstructMedium(Path.GetFileNameWithoutExtension(_directoryPath), convertedFilePaths);
 
-//            var medium = ConstructMedium(_directoryPath);
+//            var _medium = ConstructMedium(_directoryPath);
 
             _MediumChangedSignal.Dispatch(medium);
         }
@@ -68,12 +78,14 @@ namespace VisualiseR.Common
 
             if (FileUtil.IsCodeFile(filePath))
             {
-                return Convert(filePath, new ConvertCodeToJpeg());
+                //TODO
+//                return Convert(filePath, new ConvertCodeToJpeg());
             }
 
             if (FileUtil.IsPdfFile(filePath))
             {
-                return Convert(filePath, new ConvertPdfToJpeg());
+                //TODO
+//                return Convert(filePath, new ConvertPdfToJpeg());
             }
 
             Logger.WarnFormat("File ({0}) has no valid type and therefore could not be converted.", filePath);
@@ -95,5 +107,34 @@ namespace VisualiseR.Common
             }
             return medium;
         }
+
+
+        private IEnumerator TestDownload(string webPath)
+        {
+            WWW www = new WWW(webPath);
+            //yield return www;
+//            string progress;
+//            while (!www.isDone) {
+//                progress = "downloaded " + (www.progress*100).ToString() + "%...";
+//                yield return null;
+//            }
+//
+            string fullPath = Application.persistentDataPath + "/test.jpg";
+            File.WriteAllBytes (fullPath, www.bytes);
+
+//            progress = "downloaded, unzipping...";
+            yield return fullPath;
+        }
+
+        private string DownloadWeb(string webPath)
+        {
+            WebClient client = new WebClient();
+            string fullPath = Application.persistentDataPath + "/test.png";
+//            string fullPath = "C:/test.png";
+            //TODO das dateiformat auslesen...
+            client.DownloadFile(webPath, fullPath);
+            return fullPath;
+        }
+
     }
 }
