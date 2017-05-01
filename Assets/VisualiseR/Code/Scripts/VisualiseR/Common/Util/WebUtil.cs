@@ -7,6 +7,9 @@ namespace VisualiseR.Common
 {
     public static class WebUtil
     {
+
+        private static readonly JCsLogger Logger = new JCsLogger(typeof(LoadDiskDataCommand));
+
         public static bool IsValidUrl([NotNull] string url)
         {
             Uri uriResult;
@@ -24,6 +27,8 @@ namespace VisualiseR.Common
             string fileName = GetFileName(url);
             string fullPath = Application.persistentDataPath + fileName;
             File.WriteAllBytes(fullPath, www.bytes);
+
+            Logger.InfoFormat("Created file from web: {0}", fileName);
 
             return fullPath;
         }

@@ -18,7 +18,7 @@ namespace VisualiseR.Common
         public void testWrongPath()
         {
             //given
-            var loadDiskCommand = new LoadDiskDataCommand {_directoryPath = "asdasd"};
+            var loadDiskCommand = new LoadDiskDataCommand {uri = "asdasd"};
 
             //when
             Assert.That(() => loadDiskCommand.Execute(),

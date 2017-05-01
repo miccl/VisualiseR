@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Net;
 using JetBrains.Annotations;
 using strange.extensions.command.impl;
-using UnityEngine;
 using VisualiseR.CodeReview;
 
 namespace VisualiseR.Common
@@ -20,43 +17,45 @@ namespace VisualiseR.Common
         public MediumChangedSignal _MediumChangedSignal { get; set; }
 
         [Inject]
-        public string _directoryPath { get; set; }
+        public string uri { get; set; }
 
         private ImageConversionStrategy _conversion;
 
         public override void Execute()
         {
-//            if (!DirectoryUtil.IsValidDirectory(_directoryPath))
-//            {
-//                //TODO implement error message
-//                throw new FileNotFoundException(_directoryPath);
-//            }
-
-            List<string> convertedFilePaths = new List<string>();
-
-            if (WebUtil.CheckUrlValid(_directoryPath))
+            if (!DirectoryUtil.IsValidDirectory(uri) && !WebUtil.IsValidUrl(uri))
             {
-                convertedFilePaths.Add(DownloadWeb(_directoryPath));
+                //TODO implement error message
+                throw new FileNotFoundException(uri);
+            }
+
+            List<string> filePaths = new List<string>();
+
+            if (WebUtil.IsValidUrl(uri))
+            {
+                filePaths.Add(WebUtil.DownloadFileFromWeb(uri));
             }
             else
             {
-                foreach (var filePath in Directory.GetFiles(_directoryPath))
-                {
-                    var convertedFilePath = ConvertFile(filePath);
-                    if (convertedFilePath != null)
-                    {
-                        convertedFilePaths.Add(convertedFilePath);
-                    }
-                }
+                TraverseFilesAndConvert(filePaths);
             }
 
 
-
-            var medium = ConstructMedium(Path.GetFileNameWithoutExtension(_directoryPath), convertedFilePaths);
-
-//            var _medium = ConstructMedium(_directoryPath);
+            var medium = ConstructMedium(Path.GetFileNameWithoutExtension(uri), filePaths);
 
             _MediumChangedSignal.Dispatch(medium);
+        }
+
+        private void TraverseFilesAndConvert(List<string> convertedFilePaths)
+        {
+            foreach (var filePath in Directory.GetFiles(uri))
+            {
+                var convertedFilePath = ConvertFile(filePath);
+                if (convertedFilePath != null)
+                {
+                    convertedFilePaths.Add(convertedFilePath);
+                }
+            }
         }
 
         /// <summary>
@@ -107,34 +106,5 @@ namespace VisualiseR.Common
             }
             return medium;
         }
-
-
-        private IEnumerator TestDownload(string webPath)
-        {
-            WWW www = new WWW(webPath);
-            //yield return www;
-//            string progress;
-//            while (!www.isDone) {
-//                progress = "downloaded " + (www.progress*100).ToString() + "%...";
-//                yield return null;
-//            }
-//
-            string fullPath = Application.persistentDataPath + "/test.jpg";
-            File.WriteAllBytes (fullPath, www.bytes);
-
-//            progress = "downloaded, unzipping...";
-            yield return fullPath;
-        }
-
-        private string DownloadWeb(string webPath)
-        {
-            WebClient client = new WebClient();
-            string fullPath = Application.persistentDataPath + "/test.png";
-//            string fullPath = "C:/test.png";
-            //TODO das dateiformat auslesen...
-            client.DownloadFile(webPath, fullPath);
-            return fullPath;
-        }
-
     }
 }
