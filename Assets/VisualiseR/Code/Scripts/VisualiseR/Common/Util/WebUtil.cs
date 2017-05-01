@@ -1,10 +1,11 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace VisualiseR.Common
 {
     public static class WebUtil
     {
-        public static bool CheckUrlValid(string source)
+        public static bool IsValidUrl([NotNull] string source)
         {
             Uri uriResult;
             return Uri.TryCreate(source, UriKind.Absolute, out uriResult) &&

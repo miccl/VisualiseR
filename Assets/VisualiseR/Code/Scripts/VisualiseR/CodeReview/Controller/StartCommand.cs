@@ -38,7 +38,8 @@ namespace VisualiseR.CodeReview
         {
 //            string path = "D:/VisualiseR_Test/FullDirectory";
 //            string path = "/storage/emulated/0/Pictures/aviary-sample";
-//            LoadAndConvertFilesSignal.Dispatch(path);
+            var url = "https://www.planwallpaper.com/static/images/desktop-year-of-the-tiger-images-wallpaper.jpg";
+            LoadAndConvertFilesSignal.Dispatch(url);
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace VisualiseR.Common
 {
-    public class DownloadUtilTest
+    public class WebUtilTest
     {
         [TestFixture]
         public class CheckUrlValidMethod
@@ -14,7 +14,7 @@ namespace VisualiseR.Common
                 string invalidUrl = "asd.de";
 
                 //then
-                Assert.IsFalse(DownloadUtil.CheckUrlValid(invalidUrl));
+                Assert.IsFalse(WebUtil.IsValidUrl(invalidUrl));
             }
 
             [Test]
@@ -24,7 +24,7 @@ namespace VisualiseR.Common
                 string validUrl = "http://www.google.de";
 
                 //then
-                Assert.IsTrue(DownloadUtil.CheckUrlValid(validUrl));
+                Assert.IsTrue(WebUtil.IsValidUrl(validUrl));
             }
 
         }
