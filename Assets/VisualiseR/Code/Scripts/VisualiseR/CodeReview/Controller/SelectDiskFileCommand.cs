@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace VisualiseR.CodeReview
 {
-    public class SelectFileCommand : Command
+    public class SelectDiskFileCommand : Command
     {
 
         [Inject(ContextKeys.CONTEXT_VIEW)]

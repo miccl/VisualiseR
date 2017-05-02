@@ -6,7 +6,7 @@ namespace VisualiseR.Main
 {
     public class CreateRoomView : View
     {
-        public Signal _chooseDiskFileButtonClickedSignal = new Signal();
+        public Signal _selectDiskFileButtonClickedSignal = new Signal();
 
 
         /// <summary>
@@ -19,7 +19,7 @@ namespace VisualiseR.Main
 
         public void ChooseDiskFileButtonClicked()
         {
-            _chooseDiskFileButtonClickedSignal.Dispatch();
+            _selectDiskFileButtonClickedSignal.Dispatch();
         }
     }
 }

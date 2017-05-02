@@ -83,7 +83,7 @@ namespace VisualiseR.Main
                     .Once();
             }
 
-            commandBinder.Bind<SelectFileSignal>().To<SelectFileCommand>();
+            commandBinder.Bind<SelectDiskFileSignal>().To<SelectDiskFileCommand>();
 
         }
 

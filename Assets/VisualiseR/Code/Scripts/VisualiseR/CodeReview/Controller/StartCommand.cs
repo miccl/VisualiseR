@@ -13,7 +13,7 @@ namespace VisualiseR.CodeReview
         public LoadAndConvertFilesSignal _loadAndConvertFilesSignal { get; set; }
 
         [Inject]
-        public SelectFileSignal _selectFileSignal { get; set; }
+        public SelectDiskFileSignal SelectDiskFileSignal { get; set; }
 
         [Inject(ContextKeys.CONTEXT_VIEW)]
         public GameObject contextView { get; set; }
@@ -28,7 +28,7 @@ namespace VisualiseR.CodeReview
 
         private void InitFileBrowser()
         {
-            _selectFileSignal.Dispatch();
+            SelectDiskFileSignal.Dispatch();
         }
 
         private void InitView()

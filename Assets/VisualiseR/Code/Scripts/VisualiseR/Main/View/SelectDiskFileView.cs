@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace VisualiseR.Main
 {
-    public class SelectFileView : View
+    public class SelectDiskFileView : View
     {
         public Signal<string> _selectedFileSignal = new Signal<string>();
 

@@ -5,10 +5,10 @@ using VisualiseR.Common;
 
 namespace VisualiseR.Main
 {
-    public class SelectFileMediator : Mediator
+    public class SelectDiskFileMediator : Mediator
     {
         [Inject]
-        public SelectFileView _view{ get; set;}
+        public SelectDiskFileView _view{ get; set;}
 
 
         [Inject]
