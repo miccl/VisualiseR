@@ -729,12 +729,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1987968979}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 074f397e0374be546b28caba39e74962, type: 3}
+  m_Script: {fileID: 11500000, guid: 55bc1ebaf690c974cb1450167af44b75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skins:
-  - {fileID: 11400000, guid: 3f13bb8951709ef4daea5f555585ba2c, type: 2}
-  - {fileID: 11400000, guid: eab4f3d39ecadf04d9f19e189518a169, type: 2}
+  skins: []
+  file: {fileID: 0}
+  folder: {fileID: 0}
+  back: {fileID: 0}
+  drive: {fileID: 0}
 --- !u!1 &2122149996
 GameObject:
   m_ObjectHideFlags: 0

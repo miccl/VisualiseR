@@ -1,4 +1,5 @@
 ﻿using strange.extensions.mediation.impl;
+using UnityEngine;
 using VisualiseR.Common;
 
 namespace VisualiseR.CodeReview
@@ -10,6 +11,10 @@ namespace VisualiseR.CodeReview
 
         [Inject]
         public MediumChangedSignal mediumChangedSignal { get; set; }
+
+        [Inject]
+        public LoadAndConvertFilesSignal LoadAndConvertFilesSignal { get; set; }
+
 
         public override void OnRegister()
         {

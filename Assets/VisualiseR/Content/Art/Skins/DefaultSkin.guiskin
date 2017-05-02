@@ -9,15 +9,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12001, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: Skin0
+  m_Name: DefaultSkin
   m_EditorClassIdentifier: 
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   m_box:
     m_Name: box
     m_Normal:
-      m_Background: {fileID: 2800000, guid: e7503aac715b80e42b0e1ccf826701e7, type: 3}
+      m_Background: {fileID: 11001, guid: 0000000000000000e000000000000000, type: 0}
       m_ScaledBackgrounds: []
-      m_TextColor: {r: 1, g: 1, b: 1, a: 1}
+      m_TextColor: {r: 0.79999995, g: 0.79999995, b: 0.79999995, a: 1}
     m_Hover:
       m_Background: {fileID: 0}
       m_ScaledBackgrounds: []
@@ -82,15 +82,15 @@ MonoBehaviour:
   m_button:
     m_Name: button
     m_Normal:
-      m_Background: {fileID: 2800000, guid: d8a30141f0294264380aa15c1705a478, type: 3}
+      m_Background: {fileID: 11006, guid: 0000000000000000e000000000000000, type: 0}
       m_ScaledBackgrounds: []
       m_TextColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
     m_Hover:
-      m_Background: {fileID: 2800000, guid: 231a890a661ab0242ab331b0ec7db40c, type: 3}
+      m_Background: {fileID: 11003, guid: 0000000000000000e000000000000000, type: 0}
       m_ScaledBackgrounds: []
       m_TextColor: {r: 1, g: 1, b: 1, a: 1}
     m_Active:
-      m_Background: {fileID: 2800000, guid: 3d7660d074cbebb4593a1381576c0c2d, type: 3}
+      m_Background: {fileID: 11002, guid: 0000000000000000e000000000000000, type: 0}
       m_ScaledBackgrounds: []
       m_TextColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
     m_Focused:
@@ -134,7 +134,7 @@ MonoBehaviour:
       m_Top: 0
       m_Bottom: 0
     m_Font: {fileID: 0}
-    m_FontSize: 0
+    m_FontSize: 10
     m_FontStyle: 0
     m_Alignment: 4
     m_WordWrap: 0
@@ -545,7 +545,7 @@ MonoBehaviour:
     m_ImagePosition: 2
     m_ContentOffset: {x: 0, y: 0}
     m_FixedWidth: 0
-    m_FixedHeight: 12
+    m_FixedHeight: 30
     m_StretchWidth: 1
     m_StretchHeight: 0
   m_horizontalSliderThumb:
@@ -745,7 +745,7 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
-    m_FixedWidth: 12
+    m_FixedWidth: 30
     m_FixedHeight: 0
     m_StretchWidth: 0
     m_StretchHeight: 1
@@ -1080,7 +1080,7 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
-    m_FixedWidth: 15
+    m_FixedWidth: 50
     m_FixedHeight: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
@@ -1147,7 +1147,7 @@ MonoBehaviour:
     m_TextClipping: 1
     m_ImagePosition: 2
     m_ContentOffset: {x: 0, y: 0}
-    m_FixedWidth: 15
+    m_FixedWidth: 50
     m_FixedHeight: 0
     m_StretchWidth: 0
     m_StretchHeight: 1
@@ -1425,6 +1425,3 @@ MonoBehaviour:
     m_CursorColor: {r: 1, g: 1, b: 1, a: 1}
     m_CursorFlashSpeed: -1
     m_SelectionColor: {r: 1, g: 0.38403907, b: 0, a: 0.7}
---- !u!1002 &11400001
-EditorExtensionImpl:
-  serializedVersion: 6

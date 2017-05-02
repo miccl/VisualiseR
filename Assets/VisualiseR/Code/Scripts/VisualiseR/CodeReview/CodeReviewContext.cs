@@ -69,6 +69,7 @@ namespace VisualiseR.CodeReview
         private void BindMediators()
         {
             mediationBinder.Bind<ScreenView>().To<ScreenMediator>();
+            mediationBinder.Bind<SelectFileView>().To<SelectFileMediator>();
         }
 
         private void BindCommands()
@@ -86,6 +87,7 @@ namespace VisualiseR.CodeReview
             }
 
             commandBinder.Bind<LoadAndConvertFilesSignal>().To<LoadDiskDataCommand>();
+            commandBinder.Bind<SelectFileSignal>().To<SelectFileCommand>();
         }
 
         private void BindSignals()
