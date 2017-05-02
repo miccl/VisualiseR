@@ -1,24 +1,19 @@
-﻿using System.Runtime.InteropServices;
-using strange.extensions.mediation.impl;
+﻿using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
 
-namespace VisualiseR.CodeReview
+namespace VisualiseR.Main
 {
-
-
     public class SelectFileView : View
     {
         public Signal<string> _selectedFileSignal = new Signal<string>();
 
-        //TODO read readme of this guy
         [SerializeField] private GUISkin _skin;
-        [SerializeField] private Texture2D file,folder,back,drive;
 
-        public FileBrowser fb;
+        [SerializeField] private Texture2D file, folder, back, drive;
+
+        private FileBrowser fb;
         private string output;
-
-        private bool wasSelected = false;
 
         internal void Init()
         {

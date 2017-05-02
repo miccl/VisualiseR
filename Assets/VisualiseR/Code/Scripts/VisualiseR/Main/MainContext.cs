@@ -4,6 +4,7 @@ using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using UnityEngine;
+using VisualiseR.CodeReview;
 using VisualiseR.Common;
 
 namespace VisualiseR.Main
@@ -41,6 +42,7 @@ namespace VisualiseR.Main
             BindServices();
             BindMediators();
             BindCommands();
+            BindSignals();
         }
 
 
@@ -62,7 +64,9 @@ namespace VisualiseR.Main
 
         private void BindMediators()
         {
-            // TODO
+            mediationBinder.Bind<CreateRoomView>().To<CreateRoomMediator>();
+            mediationBinder.Bind<JoinRoomView>().To<JoinRoomMediator>();
+            mediationBinder.Bind<SettingsView>().To<SettingsMediator>();
         }
 
         private void BindCommands()
@@ -79,8 +83,12 @@ namespace VisualiseR.Main
                     .Once();
             }
 
+            commandBinder.Bind<SelectFileSignal>().To<SelectFileCommand>();
+
         }
 
-
+        private void BindSignals()
+        {
+        }
     }
 }

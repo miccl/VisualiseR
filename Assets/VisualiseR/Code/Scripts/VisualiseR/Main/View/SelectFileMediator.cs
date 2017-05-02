@@ -1,8 +1,9 @@
 ﻿using strange.extensions.mediation.impl;
 using UnityEngine;
+using VisualiseR.CodeReview;
 using VisualiseR.Common;
 
-namespace VisualiseR.CodeReview
+namespace VisualiseR.Main
 {
     public class SelectFileMediator : Mediator
     {
