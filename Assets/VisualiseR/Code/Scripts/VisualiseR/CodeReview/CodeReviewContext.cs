@@ -30,14 +30,14 @@ namespace VisualiseR.CodeReview
         }
 
         /// <summary>
-        /// Override Start so that we can fire the StartSignal
+        /// Override Start so that we can fire the PresentationStartSignal
         /// </summary>
         /// <returns></returns>
-        override public IContext Start()
+        public override IContext Start()
         {
             base.Start();
-            StartSignal startSignal = injectionBinder.GetInstance<StartSignal>();
-            startSignal.Dispatch();
+            CodeReviewStartSignal codeReviewStartSignal = injectionBinder.GetInstance<CodeReviewStartSignal>();
+            codeReviewStartSignal.Dispatch();
             return this;
         }
 
@@ -69,7 +69,7 @@ namespace VisualiseR.CodeReview
 
         private void BindMediators()
         {
-            mediationBinder.Bind<ScreenView>().To<ScreenMediator>();
+            mediationBinder.Bind<ScreenView>().To<CodeReviewScreenMediator>();
             mediationBinder.Bind<SelectDiskFileView>().To<SelectDiskFileMediator>();
         }
 
@@ -77,14 +77,15 @@ namespace VisualiseR.CodeReview
         {
             if (this == firstContext)
             {
-                commandBinder.Bind<StartSignal>().To<StartCommand>().Once();
+                commandBinder.Bind<CodeReviewStartSignal>().To<CodeReviewStartCommand>().Once();
             }
             else
             {
-                commandBinder.Bind<StartSignal>()
+                commandBinder.Bind<CodeReviewStartSignal>()
 //                    .To<KillAudioListenerCommand>()
-                    .To<StartCommand>()
-                    .Once();
+                    .To<CodeReviewStartCommand>()
+                    .Once()
+                    .InSequence();
             }
 
             commandBinder.Bind<LoadAndConvertFilesSignal>().To<LoadDiskDataCommand>();

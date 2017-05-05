@@ -2,7 +2,6 @@
 using System.IO;
 using JetBrains.Annotations;
 using strange.extensions.command.impl;
-using VisualiseR.CodeReview;
 
 namespace VisualiseR.Common
 {

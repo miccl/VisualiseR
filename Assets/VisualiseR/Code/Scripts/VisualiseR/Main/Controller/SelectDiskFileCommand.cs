@@ -2,7 +2,7 @@
 using strange.extensions.context.api;
 using UnityEngine;
 
-namespace VisualiseR.CodeReview
+namespace VisualiseR.Main
 {
     public class SelectDiskFileCommand : Command
     {

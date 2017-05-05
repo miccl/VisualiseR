@@ -1,10 +1,9 @@
 ﻿using strange.extensions.mediation.impl;
-using UnityEngine;
 using VisualiseR.Common;
 
 namespace VisualiseR.CodeReview
 {
-    public class ScreenMediator : Mediator
+    public class CodeReviewScreenMediator : Mediator
     {
         [Inject]
         public ScreenView view { get; set; }

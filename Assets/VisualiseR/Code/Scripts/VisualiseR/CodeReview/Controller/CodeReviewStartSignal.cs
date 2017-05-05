@@ -2,7 +2,9 @@
 
 namespace VisualiseR.CodeReview
 {
-    public class SelectDiskFileSignal : Signal
+
+    public class CodeReviewStartSignal : Signal
     {
+
     }
 }

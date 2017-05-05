@@ -4,6 +4,5 @@ namespace VisualiseR.Common
 {
     public class LoadAndConvertFilesSignal : Signal<string>
     {
-
     }
 }

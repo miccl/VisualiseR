@@ -175,9 +175,9 @@ public class GvrArmModel : MonoBehaviour {
   public float alphaValue { get; private set; }
 
   /// The suggested rendering alpha value of the controller tooltips.
-  /// This is to only display the tooltips when the player is looking
+  /// This is to only display the tooltips when the _player is looking
   /// at the controller, and also to prevent the tooltips from intersecting the
-  /// player's face.
+  /// _player's face.
   public float tooltipAlphaValue { get; private set; }
 
   /// Event handler that occurs when the state of the ArmModel is updated.
@@ -345,7 +345,7 @@ public class GvrArmModel : MonoBehaviour {
   }
 
   private void ApplyArmModel() {
-    // Find the controller's orientation relative to the player
+    // Find the controller's orientation relative to the _player
     Quaternion controllerOrientation = GvrController.Orientation;
     controllerOrientation = Quaternion.Inverse(shoulderRotation) * controllerOrientation;
 

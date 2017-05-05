@@ -2,12 +2,13 @@
 using strange.extensions.context.api;
 using UnityEngine;
 using VisualiseR.Common;
+using VisualiseR.Main;
 
-namespace VisualiseR.CodeReview
+namespace VisualiseR.Presentation
 {
-    public class StartCommand : Command
+    public class PresentationStartCommand : Command
     {
-        private static readonly JCsLogger Logger = new JCsLogger(typeof(StartCommand));
+        private static readonly JCsLogger Logger = new JCsLogger(typeof(PresentationStartCommand));
 
         [Inject]
         public LoadAndConvertFilesSignal _loadAndConvertFilesSignal { get; set; }
@@ -38,7 +39,7 @@ namespace VisualiseR.CodeReview
 
         private void InitStand()
         {
-            GameObject go = GameObject.Instantiate(Resources.Load("Common_Screen") as GameObject);
+            GameObject go = GameObject.Instantiate(Resources.Load("Presentation_Screen") as GameObject);
             go.name = "Screen";
             go.transform.parent = contextView.transform;
         }

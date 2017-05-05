@@ -4,13 +4,13 @@ using strange.extensions.mediation.impl;
 using UnityEngine;
 using VisualiseR.Common;
 
-namespace VisualiseR.CodeReview
+namespace VisualiseR.Presentation
 {
-    public class ScreenView : View
+    public class PresentationScreenView : View
     {
         private const string FILE_PREFIX = "file:///";
 
-        internal Medium _medium { get; set; }
+        internal IMedium _medium { get; set; }
 
         private IPicture _currPicture;
         private int _currPicturePos;
@@ -33,9 +33,10 @@ namespace VisualiseR.CodeReview
             StartCoroutine(LoadImageIntoTexture(_currPicture.Path));
         }
 
-        private Medium CreateMockMedium()
+        //TODO vielleicht auslagern in einen Command
+        private IMedium CreateMockMedium()
         {
-            Medium medium = new Medium("test");
+            IMedium medium = new Medium("test");
 
             for (int i = 0; i < 3; i++)
             {

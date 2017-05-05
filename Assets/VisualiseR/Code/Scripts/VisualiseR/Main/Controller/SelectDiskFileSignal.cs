@@ -2,8 +2,7 @@
 
 namespace VisualiseR.Main
 {
-    public class StartSignal : Signal
+    public class SelectDiskFileSignal : Signal
     {
-
     }
 }
