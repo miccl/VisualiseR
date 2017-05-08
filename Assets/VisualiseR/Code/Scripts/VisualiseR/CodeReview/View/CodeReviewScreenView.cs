@@ -4,10 +4,11 @@ using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
 using VisualiseR.Common;
+using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
-    public class CodeReviewScreenView : View
+    public class CodeReviewScreenView : View, DragDropHandler
     {
         private const string FILE_PREFIX = "file:///";
 
@@ -18,12 +19,15 @@ namespace VisualiseR.CodeReview
 
         public Signal<IPlayer, IMedium, int> nextCodeSignal = new Signal<IPlayer, IMedium, int>();
         public Signal<IPlayer, IMedium, int> prevCodeSignal = new Signal<IPlayer, IMedium, int>();
+        private bool _isHeld;
+        private GameObject _gvrReticlePointer;
 
-        protected override void Awake()
+        protected override void Start()
         {
+            _isHeld = false;
+            _gvrReticlePointer = GameObject.Find("GvrReticlePointer");
             _player = new Player("Test", PlayerType.Host);
             SetupMedium();
-            Debug.Log("asd: " + _medium.Pictures.Count);
         }
 
         internal void SetupMedium()
@@ -47,7 +51,6 @@ namespace VisualiseR.CodeReview
                 string filePath = Application.persistentDataPath + pic + ".png";
                 File.WriteAllBytes(filePath, tex.EncodeToPNG());
                 medium.AddPicture(new Picture(pic, filePath));
-                Debug.Log(filePath);
             }
 
             return medium;
@@ -67,7 +70,6 @@ namespace VisualiseR.CodeReview
         {
             IPicture currPicture = _medium.GetPicture(picturePos);
             StartCoroutine(LoadImageIntoTexture(currPicture.Path));
-            Debug.Log(picturePos);
         }
 
         IEnumerator LoadImageIntoTexture(string path)
@@ -84,15 +86,58 @@ namespace VisualiseR.CodeReview
 
         void Update()
         {
-            if (Input.GetButtonDown("Fire1"))
+            HandleInputs();
+            HandleDragAndDrop();
+        }
+
+        private void HandleInputs()
+        {
+            if (!_isHeld)
             {
-                NextPicture();
+                if (Input.GetButtonDown("Fire1"))
+                {
+                    NextPicture();
+                }
+
+                if (Input.GetButtonDown("Fire2"))
+                {
+                    PrevPicture();
+                }
+            }
+            if (Input.GetButtonDown("Fire3"))
+            {
+                _isHeld = false;
+
             }
 
-            if (Input.GetButtonDown("Fire2"))
+        }
+
+        private void HandleDragAndDrop()
+        {
+            if (_isHeld)
             {
-                PrevPicture();
+                Ray ray = new Ray(_gvrReticlePointer.transform.position, _gvrReticlePointer.transform.forward);
+                float distance = Vector3.Distance(_gvrReticlePointer.transform.position, transform.position);
+                transform.position = ray.GetPoint(distance);
+
+                // Fix rotation
+                transform.rotation = Quaternion.LookRotation(-Camera.main.transform.forward);
+                transform.Rotate(-270, 180, 180);
+
+                //TODO Screen soll immer über dem Boden schweben, wenn per DD dies drunter soll es drüber gezogen werden.
+
             }
+        }
+
+        public void HandleGazeTriggerStart()
+        {
+            _isHeld = true;
+        }
+
+        public void HandleGazeTriggerEnd()
+        {
+            _isHeld = false;
+//            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
         }
     }
 }
