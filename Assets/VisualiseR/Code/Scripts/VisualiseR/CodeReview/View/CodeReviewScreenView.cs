@@ -80,6 +80,7 @@ namespace VisualiseR.CodeReview
             www.LoadImageIntoTexture(tex);
             GetComponent<Renderer>().material.mainTexture = tex;
             www.Dispose();
+
         }
 
         void Update()
@@ -87,11 +88,13 @@ namespace VisualiseR.CodeReview
             if (Input.GetButtonDown("Fire1"))
             {
                 NextPicture();
+                GvrViewer.Instance.VRModeEnabled = true;
             }
 
             if (Input.GetButtonDown("Fire2"))
             {
                 PrevPicture();
+                GvrViewer.Instance.VRModeEnabled = false;
             }
         }
     }
