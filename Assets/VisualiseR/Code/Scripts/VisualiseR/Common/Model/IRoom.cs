@@ -8,7 +8,7 @@ namespace VisualiseR.Common
         string Name { get; set; }
         RoomType Type { get; set; }
         List<IPlayer> Players { get; set; }
-        DateTime CreationDate { get; set; }
+        DateTime CreationDate { get;}
 
         void AddPlayer(IPlayer player);
 

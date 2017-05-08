@@ -36,7 +36,10 @@ namespace VisualiseR.Presentation
         //TODO vielleicht auslagern in einen Command
         private IMedium CreateMockMedium()
         {
-            IMedium medium = new Medium("test");
+            IMedium medium = new Medium
+            {
+                Name = "Test"
+            };
 
             for (int i = 0; i < 3; i++)
             {
@@ -44,7 +47,11 @@ namespace VisualiseR.Presentation
                 Texture2D tex = Resources.Load<Texture2D>(pic);
                 string filePath = Application.persistentDataPath + pic + ".png";
                 File.WriteAllBytes(filePath, tex.EncodeToPNG());
-                medium.AddPicture(new Picture(pic, filePath));
+                medium.AddPicture(new Picture
+                {
+                    Title = pic,
+                    Path = filePath
+                });
                 Debug.Log(filePath);
             }
 

@@ -1,4 +1,5 @@
 ﻿using strange.extensions.mediation.impl;
+using UnityEngine;
 using VisualiseR.Common;
 
 namespace VisualiseR.CodeReview
@@ -28,8 +29,8 @@ namespace VisualiseR.CodeReview
         {
             mediumChangedSignal.AddListener(OnMediumChanged);
             _CodePositionChangedSignal.AddListener(OnCodePositionChanged);
-            _view.nextCodeSignal.AddListener(OnNextCodeSignal);
-            _view.prevCodeSignal.AddListener(OnPrevCodeSignal);
+            _view.NextCodeSignal.AddListener(OnNextCodeSignal);
+            _view.PrevCodeSignal.AddListener(OnPrevCodeSignal);
         }
 
 
@@ -37,8 +38,8 @@ namespace VisualiseR.CodeReview
         {
             mediumChangedSignal.RemoveListener(OnMediumChanged);
             _CodePositionChangedSignal.RemoveListener(OnCodePositionChanged);
-            _view.nextCodeSignal.RemoveListener(OnNextCodeSignal);
-            _view.nextCodeSignal.RemoveListener(OnPrevCodeSignal);
+            _view.NextCodeSignal.RemoveListener(OnNextCodeSignal);
+            _view.NextCodeSignal.RemoveListener(OnPrevCodeSignal);
         }
 
         public void OnMediumChanged(Medium medium)

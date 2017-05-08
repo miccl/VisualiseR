@@ -9,10 +9,9 @@ namespace VisualiseR.Common
         public string Title { get; set; }
         public string Path { get; set; }
 
-        public Picture([NotNull] string title,[NotNull] string path)
+        public Picture()
         {
-            Title = title;
-            Path = path;
+
         }
     }
 }

@@ -40,9 +40,9 @@ namespace VisualiseR.Common
             }
 
 
-            var medium = ConstructMedium(Path.GetFileNameWithoutExtension(uri), filePaths);
+            var  medium = ConstructMedium(Path.GetFileNameWithoutExtension(uri), filePaths);
 
-            _MediumChangedSignal.Dispatch(medium);
+            _MediumChangedSignal.Dispatch((Medium) medium);
         }
 
         private void TraverseFilesAndConvert(List<string> convertedFilePaths)
@@ -95,12 +95,17 @@ namespace VisualiseR.Common
             return strategy.Convert(filePath);
         }
 
-        private Medium ConstructMedium(string name, List<string> filePaths)
+        private IMedium ConstructMedium(string name, List<string> filePaths)
         {
-            Medium medium = new Medium(Path.GetFileNameWithoutExtension(name));
+            IMedium medium = new Medium {
+                Name = Path.GetFileNameWithoutExtension(name)
+            };
             foreach (var filePath in filePaths)
             {
-                Picture picture = new Picture(Path.GetFileNameWithoutExtension(filePath), filePath);
+                IPicture picture = new Picture {
+                    Title = Path.GetFileNameWithoutExtension(filePath),
+                    Path = filePath
+                };
                 medium.AddPicture(picture);
             }
             return medium;

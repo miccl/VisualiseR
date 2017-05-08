@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 
 namespace VisualiseR.Common
 {
@@ -7,22 +6,11 @@ namespace VisualiseR.Common
     {
         public string Name { get; set; }
         public PlayerType Type { get; set; }
-        public DateTime JoinDate { get; set; }
+        public DateTime JoinDate { get; private set; }
 
         public Player()
         {
             JoinDate = DateTime.Now;
-        }
-
-        public Player(string name, PlayerType type) : this(name, type, DateTime.Now)
-        {
-        }
-
-        public Player(string name, PlayerType type, DateTime joinDate)
-        {
-            Name = name;
-            Type = type;
-            JoinDate = joinDate;
         }
 
         public override string ToString()

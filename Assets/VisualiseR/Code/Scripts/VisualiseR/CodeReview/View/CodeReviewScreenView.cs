@@ -17,16 +17,20 @@ namespace VisualiseR.CodeReview
 
         internal int _currPicturePos;
 
-        public Signal<IPlayer, IMedium, int> nextCodeSignal = new Signal<IPlayer, IMedium, int>();
-        public Signal<IPlayer, IMedium, int> prevCodeSignal = new Signal<IPlayer, IMedium, int>();
+        public Signal<IPlayer, IMedium, int> NextCodeSignal = new Signal<IPlayer, IMedium, int>();
+        public Signal<IPlayer, IMedium, int> PrevCodeSignal = new Signal<IPlayer, IMedium, int>();
         private bool _isHeld;
         private GameObject _gvrReticlePointer;
 
-        protected override void Start()
+        protected override void Awake()
         {
             _isHeld = false;
             _gvrReticlePointer = GameObject.Find("GvrReticlePointer");
-            _player = new Player("Test", PlayerType.Host);
+            _player = new Player
+            {
+                Name = "Test",
+                Type = PlayerType.Host
+            };
             SetupMedium();
         }
 
@@ -42,7 +46,10 @@ namespace VisualiseR.CodeReview
 
         private IMedium CreateMockMedium()
         {
-            IMedium medium = new Medium("test");
+            IMedium medium = new Medium
+            {
+                Name = "test"
+            };
 
             for (int i = 0; i < 3; i++)
             {
@@ -50,20 +57,23 @@ namespace VisualiseR.CodeReview
                 Texture2D tex = Resources.Load<Texture2D>(pic);
                 string filePath = Application.persistentDataPath + pic + ".png";
                 File.WriteAllBytes(filePath, tex.EncodeToPNG());
-                medium.AddPicture(new Picture(pic, filePath));
+                medium.AddPicture(new Picture
+                {
+                    Title = pic,
+                    Path = filePath
+                });
             }
-
             return medium;
         }
 
         private void NextPicture()
         {
-            nextCodeSignal.Dispatch(_player, _medium, _currPicturePos);
+            NextCodeSignal.Dispatch(_player, _medium, _currPicturePos);
         }
 
         private void PrevPicture()
         {
-            prevCodeSignal.Dispatch(_player, _medium, _currPicturePos);
+            PrevCodeSignal.Dispatch(_player, _medium, _currPicturePos);
         }
 
         internal void LoadPictureIntoTexture(int picturePos)
@@ -75,9 +85,7 @@ namespace VisualiseR.CodeReview
         IEnumerator LoadImageIntoTexture(string path)
         {
             WWW www = new WWW(FILE_PREFIX + path);
-
             yield return www;
-
             Texture2D tex = new Texture2D(4, 4, TextureFormat.DXT1, false);
             www.LoadImageIntoTexture(tex);
             GetComponent<Renderer>().material.mainTexture = tex;
@@ -86,8 +94,8 @@ namespace VisualiseR.CodeReview
 
         void Update()
         {
-            HandleInputs();
             HandleDragAndDrop();
+            HandleInputs();
         }
 
         private void HandleInputs()
@@ -98,18 +106,11 @@ namespace VisualiseR.CodeReview
                 {
                     NextPicture();
                 }
-
                 if (Input.GetButtonDown("Fire2"))
                 {
                     PrevPicture();
                 }
             }
-            if (Input.GetButtonDown("Fire3"))
-            {
-                _isHeld = false;
-
-            }
-
         }
 
         private void HandleDragAndDrop()
@@ -120,12 +121,11 @@ namespace VisualiseR.CodeReview
                 float distance = Vector3.Distance(_gvrReticlePointer.transform.position, transform.position);
                 transform.position = ray.GetPoint(distance);
 
-                // Fix rotation
+// Fix rotation
                 transform.rotation = Quaternion.LookRotation(-Camera.main.transform.forward);
                 transform.Rotate(-270, 180, 180);
 
-                //TODO Screen soll immer über dem Boden schweben, wenn per DD dies drunter soll es drüber gezogen werden.
-
+//TODO Screen soll immer über dem Boden schweben, wenn per DD dies drunter soll es drüber gezogen werden.
             }
         }
 

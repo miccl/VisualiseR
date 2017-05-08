@@ -8,18 +8,11 @@ namespace VisualiseR.Common
         public string Name { get; set; }
         public RoomType Type { get; set; }
         public List<IPlayer> Players { get; set; }
-        public DateTime CreationDate { get; set; }
+        public DateTime CreationDate { get; private set; }
 
-        public Room(string name, RoomType type) : this(name, type, DateTime.Now)
+        public Room()
         {
-        }
-
-        public Room(string name, RoomType type, DateTime creationDate)
-        {
-            Name = name;
-            Type = type;
-            CreationDate = creationDate;
-            Players = new List<IPlayer>();
+            CreationDate = DateTime.Now;
         }
 
         public void AddPlayer(IPlayer player)
