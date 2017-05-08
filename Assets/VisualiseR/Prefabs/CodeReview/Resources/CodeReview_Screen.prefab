@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33777174057054864}
   - component: {fileID: 64052095926183358}
   - component: {fileID: 23074769627011888}
-  - component: {fileID: 114486048782190846}
+  - component: {fileID: 114073321881579028}
   m_Layer: 0
   m_Name: CodeReview_Screen
   m_TagString: Untagged
@@ -96,7 +96,7 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114486048782190846
+--- !u!114 &114073321881579028
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -104,6 +104,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1766051364772230}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac52d07e388941a595765766859e48d2, type: 3}
+  m_Script: {fileID: 11500000, guid: f5d8898523261804f83a2c9e368fb7c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

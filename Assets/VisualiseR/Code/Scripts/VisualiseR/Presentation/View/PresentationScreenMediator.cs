@@ -3,7 +3,7 @@ using VisualiseR.Common;
 
 namespace VisualiseR.Presentation
 {
-    public class ScreenMediator : Mediator
+    public class PresentationScreenMediator : Mediator
     {
         [Inject]
         public PresentationScreenView view { get; set; }

@@ -1,11 +1,9 @@
-﻿using strange.examples.multiplecontexts.common;
-using strange.examples.signals;
+﻿using strange.examples.signals;
 using strange.extensions.command.api;
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using UnityEngine;
-using VisualiseR.CodeReview;
 using VisualiseR.Common;
 using VisualiseR.Main;
 
@@ -66,7 +64,7 @@ namespace VisualiseR.Presentation
 
         private void BindMediators()
         {
-            mediationBinder.Bind<ScreenView>().To<CodeReviewScreenMediator>();
+            mediationBinder.Bind<PresentationScreenView>().To<PresentationScreenMediator>();
             mediationBinder.Bind<SelectDiskFileView>().To<SelectDiskFileMediator>();
         }
 
@@ -81,7 +79,8 @@ namespace VisualiseR.Presentation
                 commandBinder.Bind<PresentationStartSignal>()
 //                    .To<KillAudioListenerCommand>()
                     .To<PresentationStartCommand>()
-                    .Once().InSequence();
+                    .Once()
+                    .InSequence();
             }
 
             commandBinder.Bind<LoadAndConvertFilesSignal>().To<LoadDiskDataCommand>();

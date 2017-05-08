@@ -69,7 +69,7 @@ namespace VisualiseR.CodeReview
 
         private void BindMediators()
         {
-            mediationBinder.Bind<ScreenView>().To<CodeReviewScreenMediator>();
+            mediationBinder.Bind<CodeReviewScreenView>().To<CodeReviewScreenMediator>();
             mediationBinder.Bind<SelectDiskFileView>().To<SelectDiskFileMediator>();
         }
 
@@ -90,12 +90,16 @@ namespace VisualiseR.CodeReview
 
             commandBinder.Bind<LoadAndConvertFilesSignal>().To<LoadDiskDataCommand>();
             commandBinder.Bind<SelectDiskFileSignal>().To<SelectDiskFileCommand>();
+            commandBinder.Bind<NextCodeSignal>().To<NextCodeCommand>();
+            commandBinder.Bind<PrevCodeSignal>().To<PrevCodeCommand>();
+
         }
 
         private void BindSignals()
         {
             injectionBinder.Bind<ScoreChangedSignal>().ToSingleton();
             injectionBinder.Bind<MediumChangedSignal>().ToSingleton();
+            injectionBinder.Bind<CodePositionChangedSignal>().ToSingleton();
         }
     }
 }

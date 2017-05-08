@@ -9,6 +9,11 @@ namespace VisualiseR.Common
         public string Name { get; set; }
         public List<IPicture> Pictures { get; set; }
 
+        public Medium()
+        {
+            Pictures = new List<IPicture>();
+        }
+
         public Medium(string name) : this(name, new List<IPicture>())
         {
         }

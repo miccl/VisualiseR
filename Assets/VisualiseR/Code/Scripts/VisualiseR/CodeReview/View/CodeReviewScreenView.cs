@@ -1,23 +1,29 @@
 ﻿using System.Collections;
 using System.IO;
 using strange.extensions.mediation.impl;
+using strange.extensions.signal.impl;
 using UnityEngine;
 using VisualiseR.Common;
 
 namespace VisualiseR.CodeReview
 {
-    public class ScreenView : View
+    public class CodeReviewScreenView : View
     {
         private const string FILE_PREFIX = "file:///";
 
-        internal IMedium _medium { get; set; }
+        public IMedium _medium;
+        public IPlayer _player;
 
-        private IPicture _currPicture;
-        private int _currPicturePos;
+        internal int _currPicturePos;
+
+        public Signal<IPlayer, IMedium, int> nextCodeSignal = new Signal<IPlayer, IMedium, int>();
+        public Signal<IPlayer, IMedium, int> prevCodeSignal = new Signal<IPlayer, IMedium, int>();
 
         protected override void Awake()
         {
+            _player = new Player("Test", PlayerType.Host);
             SetupMedium();
+            Debug.Log("asd: " + _medium.Pictures.Count);
         }
 
         internal void SetupMedium()
@@ -26,11 +32,8 @@ namespace VisualiseR.CodeReview
             {
                 _medium = CreateMockMedium();
             }
-
             _currPicturePos = 0;
-            _currPicture = _medium.GetPicture(0);
-
-            StartCoroutine(LoadImageIntoTexture(_currPicture.Path));
+            LoadPictureIntoTexture(_currPicturePos);
         }
 
         private IMedium CreateMockMedium()
@@ -52,24 +55,19 @@ namespace VisualiseR.CodeReview
 
         private void NextPicture()
         {
-            _currPicturePos = (_currPicturePos + 1) % _medium.Pictures.Count;
-            LoadPictureIntoTexture(_currPicturePos);
+            nextCodeSignal.Dispatch(_player, _medium, _currPicturePos);
         }
 
         private void PrevPicture()
         {
-            _currPicturePos = _currPicturePos - 1;
-            if (_currPicturePos == -1)
-            {
-                _currPicturePos = _medium.Pictures.Count - 1;
-            }
-            LoadPictureIntoTexture(_currPicturePos);
+            prevCodeSignal.Dispatch(_player, _medium, _currPicturePos);
         }
 
-        private void LoadPictureIntoTexture(int picturePos)
+        internal void LoadPictureIntoTexture(int picturePos)
         {
-            _currPicture = _medium.GetPicture(picturePos);
-            StartCoroutine(LoadImageIntoTexture(_currPicture.Path));
+            IPicture currPicture = _medium.GetPicture(picturePos);
+            StartCoroutine(LoadImageIntoTexture(currPicture.Path));
+            Debug.Log(picturePos);
         }
 
         IEnumerator LoadImageIntoTexture(string path)

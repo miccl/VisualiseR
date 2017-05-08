@@ -24,7 +24,7 @@ namespace VisualiseR.CodeReview
         {
             InitView();
             SetupPath();
-            InitFileBrowser();
+//            InitFileBrowser();
         }
 
         private void InitFileBrowser()
