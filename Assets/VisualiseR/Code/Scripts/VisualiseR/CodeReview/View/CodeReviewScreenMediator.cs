@@ -1,9 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using JetBrains.Annotations;
-using strange.extensions.mediation.impl;
-using UnityEditor;
-using UnityEngine;
+﻿using strange.extensions.mediation.impl;
 using VisualiseR.Common;
 
 namespace VisualiseR.CodeReview
@@ -38,7 +33,6 @@ namespace VisualiseR.CodeReview
         }
 
 
-
         public override void OnRemove()
         {
             mediumChangedSignal.RemoveListener(OnMediumChanged);
@@ -56,7 +50,6 @@ namespace VisualiseR.CodeReview
         private void OnNextCodeSignal(IPlayer player, IMedium medium, int pos)
         {
             nextCodeSignal.Dispatch((Player) player, (Medium) medium, pos);
-
         }
 
         private void OnPrevCodeSignal(IPlayer player, IMedium medium, int pos)

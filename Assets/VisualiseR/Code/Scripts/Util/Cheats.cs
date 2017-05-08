@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Cvheats : MonoBehaviour
+public class Cheats : MonoBehaviour
 {
     private bool vrModeEnabled = true;
 
