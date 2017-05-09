@@ -9,7 +9,8 @@ namespace VisualiseR.Common
         private static readonly List<string> ImageExtensions =
             new List<string> {".JPG", ".JPEG", ".JPE", ".BMP", ".GIF", ".PNG"};
 
-        private static readonly List<string> CodeExtensions = new List<string> {".JAVA", ".CS", ".PY", ".C", ".PNG"};
+
+        private static readonly List<string> CodeExtensions = new List<string> {".JAVA", ".CS", ".PY", ".C"};
         private static readonly List<string> PdfExtensions = new List<string> {".PDF"};
 
 
@@ -20,8 +21,7 @@ namespace VisualiseR.Common
         /// <returns></returns>
         public static bool IsImageFile([NotNull] string filePath)
         {
-            var extension = Path.GetExtension(filePath);
-            return extension != null && ImageExtensions.Contains(extension.ToUpperInvariant());
+            return ImageExtensions.Contains(Path.GetExtension(filePath).ToUpperInvariant());
         }
 
         /// <summary>
@@ -31,8 +31,7 @@ namespace VisualiseR.Common
         /// <returns></returns>
         public static bool IsCodeFile([NotNull] string filePath)
         {
-            var extension = Path.GetExtension(filePath);
-            return extension != null && CodeExtensions.Contains(extension.ToUpperInvariant());
+            return CodeExtensions.Contains(Path.GetExtension(filePath).ToUpperInvariant());
         }
 
         /// <summary>
@@ -42,8 +41,7 @@ namespace VisualiseR.Common
         /// <returns></returns>
         public static bool IsPdfFile([NotNull] string filePath)
         {
-            var extension = Path.GetExtension(filePath);
-            return extension != null && PdfExtensions.Contains(extension.ToUpperInvariant());
+            return PdfExtensions.Contains(Path.GetExtension(filePath).ToUpperInvariant());
         }
 
         /// <summary>
