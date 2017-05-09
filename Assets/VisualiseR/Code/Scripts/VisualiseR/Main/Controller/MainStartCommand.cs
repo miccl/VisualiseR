@@ -1,4 +1,5 @@
 ﻿using strange.extensions.command.impl;
+using UnityEngine.VR;
 
 namespace VisualiseR.Main
 {
@@ -6,7 +7,7 @@ namespace VisualiseR.Main
     {
         public override void Execute()
         {
-            throw new System.NotImplementedException();
+            VRSettings.enabled = false;
         }
     }
 }

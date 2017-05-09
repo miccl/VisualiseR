@@ -51,5 +51,20 @@ namespace VisualiseR.Util
                 Debug.Log("Component " + typeof(T).ToString() + " not found on " + mono.name);
             }
         }
+
+        /// <summary>
+        /// Defensive <see cref="GameObject.Find"/> alternative.
+        /// Checks if the retrieved game object is null.
+        /// </summary>
+        /// <param name="gameOjectName"></param>
+        public static GameObject FindGameObject(string gameOjectName)
+        {
+            GameObject go = GameObject.Find(gameOjectName);
+            if (go == null)
+            {
+                Debug.LogErrorFormat("Cannot find '{0}' script", gameOjectName);
+            }
+            return go;
+        }
     }
 }

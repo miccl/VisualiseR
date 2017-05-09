@@ -64,6 +64,7 @@ namespace VisualiseR.Main
 
         private void BindMediators()
         {
+            mediationBinder.Bind<MainMenuView>().To<MainMenuMediator>();
             mediationBinder.Bind<CreateRoomView>().To<CreateRoomMediator>();
             mediationBinder.Bind<JoinRoomView>().To<JoinRoomMediator>();
             mediationBinder.Bind<SettingsView>().To<SettingsMediator>();

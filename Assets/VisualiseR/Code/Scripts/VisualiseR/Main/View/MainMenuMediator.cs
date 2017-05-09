@@ -2,11 +2,10 @@
 
 namespace VisualiseR.Main
 {
-    public class SettingsMediator : Mediator
+    public class MainMenuMediator : Mediator
     {
         [Inject]
-        public SettingsView _view { get; set; }
-
+        public MainMenuView _view { get; set; }
 
         public override void OnRegister()
         {
