@@ -29,10 +29,10 @@ python code_conversion.py <input_path> <output_dir_path>
 **Examples:**
 Convert all files in directory.
 ```
-python code_conversion.py D:/Downloads/VisualiseR_Test/CodeDirectory D:/Downloads/VisualiseR_Test/TargetDirectory/Test
+python code_conversion.py C:/CodeDirectory D:/TargetDirectory/Test
 ```
 
 Convert a file.
 ```
-python code_conversion.py D:/Downloads/VisualiseR_Test/CodeDirectory/test.py D:/Downloads/VisualiseR_Test/TargetDirectory/Test
+python code_conversion.py C:/CodeDirectory/test.py D:/TargetDirectory/Test
 ```
