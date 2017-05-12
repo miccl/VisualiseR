@@ -14,5 +14,8 @@ namespace VisualiseR.Common
 
         void RemovePlayer(IPlayer player);
 
+        bool IsEmpty();
+
+
     }
 }

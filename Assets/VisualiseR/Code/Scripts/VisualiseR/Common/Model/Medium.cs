@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using WebSocketSharp;
 
 namespace VisualiseR.Common
 {
@@ -33,5 +35,11 @@ namespace VisualiseR.Common
         {
             return string.Format("Name: {0}, Pictures: {1}", Name, Pictures);
         }
+
+        public bool IsEmpty()
+        {
+            return String.IsNullOrEmpty(Name) || Pictures.Count == 0;
+        }
+
     }
 }

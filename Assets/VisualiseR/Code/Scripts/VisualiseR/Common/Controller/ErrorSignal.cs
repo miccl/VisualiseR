@@ -2,7 +2,8 @@
 
 namespace VisualiseR.Common
 {
-    public class JoinRoomSignal : Signal<Room>
+    public class ErrorSignal : Signal<string>
     {
+
     }
 }

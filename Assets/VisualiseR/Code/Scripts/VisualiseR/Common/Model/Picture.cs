@@ -13,5 +13,10 @@ namespace VisualiseR.Common
         {
 
         }
+
+        public bool IsEmpty()
+        {
+            return String.IsNullOrEmpty(Title) || String.IsNullOrEmpty(Path);
+        }
     }
 }

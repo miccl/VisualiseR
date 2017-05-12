@@ -30,5 +30,10 @@ namespace VisualiseR.Common
             return string.Format("Name: {0}, Type: {1}, Players: {2}, CreationDate: {3}", Name, Type, Players,
                 CreationDate);
         }
+
+        public bool IsEmpty()
+        {
+            return String.IsNullOrEmpty(Name) || String.IsNullOrEmpty(Type.ToString()) || Players.Count == 0;
+        }
     }
 }

@@ -87,11 +87,14 @@ namespace VisualiseR.Main
 
             commandBinder.Bind<SelectDiskFileSignal>().To<SelectDiskFileCommand>();
             commandBinder.Bind<LoadFilesSignal>().To<LoadFilesCommand>();
+            commandBinder.Bind<CreateRoomSignal>().To<CreateRoomCommand>();
+            commandBinder.Bind<JoinRoomSignal>().To<JoinRoomSignal>();
         }
 
         private void BindSignals()
         {
             injectionBinder.Bind<MediumChangedSignal>().ToSingleton();
+            injectionBinder.Bind<ErrorSignal>().ToSingleton();
         }
     }
 }
