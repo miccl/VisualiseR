@@ -12,6 +12,7 @@ namespace VisualiseR.Main
 
         public override void Execute()
         {
+            Debug.Log("WARUM?");
             GameObject go = GameObject.Instantiate(Resources.Load("FileBrowser") as GameObject);
             go.name = "FileBrowser";
             go.transform.parent = contextView.transform;

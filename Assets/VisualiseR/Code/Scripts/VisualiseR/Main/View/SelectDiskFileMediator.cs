@@ -12,7 +12,7 @@ namespace VisualiseR.Main
 
 
         [Inject]
-        public LoadAndConvertFilesSignal _loadAndConvertFilesSignal { get; set; }
+        public LoadFilesSignal LoadFilesSignal { get; set; }
 
 
         public override void OnRegister()
@@ -31,7 +31,7 @@ namespace VisualiseR.Main
         {
             if (filePath != null)
             {
-                _loadAndConvertFilesSignal.Dispatch(filePath);
+                LoadFilesSignal.Dispatch(filePath);
             }
             else
             {

@@ -8,7 +8,7 @@ namespace VisualiseR.Common
     public static class WebUtil
     {
 
-        private static readonly JCsLogger Logger = new JCsLogger(typeof(LoadDiskDataCommand));
+        private static readonly JCsLogger Logger = new JCsLogger(typeof(LoadFilesCommand));
 
         public static bool IsValidUrl([NotNull] string url)
         {

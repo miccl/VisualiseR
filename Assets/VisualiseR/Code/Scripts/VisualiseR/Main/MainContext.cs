@@ -4,7 +4,6 @@ using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using UnityEngine;
-using VisualiseR.CodeReview;
 using VisualiseR.Common;
 
 namespace VisualiseR.Main
@@ -68,13 +67,15 @@ namespace VisualiseR.Main
             mediationBinder.Bind<CreateRoomView>().To<CreateRoomMediator>();
             mediationBinder.Bind<JoinRoomView>().To<JoinRoomMediator>();
             mediationBinder.Bind<SettingsView>().To<SettingsMediator>();
+
+            mediationBinder.Bind<SelectDiskFileView>().To<SelectDiskFileMediator>();
         }
 
         private void BindCommands()
         {
             if (this == firstContext)
             {
-                commandBinder.Bind<MainStartSignal>().To<MainStartCommand>().Once ();
+                commandBinder.Bind<MainStartSignal>().To<MainStartCommand>().Once();
             }
             else
             {
@@ -85,11 +86,12 @@ namespace VisualiseR.Main
             }
 
             commandBinder.Bind<SelectDiskFileSignal>().To<SelectDiskFileCommand>();
-
+            commandBinder.Bind<LoadFilesSignal>().To<LoadFilesCommand>();
         }
 
         private void BindSignals()
         {
+            injectionBinder.Bind<MediumChangedSignal>().ToSingleton();
         }
     }
 }

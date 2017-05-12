@@ -83,7 +83,7 @@ namespace VisualiseR.Presentation
                     .InSequence();
             }
 
-            commandBinder.Bind<LoadAndConvertFilesSignal>().To<LoadDiskDataCommand>();
+            commandBinder.Bind<LoadFilesSignal>().To<LoadFilesCommand>();
             commandBinder.Bind<SelectDiskFileSignal>().To<SelectDiskFileCommand>();
         }
 

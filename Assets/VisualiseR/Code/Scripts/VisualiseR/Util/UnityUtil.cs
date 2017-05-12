@@ -56,13 +56,24 @@ namespace VisualiseR.Util
         /// Defensive <see cref="GameObject.Find"/> alternative.
         /// Checks if the retrieved game object is null.
         /// </summary>
-        /// <param name="gameOjectName"></param>
-        public static GameObject FindGameObject(string gameOjectName)
+        /// <param name="gameObjectName"></param>
+        public static GameObject FindGameObject(string gameObjectName)
         {
-            GameObject go = GameObject.Find(gameOjectName);
+            GameObject go = GameObject.Find(gameObjectName);
             if (go == null)
             {
-                Debug.LogErrorFormat("Cannot find '{0}' script", gameOjectName);
+                Debug.LogErrorFormat("Cannot find '{0}' script", gameObjectName);
+            }
+            return go;
+        }
+
+        //TODO vielleicht kann man hier was sichereres machen
+        public static GameObject FindGameObjectInChild(string gameObjectName)
+        {
+            GameObject go = GameObject.Find(gameObjectName);
+            if (go == null)
+            {
+                Debug.LogErrorFormat("Cannot find '{0}' script", gameObjectName);
             }
             return go;
         }

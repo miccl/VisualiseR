@@ -63,10 +63,12 @@ public class MainMenuView : View
 
     public void OnQuitButtonClick()
     {
-#if UNITY_EDITOR
-//        EditorApplication.isPlaying = false;
-#else
         Application.Quit();
-#endif
+
+//#if UNITY_EDITOR
+//        EditorApplication.isPlaying = false;
+//#else
+//        Application.Quit();
+//#endif
     }
 }

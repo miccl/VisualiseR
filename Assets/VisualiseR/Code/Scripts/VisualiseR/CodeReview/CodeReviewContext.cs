@@ -88,7 +88,7 @@ namespace VisualiseR.CodeReview
                     .InSequence();
             }
 
-            commandBinder.Bind<LoadAndConvertFilesSignal>().To<LoadDiskDataCommand>();
+            commandBinder.Bind<LoadFilesSignal>().To<LoadFilesCommand>();
             commandBinder.Bind<SelectDiskFileSignal>().To<SelectDiskFileCommand>();
             commandBinder.Bind<NextCodeSignal>().To<NextCodeCommand>();
             commandBinder.Bind<PrevCodeSignal>().To<PrevCodeCommand>();

@@ -8,9 +8,9 @@ namespace VisualiseR.Common
     /// <summary>
     /// Loads the files from Disk and creates _medium model.
     /// </summary>
-    public class LoadDiskDataCommand : Command
+    public class LoadFilesCommand : Command
     {
-        private static readonly JCsLogger Logger = new JCsLogger(typeof(LoadDiskDataCommand));
+        private static readonly JCsLogger Logger = new JCsLogger(typeof(LoadFilesCommand));
 
         [Inject]
         public MediumChangedSignal _MediumChangedSignal { get; set; }
@@ -22,14 +22,17 @@ namespace VisualiseR.Common
 
         public override void Execute()
         {
-            if (!DirectoryUtil.IsValidDirectory(uri) && !WebUtil.IsValidUrl(uri))
-            {
-                //TODO implement error message
-                throw new FileNotFoundException(uri);
-            }
+            CheckIfValidFile();
 
             List<string> filePaths = new List<string>();
+            LoadFiles(filePaths);
+            var  medium = ConstructMedium(Path.GetFileNameWithoutExtension(uri), filePaths);
 
+            _MediumChangedSignal.Dispatch((Medium) medium);
+        }
+
+        private void LoadFiles(List<string> filePaths)
+        {
             if (WebUtil.IsValidUrl(uri))
             {
                 filePaths.Add(WebUtil.DownloadFileFromWeb(uri));
@@ -38,11 +41,15 @@ namespace VisualiseR.Common
             {
                 TraverseFilesAndConvert(filePaths);
             }
+        }
 
-
-            var  medium = ConstructMedium(Path.GetFileNameWithoutExtension(uri), filePaths);
-
-            _MediumChangedSignal.Dispatch((Medium) medium);
+        private void CheckIfValidFile()
+        {
+            if (!DirectoryUtil.IsValidDirectory(uri) && !WebUtil.IsValidUrl(uri))
+            {
+                //TODO implement error message
+                throw new FileNotFoundException(uri);
+            }
         }
 
         private void TraverseFilesAndConvert(List<string> convertedFilePaths)

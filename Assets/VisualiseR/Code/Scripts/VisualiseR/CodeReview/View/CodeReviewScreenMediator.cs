@@ -13,7 +13,7 @@ namespace VisualiseR.CodeReview
         public MediumChangedSignal mediumChangedSignal { get; set; }
 
         [Inject]
-        public LoadAndConvertFilesSignal LoadAndConvertFilesSignal { get; set; }
+        public LoadFilesSignal LoadFilesSignal { get; set; }
 
         [Inject]
         public CodePositionChangedSignal _CodePositionChangedSignal { get; set; }
