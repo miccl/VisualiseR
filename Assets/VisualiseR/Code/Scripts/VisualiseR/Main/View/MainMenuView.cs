@@ -12,11 +12,18 @@ public class MainMenuView : View
 
     private bool isAudioOn = true;
     private Image audioImage;
+    private GameObject _helpPanel;
+    private GameObject _createRoomPanel;
+    private GameObject _joinRoomPanel;
 
     protected override void Start()
     {
         GameObject menuCanvas = UnityUtil.FindGameObject("MenuCanvas");
         _settingsPanel = menuCanvas.transform.FindChild("SettingsPanel").gameObject;
+        _helpPanel = menuCanvas.transform.FindChild("HelpPanel").gameObject;
+        _createRoomPanel = menuCanvas.transform.FindChild("CreateRoomPanel").gameObject;
+        _joinRoomPanel = menuCanvas.transform.FindChild("JoinRoomPanel").gameObject;
+
 
         audioImage = transform.FindChild("AudioButton").GetComponent<Image>();
 
@@ -25,14 +32,14 @@ public class MainMenuView : View
 
     public void OnCreateRoomButtonClick()
     {
-        //TODO
-        Debug.Log("OnCreateRoomButtonClick");
+        _createRoomPanel.SetActive(true);
+        gameObject.SetActive(false);
     }
 
     public void OnJoinRoomButtonClick()
     {
-        //TODO
-        Debug.Log("OnJoinRoomButtonClick");
+        _joinRoomPanel.SetActive(true);
+        gameObject.SetActive(false);
     }
 
     public void OnSettingsButtonClick()
@@ -57,8 +64,8 @@ public class MainMenuView : View
 
     public void OnHelpButtonClick()
     {
-        //TODO
-        Debug.Log("OnHelpButtonClick");
+        _helpPanel.SetActive(true);
+        gameObject.SetActive(false);
     }
 
     public void OnQuitButtonClick()

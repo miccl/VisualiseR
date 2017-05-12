@@ -18,13 +18,13 @@ namespace VisualiseR.Main
 
         public override void OnRegister()
         {
-            _view._selectDiskFileButtonClickedSignal.AddListener(OnSelectDiskFileButtonClicked);
+            _view.SelectDiskFileButtonClickedSignal.AddListener(OnSelectDiskFileButtonClicked);
             MediumChangedSignal.AddListener(OnMediumChanged);
         }
 
         public override void OnRemove()
         {
-            _view._selectDiskFileButtonClickedSignal.RemoveListener(OnSelectDiskFileButtonClicked);
+            _view.SelectDiskFileButtonClickedSignal.RemoveListener(OnSelectDiskFileButtonClicked);
             MediumChangedSignal.RemoveListener(OnMediumChanged);
         }
 
@@ -35,7 +35,10 @@ namespace VisualiseR.Main
 
         private void OnMediumChanged(Medium medium)
         {
-            _view.OnMediumLoadFinished(medium);
+            //TODO davor könnte beispielsweise eine Laderad kommen, bis dieser Aufruf getätigt wird
+            _view.ChoosenMedium = medium;
+            _view.ChooseMediumDropdown.captionText.text = medium.Name;
+
         }
     }
 }

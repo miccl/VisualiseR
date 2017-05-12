@@ -13,20 +13,21 @@ namespace VisualiseR.Main
 {
     public class CreateRoomView : View
     {
-        public Signal _selectDiskFileButtonClickedSignal = new Signal();
+        private static readonly string CHOOSE_MEDIUM_TEXT = " Choose medium...";
+        private static readonly string SELECT_DISK_FILE = "Choose disk file";
+        private static readonly string SELECT_WEB_FILE = "Choose web file";
+
+        public Signal SelectDiskFileButtonClickedSignal = new Signal();
 
         internal Dropdown RoomTypeDropdown;
         internal InputField RoomNameInputField;
         internal Dropdown ChooseMediumDropdown;
-
-        private static readonly string CHOOSE_MEDIUM_TEXT = "Choose medium...";
-        private static readonly string SELECT_DISK_FILE = "Choose disk file";
-        private static readonly string SELECT_WEB_FILE = "Choose web file";
-
-        private List<string> roomTypes = Enum.GetNames(typeof(RoomType)).ToList();
-        private List<string> chooseMediumTypes = new List<string> {SELECT_WEB_FILE, SELECT_DISK_FILE};
-
         internal Medium ChoosenMedium;
+
+        private readonly List<string> roomTypes = Enum.GetNames(typeof(RoomType)).ToList();
+        private readonly List<string> chooseMediumTypes = new List<string> {SELECT_WEB_FILE, SELECT_DISK_FILE};
+
+        private GameObject _mainMenuPanelView;
 
         protected override void Awake()
         {
@@ -35,6 +36,9 @@ namespace VisualiseR.Main
             RoomNameInputField = UnityUtil.FindGameObjectInChild("RoomNamePanel").GetComponentInChildren<InputField>();
             ChooseMediumDropdown = UnityUtil.FindGameObjectInChild("ChooseMediumPanel")
                 .GetComponentInChildren<Dropdown>();
+
+            GameObject menuCanvas = UnityUtil.FindGameObject("MenuCanvas");
+            _mainMenuPanelView = menuCanvas.transform.FindChild("MainMenuPanel").gameObject;
         }
 
         protected override void Start()
@@ -57,11 +61,6 @@ namespace VisualiseR.Main
             ChooseMediumDropdown.captionText.text = CHOOSE_MEDIUM_TEXT;
         }
 
-        public void OnChooseDiskFileButtonClick()
-        {
-            _selectDiskFileButtonClickedSignal.Dispatch();
-        }
-
         public void OnCreateRoomButtonClick()
         {
             if (IsValidInput())
@@ -75,15 +74,23 @@ namespace VisualiseR.Main
             }
         }
 
+        public void OnBackButtonClick()
+        {
+            _mainMenuPanelView.SetActive(true);
+            gameObject.SetActive(false);
+        }
+
+
         /// <summary>
         /// Test, if all needed information are choosen.
         /// If not, a error message is displayed with
         /// </summary>
         private bool IsValidInput()
         {
+            //TODO Die Validerung sollte wohl woanders gemacht werden, wahrscheinlich im Model?! zumindestens die formale Validierung?
             //TODO Fehlernachricht anzeigen
             //TODO vielleicht andere Validierungen hinzufügen (keine Sonderzeichen...)
-            //TODO ist der Raumname schon vergeben???
+            //TODO Photon ist der Raumname schon vergeben???
             if (RoomNameInputField.text == null)
             {
                 Debug.LogFormat("Room name wasn't choosen yet ({0})", RoomNameInputField.text);
@@ -105,7 +112,7 @@ namespace VisualiseR.Main
         {
             if (index == chooseMediumTypes.IndexOf(SELECT_DISK_FILE))
             {
-                _selectDiskFileButtonClickedSignal.Dispatch();
+                SelectDiskFileButtonClickedSignal.Dispatch();
             }
             else if (index == chooseMediumTypes.IndexOf(SELECT_WEB_FILE))
             {
@@ -113,13 +120,6 @@ namespace VisualiseR.Main
                 ChooseMediumDropdown.captionText.text = CHOOSE_MEDIUM_TEXT;
                 throw new NotImplementedException();
             }
-        }
-
-        public void OnMediumLoadFinished(Medium medium)
-        {
-            //TODO davor könnte beispielsweise eine Laderad kommen, bis dieser Aufruf getätigt wird
-            ChoosenMedium = medium;
-            ChooseMediumDropdown.captionText.text = medium.Name;
         }
     }
 }
