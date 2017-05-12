@@ -1,5 +1,8 @@
 ﻿using System;
 using strange.extensions.command.impl;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using VisualiseR.Util;
 
 namespace VisualiseR.Common
 {
@@ -24,6 +27,9 @@ namespace VisualiseR.Common
         [Inject]
         public ErrorSignal ErrorSignal { get; set; }
 
+        [Inject]
+        public RoomChangedSignal RoomChangedSignal { get; set; }
+
 
         public override void Execute()
         {
@@ -37,6 +43,10 @@ namespace VisualiseR.Common
                 //TODO Entsprechende Szene laden...
                 //TODO
                 Logger.InfoFormat("Room {0} was created", room);
+
+
+                UnityUtil.saveObjectInPlayerPrefs(room, "room");
+                SceneManager.LoadScene(1);
             }
         }
 
@@ -44,7 +54,8 @@ namespace VisualiseR.Common
         {
             room.Name = _roomName;
             room.Type = _roomType;
-            room.Players.Add(new Player {Name = "Kai", Type = PlayerType.Host});
+            room.Medium = _medium;
+//            room.Players.Add(new Player {Name = "Kai", Type = PlayerType.Host});
 
             //TODO wie kreiere ich die Spieler ?!?!?!
         }

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 
 namespace VisualiseR.Common
 {
+    [Serializable]
     public class Room : IRoom
     {
         public string Name { get; set; }
         public RoomType Type { get; set; }
+        public IMedium Medium { get; set; }
         public List<IPlayer> Players { get; set; }
         public DateTime CreationDate { get; private set; }
 

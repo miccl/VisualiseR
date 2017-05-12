@@ -2,6 +2,7 @@
 
 namespace VisualiseR.Common
 {
+    [Serializable]
     public class Player : IPlayer
     {
         public string Name { get; set; }

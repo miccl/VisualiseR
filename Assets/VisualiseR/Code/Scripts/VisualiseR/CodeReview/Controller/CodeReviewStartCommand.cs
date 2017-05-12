@@ -2,7 +2,6 @@
 using strange.extensions.context.api;
 using UnityEngine;
 using VisualiseR.Common;
-using VisualiseR.Main;
 
 namespace VisualiseR.CodeReview
 {
@@ -11,10 +10,11 @@ namespace VisualiseR.CodeReview
         private static readonly JCsLogger Logger = new JCsLogger(typeof(CodeReviewStartCommand));
 
         [Inject]
-        public LoadFilesSignal LoadFilesSignal { get; set; }
+        public MediumChangedSignal MediumChangedSignal { get; set; }
 
         [Inject]
-        public SelectDiskFileSignal SelectDiskFileSignal { get; set; }
+        public CodePositionChangedSignal CodePositionChangedSignal { get; set; }
+
 
         [Inject(ContextKeys.CONTEXT_VIEW)]
         public GameObject contextView { get; set; }
@@ -23,14 +23,8 @@ namespace VisualiseR.CodeReview
         public override void Execute()
         {
             InitView();
-            SetupPath();
-//            InitFileBrowser();
         }
 
-        private void InitFileBrowser()
-        {
-            SelectDiskFileSignal.Dispatch();
-        }
 
         private void InitView()
         {
@@ -42,14 +36,6 @@ namespace VisualiseR.CodeReview
             GameObject go = GameObject.Instantiate(Resources.Load("CodeReview_Screen") as GameObject);
             go.name = "Screen";
             go.transform.parent = contextView.transform;
-        }
-
-        private void SetupPath()
-        {
-//            string path = "D:/VisualiseR_Test/FullDirectory";
-//            string path = "/storage/emulated/0/Pictures/aviary-sample";
-//            var url = "https://www.planwallpaper.com/static/images/desktop-year-of-the-tiger-images-wallpaper.jpg";
-//            LoadFilesSignal.Dispatch(url);
         }
     }
 }

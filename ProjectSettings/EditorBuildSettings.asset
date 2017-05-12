@@ -8,3 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/VisualiseR/Scenes/Main.unity
     guid: 8c22ac960505c0c489efcf9c79d776f5
+  - enabled: 1
+    path: Assets/VisualiseR/Scenes/Code_Review.unity
+    guid: 00000000000000000000000000000000

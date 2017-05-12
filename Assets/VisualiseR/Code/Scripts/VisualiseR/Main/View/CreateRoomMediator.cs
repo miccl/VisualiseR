@@ -1,6 +1,5 @@
 ﻿using strange.extensions.mediation.impl;
 using UnityEngine;
-using VisualiseR.CodeReview;
 using VisualiseR.Common;
 
 namespace VisualiseR.Main
@@ -62,7 +61,6 @@ namespace VisualiseR.Main
             //TODO davor könnte beispielsweise eine Laderad kommen, bis dieser Aufruf getätigt wird
             _view.ChoosenMedium = medium;
             _view.ChooseMediumDropdown.captionText.text = medium.Name;
-
         }
     }
 }

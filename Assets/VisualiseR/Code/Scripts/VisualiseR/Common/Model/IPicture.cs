@@ -9,5 +9,7 @@ namespace VisualiseR.Common
 
         bool IsEmpty();
 
+        string ToString();
+
     }
 }

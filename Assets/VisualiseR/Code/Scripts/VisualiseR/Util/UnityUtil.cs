@@ -1,5 +1,8 @@
 ﻿using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace VisualiseR.Util
 {
@@ -8,6 +11,7 @@ namespace VisualiseR.Util
     /// </summary>
     public static class UnityUtil
     {
+        private static readonly JCsLogger Logger = new JCsLogger(typeof(UnityUtil));
 
         /// <summary>
         /// Defensive <see cref="Component.GetComponent{T}"/>-Alternative.
@@ -24,7 +28,7 @@ namespace VisualiseR.Util
 
             if (component == null)
             {
-                Debug.LogError("Expected to find component of type " + typeof(T) + " but found none", obj);
+                Logger.ErrorFormat("Expected to find component of type {0} but found none: {1}", typeof(T), obj);
             }
 
             return component;
@@ -48,7 +52,7 @@ namespace VisualiseR.Util
             }
             else
             {
-                Debug.Log("Component " + typeof(T).ToString() + " not found on " + mono.name);
+                Logger.Error("Component " + typeof(T).ToString() + " not found on " + mono.name);
             }
         }
 
@@ -62,7 +66,7 @@ namespace VisualiseR.Util
             GameObject go = GameObject.Find(gameObjectName);
             if (go == null)
             {
-                Debug.LogErrorFormat("Cannot find '{0}' script", gameObjectName);
+                Logger.ErrorFormat("Cannot find '{0}' script", gameObjectName);
             }
             return go;
         }
@@ -73,9 +77,34 @@ namespace VisualiseR.Util
             GameObject go = GameObject.Find(gameObjectName);
             if (go == null)
             {
-                Debug.LogErrorFormat("Cannot find '{0}' script", gameObjectName);
+                Logger.ErrorFormat("Cannot find '{0}' script", gameObjectName);
             }
             return go;
+        }
+
+        public static void LoadScene(string sceneName)
+        {
+            int sceneIndex = SceneManager.GetSceneByName(sceneName).buildIndex;
+            if (sceneIndex < 0)
+            {
+                Logger.ErrorFormat("Cannot find '{0}' scene", sceneName);
+            }
+            SceneManager.LoadScene(sceneIndex);
+        }
+
+        public static void saveObjectInPlayerPrefs(object o, string saveString)
+        {
+            var m = new MemoryStream();
+            var b = new BinaryFormatter();
+            b.Serialize(m, o);
+            PlayerPrefs.SetString(saveString, Convert.ToBase64String(m.GetBuffer()));
+        }
+
+        public static object RetrieveObjectFromPlayerPrefs(string saveString)
+        {
+            var m = new MemoryStream(Convert.FromBase64String(PlayerPrefs.GetString(saveString)));
+            var b = new BinaryFormatter();
+            return b.Deserialize(m);
         }
     }
 }

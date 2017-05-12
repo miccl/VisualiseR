@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using WebSocketSharp;
+using System.Text;
 
 namespace VisualiseR.Common
 {
+    [Serializable]
     public class Medium : IMedium
     {
         public string Name { get; set; }
@@ -33,6 +34,13 @@ namespace VisualiseR.Common
 
         public override string ToString()
         {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("Medium[Name: {0}, Pictures: [", Name);
+            foreach (IPicture pic in Pictures)
+            {
+                sb.Append(pic.ToString() + ", ");
+            }
+            sb.Append("]");
             return string.Format("Name: {0}, Pictures: {1}", Name, Pictures);
         }
 
@@ -40,6 +48,5 @@ namespace VisualiseR.Common
         {
             return String.IsNullOrEmpty(Name) || Pictures.Count == 0;
         }
-
     }
 }
