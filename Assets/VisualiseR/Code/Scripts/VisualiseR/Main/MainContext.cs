@@ -95,8 +95,7 @@ namespace VisualiseR.Main
         {
             injectionBinder.Bind<MediumChangedSignal>().ToSingleton();
             injectionBinder.Bind<ErrorSignal>().ToSingleton();
-            injectionBinder.Bind<RoomChangedSignal>().ToSingleton().CrossContext();
-
+            injectionBinder.Bind<RoomChangedSignal>().ToSingleton();
         }
     }
 }
