@@ -82,12 +82,14 @@ namespace VisualiseR.Util
 
         public static void LoadScene(string sceneName)
         {
-            int sceneIndex = SceneManager.GetSceneByName(sceneName).buildIndex;
-            if (sceneIndex < 0)
+            try
             {
-                Logger.ErrorFormat("Cannot find '{0}' scene", sceneName);
+                SceneManager.LoadScene(sceneName);
             }
-            SceneManager.LoadScene(sceneIndex);
+            catch (Exception e)
+            {
+                Logger.ErrorFormat("Scene '{0}' could not be loaded", sceneName, e);
+            }
         }
     }
 }

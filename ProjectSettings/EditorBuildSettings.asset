@@ -9,5 +9,8 @@ EditorBuildSettings:
     path: Assets/VisualiseR/Scenes/Main.unity
     guid: 8c22ac960505c0c489efcf9c79d776f5
   - enabled: 1
-    path: Assets/VisualiseR/Scenes/Code_Review.unity
+    path: Assets/VisualiseR/Scenes/CodeReview.unity
+    guid: 8d9dfa82075053d4da7f09a151aca1a5
+  - enabled: 1
+    path: Assets/VisualiseR/Scenes/Presentation.unity
     guid: 00000000000000000000000000000000
