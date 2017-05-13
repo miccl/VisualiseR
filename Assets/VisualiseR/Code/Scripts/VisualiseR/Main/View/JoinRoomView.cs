@@ -7,10 +7,6 @@ namespace VisualiseR.Main
 {
     public class JoinRoomView : View
     {
-        private static readonly string CHOOSE_MEDIUM_TEXT = " Choose medium...";
-        private static readonly string SELECT_DISK_FILE = "Choose disk file";
-        private static readonly string SELECT_WEB_FILE = "Choose web file";
-
         internal InputField RoomNameInputField;
 
         private GameObject _mainMenuPanelView;

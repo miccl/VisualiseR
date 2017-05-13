@@ -1,6 +1,7 @@
 ﻿using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using UnityEngine;
+using UnityEngine.VR;
 using VisualiseR.Common;
 
 namespace VisualiseR.CodeReview
@@ -22,6 +23,7 @@ namespace VisualiseR.CodeReview
 
         public override void Execute()
         {
+            VRSettings.enabled = true;
             InitView();
         }
 
