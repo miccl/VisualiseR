@@ -1,6 +1,5 @@
 ﻿using System;
 using strange.extensions.command.impl;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 using VisualiseR.Util;
 
@@ -23,6 +22,8 @@ namespace VisualiseR.Common
         [Inject]
         public IRoom room { get; set; }
 
+        [Inject]
+        public IPlayer player { get; set; }
 
         [Inject]
         public ErrorSignal ErrorSignal { get; set; }
@@ -44,8 +45,7 @@ namespace VisualiseR.Common
                 //TODO
                 Logger.InfoFormat("Room {0} was created", room);
 
-
-                UnityUtil.saveObjectInPlayerPrefs(room, "room");
+                PlayerPrefsUtil.saveObject(PlayerPrefsUtil.ROOM_KEY, room);
                 SceneManager.LoadScene(1);
             }
         }
@@ -55,9 +55,16 @@ namespace VisualiseR.Common
             room.Name = _roomName;
             room.Type = _roomType;
             room.Medium = _medium;
-//            room.Players.Add(new Player {Name = "Kai", Type = PlayerType.Host});
-
+            AddPlayer();
             //TODO wie kreiere ich die Spieler ?!?!?!
+        }
+
+        private void AddPlayer()
+        {
+            var playerName = PlayerPrefsUtil.RetrieveValue(PlayerPrefsUtil.PLAYER_NAME_KEY);
+            player.Name = playerName;
+            player.Type = PlayerType.Host;
+            room.AddPlayer(player);
         }
 
         /// <summary>

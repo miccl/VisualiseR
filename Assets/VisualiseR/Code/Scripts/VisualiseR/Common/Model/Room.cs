@@ -14,6 +14,7 @@ namespace VisualiseR.Common
 
         public Room()
         {
+            Players = new List<IPlayer>();
             CreationDate = DateTime.Now;
         }
 

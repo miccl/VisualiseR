@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.IO;
+﻿using System.IO;
 using strange.extensions.mediation.impl;
 using UnityEngine;
 using VisualiseR.Common;
@@ -40,12 +39,11 @@ namespace VisualiseR.CodeReview
 
         private void InitView()
         {
-            object o = UnityUtil.RetrieveObjectFromPlayerPrefs("room");
+            object o = PlayerPrefsUtil.RetrieveObject(PlayerPrefsUtil.ROOM_KEY);
             if (o != null)
             {
                 Room room = (Room) o;
                 Medium = room.Medium;
-
             }
             else
             {

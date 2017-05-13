@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
@@ -18,7 +17,9 @@ namespace VisualiseR.Main
         private static readonly string SELECT_WEB_FILE = "Choose web file";
 
         public Signal SelectDiskFileButtonClickedSignal = new Signal();
-        public Signal<string, RoomType, IMedium> CreateRoomButtonClickedSignal = new Signal<string, RoomType, IMedium>();
+
+        public Signal<string, RoomType, IMedium> CreateRoomButtonClickedSignal =
+            new Signal<string, RoomType, IMedium>();
 
 
         internal Dropdown RoomTypeDropdown;
@@ -26,8 +27,8 @@ namespace VisualiseR.Main
         internal Dropdown ChooseMediumDropdown;
         internal IMedium ChoosenMedium;
 
-        private readonly List<string> roomTypes = Enum.GetNames(typeof(RoomType)).ToList();
-        private readonly List<string> chooseMediumTypes = new List<string> {SELECT_WEB_FILE, SELECT_DISK_FILE};
+        private readonly List<string> _roomTypes = CSharpUtil.EnumToList<RoomType>();
+        private readonly List<string> _chooseMediumTypes = new List<string> {SELECT_WEB_FILE, SELECT_DISK_FILE};
 
         private GameObject _mainMenuPanelView;
 
@@ -53,20 +54,20 @@ namespace VisualiseR.Main
         private void PopulateRoomTypeDropdown()
         {
             RoomTypeDropdown.ClearOptions();
-            RoomTypeDropdown.AddOptions(roomTypes);
+            RoomTypeDropdown.AddOptions(_roomTypes);
         }
 
         private void PopulateChooseMediumDropdown()
         {
             ChooseMediumDropdown.ClearOptions();
-            ChooseMediumDropdown.AddOptions(chooseMediumTypes);
+            ChooseMediumDropdown.AddOptions(_chooseMediumTypes);
             ChooseMediumDropdown.captionText.text = CHOOSE_MEDIUM_TEXT;
         }
 
         public void OnCreateRoomButtonClick()
         {
             CreateRoomButtonClickedSignal.Dispatch(RoomNameInputField.text,
-                roomTypes[RoomTypeDropdown.value].ToEnum<RoomType>(), ChoosenMedium);
+                _roomTypes[RoomTypeDropdown.value].ToEnum<RoomType>(), ChoosenMedium);
         }
 
         public void OnBackButtonClick()
@@ -78,11 +79,11 @@ namespace VisualiseR.Main
         //TODO vielleicht überlegen, das woanders hin zu verlagern..., denn die view soll ja möglichst ohne logik bleiben.
         public void OnChooseRoomIndexChange(int index)
         {
-            if (index == chooseMediumTypes.IndexOf(SELECT_DISK_FILE))
+            if (index == _chooseMediumTypes.IndexOf(SELECT_DISK_FILE))
             {
                 SelectDiskFileButtonClickedSignal.Dispatch();
             }
-            else if (index == chooseMediumTypes.IndexOf(SELECT_WEB_FILE))
+            else if (index == _chooseMediumTypes.IndexOf(SELECT_WEB_FILE))
             {
                 ChoosenMedium = null;
                 ChooseMediumDropdown.captionText.text = CHOOSE_MEDIUM_TEXT;

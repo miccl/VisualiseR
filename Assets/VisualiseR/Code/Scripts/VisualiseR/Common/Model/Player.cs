@@ -7,6 +7,7 @@ namespace VisualiseR.Common
     {
         public string Name { get; set; }
         public PlayerType Type { get; set; }
+        public AvatarType Avatar { get; set; }
         public DateTime JoinDate { get; private set; }
 
         public Player()

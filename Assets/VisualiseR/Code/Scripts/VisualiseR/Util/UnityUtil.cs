@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -90,21 +88,6 @@ namespace VisualiseR.Util
                 Logger.ErrorFormat("Cannot find '{0}' scene", sceneName);
             }
             SceneManager.LoadScene(sceneIndex);
-        }
-
-        public static void saveObjectInPlayerPrefs(object o, string saveString)
-        {
-            var m = new MemoryStream();
-            var b = new BinaryFormatter();
-            b.Serialize(m, o);
-            PlayerPrefs.SetString(saveString, Convert.ToBase64String(m.GetBuffer()));
-        }
-
-        public static object RetrieveObjectFromPlayerPrefs(string saveString)
-        {
-            var m = new MemoryStream(Convert.FromBase64String(PlayerPrefs.GetString(saveString)));
-            var b = new BinaryFormatter();
-            return b.Deserialize(m);
         }
     }
 }
