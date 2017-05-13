@@ -35,7 +35,7 @@ namespace VisualiseR.Common
             public void ValidDirectory()
             {
                 //given
-                string invalidDirectoryPath = "D:/VisualiseR_Test/FullDirectory";
+                string invalidDirectoryPath = "D:/Downloads/VisualiseR_Test/FullDirectory";
 
                 //when
 
@@ -52,7 +52,7 @@ namespace VisualiseR.Common
         public void EmptyDirectory()
         {
             //given
-            string directoryPath = "D:/VisualiseR_Test/EmptyDirectory";
+            string directoryPath = "D:/Downloads/VisualiseR_Test/EmptyDirectory";
 
             //when
 
@@ -64,7 +64,7 @@ namespace VisualiseR.Common
         public void FullDirectory()
         {
             //given
-            string directoryPath = "D:/VisualiseR_Test/FullDirectory";
+            string directoryPath = "D:/Downloads/VisualiseR_Test/FullDirectory";
 
             //when
 

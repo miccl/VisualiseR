@@ -22,10 +22,10 @@ GameObject:
   - component: {fileID: 33777174057054864}
   - component: {fileID: 64052095926183358}
   - component: {fileID: 23074769627011888}
-  - component: {fileID: 114073321881579028}
   - component: {fileID: 223641228401298218}
   - component: {fileID: 114855388833167918}
   - component: {fileID: 114636426029965236}
+  - component: {fileID: 114073321881579028}
   m_Layer: 0
   m_Name: CodeReview_Screen
   m_TagString: Untagged

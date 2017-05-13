@@ -1,5 +1,4 @@
 ﻿using strange.extensions.command.impl;
-using UnityEngine;
 using VisualiseR.Common;
 
 namespace VisualiseR.CodeReview
@@ -9,11 +8,9 @@ namespace VisualiseR.CodeReview
         [Inject]
         public Player _player { get; set; }
 
-//
         [Inject]
         public Medium _medium { get; set; }
 
-//
         [Inject]
         public int position { get; set; }
 
@@ -24,8 +21,11 @@ namespace VisualiseR.CodeReview
         {
             if (AcessList.NavigateCodeRight.Contains(_player.Type))
             {
-                position = (position + 1) % _medium.Pictures.Count;
-                _codePositionChangedSignal.Dispatch(position);
+                if (_medium.Pictures.Count > 0)
+                {
+                    position = (position + 1) % _medium.Pictures.Count;
+                    _codePositionChangedSignal.Dispatch(position);
+                }
             }
         }
     }

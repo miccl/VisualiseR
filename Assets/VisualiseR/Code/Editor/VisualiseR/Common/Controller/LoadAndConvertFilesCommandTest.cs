@@ -18,7 +18,7 @@ namespace VisualiseR.Common
         public void testWrongPath()
         {
             //given
-            var loadDiskCommand = new LoadDiskDataCommand {uri = "asdasd"};
+            var loadDiskCommand = new LoadFilesCommand {uri = "asdasd"};
 
             //when
             Assert.That(() => loadDiskCommand.Execute(),
@@ -31,7 +31,7 @@ namespace VisualiseR.Common
 //        public void testFilePath()
 //        {
 //            // given
-//            var loadDiskCommand = new LoadDiskDataCommand {_directoryPath = "D:/VisualiseR_Test/imgres.jpg"};
+//            var loadDiskCommand = new LoadFilesCommand {_directoryPath = "D:/VisualiseR_Test/imgres.jpg"};
 //
 //            //
 //
@@ -41,7 +41,7 @@ namespace VisualiseR.Common
 //        public void testEmptyFolderPath()
 //        {
 //            // given
-//            var loadDiskCommand = new LoadDiskDataCommand {_directoryPath = "D:/VisualiseR_Test/EmptyDirectory"};
+//            var loadDiskCommand = new LoadFilesCommand {_directoryPath = "D:/VisualiseR_Test/EmptyDirectory"};
 //
 //            //when
 //            loadDiskCommand.Execute();
@@ -53,7 +53,7 @@ namespace VisualiseR.Common
 //        public void testFullFolderPath()
 //        {
 //            // given
-//            var loadDiskCommand = new LoadDiskDataCommand {_directoryPath = "D:/VisualiseR_Test/FullDirectory"};
+//            var loadDiskCommand = new LoadFilesCommand {_directoryPath = "D:/VisualiseR_Test/FullDirectory"};
 //
 //            //when
 //            loadDiskCommand.Execute();

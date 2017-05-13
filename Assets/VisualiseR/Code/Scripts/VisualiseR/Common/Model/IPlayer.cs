@@ -7,5 +7,8 @@ namespace VisualiseR.Common
         string Name { get; set; }
         PlayerType Type { get; set; }
         DateTime JoinDate { get;}
+
+        bool IsEmpty();
+
     }
 }

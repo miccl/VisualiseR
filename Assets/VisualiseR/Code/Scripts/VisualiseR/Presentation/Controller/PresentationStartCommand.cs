@@ -11,7 +11,7 @@ namespace VisualiseR.Presentation
         private static readonly JCsLogger Logger = new JCsLogger(typeof(PresentationStartCommand));
 
         [Inject]
-        public LoadAndConvertFilesSignal _loadAndConvertFilesSignal { get; set; }
+        public LoadFilesSignal LoadFilesSignal { get; set; }
 
         [Inject]
         public SelectDiskFileSignal SelectDiskFileSignal { get; set; }
@@ -49,7 +49,7 @@ namespace VisualiseR.Presentation
 //            string path = "D:/VisualiseR_Test/FullDirectory";
 //            string path = "/storage/emulated/0/Pictures/aviary-sample";
 //            var url = "https://www.planwallpaper.com/static/images/desktop-year-of-the-tiger-images-wallpaper.jpg";
-//            _loadAndConvertFilesSignal.Dispatch(url);
+//            LoadFilesSignal.Dispatch(url);
         }
     }
 }

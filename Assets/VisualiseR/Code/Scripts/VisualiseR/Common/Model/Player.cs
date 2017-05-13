@@ -2,10 +2,12 @@
 
 namespace VisualiseR.Common
 {
+    [Serializable]
     public class Player : IPlayer
     {
         public string Name { get; set; }
         public PlayerType Type { get; set; }
+        public AvatarType Avatar { get; set; }
         public DateTime JoinDate { get; private set; }
 
         public Player()
@@ -16,6 +18,11 @@ namespace VisualiseR.Common
         public override string ToString()
         {
             return string.Format("Name: {0} (Type: {1}, JoinDate: {2})", Name, Type, JoinDate);
+        }
+
+        public bool IsEmpty()
+        {
+            return String.IsNullOrEmpty(Name) || String.IsNullOrEmpty(Type.ToString());
         }
     }
 }

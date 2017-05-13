@@ -153,7 +153,7 @@ namespace VisualiseR.Common
                 //given
                 const string jpgFile = "C:/directory/image.java";
                 const string fileExtension = "jpeg";
-                const string expectedFileName = "C:/directory/image.java";
+                const string expectedFileName = "C:\\directory\\image.jpeg";
                 //when
 
                 //then

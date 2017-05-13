@@ -4,7 +4,6 @@ using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using UnityEngine;
-using VisualiseR.CodeReview;
 using VisualiseR.Common;
 
 namespace VisualiseR.Main
@@ -64,16 +63,19 @@ namespace VisualiseR.Main
 
         private void BindMediators()
         {
+            mediationBinder.Bind<MainMenuView>().To<MainMenuMediator>();
             mediationBinder.Bind<CreateRoomView>().To<CreateRoomMediator>();
             mediationBinder.Bind<JoinRoomView>().To<JoinRoomMediator>();
             mediationBinder.Bind<SettingsView>().To<SettingsMediator>();
+
+            mediationBinder.Bind<SelectDiskFileView>().To<SelectDiskFileMediator>();
         }
 
         private void BindCommands()
         {
             if (this == firstContext)
             {
-                commandBinder.Bind<MainStartSignal>().To<MainStartCommand>().Once ();
+                commandBinder.Bind<MainStartSignal>().To<MainStartCommand>().Once();
             }
             else
             {
@@ -84,11 +86,16 @@ namespace VisualiseR.Main
             }
 
             commandBinder.Bind<SelectDiskFileSignal>().To<SelectDiskFileCommand>();
-
+            commandBinder.Bind<LoadFilesSignal>().To<LoadFilesCommand>();
+            commandBinder.Bind<CreateRoomSignal>().To<CreateRoomCommand>();
+            commandBinder.Bind<JoinRoomSignal>().To<JoinRoomSignal>();
         }
 
         private void BindSignals()
         {
+            injectionBinder.Bind<MediumChangedSignal>().ToSingleton();
+            injectionBinder.Bind<ErrorSignal>().ToSingleton();
+            injectionBinder.Bind<RoomChangedSignal>().ToSingleton();
         }
     }
 }

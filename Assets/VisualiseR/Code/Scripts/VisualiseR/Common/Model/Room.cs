@@ -3,15 +3,18 @@ using System.Collections.Generic;
 
 namespace VisualiseR.Common
 {
+    [Serializable]
     public class Room : IRoom
     {
         public string Name { get; set; }
         public RoomType Type { get; set; }
+        public IMedium Medium { get; set; }
         public List<IPlayer> Players { get; set; }
         public DateTime CreationDate { get; private set; }
 
         public Room()
         {
+            Players = new List<IPlayer>();
             CreationDate = DateTime.Now;
         }
 
@@ -29,6 +32,11 @@ namespace VisualiseR.Common
         {
             return string.Format("Name: {0}, Type: {1}, Players: {2}, CreationDate: {3}", Name, Type, Players,
                 CreationDate);
+        }
+
+        public bool IsEmpty()
+        {
+            return String.IsNullOrEmpty(Name) || String.IsNullOrEmpty(Type.ToString()) || Players.Count == 0;
         }
     }
 }

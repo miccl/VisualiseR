@@ -1,6 +1,8 @@
-﻿using strange.extensions.mediation.impl;
+﻿using System.IO;
+using strange.extensions.mediation.impl;
 using UnityEngine;
 using VisualiseR.Common;
+using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
@@ -13,9 +15,6 @@ namespace VisualiseR.CodeReview
         public MediumChangedSignal mediumChangedSignal { get; set; }
 
         [Inject]
-        public LoadAndConvertFilesSignal LoadAndConvertFilesSignal { get; set; }
-
-        [Inject]
         public CodePositionChangedSignal _CodePositionChangedSignal { get; set; }
 
         [Inject]
@@ -24,6 +23,9 @@ namespace VisualiseR.CodeReview
         [Inject]
         public PrevCodeSignal prevCodeSignal { get; set; }
 
+        [Inject]
+        public IMedium Medium { get; set; }
+
 
         public override void OnRegister()
         {
@@ -31,8 +33,25 @@ namespace VisualiseR.CodeReview
             _CodePositionChangedSignal.AddListener(OnCodePositionChanged);
             _view.NextCodeSignal.AddListener(OnNextCodeSignal);
             _view.PrevCodeSignal.AddListener(OnPrevCodeSignal);
+
+            InitView();
         }
 
+        private void InitView()
+        {
+            object o = PlayerPrefsUtil.RetrieveObject(PlayerPrefsUtil.ROOM_KEY);
+            if (o != null)
+            {
+                Room room = (Room) o;
+                Medium = room.Medium;
+            }
+            else
+            {
+                Medium = CreateMockMedium();
+            }
+
+            OnMediumChanged((Medium) Medium);
+        }
 
         public override void OnRemove()
         {
@@ -60,8 +79,31 @@ namespace VisualiseR.CodeReview
 
         private void OnCodePositionChanged(int pos)
         {
+            Debug.Log("AHUUU");
             _view._currPicturePos = pos;
             _view.LoadPictureIntoTexture(pos);
+        }
+
+        private IMedium CreateMockMedium()
+        {
+            IMedium medium = new Medium
+            {
+                Name = "test"
+            };
+
+            for (int i = 0; i < 3; i++)
+            {
+                var pic = "pic" + i;
+                Texture2D tex = Resources.Load<Texture2D>(pic);
+                string filePath = Application.persistentDataPath + pic + ".png";
+                File.WriteAllBytes(filePath, tex.EncodeToPNG());
+                medium.AddPicture(new Picture
+                {
+                    Title = pic,
+                    Path = filePath
+                });
+            }
+            return medium;
         }
     }
 }

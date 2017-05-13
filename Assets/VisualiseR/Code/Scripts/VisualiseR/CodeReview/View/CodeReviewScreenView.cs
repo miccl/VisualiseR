@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.IO;
 using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
@@ -12,7 +11,7 @@ namespace VisualiseR.CodeReview
     {
         private const string FILE_PREFIX = "file:///";
 
-        public IMedium _medium;
+        internal IMedium _medium;
         public IPlayer _player;
 
         internal int _currPicturePos;
@@ -31,40 +30,17 @@ namespace VisualiseR.CodeReview
                 Name = "Test",
                 Type = PlayerType.Host
             };
-            SetupMedium();
         }
 
         internal void SetupMedium()
         {
-            if (_medium == null)
+            if (_medium != null && !_medium.IsEmpty())
             {
-                _medium = CreateMockMedium();
+                _currPicturePos = 0;
+                LoadPictureIntoTexture(_currPicturePos);
             }
-            _currPicturePos = 0;
-            LoadPictureIntoTexture(_currPicturePos);
         }
 
-        private IMedium CreateMockMedium()
-        {
-            IMedium medium = new Medium
-            {
-                Name = "test"
-            };
-
-            for (int i = 0; i < 3; i++)
-            {
-                var pic = "pic" + i;
-                Texture2D tex = Resources.Load<Texture2D>(pic);
-                string filePath = Application.persistentDataPath + pic + ".png";
-                File.WriteAllBytes(filePath, tex.EncodeToPNG());
-                medium.AddPicture(new Picture
-                {
-                    Title = pic,
-                    Path = filePath
-                });
-            }
-            return medium;
-        }
 
         private void NextPicture()
         {
@@ -79,7 +55,14 @@ namespace VisualiseR.CodeReview
         internal void LoadPictureIntoTexture(int picturePos)
         {
             IPicture currPicture = _medium.GetPicture(picturePos);
-            StartCoroutine(LoadImageIntoTexture(currPicture.Path));
+            if (currPicture != null)
+            {
+                StartCoroutine(LoadImageIntoTexture(currPicture.Path));
+            }
+            else
+            {
+                Debug.LogError("No Picture to load");
+            }
         }
 
         IEnumerator LoadImageIntoTexture(string path)
@@ -121,11 +104,11 @@ namespace VisualiseR.CodeReview
                 float distance = Vector3.Distance(_gvrReticlePointer.transform.position, transform.position);
                 transform.position = ray.GetPoint(distance);
 
-// Fix rotation
+                // Fix rotation
                 transform.rotation = Quaternion.LookRotation(-Camera.main.transform.forward);
                 transform.Rotate(-270, 180, 180);
 
-//TODO Screen soll immer über dem Boden schweben, wenn per DD dies drunter soll es drüber gezogen werden.
+                //TODO Screen soll immer über dem Boden schweben, wenn per DD dies drunter soll es drüber gezogen werden.
             }
         }
 

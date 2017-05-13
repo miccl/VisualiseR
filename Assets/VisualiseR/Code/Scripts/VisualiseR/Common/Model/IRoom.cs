@@ -7,12 +7,14 @@ namespace VisualiseR.Common
     {
         string Name { get; set; }
         RoomType Type { get; set; }
+        IMedium Medium { get; set; }
         List<IPlayer> Players { get; set; }
-        DateTime CreationDate { get;}
+        DateTime CreationDate { get; }
 
         void AddPlayer(IPlayer player);
 
         void RemovePlayer(IPlayer player);
 
+        bool IsEmpty();
     }
 }

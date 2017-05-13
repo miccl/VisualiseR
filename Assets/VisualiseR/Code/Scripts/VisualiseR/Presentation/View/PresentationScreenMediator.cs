@@ -12,7 +12,7 @@ namespace VisualiseR.Presentation
         public MediumChangedSignal mediumChangedSignal { get; set; }
 
         [Inject]
-        public LoadAndConvertFilesSignal LoadAndConvertFilesSignal { get; set; }
+        public LoadFilesSignal LoadFilesSignal { get; set; }
 
 
         public override void OnRegister()

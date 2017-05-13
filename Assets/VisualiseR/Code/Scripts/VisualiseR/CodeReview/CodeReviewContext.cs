@@ -70,7 +70,6 @@ namespace VisualiseR.CodeReview
         private void BindMediators()
         {
             mediationBinder.Bind<CodeReviewScreenView>().To<CodeReviewScreenMediator>();
-            mediationBinder.Bind<SelectDiskFileView>().To<SelectDiskFileMediator>();
         }
 
         private void BindCommands()
@@ -82,14 +81,11 @@ namespace VisualiseR.CodeReview
             else
             {
                 commandBinder.Bind<CodeReviewStartSignal>()
-//                    .To<KillAudioListenerCommand>()
                     .To<CodeReviewStartCommand>()
                     .Once()
                     .InSequence();
             }
 
-            commandBinder.Bind<LoadAndConvertFilesSignal>().To<LoadDiskDataCommand>();
-            commandBinder.Bind<SelectDiskFileSignal>().To<SelectDiskFileCommand>();
             commandBinder.Bind<NextCodeSignal>().To<NextCodeCommand>();
             commandBinder.Bind<PrevCodeSignal>().To<PrevCodeCommand>();
 

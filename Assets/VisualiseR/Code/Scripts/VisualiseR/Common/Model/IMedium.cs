@@ -12,5 +12,7 @@ namespace VisualiseR.Common
         void RemovePicture(IPicture picture);
 
         IPicture GetPicture(int pos);
+
+        bool IsEmpty();
     }
 }

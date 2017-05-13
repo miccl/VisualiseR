@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace VisualiseR.Util
 {
@@ -8,6 +9,7 @@ namespace VisualiseR.Util
     /// </summary>
     public static class UnityUtil
     {
+        private static readonly JCsLogger Logger = new JCsLogger(typeof(UnityUtil));
 
         /// <summary>
         /// Defensive <see cref="Component.GetComponent{T}"/>-Alternative.
@@ -24,7 +26,7 @@ namespace VisualiseR.Util
 
             if (component == null)
             {
-                Debug.LogError("Expected to find component of type " + typeof(T) + " but found none", obj);
+                Logger.ErrorFormat("Expected to find component of type {0} but found none: {1}", typeof(T), obj);
             }
 
             return component;
@@ -48,7 +50,45 @@ namespace VisualiseR.Util
             }
             else
             {
-                Debug.Log("Component " + typeof(T).ToString() + " not found on " + mono.name);
+                Logger.Error("Component " + typeof(T).ToString() + " not found on " + mono.name);
+            }
+        }
+
+        /// <summary>
+        /// Defensive <see cref="GameObject.Find"/> alternative.
+        /// Checks if the retrieved game object is null.
+        /// </summary>
+        /// <param name="gameObjectName"></param>
+        public static GameObject FindGameObject(string gameObjectName)
+        {
+            GameObject go = GameObject.Find(gameObjectName);
+            if (go == null)
+            {
+                Logger.ErrorFormat("Cannot find '{0}' script", gameObjectName);
+            }
+            return go;
+        }
+
+        //TODO vielleicht kann man hier was sichereres machen
+        public static GameObject FindGameObjectInChild(string gameObjectName)
+        {
+            GameObject go = GameObject.Find(gameObjectName);
+            if (go == null)
+            {
+                Logger.ErrorFormat("Cannot find '{0}' script", gameObjectName);
+            }
+            return go;
+        }
+
+        public static void LoadScene(string sceneName)
+        {
+            try
+            {
+                SceneManager.LoadScene(sceneName);
+            }
+            catch (Exception e)
+            {
+                Logger.ErrorFormat("Scene '{0}' could not be loaded", sceneName, e);
             }
         }
     }

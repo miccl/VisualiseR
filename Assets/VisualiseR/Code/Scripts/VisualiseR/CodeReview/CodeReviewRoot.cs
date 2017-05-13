@@ -1,17 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using strange.extensions.context.impl;
-using UnityEngine;
+﻿using strange.extensions.context.impl;
 
 namespace VisualiseR.CodeReview
 {
-
     public class CodeReviewRoot : ContextView
     {
         void Awake()
         {
             context = new CodeReviewContext(this);
         }
-
     }
 }

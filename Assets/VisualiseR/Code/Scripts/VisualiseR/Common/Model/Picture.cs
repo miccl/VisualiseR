@@ -1,9 +1,8 @@
 using System;
-using System.IO;
-using JetBrains.Annotations;
 
 namespace VisualiseR.Common
 {
+    [Serializable]
     public class Picture : IPicture
     {
         public string Title { get; set; }
@@ -11,7 +10,16 @@ namespace VisualiseR.Common
 
         public Picture()
         {
+        }
 
+        public bool IsEmpty()
+        {
+            return String.IsNullOrEmpty(Title) || String.IsNullOrEmpty(Path);
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Picture [Title: {0}, Path: {1}]", Title, Path);
         }
     }
 }
