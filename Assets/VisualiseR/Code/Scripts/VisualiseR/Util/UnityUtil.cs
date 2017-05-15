@@ -1,5 +1,7 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 namespace VisualiseR.Util
@@ -90,6 +92,24 @@ namespace VisualiseR.Util
             {
                 Logger.ErrorFormat("Scene '{0}' could not be loaded", sceneName, e);
             }
+        }
+
+        /// <summary>
+        /// Sets up a event trigger programmatically.
+        /// </summary>
+        /// <see href="http://answers.unity3d.com/questions/854251/how-do-you-add-an-ui-eventtrigger-by-script.html">Source</see>
+        /// <param name="trigger"></param>
+        /// <param name="eventType"></param>
+        /// <param name="callback"></param>
+        public static void AddEventTriggerListener(EventTrigger trigger,
+            EventTriggerType eventType,
+            Action<BaseEventData> callback)
+        {
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = eventType;
+            entry.callback = new EventTrigger.TriggerEvent();
+            entry.callback.AddListener(new UnityAction<BaseEventData>(callback));
+            trigger.triggers.Add(entry);
         }
     }
 }

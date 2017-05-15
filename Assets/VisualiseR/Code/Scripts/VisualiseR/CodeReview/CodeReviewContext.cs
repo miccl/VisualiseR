@@ -71,6 +71,7 @@ namespace VisualiseR.CodeReview
         private void BindMediators()
         {
             mediationBinder.Bind<CodeReviewScreenView>().To<CodeReviewScreenMediator>();
+            mediationBinder.Bind<ContextMenuView>().To<ContextMenuMediator>();
         }
 
         private void BindCommands()
@@ -89,6 +90,9 @@ namespace VisualiseR.CodeReview
 
             commandBinder.Bind<NextCodeSignal>().To<NextCodeCommand>();
             commandBinder.Bind<PrevCodeSignal>().To<PrevCodeCommand>();
+            commandBinder.Bind<SelectedCodeRatingSignal>().To<SelectedCodeRatingCommand>();
+            commandBinder.Bind<SaveCommentSignal>().To<SaveCommentCommand>();
+            commandBinder.Bind<RemoveCodeSignal>().To<RemoveCodeCommand>();
 
         }
 
@@ -96,6 +100,7 @@ namespace VisualiseR.CodeReview
         {
             injectionBinder.Bind<ScoreChangedSignal>().ToSingleton();
             injectionBinder.Bind<CodePositionChangedSignal>().ToSingleton();
+            injectionBinder.Bind<ContextMenuCanceledSignal>().ToSingleton();
         }
     }
 }

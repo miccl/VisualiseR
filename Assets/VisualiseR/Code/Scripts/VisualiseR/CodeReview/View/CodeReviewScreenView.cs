@@ -2,6 +2,7 @@
 using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
+using UnityEngine.UI;
 using VisualiseR.Common;
 using VisualiseR.Util;
 
@@ -20,16 +21,30 @@ namespace VisualiseR.CodeReview
         public Signal<IPlayer, ICodeMedium, int> PrevCodeSignal = new Signal<IPlayer, ICodeMedium, int>();
         private bool _isHeld;
         private GameObject _gvrReticlePointer;
+        [SerializeField] private GameObject infoBubble;
+        private Text _infoText;
+        private Button infoBUtton;
+        private GvrPointerGraphicRaycaster pointerScript;
+        internal GameObject contextMenu;
+
+        internal bool IsContextMenuShown;
+
 
         protected override void Awake()
         {
             _isHeld = false;
             _gvrReticlePointer = GameObject.Find("GvrReticlePointer");
+
             _player = new Player
             {
                 Name = "Test",
                 Type = PlayerType.Host
             };
+            _infoText = infoBubble.GetComponentInChildren<Text>();
+            infoBUtton = infoBubble.GetComponentInChildren<Button>();
+            pointerScript = GetComponent<GvrPointerGraphicRaycaster>();
+
+
         }
 
         internal void SetupMedium()
@@ -83,32 +98,36 @@ namespace VisualiseR.CodeReview
 
         private void HandleInputs()
         {
-            if (!_isHeld)
-            {
+//            if (!_isHeld)
+//            {
                 if (Input.GetButtonDown("Fire1"))
                 {
-                    NextPicture();
+//                    NextPicture();
+
+                    ShowContextMenu();
                 }
                 if (Input.GetButtonDown("Fire2"))
                 {
-                    PrevPicture();
+                    _infoText.text = "CLICKED";
+//                    infoBubble.SetActive(true);
+
                 }
-            }
+//            }
         }
 
         private void HandleDragAndDrop()
         {
             if (_isHeld)
             {
-                Ray ray = new Ray(_gvrReticlePointer.transform.position, _gvrReticlePointer.transform.forward);
-                float distance = Vector3.Distance(_gvrReticlePointer.transform.position, transform.position);
-                transform.position = ray.GetPoint(distance);
-
-                // Fix rotation
-                transform.rotation = Quaternion.LookRotation(-Camera.main.transform.forward);
-                transform.Rotate(-270, 180, 180);
-
-                //TODO Screen soll immer über dem Boden schweben, wenn per DD dies drunter soll es drüber gezogen werden.
+//                Ray ray = new Ray(_gvrReticlePointer.transform.position, _gvrReticlePointer.transform.forward);
+//                float distance = Vector3.Distance(_gvrReticlePointer.transform.position, transform.position);
+//                transform.position = ray.GetPoint(distance);
+//
+//                // Fix rotation
+//                transform.rotation = Quaternion.LookRotation(-Camera.main.transform.forward);
+//                transform.Rotate(-270, 180, 180);
+//
+//                //TODO Screen soll immer über dem Boden schweben, wenn per DD dies drunter soll es drüber gezogen werden.
             }
         }
 
@@ -121,6 +140,36 @@ namespace VisualiseR.CodeReview
         {
             _isHeld = false;
 //            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        }
+
+
+        public void ShowContextMenu()
+        {
+            if (!IsContextMenuShown)
+            {
+                Vector3 shift = -Camera.main.transform.forward * 10;
+
+                contextMenu = Instantiate(Resources.Load("ContextMenuCanvas"), transform.position + shift, transform.rotation) as GameObject;
+                contextMenu.transform.Rotate(90, -180, 0);
+
+                contextMenu.transform.SetParent(transform.parent);
+                IsContextMenuShown = true;
+            }
+        }
+
+        public void OnCancelButtonClick()
+        {
+            Debug.Log("Cancel");
+        }
+
+        public void OnRateButtonClick()
+        {
+            Debug.Log("Rate");
+        }
+
+        public void OnEditButtonClick()
+        {
+            Debug.Log("Edit");
         }
     }
 }

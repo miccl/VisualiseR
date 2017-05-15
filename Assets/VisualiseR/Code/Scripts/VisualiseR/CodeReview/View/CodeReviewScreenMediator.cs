@@ -11,7 +11,6 @@ namespace VisualiseR.CodeReview
         [Inject]
         public CodeReviewScreenView _view { get; set; }
 
-
         [Inject]
         public CodePositionChangedSignal _CodePositionChangedSignal { get; set; }
 
@@ -20,6 +19,9 @@ namespace VisualiseR.CodeReview
 
         [Inject]
         public PrevCodeSignal prevCodeSignal { get; set; }
+
+        [Inject]
+        public ContextMenuCanceledSignal ContextMenuCanceledSignal { get; set; }
 
         [Inject]
         public IPictureMedium PictureMedium { get; set; }
@@ -31,10 +33,19 @@ namespace VisualiseR.CodeReview
         public override void OnRegister()
         {
             _CodePositionChangedSignal.AddListener(OnCodePositionChanged);
+            ContextMenuCanceledSignal.AddListener(OnContextMenuCanceled);
             _view.NextCodeSignal.AddListener(OnNextCodeSignal);
             _view.PrevCodeSignal.AddListener(OnPrevCodeSignal);
 
             InitView();
+        }
+
+        public override void OnRemove()
+        {
+            _CodePositionChangedSignal.RemoveListener(OnCodePositionChanged);
+            ContextMenuCanceledSignal.RemoveListener(OnContextMenuCanceled);
+            _view.NextCodeSignal.RemoveListener(OnNextCodeSignal);
+            _view.NextCodeSignal.RemoveListener(OnPrevCodeSignal);
         }
 
         private void InitView()
@@ -66,13 +77,6 @@ namespace VisualiseR.CodeReview
             }
         }
 
-        public override void OnRemove()
-        {
-            _CodePositionChangedSignal.RemoveListener(OnCodePositionChanged);
-            _view.NextCodeSignal.RemoveListener(OnNextCodeSignal);
-            _view.NextCodeSignal.RemoveListener(OnPrevCodeSignal);
-        }
-
         public void OnMediumChanged(CodeMedium medium)
         {
             _view._medium = medium;
@@ -93,6 +97,11 @@ namespace VisualiseR.CodeReview
         {
             _view._currPicturePos = pos;
             _view.LoadPictureIntoTexture(pos);
+        }
+
+        private void OnContextMenuCanceled()
+        {
+            _view.IsContextMenuShown = false;
         }
 
         private ICodeMedium CreateMockMedium()

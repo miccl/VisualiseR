@@ -30,9 +30,9 @@ namespace VisualiseR.CodeReview
 
         private void InitStand()
         {
-            GameObject go = GameObject.Instantiate(Resources.Load("CodeReview_Screen") as GameObject);
-            go.name = "Screen";
-            go.transform.parent = contextView.transform;
+//            GameObject go = GameObject.Instantiate(Resources.Load("CodeReview_Screen") as GameObject);
+//            go.name = "Screen";
+//            go.transform.SetParent(contextView.transform);
         }
     }
 }
