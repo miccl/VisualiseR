@@ -5,7 +5,7 @@ namespace VisualiseR.CodeReview
     public interface ICode
     {
         string Name { get; set; }
-        Picture Pic { get; set; }
+        IPicture Pic { get; set; }
         Rate Rate { get; set; }
         string Comment { get; set; }
 

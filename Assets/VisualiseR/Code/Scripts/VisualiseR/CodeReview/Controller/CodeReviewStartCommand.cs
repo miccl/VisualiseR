@@ -2,7 +2,6 @@
 using strange.extensions.context.api;
 using UnityEngine;
 using UnityEngine.VR;
-using VisualiseR.Common;
 
 namespace VisualiseR.CodeReview
 {
@@ -11,11 +10,7 @@ namespace VisualiseR.CodeReview
         private static readonly JCsLogger Logger = new JCsLogger(typeof(CodeReviewStartCommand));
 
         [Inject]
-        public MediumChangedSignal MediumChangedSignal { get; set; }
-
-        [Inject]
         public CodePositionChangedSignal CodePositionChangedSignal { get; set; }
-
 
         [Inject(ContextKeys.CONTEXT_VIEW)]
         public GameObject contextView { get; set; }

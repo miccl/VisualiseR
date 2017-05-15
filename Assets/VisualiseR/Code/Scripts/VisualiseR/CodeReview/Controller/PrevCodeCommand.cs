@@ -9,7 +9,7 @@ namespace VisualiseR.CodeReview
         public Player _player { get; set; }
 
         [Inject]
-        public PictureMedium _medium { get; set; }
+        public CodeMedium _medium { get; set; }
 
         [Inject]
         public int position { get; set; }
@@ -25,7 +25,7 @@ namespace VisualiseR.CodeReview
                 position = position - 1;
                 if (position == -1)
                 {
-                    position = _medium.Pictures.Count - 1;
+                    position = _medium.CodeFragments.Count - 1;
                 }
                 _codePositionChangedSignal.Dispatch(position);
             }

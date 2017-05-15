@@ -57,6 +57,7 @@ namespace VisualiseR.CodeReview
         private void BindModels()
         {
             injectionBinder.Bind<IPictureMedium>().To<PictureMedium>().ToSingleton();
+            injectionBinder.Bind<ICodeMedium>().To<CodeMedium>().ToSingleton();
             injectionBinder.Bind<IPicture>().To<Picture>().ToSingleton();
             injectionBinder.Bind<IPlayer>().To<Player>().ToSingleton();
             injectionBinder.Bind<IRoom>().To<Room>().ToSingleton();
@@ -94,7 +95,6 @@ namespace VisualiseR.CodeReview
         private void BindSignals()
         {
             injectionBinder.Bind<ScoreChangedSignal>().ToSingleton();
-            injectionBinder.Bind<MediumChangedSignal>().ToSingleton();
             injectionBinder.Bind<CodePositionChangedSignal>().ToSingleton();
         }
     }

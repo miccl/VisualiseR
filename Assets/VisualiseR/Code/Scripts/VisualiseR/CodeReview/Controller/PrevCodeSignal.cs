@@ -3,7 +3,7 @@ using VisualiseR.Common;
 
 namespace VisualiseR.CodeReview
 {
-    public class PrevCodeSignal : Signal<Player, PictureMedium, int>
+    public class PrevCodeSignal : Signal<Player, CodeMedium, int>
     {
 
     }

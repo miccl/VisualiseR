@@ -11,13 +11,13 @@ namespace VisualiseR.CodeReview
     {
         private const string FILE_PREFIX = "file:///";
 
-        internal IPictureMedium _medium;
+        internal ICodeMedium _medium;
         public IPlayer _player;
 
         internal int _currPicturePos;
 
-        public Signal<IPlayer, IPictureMedium, int> NextCodeSignal = new Signal<IPlayer, IPictureMedium, int>();
-        public Signal<IPlayer, IPictureMedium, int> PrevCodeSignal = new Signal<IPlayer, IPictureMedium, int>();
+        public Signal<IPlayer, ICodeMedium, int> NextCodeSignal = new Signal<IPlayer, ICodeMedium, int>();
+        public Signal<IPlayer, ICodeMedium, int> PrevCodeSignal = new Signal<IPlayer, ICodeMedium, int>();
         private bool _isHeld;
         private GameObject _gvrReticlePointer;
 
@@ -54,7 +54,7 @@ namespace VisualiseR.CodeReview
 
         internal void LoadPictureIntoTexture(int picturePos)
         {
-            IPicture currPicture = _medium.GetPicture(picturePos);
+            IPicture currPicture = _medium.GetCodeFragment(picturePos).Pic;
             if (currPicture != null)
             {
                 StartCoroutine(LoadImageIntoTexture(currPicture.Path));
