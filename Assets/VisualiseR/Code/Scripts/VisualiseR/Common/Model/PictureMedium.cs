@@ -41,7 +41,7 @@ namespace VisualiseR.Common
                 sb.Append(pic.ToString() + ", ");
             }
             sb.Append("]");
-            return string.Format("Name: {0}, Pictures: {1}", Name, Pictures);
+            return sb.ToString();
         }
 
         public bool IsEmpty()
