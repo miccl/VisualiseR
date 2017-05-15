@@ -9,7 +9,7 @@ namespace VisualiseR.CodeReview
         public Player _player { get; set; }
 
         [Inject]
-        public Medium _medium { get; set; }
+        public PictureMedium _medium { get; set; }
 
         [Inject]
         public int position { get; set; }

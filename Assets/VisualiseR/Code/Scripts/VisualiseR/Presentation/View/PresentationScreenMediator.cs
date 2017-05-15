@@ -26,9 +26,9 @@ namespace VisualiseR.Presentation
             mediumChangedSignal.RemoveListener(OnMediumChanged);
         }
 
-        public void OnMediumChanged(Medium medium)
+        public void OnMediumChanged(PictureMedium pictureMedium)
         {
-            view._medium = medium;
+            view._medium = pictureMedium;
             view.SetupMedium();
         }
     }

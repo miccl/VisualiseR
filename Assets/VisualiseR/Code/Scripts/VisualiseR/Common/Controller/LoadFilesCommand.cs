@@ -28,7 +28,7 @@ namespace VisualiseR.Common
             LoadFiles(filePaths);
             var  medium = ConstructMedium(Path.GetFileNameWithoutExtension(uri), filePaths);
 
-            _MediumChangedSignal.Dispatch((Medium) medium);
+            _MediumChangedSignal.Dispatch((PictureMedium) medium);
         }
 
         private void LoadFiles(List<string> filePaths)
@@ -102,9 +102,9 @@ namespace VisualiseR.Common
             return strategy.Convert(filePath);
         }
 
-        private IMedium ConstructMedium(string name, List<string> filePaths)
+        private IPictureMedium ConstructMedium(string name, List<string> filePaths)
         {
-            IMedium medium = new Medium {
+            IPictureMedium medium = new PictureMedium {
                 Name = Path.GetFileNameWithoutExtension(name)
             };
             foreach (var filePath in filePaths)

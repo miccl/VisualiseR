@@ -24,7 +24,7 @@ namespace VisualiseR.CodeReview
         public PrevCodeSignal prevCodeSignal { get; set; }
 
         [Inject]
-        public IMedium Medium { get; set; }
+        public IPictureMedium Medium { get; set; }
 
 
         public override void OnRegister()
@@ -50,7 +50,7 @@ namespace VisualiseR.CodeReview
                 Medium = CreateMockMedium();
             }
 
-            OnMediumChanged((Medium) Medium);
+            OnMediumChanged((PictureMedium) Medium);
         }
 
         public override void OnRemove()
@@ -61,20 +61,20 @@ namespace VisualiseR.CodeReview
             _view.NextCodeSignal.RemoveListener(OnPrevCodeSignal);
         }
 
-        public void OnMediumChanged(Medium medium)
+        public void OnMediumChanged(PictureMedium pictureMedium)
         {
-            _view._medium = medium;
+            _view._medium = pictureMedium;
             _view.SetupMedium();
         }
 
-        private void OnNextCodeSignal(IPlayer player, IMedium medium, int pos)
+        private void OnNextCodeSignal(IPlayer player, IPictureMedium medium, int pos)
         {
-            nextCodeSignal.Dispatch((Player) player, (Medium) medium, pos);
+            nextCodeSignal.Dispatch((Player) player, (PictureMedium) medium, pos);
         }
 
-        private void OnPrevCodeSignal(IPlayer player, IMedium medium, int pos)
+        private void OnPrevCodeSignal(IPlayer player, IPictureMedium medium, int pos)
         {
-            prevCodeSignal.Dispatch((Player) player, (Medium) medium, pos);
+            prevCodeSignal.Dispatch((Player) player, (PictureMedium) medium, pos);
         }
 
         private void OnCodePositionChanged(int pos)
@@ -84,9 +84,9 @@ namespace VisualiseR.CodeReview
             _view.LoadPictureIntoTexture(pos);
         }
 
-        private IMedium CreateMockMedium()
+        private IPictureMedium CreateMockMedium()
         {
-            IMedium medium = new Medium
+            IPictureMedium medium = new PictureMedium
             {
                 Name = "test"
             };

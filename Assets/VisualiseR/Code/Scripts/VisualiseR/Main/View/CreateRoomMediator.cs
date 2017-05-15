@@ -22,7 +22,7 @@ namespace VisualiseR.Main
         public CreateRoomSignal CreateRoomSignal { get; set; }
 
         [Inject]
-        public IMedium Medium { get; set; }
+        public IPictureMedium Medium { get; set; }
 
         public override void OnRegister()
         {
@@ -46,9 +46,9 @@ namespace VisualiseR.Main
             ErrorSignal.RemoveListener(OnError);
         }
 
-        private void OnCreateRoomButtonClick(string roomName, RoomType roomType, IMedium medium)
+        private void OnCreateRoomButtonClick(string roomName, RoomType roomType, IPictureMedium medium)
         {
-            CreateRoomSignal.Dispatch(roomName, roomType, (Medium) medium);
+            CreateRoomSignal.Dispatch(roomName, roomType, (PictureMedium) medium);
         }
 
         private void OnSelectDiskFileButtonClicked()
@@ -56,11 +56,11 @@ namespace VisualiseR.Main
             SelectDiskFileSignal.Dispatch();
         }
 
-        private void OnMediumChanged(Medium medium)
+        private void OnMediumChanged(PictureMedium pictureMedium)
         {
             //TODO davor könnte beispielsweise eine Laderad kommen, bis dieser Aufruf getätigt wird
-            _view.ChoosenMedium = medium;
-            _view.ChooseMediumDropdown.captionText.text = medium.Name;
+            _view.ChoosenMedium = pictureMedium;
+            _view.ChooseMediumDropdown.captionText.text = pictureMedium.Name;
         }
     }
 }

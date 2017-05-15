@@ -10,7 +10,7 @@ namespace VisualiseR.Presentation
     {
         private const string FILE_PREFIX = "file:///";
 
-        internal IMedium _medium { get; set; }
+        internal IPictureMedium _medium { get; set; }
 
         private IPicture _currPicture;
         private int _currPicturePos;
@@ -34,9 +34,9 @@ namespace VisualiseR.Presentation
         }
 
         //TODO vielleicht auslagern in einen Command
-        private IMedium CreateMockMedium()
+        private IPictureMedium CreateMockMedium()
         {
-            IMedium medium = new Medium
+            IPictureMedium medium = new PictureMedium
             {
                 Name = "Test"
             };

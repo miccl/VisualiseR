@@ -12,20 +12,20 @@ namespace VisualiseR.Main
 {
     public class CreateRoomView : View
     {
-        private static readonly string CHOOSE_MEDIUM_TEXT = " Choose medium...";
+        private static readonly string CHOOSE_MEDIUM_TEXT = " Choose pictureMedium...";
         private static readonly string SELECT_DISK_FILE = "Choose disk file";
         private static readonly string SELECT_WEB_FILE = "Choose web file";
 
         public Signal SelectDiskFileButtonClickedSignal = new Signal();
 
-        public Signal<string, RoomType, IMedium> CreateRoomButtonClickedSignal =
-            new Signal<string, RoomType, IMedium>();
+        public Signal<string, RoomType, IPictureMedium> CreateRoomButtonClickedSignal =
+            new Signal<string, RoomType, IPictureMedium>();
 
 
         internal Dropdown RoomTypeDropdown;
         internal InputField RoomNameInputField;
         internal Dropdown ChooseMediumDropdown;
-        internal IMedium ChoosenMedium;
+        internal IPictureMedium ChoosenMedium;
 
         private readonly List<string> _roomTypes = CSharpUtil.EnumToList<RoomType>();
         private readonly List<string> _chooseMediumTypes = new List<string> {SELECT_WEB_FILE, SELECT_DISK_FILE};

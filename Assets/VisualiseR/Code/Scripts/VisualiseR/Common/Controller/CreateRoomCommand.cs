@@ -17,7 +17,7 @@ namespace VisualiseR.Common
         public RoomType _roomType { get; set; }
 
         [Inject]
-        public Medium _medium { get; set; }
+        public PictureMedium _medium { get; set; }
 
         [Inject]
         public IRoom room { get; set; }
@@ -36,7 +36,7 @@ namespace VisualiseR.Common
         {
             Logger.DebugFormat("roomName: {0}", _roomName);
             Logger.DebugFormat("roomType: {0}", _roomType);
-            Logger.DebugFormat("medium: {0}", _medium);
+            Logger.DebugFormat("pictureMedium: {0}", _medium);
             if (IsInputValid())
             {
                 ConstructRoom();
@@ -87,7 +87,7 @@ namespace VisualiseR.Common
             }
             if (_medium.IsEmpty())
             {
-                string errorMessage = "Medium wasn't choosen yet";
+                string errorMessage = "PictureMedium wasn't choosen yet";
                 Logger.Error(errorMessage);
                 ErrorSignal.Dispatch(errorMessage);
                 return false;

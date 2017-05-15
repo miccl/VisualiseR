@@ -8,7 +8,7 @@ namespace VisualiseR.Common
     {
         public string Name { get; set; }
         public RoomType Type { get; set; }
-        public IMedium Medium { get; set; }
+        public IPictureMedium Medium { get; set; }
         public List<IPlayer> Players { get; set; }
         public DateTime CreationDate { get; private set; }
 

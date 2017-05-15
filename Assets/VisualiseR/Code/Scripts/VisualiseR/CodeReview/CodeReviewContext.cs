@@ -56,7 +56,7 @@ namespace VisualiseR.CodeReview
         /// </summary>
         private void BindModels()
         {
-            injectionBinder.Bind<IMedium>().To<Medium>().ToSingleton();
+            injectionBinder.Bind<IPictureMedium>().To<PictureMedium>().ToSingleton();
             injectionBinder.Bind<IPicture>().To<Picture>().ToSingleton();
             injectionBinder.Bind<IPlayer>().To<Player>().ToSingleton();
             injectionBinder.Bind<IRoom>().To<Room>().ToSingleton();

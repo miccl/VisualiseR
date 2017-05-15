@@ -6,13 +6,13 @@ using System.Text;
 namespace VisualiseR.Common
 {
     [Serializable]
-    public class Medium : IMedium
+    public class PictureMedium : IPictureMedium
     {
         public string Name { get; set; }
 
         public List<IPicture> Pictures { get; set; }
 
-        public Medium()
+        public PictureMedium()
         {
             Pictures = new List<IPicture>();
         }
@@ -35,7 +35,7 @@ namespace VisualiseR.Common
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("Medium[Name: {0}, Pictures: [", Name);
+            sb.AppendFormat("PictureMedium[Name: {0}, Pictures: [", Name);
             foreach (IPicture pic in Pictures)
             {
                 sb.Append(pic.ToString() + ", ");

@@ -2,7 +2,7 @@
 
 namespace VisualiseR.Common
 {
-    public class MediumChangedSignal : Signal<Medium>
+    public class MediumChangedSignal : Signal<PictureMedium>
     {
     }
 }

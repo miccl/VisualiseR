@@ -11,13 +11,13 @@ namespace VisualiseR.CodeReview
     {
         private const string FILE_PREFIX = "file:///";
 
-        internal IMedium _medium;
+        internal IPictureMedium _medium;
         public IPlayer _player;
 
         internal int _currPicturePos;
 
-        public Signal<IPlayer, IMedium, int> NextCodeSignal = new Signal<IPlayer, IMedium, int>();
-        public Signal<IPlayer, IMedium, int> PrevCodeSignal = new Signal<IPlayer, IMedium, int>();
+        public Signal<IPlayer, IPictureMedium, int> NextCodeSignal = new Signal<IPlayer, IPictureMedium, int>();
+        public Signal<IPlayer, IPictureMedium, int> PrevCodeSignal = new Signal<IPlayer, IPictureMedium, int>();
         private bool _isHeld;
         private GameObject _gvrReticlePointer;
 
