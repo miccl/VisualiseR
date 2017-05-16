@@ -1,4 +1,5 @@
-﻿using strange.extensions.mediation.impl;
+﻿using System;
+using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -91,6 +92,11 @@ namespace VisualiseR.CodeReview
         {
             _editPanel.SetActive(false);
             _commentPanel.SetActive(true);
+            var comment = _code.Comment;
+            if (!String.IsNullOrEmpty(comment))
+            {
+                _commentInputField.text = comment;
+            }
         }
 
         public void OnRemoveButtonClick()

@@ -149,7 +149,7 @@ namespace VisualiseR.CodeReview
         private Vector3 GetContextMenuPosition()
         {
             //TODO irgendwann nochmal verbessern, derzeit schwankt das immer hin und her
-            Vector3 cameraBack = -Camera.main.transform.forward * 10;
+            Vector3 cameraBack = -Camera.main.transform.forward * 12;
             Vector3 shift = new Vector3(0, 0, cameraBack.z);
             Debug.Log("shift:" + shift);
             Vector3 pos = transform.position + shift;
