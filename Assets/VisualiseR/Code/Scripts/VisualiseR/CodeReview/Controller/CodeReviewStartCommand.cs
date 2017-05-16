@@ -19,20 +19,6 @@ namespace VisualiseR.CodeReview
         public override void Execute()
         {
             VRSettings.enabled = true;
-            InitView();
-        }
-
-
-        private void InitView()
-        {
-            InitStand();
-        }
-
-        private void InitStand()
-        {
-//            GameObject go = GameObject.Instantiate(Resources.Load("CodeReview_Screen") as GameObject);
-//            go.name = "Screen";
-//            go.transform.SetParent(contextView.transform);
         }
     }
 }

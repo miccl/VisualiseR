@@ -72,6 +72,7 @@ namespace VisualiseR.CodeReview
         {
             mediationBinder.Bind<CodeReviewScreenView>().To<CodeReviewScreenMediator>();
             mediationBinder.Bind<ContextMenuView>().To<ContextMenuMediator>();
+            mediationBinder.Bind<CodeReviewControllerView>().To<CodeReviewControllerMediator>();
         }
 
         private void BindCommands()

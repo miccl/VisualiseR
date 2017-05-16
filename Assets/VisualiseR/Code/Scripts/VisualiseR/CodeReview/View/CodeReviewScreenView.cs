@@ -12,13 +12,9 @@ namespace VisualiseR.CodeReview
     {
         private const string FILE_PREFIX = "file:///";
 
-        internal ICodeMedium _medium;
-        public IPlayer _player;
+        internal ICode _code;
+        internal IPlayer _player;
 
-        internal int _currPicturePos;
-
-        public Signal<IPlayer, ICodeMedium, int> NextCodeSignal = new Signal<IPlayer, ICodeMedium, int>();
-        public Signal<IPlayer, ICodeMedium, int> PrevCodeSignal = new Signal<IPlayer, ICodeMedium, int>();
         private bool _isHeld;
         private GameObject _gvrReticlePointer;
         private Text _infoText;
@@ -28,46 +24,35 @@ namespace VisualiseR.CodeReview
 
         internal bool IsContextMenuShown;
 
-
         protected override void Awake()
         {
             _isHeld = false;
             _gvrReticlePointer = GameObject.Find("GvrReticlePointer");
 
-            _player = new Player
-            {
-                Name = "Test",
-                Type = PlayerType.Host
-            };
             pointerScript = GetComponent<GvrPointerGraphicRaycaster>();
         }
 
-        internal void SetupMedium()
+        protected override void Start()
         {
-            if (_medium != null && !_medium.IsEmpty())
+            base.Start();
+            SetupCode();
+        }
+
+        internal void SetupCode()
+        {
+            if (_code != null)
             {
-                _currPicturePos = 0;
-                LoadPictureIntoTexture(_currPicturePos);
+                LoadPictureIntoTexture(_code.Pic);
             }
+
         }
 
 
-        private void NextPicture()
+        internal void LoadPictureIntoTexture(IPicture pic)
         {
-            NextCodeSignal.Dispatch(_player, _medium, _currPicturePos);
-        }
-
-        private void PrevPicture()
-        {
-            PrevCodeSignal.Dispatch(_player, _medium, _currPicturePos);
-        }
-
-        internal void LoadPictureIntoTexture(int picturePos)
-        {
-            IPicture currPicture = _medium.GetCodeFragment(picturePos).Pic;
-            if (currPicture != null)
+            if (pic != null)
             {
-                StartCoroutine(LoadImageIntoTexture(currPicture.Path));
+                StartCoroutine(LoadImageIntoTexture(pic.Path));
             }
             else
             {
@@ -88,26 +73,13 @@ namespace VisualiseR.CodeReview
         void Update()
         {
             HandleDragAndDrop();
-            HandleInputs();
         }
 
-        private void HandleInputs()
+        public void OnScreenClick()
         {
-//            if (!_isHeld)
-//            {
-            if (Input.GetButtonDown("Fire1"))
-            {
-//                    NextPicture();
-
-                ShowContextMenu();
-            }
-            if (Input.GetButtonDown("Fire2"))
-            {
-                _infoText.text = "CLICKED";
-//                    infoBubble.SetActive(true);
-            }
-//            }
+            ShowContextMenu();
         }
+
 
         private void HandleDragAndDrop()
         {
@@ -158,19 +130,10 @@ namespace VisualiseR.CodeReview
             }
         }
 
-        public void OnCancelButtonClick()
+        public void ChangeCode(ICode code)
         {
-            Debug.Log("Cancel");
-        }
-
-        public void OnRateButtonClick()
-        {
-            Debug.Log("Rate");
-        }
-
-        public void OnEditButtonClick()
-        {
-            Debug.Log("Edit");
+            _code = code;
+            SetupCode();
         }
     }
 }
