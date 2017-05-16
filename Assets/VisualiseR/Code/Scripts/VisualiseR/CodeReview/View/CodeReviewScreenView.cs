@@ -21,7 +21,6 @@ namespace VisualiseR.CodeReview
         public Signal<IPlayer, ICodeMedium, int> PrevCodeSignal = new Signal<IPlayer, ICodeMedium, int>();
         private bool _isHeld;
         private GameObject _gvrReticlePointer;
-        [SerializeField] private GameObject infoBubble;
         private Text _infoText;
         private Button infoBUtton;
         private GvrPointerGraphicRaycaster pointerScript;
@@ -40,11 +39,7 @@ namespace VisualiseR.CodeReview
                 Name = "Test",
                 Type = PlayerType.Host
             };
-            _infoText = infoBubble.GetComponentInChildren<Text>();
-            infoBUtton = infoBubble.GetComponentInChildren<Button>();
             pointerScript = GetComponent<GvrPointerGraphicRaycaster>();
-
-
         }
 
         internal void SetupMedium()
@@ -100,18 +95,17 @@ namespace VisualiseR.CodeReview
         {
 //            if (!_isHeld)
 //            {
-                if (Input.GetButtonDown("Fire1"))
-                {
+            if (Input.GetButtonDown("Fire1"))
+            {
 //                    NextPicture();
 
-                    ShowContextMenu();
-                }
-                if (Input.GetButtonDown("Fire2"))
-                {
-                    _infoText.text = "CLICKED";
+                ShowContextMenu();
+            }
+            if (Input.GetButtonDown("Fire2"))
+            {
+                _infoText.text = "CLICKED";
 //                    infoBubble.SetActive(true);
-
-                }
+            }
 //            }
         }
 
@@ -145,11 +139,18 @@ namespace VisualiseR.CodeReview
 
         public void ShowContextMenu()
         {
+            //TODO irgendwann nochmal verbessern, derzeit schwankt das immer hin und her
             if (!IsContextMenuShown)
             {
-                Vector3 shift = -Camera.main.transform.forward * 10;
+                Vector3 cameraBack = -Camera.main.transform.forward * 10;
+                Vector3 shift = new Vector3(0, 0, cameraBack.z);
+                Debug.Log("shift:" + shift);
+                contextMenu = Instantiate(Resources.Load("ContextMenuCanvas"), transform.position + shift,
+                    transform.rotation) as GameObject;
 
-                contextMenu = Instantiate(Resources.Load("ContextMenuCanvas"), transform.position + shift, transform.rotation) as GameObject;
+                var yPos = 2;
+                contextMenu.transform.position =
+                    new Vector3(contextMenu.transform.position.x, yPos, contextMenu.transform.position.z);
                 contextMenu.transform.Rotate(90, -180, 0);
 
                 contextMenu.transform.SetParent(transform.parent);

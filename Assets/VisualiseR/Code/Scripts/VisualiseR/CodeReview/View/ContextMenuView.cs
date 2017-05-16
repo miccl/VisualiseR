@@ -1,6 +1,7 @@
 ﻿using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using VisualiseR.Util;
 
@@ -26,14 +27,13 @@ namespace VisualiseR.CodeReview
         {
             GameObject contextMenuCanvas = UnityUtil.FindGameObject("ContextMenuCanvas(Clone)");
             _mainPanel = contextMenuCanvas.transform.FindChild("MainPanel").gameObject;
-            Debug.Log("MainPanel: " + _mainPanel);
             _ratePanel = contextMenuCanvas.transform.FindChild("RatePanel").gameObject;
             _editPanel = contextMenuCanvas.transform.FindChild("EditPanel").gameObject;
             _commentPanel = contextMenuCanvas.transform.FindChild("CommentPanel").gameObject;
             _removePanel = contextMenuCanvas.transform.FindChild("RemovePanel").gameObject;
             _commentInputField = _commentPanel.GetComponentInChildren<InputField>();
 
-//            UnityUtil.AddEventTriggerListener(_editPanel.transform.FindChild("CommentButton"));
+//            UnityUtil.AddEventTriggerListener(_mainPanel.transform.FindChild("RateButton").gameObject.GetComponent<EventTrigger>(), EventTriggerType.PointerClick, OnRateButtonClick);
 
             _gvrReticlePointer = GameObject.Find("GvrReticlePointer");
         }
@@ -43,7 +43,7 @@ namespace VisualiseR.CodeReview
             HandleDragAndDrop();
         }
 
-        public void OnRateButtonClick()
+        public void OnRateButtonClick(BaseEventData eventData)
         {
             _mainPanel.SetActive(false);
             _ratePanel.SetActive(true);
