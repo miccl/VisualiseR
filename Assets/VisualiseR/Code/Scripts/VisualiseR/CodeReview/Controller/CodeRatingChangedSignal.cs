@@ -2,7 +2,8 @@
 
 namespace VisualiseR.CodeReview
 {
-    public class NextCodeSignal : Signal<Code>
+    public class CodeRatingChangedSignal : Signal<Code>
     {
+
     }
 }

@@ -90,8 +90,7 @@ namespace VisualiseR.CodeReview
             }
 
             commandBinder.Bind<NextCodeSignal>().To<NextCodeCommand>();
-            commandBinder.Bind<PrevCodeSignal>().To<PrevCodeCommand>();
-            commandBinder.Bind<SelectedCodeRatingSignal>().To<SelectedCodeRatingCommand>();
+            commandBinder.Bind<SelectedCodeRatingSignal>().To<SelectCodeRatingCommand>();
             commandBinder.Bind<SaveCommentSignal>().To<SaveCommentCommand>();
             commandBinder.Bind<RemoveCodeSignal>().To<RemoveCodeCommand>();
 
@@ -102,6 +101,7 @@ namespace VisualiseR.CodeReview
             injectionBinder.Bind<ScoreChangedSignal>().ToSingleton();
             injectionBinder.Bind<CodePositionChangedSignal>().ToSingleton();
             injectionBinder.Bind<ContextMenuCanceledSignal>().ToSingleton();
+            injectionBinder.Bind<CodeRatingChangedSignal>().ToSingleton();
         }
     }
 }

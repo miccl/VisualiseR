@@ -1,9 +1,13 @@
-//#define LOG4NET // log4net logging active?
-//#define LOG_UNITY // Debug.Log* active?
+#define LOG4NET // log4net logging active?
+
+#define LOG_UNITY // Debug.Log* active?
 
 #define UNITY // running inside the unity runtime environment?
 
 using System;
+using System.IO;
+using log4net;
+using log4net.Config;
 #if UNITY
 using UnityEngine; // you can disable this - recommended when using outside of Unity!
 #endif

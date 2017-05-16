@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using strange.extensions.mediation.impl;
-using strange.extensions.signal.impl;
 using UnityEngine;
 using VisualiseR.Common;
 using VisualiseR.Util;
@@ -15,8 +15,6 @@ namespace VisualiseR.CodeReview
 
         internal List<GameObject> screens = new List<GameObject>();
 
-        public Signal<IPlayer, ICodeMedium, int> NextCodeSignal = new Signal<IPlayer, ICodeMedium, int>();
-        public Signal<IPlayer, ICodeMedium, int> PrevCodeSignal = new Signal<IPlayer, ICodeMedium, int>();
         internal GameObject _contextView;
 
 
@@ -62,13 +60,15 @@ namespace VisualiseR.CodeReview
 
         private void IntialiseScreens()
         {
+            bool isFirst = true;
             List<Vector3> screenPositions = GetScreenPositions();
             for (int i = 0; i < screenPositions.Count; i++)
             {
                 //TODO zu überprüfen, ob diese Abfrage auch richtig greift
                 if (i <= _medium.CodeFragments.Count - 1)
                 {
-                    InstantiateScreen(_medium.GetCodeFragment(_currCodePos + i), screenPositions[i]);
+                    InstantiateScreen(_medium.GetCodeFragment(_currCodePos + i), screenPositions[i], isFirst);
+                    isFirst = false;
                 }
             }
         }
@@ -79,7 +79,7 @@ namespace VisualiseR.CodeReview
         }
 
 
-        private void InstantiateScreen(ICode code, Vector3 pos)
+        private void InstantiateScreen(ICode code, Vector3 pos, bool isFirst)
         {
             //fix rotation
             Vector3 relativePos = Vector3.zero - pos;
@@ -94,23 +94,38 @@ namespace VisualiseR.CodeReview
             //TODO direkte verbindung verhindern
             CodeReviewScreenView screenView = screen.GetComponent<CodeReviewScreenView>();
             screenView.ChangeCode(code);
+            screenView.IsFirst = isFirst;
 
             screens.Add(screen);
+
         }
 
-
-//        private ShowCodeScreen(ICode code)
-//        {
-//        }
-
-        private void NextCode()
+        public void NextCode(Code code)
         {
-            NextCodeSignal.Dispatch(_player, _medium, _currCodePos);
+            int currPos = _medium.GetCodeFragmentPos(code);
+            foreach (var screen in screens)
+            {
+                var currCode = _medium.GetCodeFragment(currPos);
+                CodeReviewScreenView screenView = screen.GetComponent<CodeReviewScreenView>();
+                screenView.ChangeCode(currCode);
+                currPos = getNextPosition(currPos);
+            }
+
         }
 
-        private void PrevCode()
+        private int getNextPosition(int pos)
         {
-            PrevCodeSignal.Dispatch(_player, _medium, _currCodePos);
+            return (pos + 1) % _medium.CodeFragments.Count;
+        }
+
+        public void RemoveCodeFragment(Code code)
+        {
+            _medium.RemoveCodeFragment(code);
+            if (_medium.CodeFragments.Count < screens.Count)
+            {
+                var lastScreen = screens.Last();
+                Destroy(lastScreen);
+            }
         }
     }
 }

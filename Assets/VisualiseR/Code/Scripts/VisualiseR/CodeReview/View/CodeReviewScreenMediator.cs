@@ -1,8 +1,6 @@
-﻿using System.IO;
+﻿using System;
 using strange.extensions.mediation.impl;
 using UnityEngine;
-using VisualiseR.Common;
-using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
@@ -11,21 +9,34 @@ namespace VisualiseR.CodeReview
         [Inject]
         public CodeReviewScreenView _view { get; set; }
 
-
         [Inject]
         public ContextMenuCanceledSignal ContextMenuCanceledSignal { get; set; }
 
+        [Inject]
+        public CodeRatingChangedSignal CodeRatingChangedSignal { get; set; }
+
+        [Inject]
+        public NextCodeSignal NextCodeSignal { get; set; }
 
 
         public override void OnRegister()
         {
+            _view.NextCodeSignal.AddListener(OnNextCodeSignal);
             ContextMenuCanceledSignal.AddListener(OnContextMenuCanceled);
+            CodeRatingChangedSignal.AddListener(OnCodeRatingChanged);
         }
-
 
         public override void OnRemove()
         {
+            _view.NextCodeSignal.RemoveListener(OnNextCodeSignal);
             ContextMenuCanceledSignal.RemoveListener(OnContextMenuCanceled);
+            CodeRatingChangedSignal.RemoveListener(OnCodeRatingChanged);
+
+        }
+
+        private void OnNextCodeSignal(Code code)
+        {
+            NextCodeSignal.Dispatch(code);
         }
 
         public void OnCodeChanged(ICode code)
@@ -33,7 +44,13 @@ namespace VisualiseR.CodeReview
             _view.ChangeCode(code);
         }
 
-
+        private void OnCodeRatingChanged(Code code)
+        {
+            if (_view._code.Equals(code))
+            {
+                //TODO verstecken und dem entsprechenden Stapel zuweisen
+            }
+        }
 
 
         private void OnContextMenuCanceled()

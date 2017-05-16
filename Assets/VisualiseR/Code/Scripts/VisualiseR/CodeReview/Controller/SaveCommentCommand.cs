@@ -16,8 +16,8 @@ namespace VisualiseR.CodeReview
 
         public override void Execute()
         {
+            code.Comment = text;
             Logger.InfoFormat("Comment {0} was added  to code {1}", text, code);
-            throw new NotImplementedException();
         }
     }
 }

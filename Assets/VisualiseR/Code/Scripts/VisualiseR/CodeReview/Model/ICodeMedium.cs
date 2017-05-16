@@ -13,6 +13,8 @@ namespace VisualiseR.CodeReview
 
         ICode GetCodeFragment(int pos);
 
+        int GetCodeFragmentPos(ICode code);
+
         bool IsEmpty();
     }
 }

@@ -10,17 +10,20 @@ namespace VisualiseR.CodeReview
 {
     public class CodeReviewScreenView : View, DragDropHandler
     {
+        public Signal<Code> NextCodeSignal = new Signal<Code>();
+
         private const string FILE_PREFIX = "file:///";
 
         internal ICode _code;
         internal IPlayer _player;
 
         private bool _isHeld;
+        public bool IsFirst { get; set; }
         private GameObject _gvrReticlePointer;
         private Text _infoText;
-        private Button infoBUtton;
         private GvrPointerGraphicRaycaster pointerScript;
         internal GameObject contextMenu;
+
 
         internal bool IsContextMenuShown;
 
@@ -44,7 +47,6 @@ namespace VisualiseR.CodeReview
             {
                 LoadPictureIntoTexture(_code.Pic);
             }
-
         }
 
 
@@ -77,7 +79,14 @@ namespace VisualiseR.CodeReview
 
         public void OnScreenClick()
         {
-            ShowContextMenu();
+            if (IsFirst)
+            {
+                ShowContextMenu();
+            }
+            else
+            {
+                NextCodeSignal.Dispatch((Code) _code);
+            }
         }
 
 
@@ -111,23 +120,42 @@ namespace VisualiseR.CodeReview
 
         public void ShowContextMenu()
         {
-            //TODO irgendwann nochmal verbessern, derzeit schwankt das immer hin und her
             if (!IsContextMenuShown)
             {
-                Vector3 cameraBack = -Camera.main.transform.forward * 10;
-                Vector3 shift = new Vector3(0, 0, cameraBack.z);
-                Debug.Log("shift:" + shift);
-                contextMenu = Instantiate(Resources.Load("ContextMenuCanvas"), transform.position + shift,
-                    transform.rotation) as GameObject;
-
-                var yPos = 2;
-                contextMenu.transform.position =
-                    new Vector3(contextMenu.transform.position.x, yPos, contextMenu.transform.position.z);
-                contextMenu.transform.Rotate(90, -180, 0);
-
-                contextMenu.transform.SetParent(transform.parent);
+                InstantiateContextMenu();
                 IsContextMenuShown = true;
             }
+        }
+
+        private void InstantiateContextMenu()
+        {
+            var position = GetContextMenuPosition();
+            var rotation = GetContextMenuRotation();
+            contextMenu = Instantiate(Resources.Load("ContextMenuCanvas"), position, rotation) as GameObject;
+            contextMenu.transform.Rotate(90, -180, 0);
+            contextMenu.transform.SetParent(transform.parent);
+
+            //TODO direkte Verdrahtung entfernen
+            ContextMenuView contextMenuView = contextMenu.GetComponent<ContextMenuView>();
+            contextMenuView._code = _code;
+        }
+
+        private Quaternion GetContextMenuRotation()
+        {
+            //TODO überarbeiten
+            return transform.rotation;
+        }
+
+        private Vector3 GetContextMenuPosition()
+        {
+            //TODO irgendwann nochmal verbessern, derzeit schwankt das immer hin und her
+            Vector3 cameraBack = -Camera.main.transform.forward * 10;
+            Vector3 shift = new Vector3(0, 0, cameraBack.z);
+            Debug.Log("shift:" + shift);
+            Vector3 pos = transform.position + shift;
+            pos.y = 2;
+
+            return pos;
         }
 
         public void ChangeCode(ICode code)

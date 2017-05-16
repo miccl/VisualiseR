@@ -14,6 +14,8 @@ namespace VisualiseR.CodeReview
         public Signal<Code> RemoveCodeSignal = new Signal<Code>();
         public Signal OnContextMenuCanceled = new Signal();
 
+        public ICode _code;
+
         private GameObject _mainPanel;
         private GameObject _ratePanel;
         private GameObject _editPanel;
@@ -64,19 +66,19 @@ namespace VisualiseR.CodeReview
         public void OnRateGoodButtonClick()
         {
             //TODO Rating des mommentanen Fragments auf Gut setzen
-            CodeRatingSelected.Dispatch(new Code(), Rate.Uncritical);
+            CodeRatingSelected.Dispatch((Code) _code, Rate.Uncritical);
         }
 
         public void OnRateOkButtonClick()
         {
             //TODO Rating des Code-Fragments auf Gut setzen
-            CodeRatingSelected.Dispatch(new Code(), Rate.Minor);
+            CodeRatingSelected.Dispatch((Code) _code, Rate.Minor);
         }
 
         public void OnRateBadButtonClick()
         {
             //TODO Rating des Code-Fragments auf Gut setzen
-            CodeRatingSelected.Dispatch(new Code(), Rate.Criticial);
+            CodeRatingSelected.Dispatch((Code) _code, Rate.Criticial);
         }
 
         public void OnRateCancelButtonClick()
@@ -105,7 +107,7 @@ namespace VisualiseR.CodeReview
 
         public void OnCommentSaveButtonClick()
         {
-            CommentSaveButtonClickedSignal.Dispatch(new Code(), _commentInputField.text);
+            CommentSaveButtonClickedSignal.Dispatch((Code) _code, _commentInputField.text);
         }
 
         public void OnCommentCancelButtonClick()
@@ -116,7 +118,7 @@ namespace VisualiseR.CodeReview
 
         public void OnRemoveYesButtonClick()
         {
-            RemoveCodeSignal.Dispatch(new Code());
+            RemoveCodeSignal.Dispatch((Code) _code);
 
         }
 

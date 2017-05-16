@@ -14,7 +14,9 @@ namespace VisualiseR.CodeReview
         public override void Execute()
         {
             Logger.InfoFormat("Code {0} was removed", code);
-            throw new NotImplementedException();
+            //TODO Von der Platte holen
+
+//            throw new NotImplementedException();
         }
     }
 }

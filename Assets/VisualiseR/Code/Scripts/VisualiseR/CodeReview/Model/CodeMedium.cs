@@ -32,6 +32,11 @@ namespace VisualiseR.CodeReview
             return CodeFragments.ElementAt(pos);
         }
 
+        public int GetCodeFragmentPos(ICode code)
+        {
+            return CodeFragments.IndexOf(code);
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();

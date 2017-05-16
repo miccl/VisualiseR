@@ -19,7 +19,7 @@ namespace VisualiseR.CodeReview
         public NextCodeSignal NextCodeSignal { get; set; }
 
         [Inject]
-        public PrevCodeSignal PrevCodeSignal { get; set; }
+        public RemoveCodeSignal RemoveCodeSignal { get; set; }
 
         [Inject]
         public IPictureMedium PictureMedium { get; set; }
@@ -31,20 +31,24 @@ namespace VisualiseR.CodeReview
         public GameObject contextView { get; set; }
 
 
-
         public override void OnRegister()
         {
-            NextCodeSignal.AddListener(OnNextCodeSignal);
-            PrevCodeSignal.AddListener(OnPrevCodeSignal);
+            NextCodeSignal.AddListener(OnNextCode);
+            RemoveCodeSignal.AddListener(OnRemoveCode);
             CodePositionChangedSignal.AddListener(OnCodePositionChanged);
 
             InitView();
         }
 
+        private void OnNextCode(Code code)
+        {
+            View.NextCode(code);
+
+        }
+
         public override void OnRemove()
         {
-            NextCodeSignal.RemoveListener(OnNextCodeSignal);
-            PrevCodeSignal.RemoveListener(OnPrevCodeSignal);
+            RemoveCodeSignal.RemoveListener(OnRemoveCode);
             CodePositionChangedSignal.RemoveListener(OnCodePositionChanged);
         }
 
@@ -73,6 +77,14 @@ namespace VisualiseR.CodeReview
             View.SetupMedium();
         }
 
+        private void OnRemoveCode(Code code)
+        {
+            var currPos = View._medium.GetCodeFragmentPos(code);
+            Code nextCode = (Code) View._medium.GetCodeFragment(currPos +1);
+            View.RemoveCodeFragment(code);
+            OnNextCode(nextCode);
+        }
+
         private void OnCodePositionChanged(int pos)
         {
             View._currCodePos = pos;
@@ -80,15 +92,6 @@ namespace VisualiseR.CodeReview
 //            _view.LoadPictureIntoTexture(pos);
         }
 
-        private void OnNextCodeSignal(IPlayer player, ICodeMedium medium, int pos)
-        {
-            NextCodeSignal.Dispatch((Player) player, (CodeMedium) medium, pos);
-        }
-
-        private void OnPrevCodeSignal(IPlayer player, ICodeMedium medium, int pos)
-        {
-            PrevCodeSignal.Dispatch((Player) player, (CodeMedium) medium, pos);
-        }
 
         private void ConstructCodeMedium(IPictureMedium medium)
         {
