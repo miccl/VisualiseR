@@ -7,7 +7,7 @@ namespace VisualiseR.Util
     public static class MathUtil
     {
         public static List<Vector3> ComputeSpawnPositionsWithElements(float spawnDistance, int numberOfElements,
-            int radius, float posY)
+            int radius, float startAngle, float posY)
         {
             List<Vector3> positions = new List<Vector3>();
 
@@ -15,7 +15,7 @@ namespace VisualiseR.Util
             float currentAngle = 0;
             for (int i = 0; i < numberOfElements; i++)
             {
-                Vector3? currPos = ComputeSpawnPositionFromStartPosition(spawnDistance, currentAngle, posY);
+                Vector3? currPos = ComputeSpawnPositionFromStartPosition(spawnDistance, currentAngle, startAngle, posY);
                 if (currPos == null)
                 {
                     break;
@@ -27,13 +27,13 @@ namespace VisualiseR.Util
         }
 
         public static List<Vector3> ComputeSpawnPositionsWithAngle(float spawnDistance, float angleBetweenElements,
-            int radius, float posY)
+            int radius, float startAngle, float posY)
         {
             List<Vector3> positions = new List<Vector3>();
             float currAngle = 0;
             while (currAngle <= radius)
             {
-                Vector3? currPos = ComputeSpawnPositionFromStartPosition(spawnDistance, currAngle, posY);
+                Vector3? currPos = ComputeSpawnPositionFromStartPosition(spawnDistance, currAngle, startAngle, posY);
                 if (currPos == null)
                 {
                     break;
@@ -46,14 +46,14 @@ namespace VisualiseR.Util
         }
 
         [CanBeNull]
-        public static Vector3? ComputeSpawnPositionFromStartPosition(float spawnDistance, float spawnAngle, float posY)
+        public static Vector3? ComputeSpawnPositionFromStartPosition(float spawnDistance, float spawnAngle,
+            float startAngle, float posY)
         {
             if (spawnAngle > 360)
             {
                 return null;
             }
 
-            float startAngle = 90;
             float spawnAngleFromStartPosition = spawnAngle + startAngle;
 
             return ComputeSpawnPosition(spawnDistance, spawnAngleFromStartPosition, posY);
@@ -79,6 +79,5 @@ namespace VisualiseR.Util
 
             return new Vector3(xPos, yPos, zPos);
         }
-
     }
 }

@@ -27,7 +27,7 @@ namespace VisualiseR.Main
         internal Dropdown ChooseMediumDropdown;
         internal IPictureMedium ChoosenMedium;
 
-        private readonly List<string> _roomTypes = CSharpUtil.EnumToList<RoomType>();
+        private readonly List<string> _roomTypes = EnumUtil.EnumToList<RoomType>();
         private readonly List<string> _chooseMediumTypes = new List<string> {SELECT_WEB_FILE, SELECT_DISK_FILE};
 
         private GameObject _mainMenuPanelView;

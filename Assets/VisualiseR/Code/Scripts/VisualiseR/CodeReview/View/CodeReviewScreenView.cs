@@ -38,17 +38,27 @@ namespace VisualiseR.CodeReview
         protected override void Start()
         {
             base.Start();
-            SetupCode();
+            LoadCode();
         }
 
-        internal void SetupCode()
+        void Update()
+        {
+            HandleDragAndDrop();
+        }
+
+        public void Init(ICode code, bool isFirst)
+        {
+            ChangeCode(code);
+            IsFirst = isFirst;
+        }
+
+        internal void LoadCode()
         {
             if (_code != null)
             {
                 LoadPictureIntoTexture(_code.Pic);
             }
         }
-
 
         internal void LoadPictureIntoTexture(IPicture pic)
         {
@@ -70,11 +80,6 @@ namespace VisualiseR.CodeReview
             www.LoadImageIntoTexture(tex);
             GetComponent<Renderer>().material.mainTexture = tex;
             www.Dispose();
-        }
-
-        void Update()
-        {
-            HandleDragAndDrop();
         }
 
         public void OnScreenClick()
@@ -161,7 +166,7 @@ namespace VisualiseR.CodeReview
         public void ChangeCode(ICode code)
         {
             _code = code;
-            SetupCode();
+            LoadCode();
         }
     }
 }
