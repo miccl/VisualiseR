@@ -140,7 +140,8 @@ namespace VisualiseR.CodeReview
 
         private List<Vector3> GetScreenPositions()
         {
-            return MathUtil.ComputeSpawnPositionsWithElements(SCREEN_DISTANCE, MAX_NUMBER_OF_SCREENS_SHOWN, SCREEN_RADIUS,
+            return MathUtil.ComputeSpawnPositionsWithElements(SCREEN_DISTANCE, MAX_NUMBER_OF_SCREENS_SHOWN,
+                SCREEN_RADIUS,
                 SCREEN_START_ANGLE, SCREEN_VALUE_Y);
         }
 
@@ -181,22 +182,12 @@ namespace VisualiseR.CodeReview
                 List<ICode> currCode = new List<ICode>();
                 if (currRate.Equals(Rate.Unrated))
                 {
-                    currCode = GetNewList();
+                    currCode = new List<ICode>(_medium.CodeFragments);
                 }
 
                 var pilePos = pilePositions[pilePositions.Count - i - 1];
                 InstantiatePile(currRate, pilePos, currCode);
             }
-        }
-
-        private List<ICode> GetNewList()
-        {
-            List<ICode> codes = new List<ICode>();
-            foreach (var code in _medium.CodeFragments)
-            {
-                codes.Add(code);
-            }
-            return codes;
         }
 
         private void InstiatePileParent()
