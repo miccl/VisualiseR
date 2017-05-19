@@ -48,7 +48,7 @@ namespace VisualiseR.CodeReview
         /// <summary>
         /// Distance between the player and the piles.
         /// </summary>
-        private const float PILE_DISTANCE = 5;
+        private const float PILE_DISTANCE = 3;
 
         /// <summary>
         /// Degree of the radius, in which the screens are placed
@@ -154,7 +154,8 @@ namespace VisualiseR.CodeReview
                     currCode = _medium.CodeFragments;
                 }
 
-                InstantiatePile(currRate, pilePositions[i], currCode);
+                var pilePos = pilePositions[pilePositions.Count - i - 1];
+                InstantiatePile(currRate, pilePos, currCode);
             }
         }
 
@@ -180,7 +181,7 @@ namespace VisualiseR.CodeReview
 
             var pile = (GameObject) Instantiate(Resources.Load("PileCanvas"), pos, rotation);
             pile.name = "Pile_" + rate;
-            pile.transform.Rotate(-270, 180, 180);
+            pile.transform.Rotate(67.5f, -180, 0);
             pile.transform.SetParent(pileParent.transform);
 
             PileView pileView = pile.GetComponent<PileView>();

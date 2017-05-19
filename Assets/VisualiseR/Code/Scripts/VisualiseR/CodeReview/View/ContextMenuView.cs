@@ -28,12 +28,11 @@ namespace VisualiseR.CodeReview
 
         protected override void Awake()
         {
-            GameObject contextMenuCanvas = UnityUtil.FindGameObject("ContextMenuCanvas(Clone)");
-            _mainPanel = contextMenuCanvas.transform.FindChild("MainPanel").gameObject;
-            _ratePanel = contextMenuCanvas.transform.FindChild("RatePanel").gameObject;
-            _editPanel = contextMenuCanvas.transform.FindChild("EditPanel").gameObject;
-            _commentPanel = contextMenuCanvas.transform.FindChild("CommentPanel").gameObject;
-            _removePanel = contextMenuCanvas.transform.FindChild("RemovePanel").gameObject;
+            _mainPanel = gameObject.transform.FindChild("MainPanel").gameObject;
+            _ratePanel = gameObject.transform.FindChild("RatePanel").gameObject;
+            _editPanel = gameObject.transform.FindChild("EditPanel").gameObject;
+            _commentPanel = gameObject.transform.FindChild("CommentPanel").gameObject;
+            _removePanel = gameObject.transform.FindChild("RemovePanel").gameObject;
             _commentInputField = _commentPanel.GetComponentInChildren<InputField>();
 
 //            UnityUtil.AddEventTriggerListener(_mainPanel.transform.FindChild("RateButton").gameObject.GetComponent<EventTrigger>(), EventTriggerType.PointerClick, OnRateButtonClick);
