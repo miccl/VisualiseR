@@ -108,110 +108,6 @@ NavMeshSettings:
     tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &48365169
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 224047389053246654, guid: 9285e72fe8c286541b78ccfeea44af59,
-        type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224047389053246654, guid: 9285e72fe8c286541b78ccfeea44af59,
-        type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224047389053246654, guid: 9285e72fe8c286541b78ccfeea44af59,
-        type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 224047389053246654, guid: 9285e72fe8c286541b78ccfeea44af59,
-        type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224047389053246654, guid: 9285e72fe8c286541b78ccfeea44af59,
-        type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224047389053246654, guid: 9285e72fe8c286541b78ccfeea44af59,
-        type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224047389053246654, guid: 9285e72fe8c286541b78ccfeea44af59,
-        type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224047389053246654, guid: 9285e72fe8c286541b78ccfeea44af59,
-        type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224047389053246654, guid: 9285e72fe8c286541b78ccfeea44af59,
-        type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: -7
-      objectReference: {fileID: 0}
-    - target: {fileID: 224047389053246654, guid: 9285e72fe8c286541b78ccfeea44af59,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224047389053246654, guid: 9285e72fe8c286541b78ccfeea44af59,
-        type: 2}
-      propertyPath: m_SizeDelta.x
-      value: 2000
-      objectReference: {fileID: 0}
-    - target: {fileID: 224047389053246654, guid: 9285e72fe8c286541b78ccfeea44af59,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 224047389053246654, guid: 9285e72fe8c286541b78ccfeea44af59,
-        type: 2}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224047389053246654, guid: 9285e72fe8c286541b78ccfeea44af59,
-        type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224047389053246654, guid: 9285e72fe8c286541b78ccfeea44af59,
-        type: 2}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224047389053246654, guid: 9285e72fe8c286541b78ccfeea44af59,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224047389053246654, guid: 9285e72fe8c286541b78ccfeea44af59,
-        type: 2}
-      propertyPath: m_Pivot.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 224047389053246654, guid: 9285e72fe8c286541b78ccfeea44af59,
-        type: 2}
-      propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1735934882257234, guid: 9285e72fe8c286541b78ccfeea44af59, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 9285e72fe8c286541b78ccfeea44af59, type: 2}
-  m_IsPrefabParent: 0
 --- !u!4 &522120921 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4312389780923154, guid: 605ebc76f8c2a0e43857c91d380b5217,
@@ -646,6 +542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d35b787b41f0464591d874456dcccce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rate: 0
 --- !u!1001 &2032892454
 Prefab:
   m_ObjectHideFlags: 0

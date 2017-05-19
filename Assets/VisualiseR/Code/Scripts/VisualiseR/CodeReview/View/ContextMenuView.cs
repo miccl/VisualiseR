@@ -25,6 +25,9 @@ namespace VisualiseR.CodeReview
         private InputField _commentInputField;
         private bool _isHeld;
         private GameObject _gvrReticlePointer;
+        private Selectable _goodButtonSelectable;
+        private Selectable _okButtonSelectable;
+        private Selectable _badButtonSelectable;
 
         protected override void Awake()
         {
@@ -35,9 +38,27 @@ namespace VisualiseR.CodeReview
             _removePanel = gameObject.transform.FindChild("RemovePanel").gameObject;
             _commentInputField = _commentPanel.GetComponentInChildren<InputField>();
 
+            _goodButtonSelectable = _ratePanel.transform.FindChild("CenterPanel").transform.FindChild("GoodButton").GetComponent<Selectable>();
+            _okButtonSelectable = _ratePanel.transform.FindChild("CenterPanel").transform.FindChild("OkButton").GetComponent<Selectable>();
+            _badButtonSelectable = _ratePanel.transform.FindChild("CenterPanel").transform.FindChild("BadButton").GetComponent<Selectable>();
+
+
 //            UnityUtil.AddEventTriggerListener(_mainPanel.transform.FindChild("RateButton").gameObject.GetComponent<EventTrigger>(), EventTriggerType.PointerClick, OnRateButtonClick);
 
             _gvrReticlePointer = GameObject.Find("GvrReticlePointer");
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            SetupRateButtons();
+        }
+
+        private void SetupRateButtons()
+        {
+            _goodButtonSelectable.interactable = !_code.Rate.Equals(Rate.Uncritical);
+            _okButtonSelectable.interactable = !_code.Rate.Equals(Rate.Minor);
+            _badButtonSelectable.interactable = !_code.Rate.Equals(Rate.Criticial);
         }
 
         void Update()
@@ -65,20 +86,27 @@ namespace VisualiseR.CodeReview
 
         public void OnRateGoodButtonClick()
         {
-            //TODO Rating des mommentanen Fragments auf Gut setzen
-            CodeRatingSelected.Dispatch((Code) _code, Rate.Uncritical);
+            DispatchRatingIfChanged(Rate.Uncritical);
         }
 
         public void OnRateOkButtonClick()
         {
-            //TODO Rating des Code-Fragments auf Gut setzen
-            CodeRatingSelected.Dispatch((Code) _code, Rate.Minor);
+
+            DispatchRatingIfChanged(Rate.Minor);
         }
 
         public void OnRateBadButtonClick()
         {
-            //TODO Rating des Code-Fragments auf Gut setzen
-            CodeRatingSelected.Dispatch((Code) _code, Rate.Criticial);
+            DispatchRatingIfChanged(Rate.Criticial);
+        }
+
+        private void DispatchRatingIfChanged(Rate rate)
+        {
+            if (!_code.Rate.Equals(rate))
+            {
+                CodeRatingSelected.Dispatch((Code) _code, rate);
+            }
+
         }
 
         public void OnRateCancelButtonClick()
@@ -91,10 +119,9 @@ namespace VisualiseR.CodeReview
         {
             _editPanel.SetActive(false);
             _commentPanel.SetActive(true);
-            var comment = _code.Comment;
-            if (!String.IsNullOrEmpty(comment))
+            if (!String.IsNullOrEmpty(_code.Comment))
             {
-                _commentInputField.text = comment;
+                _commentInputField.text = _code.Comment;
             }
         }
 
@@ -124,7 +151,6 @@ namespace VisualiseR.CodeReview
         public void OnRemoveYesButtonClick()
         {
             RemoveCodeSignal.Dispatch((Code) _code);
-
         }
 
         public void OnRemoveNoButtonClick()
