@@ -11,15 +11,18 @@ namespace VisualiseR.CodeReview
     public class CodeReviewControllerView : View
     {
         internal ICodeMedium _medium;
+        internal List<ICode> _codeFragmentsWithRate;
+        public Rate _rate;
         internal IPlayer _player;
         internal int _currCodePos;
+
 
         internal List<GameObject> screens = new List<GameObject>();
         private List<GameObject> _piles = new List<GameObject>();
 
         internal GameObject _contextView;
-        private GameObject screenParent;
-        private GameObject pileParent;
+        private GameObject _screenParent;
+        private GameObject _pileParent;
 
 
         /// <summary>
@@ -30,7 +33,7 @@ namespace VisualiseR.CodeReview
         /// <summary>
         /// Number of screens shown concurrently in the sceen.
         /// </summary>
-        private const int NUMBER_OF_SCREENS_SHOWN = 3;
+        private const int MAX_NUMBER_OF_SCREENS_SHOWN = 3;
 
         /// <summary>
         /// Degree of the radius, in which the screens are placed
@@ -78,43 +81,70 @@ namespace VisualiseR.CodeReview
         {
             if (_medium != null && !_medium.IsEmpty())
             {
+                _codeFragmentsWithRate = _medium.GetCodeFragmentsWithRate(Rate.Unrated);
                 _currCodePos = 0;
-                IntialiseScreens();
+                InitialiseScreens();
                 InitialisePiles();
+                UpdateCode();
             }
         }
 
-        private void IntialiseScreens()
+        internal void UpdateCode()
         {
-            InstantiateScreenParent();
-
-            bool isFirst = true;
-            List<Vector3> screenPositions = GetScreenPositions();
-            for (int i = 0; i < screenPositions.Count; i++)
+            RemoveScreensIfNeeded();
+            for (int i = 0; i < screens.Count; i++)
             {
-                //TODO zu überprüfen, ob diese Abfrage auch richtig greift
-                if (i <= _medium.CodeFragments.Count - 1)
+                CodeReviewScreenView screenView = screens[i].GetComponent<CodeReviewScreenView>();
+                screenView.ChangeCode(_codeFragmentsWithRate.ElementAt(i));
+            }
+        }
+
+        internal void ClearScreens()
+        {
+            foreach (var screen in screens)
+            {
+                Destroy(screen);
+            }
+            screens.Clear();
+        }
+
+        internal void InitialiseScreens()
+        {
+            if (_codeFragmentsWithRate.Count > 0)
+            {
+                InstantiateScreenParent();
+
+                bool isFirst = true;
+                List<Vector3> screenPositions = GetScreenPositions();
+                for (int i = 0; i < _codeFragmentsWithRate.Count; i++)
                 {
-                    InstantiateScreen(_medium.GetCodeFragment(_currCodePos + i), screenPositions[i], isFirst);
+//                //TODO zu überprüfen, ob diese Abfrage auch richtig greift
+//                if (i <= _codeFragmentsWithRate.Count - 1)
+//                {
+                    InstantiateScreen(screenPositions[i], isFirst);
                     isFirst = false;
+//                }
                 }
             }
         }
 
         private void InstantiateScreenParent()
         {
-            screenParent = new GameObject();
-            screenParent.name = "Screens";
-            screenParent.transform.SetParent(_contextView.transform);
+            if (_screenParent == null)
+            {
+                _screenParent = new GameObject();
+                _screenParent.name = "Screens";
+                _screenParent.transform.SetParent(_contextView.transform);
+            }
         }
 
-        private static List<Vector3> GetScreenPositions()
+        private List<Vector3> GetScreenPositions()
         {
-            return MathUtil.ComputeSpawnPositionsWithElements(SCREEN_DISTANCE, NUMBER_OF_SCREENS_SHOWN, SCREEN_RADIUS,
+            return MathUtil.ComputeSpawnPositionsWithElements(SCREEN_DISTANCE, MAX_NUMBER_OF_SCREENS_SHOWN, SCREEN_RADIUS,
                 SCREEN_START_ANGLE, SCREEN_VALUE_Y);
         }
 
-        private void InstantiateScreen(ICode code, Vector3 pos, bool isFirst)
+        private void InstantiateScreen(Vector3 pos, bool isFirst)
         {
             //fix rotation
             Vector3 relativePos = Vector3.zero - pos;
@@ -123,11 +153,11 @@ namespace VisualiseR.CodeReview
             var screen = (GameObject) Instantiate(Resources.Load("CodeReview_Screen"), pos, rotation);
             screen.transform.Rotate(-270, 180, 180);
             screen.name = "Screen";
-            screen.transform.SetParent(screenParent.transform);
+            screen.transform.SetParent(_screenParent.transform);
 
             //TODO direkte verbindung verhindern
             CodeReviewScreenView screenView = screen.GetComponent<CodeReviewScreenView>();
-            screenView.Init(code, isFirst);
+            screenView.Init(isFirst);
 
             screens.Add(screen);
         }
@@ -151,7 +181,7 @@ namespace VisualiseR.CodeReview
                 List<ICode> currCode = new List<ICode>();
                 if (currRate.Equals(Rate.Unrated))
                 {
-                    currCode = _medium.CodeFragments;
+                    currCode = GetNewList();
                 }
 
                 var pilePos = pilePositions[pilePositions.Count - i - 1];
@@ -159,11 +189,24 @@ namespace VisualiseR.CodeReview
             }
         }
 
+        private List<ICode> GetNewList()
+        {
+            List<ICode> codes = new List<ICode>();
+            foreach (var code in _medium.CodeFragments)
+            {
+                codes.Add(code);
+            }
+            return codes;
+        }
+
         private void InstiatePileParent()
         {
-            pileParent = new GameObject();
-            pileParent.name = "Piles";
-            pileParent.transform.SetParent(_contextView.transform);
+            if (_pileParent == null)
+            {
+                _pileParent = new GameObject();
+                _pileParent.name = "Piles";
+                _pileParent.transform.SetParent(_contextView.transform);
+            }
         }
 
         private static List<Vector3> GetPilePositions()
@@ -182,7 +225,7 @@ namespace VisualiseR.CodeReview
             var pile = (GameObject) Instantiate(Resources.Load("PileCanvas"), pos, rotation);
             pile.name = "Pile_" + rate;
             pile.transform.Rotate(67.5f, -180, 0);
-            pile.transform.SetParent(pileParent.transform);
+            pile.transform.SetParent(_pileParent.transform);
 
             PileView pileView = pile.GetComponent<PileView>();
             pileView.Init(rate, codes);
@@ -192,28 +235,35 @@ namespace VisualiseR.CodeReview
 
         public void NextCode(Code code)
         {
-            int currPos = _medium.GetCodeFragmentPos(code);
+            int currPos = _codeFragmentsWithRate.IndexOf(code);
             foreach (var screen in screens)
             {
-                var currCode = _medium.GetCodeFragment(currPos);
+                var currCode = _codeFragmentsWithRate.ElementAt(currPos);
                 CodeReviewScreenView screenView = screen.GetComponent<CodeReviewScreenView>();
                 screenView.ChangeCode(currCode);
-                currPos = getNextCodePosition(currPos);
+                currPos = GetNextCodePosition(currPos);
             }
         }
 
-        private int getNextCodePosition(int pos)
+        private int GetNextCodePosition(int pos)
         {
-            return (pos + 1) % _medium.CodeFragments.Count;
+            return (pos + 1) % _codeFragmentsWithRate.Count;
         }
 
         public void RemoveCodeFragment(Code code)
         {
             _medium.RemoveCodeFragment(code);
-            if (_medium.CodeFragments.Count < screens.Count)
+            _codeFragmentsWithRate.Remove(code);
+            RemoveScreensIfNeeded();
+        }
+
+        internal void RemoveScreensIfNeeded()
+        {
+            while (_codeFragmentsWithRate.Count < screens.Count)
             {
                 var lastScreen = screens.Last();
                 Destroy(lastScreen);
+                screens.Remove(lastScreen);
             }
         }
     }

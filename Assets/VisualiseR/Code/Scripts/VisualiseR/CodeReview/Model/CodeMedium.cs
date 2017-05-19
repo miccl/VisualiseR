@@ -37,6 +37,20 @@ namespace VisualiseR.CodeReview
             return CodeFragments.IndexOf(code);
         }
 
+        public List<ICode> GetCodeFragmentsWithRate(Rate rate)
+        {
+            List<ICode> codeFragmentsWithRate = new List<ICode>();
+            foreach (var code in CodeFragments)
+            {
+                if (code.Rate.Equals(rate))
+                {
+                    codeFragmentsWithRate.Add(code);
+                }
+            }
+            return codeFragmentsWithRate;
+
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();

@@ -46,9 +46,8 @@ namespace VisualiseR.CodeReview
             HandleDragAndDrop();
         }
 
-        public void Init(ICode code, bool isFirst)
+        public void Init(bool isFirst)
         {
-            ChangeCode(code);
             IsFirst = isFirst;
         }
 
@@ -138,7 +137,7 @@ namespace VisualiseR.CodeReview
             var rotation = GetContextMenuRotation();
             contextMenu = Instantiate(Resources.Load("ContextMenuCanvas"), position, rotation) as GameObject;
             contextMenu.transform.Rotate(90, -180, 0);
-            contextMenu.transform.SetParent(transform.parent);
+            contextMenu.transform.SetParent(transform);
 
             //TODO direkte Verdrahtung entfernen
             ContextMenuView contextMenuView = contextMenu.GetComponent<ContextMenuView>();
@@ -156,7 +155,6 @@ namespace VisualiseR.CodeReview
             //TODO irgendwann nochmal verbessern, derzeit schwankt das immer hin und her
             Vector3 cameraBack = -Camera.main.transform.forward * 12;
             Vector3 shift = new Vector3(0, 0, cameraBack.z);
-            Debug.Log("shift:" + shift);
             Vector3 pos = transform.position + shift;
             pos.y = 2;
 

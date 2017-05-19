@@ -18,6 +18,9 @@ namespace VisualiseR.CodeReview
         [Inject]
         public NextCodeSignal NextCodeSignal { get; set; }
 
+        [Inject]
+        public RemoveCodeSignal RemoveCodeSignal { get; set; }
+
 
         public override void OnRegister()
         {
@@ -48,7 +51,8 @@ namespace VisualiseR.CodeReview
         {
             if (_view._code.Equals(code))
             {
-                //TODO verstecken und dem entsprechenden Stapel zuweisen
+//                RemoveCodeSignal.Dispatch(code);
+//                TODO verstecken und dem entsprechenden Stapel zuweisen
             }
         }
 

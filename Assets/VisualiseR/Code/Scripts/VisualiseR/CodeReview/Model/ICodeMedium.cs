@@ -15,6 +15,8 @@ namespace VisualiseR.CodeReview
 
         int GetCodeFragmentPos(ICode code);
 
+        List<ICode> GetCodeFragmentsWithRate(Rate rate);
+
         bool IsEmpty();
     }
 }

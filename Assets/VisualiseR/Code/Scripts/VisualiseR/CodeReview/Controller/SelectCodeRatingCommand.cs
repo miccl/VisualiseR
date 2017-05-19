@@ -1,6 +1,4 @@
-﻿using System;
-using strange.extensions.command.impl;
-using UnityEngine;
+﻿using strange.extensions.command.impl;
 
 namespace VisualiseR.CodeReview
 {
@@ -20,9 +18,12 @@ namespace VisualiseR.CodeReview
         public override void Execute()
         {
             Rate prevRate = code.Rate;
-            code.Rate = rate;
-            Logger.InfoFormat("Code {0} was rated with {1} (previous {2})", code, code.Rate, prevRate);
-            CodeRatingChangedSignal.Dispatch(code);
+            if (!prevRate.Equals(rate))
+            {
+                code.Rate = rate;
+                Logger.InfoFormat("Code {0} was rated with {1} (previous {2})", code, code.Rate, prevRate);
+                CodeRatingChangedSignal.Dispatch(code);
+            }
         }
     }
 }

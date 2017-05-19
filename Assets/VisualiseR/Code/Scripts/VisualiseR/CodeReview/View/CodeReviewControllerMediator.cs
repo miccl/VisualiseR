@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using strange.extensions.context.api;
 using strange.extensions.mediation.impl;
 using UnityEngine;
@@ -22,6 +23,12 @@ namespace VisualiseR.CodeReview
         public RemoveCodeSignal RemoveCodeSignal { get; set; }
 
         [Inject]
+        public CodeRatingChangedSignal CodeRatingChangedSignal { get; set; }
+
+        [Inject]
+        public PileSelectedSignal PileSelectedSignal { get; set; }
+
+        [Inject]
         public IPictureMedium PictureMedium { get; set; }
 
         [Inject]
@@ -35,26 +42,48 @@ namespace VisualiseR.CodeReview
         {
             NextCodeSignal.AddListener(OnNextCode);
             RemoveCodeSignal.AddListener(OnRemoveCode);
-            CodePositionChangedSignal.AddListener(OnCodePositionChanged);
+            CodeRatingChangedSignal.AddListener(OnCodeRatingChanged);
+            PileSelectedSignal.AddListener(OnPileSelected);
 
             InitView();
+        }
+
+        public override void OnRemove()
+        {
+            NextCodeSignal.RemoveListener(OnNextCode);
+            RemoveCodeSignal.RemoveListener(OnRemoveCode);
+            CodeRatingChangedSignal.RemoveListener(OnCodeRatingChanged);
+            PileSelectedSignal.RemoveListener(OnPileSelected);
+        }
+
+        private void OnPileSelected(Rate rate)
+        {
+            if (!View._rate.Equals(rate))
+            {
+                View._rate = rate;
+                View._codeFragmentsWithRate = View._medium.GetCodeFragmentsWithRate(rate);
+                View.ClearScreens();
+                View.InitialiseScreens();
+                View.UpdateCode();
+            }
+        }
+
+        private void OnCodeRatingChanged(Code code)
+        {
+            View._codeFragmentsWithRate.Remove(code);
+            View.RemoveScreensIfNeeded();
+            GetNextCodeFragment(code);
         }
 
         private void OnNextCode(Code code)
         {
             View.NextCode(code);
-
-        }
-
-        public override void OnRemove()
-        {
-            RemoveCodeSignal.RemoveListener(OnRemoveCode);
-            CodePositionChangedSignal.RemoveListener(OnCodePositionChanged);
         }
 
         private void InitView()
         {
             View._contextView = contextView;
+            View._rate = Rate.Unrated;
 
             object o = PlayerPrefsUtil.RetrieveObject(PlayerPrefsUtil.ROOM_KEY);
             if (o != null)
@@ -68,30 +97,26 @@ namespace VisualiseR.CodeReview
                 CodeMedium = CreateMockMedium();
             }
 
-            OnMediumChanged((CodeMedium) CodeMedium);
-        }
-
-        public void OnMediumChanged(CodeMedium medium)
-        {
-            View._medium = medium;
+            View._medium = (CodeMedium) CodeMedium;
             View.SetupMedium();
         }
 
         private void OnRemoveCode(Code code)
         {
-            var currPos = View._medium.GetCodeFragmentPos(code);
-            Code nextCode = (Code) View._medium.GetCodeFragment(currPos +1);
+            GetNextCodeFragment(code);
             View.RemoveCodeFragment(code);
-            OnNextCode(nextCode);
         }
 
-        private void OnCodePositionChanged(int pos)
+        private void GetNextCodeFragment(Code code)
         {
-            View._currCodePos = pos;
-            //TODO
-//            _view.LoadPictureIntoTexture(pos);
-        }
+            var currPos = View._codeFragmentsWithRate.IndexOf(code);
 
+            if (View._codeFragmentsWithRate.Count > 0)
+            {
+                Code nextCode = (Code) View._codeFragmentsWithRate.ElementAt((currPos + 1) % View._codeFragmentsWithRate.Count);
+                OnNextCode(nextCode);
+            }
+        }
 
         private void ConstructCodeMedium(IPictureMedium medium)
         {

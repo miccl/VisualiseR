@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using strange.extensions.mediation.impl;
+using strange.extensions.signal.impl;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,9 @@ namespace VisualiseR.CodeReview
 {
     public class PileView : View
     {
+        public Signal<Rate> RatePileSelectedSignal = new Signal<Rate>();
+
+
         internal Rate _rate { get; set; }
 
         internal List<ICode> _codes;
@@ -24,38 +28,28 @@ namespace VisualiseR.CodeReview
 
         }
 
-        protected override void Start()
+        public void Init(Rate rate, List<ICode> codes)
         {
-            base.Start();
-
+            _rate = rate;
+            _codes = codes;
+            UpdateView();
         }
 
         public void AddCode(Code code)
         {
             _codes.Add(code);
-            UpdateCode();
+            UpdateView();
         }
 
         public void RemoveCode(Code code)
         {
             _codes.Remove(code);
-            UpdateCode();
+            UpdateView();
         }
 
-        private void UpdateCode()
-        {
-            //TODO irgendwat aktualisieren
-
-        }
-
-        private void SetupView()
+        internal void UpdateView()
         {
             UpdateTitle();
-        }
-
-        private void UpdateView()
-        {
-
         }
 
         private void UpdateTitle()
@@ -63,11 +57,10 @@ namespace VisualiseR.CodeReview
             _titleText.text = String.Format("{0} ({1})", _rate, _codes.Count);
 
         }
-        public void Init(Rate rate, List<ICode> codes)
+
+        public void OnClick()
         {
-            _rate = rate;
-            _codes = codes;
-            SetupView();
+            RatePileSelectedSignal.Dispatch(_rate);
         }
     }
 }

@@ -103,6 +103,7 @@ namespace VisualiseR.CodeReview
             injectionBinder.Bind<CodePositionChangedSignal>().ToSingleton();
             injectionBinder.Bind<ContextMenuCanceledSignal>().ToSingleton();
             injectionBinder.Bind<CodeRatingChangedSignal>().ToSingleton();
+            injectionBinder.Bind<PileSelectedSignal>().ToSingleton();
         }
     }
 }

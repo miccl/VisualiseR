@@ -1,8 +1,9 @@
-﻿using VisualiseR.Common;
+﻿using System;
+using VisualiseR.Common;
 
 namespace VisualiseR.CodeReview
 {
-    public class Code: ICode
+    public class Code : ICode
     {
         public string Name { get; set; }
         public IPicture Pic { get; set; }
@@ -16,8 +17,7 @@ namespace VisualiseR.CodeReview
 
         public void saveCommentToTxt()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
-
 }
