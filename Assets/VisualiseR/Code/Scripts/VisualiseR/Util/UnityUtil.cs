@@ -13,7 +13,7 @@ namespace VisualiseR.Util
     /// </summary>
     public static class UnityUtil
     {
-//        private static readonly JCsLogger Logger = new JCsLogger(typeof(UnityUtil));
+        private static readonly JCsLogger Logger = new JCsLogger(typeof(UnityUtil));
 
         /// <summary>
         /// Defensive <see cref="Component.GetComponent{T}"/>-Alternative.
@@ -30,7 +30,7 @@ namespace VisualiseR.Util
 
             if (component == null)
             {
-//                Logger.ErrorFormat("Expected to find component of type {0} but found none: {1}", typeof(T), obj);
+                Logger.ErrorFormat("Expected to find component of type {0} but found none: {1}", typeof(T), obj);
             }
 
             return component;
@@ -54,7 +54,7 @@ namespace VisualiseR.Util
             }
             else
             {
-//                Logger.Error("Component " + typeof(T).ToString() + " not found on " + mono.name);
+                Logger.Error("Component " + typeof(T).ToString() + " not found on " + mono.name);
             }
         }
 
@@ -68,7 +68,7 @@ namespace VisualiseR.Util
             GameObject go = GameObject.Find(gameObjectName);
             if (go == null)
             {
-//                Logger.ErrorFormat("Cannot find '{0}' script", gameObjectName);
+                Logger.ErrorFormat("Cannot find '{0}' script", gameObjectName);
             }
             return go;
         }
@@ -79,7 +79,7 @@ namespace VisualiseR.Util
             GameObject go = GameObject.Find(gameObjectName);
             if (go == null)
             {
-//                Logger.ErrorFormat("Cannot find '{0}' script", gameObjectName);
+                Logger.ErrorFormat("Cannot find '{0}' script", gameObjectName);
             }
             return go;
         }
@@ -92,7 +92,7 @@ namespace VisualiseR.Util
             }
             catch (Exception e)
             {
-//                Logger.ErrorFormat("Scene '{0}' could not be loaded", sceneName, e);
+                Logger.ErrorFormat("Scene '{0}' could not be loaded", sceneName, e);
             }
         }
 

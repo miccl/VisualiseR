@@ -5,7 +5,6 @@ using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using UnityEngine;
 using VisualiseR.Common;
-using VisualiseR.Main;
 
 namespace VisualiseR.CodeReview
 {
@@ -94,7 +93,6 @@ namespace VisualiseR.CodeReview
             commandBinder.Bind<SelectedCodeRatingSignal>().To<SelectCodeRatingCommand>();
             commandBinder.Bind<SaveCommentSignal>().To<SaveCommentCommand>();
             commandBinder.Bind<RemoveCodeSignal>().To<RemoveCodeCommand>();
-
         }
 
         private void BindSignals()

@@ -115,10 +115,6 @@ namespace VisualiseR.Common
 
         internal static void AssertVectorsAreEqual(Vector3 expectedVector, Vector3 actualVector)
         {
-            if (expectedVector == null || actualVector == null)
-            {
-                Assert.Fail("vector is null");
-            }
             float tolerance = 0.1f;
             Assert.AreEqual(expectedVector.x, actualVector.x, tolerance);
             Assert.AreEqual(expectedVector.y, actualVector.y, tolerance);

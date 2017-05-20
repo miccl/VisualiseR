@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using strange.extensions.context.api;
 using strange.extensions.mediation.impl;
@@ -113,20 +114,40 @@ namespace VisualiseR.CodeReview
 
             if (View._codeFragmentsWithRate.Count > 0)
             {
-                Code nextCode = (Code) View._codeFragmentsWithRate.ElementAt((currPos + 1) % View._codeFragmentsWithRate.Count);
+                Code nextCode =
+                    (Code) View._codeFragmentsWithRate.ElementAt((currPos + 1) % View._codeFragmentsWithRate.Count);
                 OnNextCode(nextCode);
             }
         }
 
         private void ConstructCodeMedium(IPictureMedium medium)
         {
-            CodeMedium.Name = medium.Name;
-            foreach (var pic in medium.Pictures)
+            string mainDirName = String.Format("{0}_{1}", medium.Name, DateTime.Now.Ticks);
+            string mainDir = Application.persistentDataPath + Path.DirectorySeparatorChar + mainDirName;
+            DirectoryInfo mainDirInfo = DirectoryUtil.CreateDirectorysForCodeReview(mainDir);
+            if (mainDirInfo != null && mainDirInfo.Exists)
             {
-                ICode code = new Code();
-                code.Name = pic.Title;
-                code.Pic = pic;
-                CodeMedium.AddCodeFragment(code);
+                PlayerPrefsUtil.SaveValue(PlayerPrefsUtil.MAIN_DIR, mainDirInfo.FullName);
+
+                CodeMedium.Name = medium.Name;
+                foreach (var pic in medium.Pictures)
+                {
+                    ICode code = new Code();
+                    code.Name = pic.Title;
+
+                    var filePath = FileUtil.CopyFile(pic.Path,
+                        DirectoryUtil.GetRatingDirectory(mainDirInfo.FullName, Rate.Unrated));
+                    if (filePath != null)
+                    {
+                        pic.Path = filePath;
+                        code.Pic = pic;
+                    }
+                    else
+                    {
+                        Debug.LogErrorFormat("File '{0}' couldnt be copied", pic.Path);
+                    }
+                    CodeMedium.AddCodeFragment(code);
+                }
             }
         }
 

@@ -1,4 +1,8 @@
-﻿using strange.extensions.command.impl;
+﻿using System;
+using strange.extensions.command.impl;
+using UnityEngine;
+using VisualiseR.Common;
+using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
@@ -7,22 +11,41 @@ namespace VisualiseR.CodeReview
         private static readonly JCsLogger Logger = new JCsLogger(typeof(SelectCodeRatingCommand));
 
         [Inject]
-        public Code code { get; set; }
+        public Code _code { get; set; }
 
         [Inject]
-        public Rate rate { get; set; }
+        public Rate _rate { get; set; }
 
         [Inject]
         public CodeRatingChangedSignal CodeRatingChangedSignal { get; set; }
 
         public override void Execute()
         {
-            Rate prevRate = code.Rate;
-            if (!prevRate.Equals(rate))
+            Rate prevRate = _code.Rate;
+            if (!prevRate.Equals(_rate))
             {
-                code.Rate = rate;
-                Logger.InfoFormat("Code {0} was rated with {1} (previous {2})", code, code.Rate, prevRate);
-                CodeRatingChangedSignal.Dispatch(code);
+                _code.Rate = _rate;
+                Logger.InfoFormat("Code {0} was rated with {1} (previous {2})", _code, _code.Rate, prevRate);
+                MoveFileToRate(_code);
+
+                CodeRatingChangedSignal.Dispatch(_code);
+            }
+        }
+
+        private void MoveFileToRate(Code code)
+        {
+            string mainDir = PlayerPrefsUtil.RetrieveValue(PlayerPrefsUtil.MAIN_DIR);
+            if (!String.IsNullOrEmpty(mainDir))
+            {
+                var rateDirInfo = DirectoryUtil.GetRatingDirectory(mainDir, code.Rate);
+                if (rateDirInfo != null && rateDirInfo.Exists)
+                {
+                    FileUtil.MoveFile(code.Pic.Path, rateDirInfo.FullName);
+                }
+            }
+            else
+            {
+                Logger.ErrorFormat("Main dir not set");
             }
         }
     }

@@ -45,7 +45,7 @@ namespace VisualiseR.Common
 
         private void CheckIfValidFile()
         {
-            if (!DirectoryUtil.IsValidDirectory(uri) && !WebUtil.IsValidUrl(uri))
+            if (!DirectoryUtil.IsValidNotEmptyDirectory(uri) && !WebUtil.IsValidUrl(uri))
             {
                 //TODO implement error message
                 throw new FileNotFoundException(uri);

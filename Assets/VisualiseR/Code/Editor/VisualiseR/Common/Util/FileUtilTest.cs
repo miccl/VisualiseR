@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.IO;
+using NUnit.Framework;
 
 namespace VisualiseR.Common
 {
@@ -32,13 +33,12 @@ namespace VisualiseR.Common
                 const string pdfFile = "C:/file.pdf";
 
 
-               //when
+                //when
 
 
                 //then
                 Assert.False(FileUtil.IsImageFile(javaCode));
                 Assert.False(FileUtil.IsImageFile(pdfFile));
-
             }
         }
 
@@ -75,7 +75,6 @@ namespace VisualiseR.Common
                 //then
                 Assert.IsFalse(FileUtil.IsCodeFile(jpgFile));
                 Assert.IsFalse(FileUtil.IsCodeFile(pdfFile));
-
             }
         }
 
@@ -108,7 +107,6 @@ namespace VisualiseR.Common
                 //then
                 Assert.IsFalse(FileUtil.IsPdfFile(jpgFile));
                 Assert.IsFalse(FileUtil.IsPdfFile(javaCode));
-
             }
         }
 
@@ -140,7 +138,7 @@ namespace VisualiseR.Common
                 //when
 
                 //then
-                Assert.That(FileUtil.GetFileName(jpgFile), Is.EqualTo(expectedFileName));
+                Assert.That(FileUtil.GetFileNameWithExtension(jpgFile), Is.EqualTo(expectedFileName));
             }
         }
 
@@ -158,6 +156,56 @@ namespace VisualiseR.Common
 
                 //then
                 Assert.That(FileUtil.GetPathWithExtension(jpgFile, fileExtension), Is.EqualTo(expectedFileName));
+            }
+        }
+
+        [TestFixture]
+        public class CopyMethod
+        {
+            [Test]
+            public void testSimple()
+            {
+                //given
+                const string sourceFilePath = "D:\\Downloads\\VisualiseR_Test\\Copy\\test.txt";
+                const string destDirPath = "D:\\Downloads\\VisualiseR_Test\\Copy\\testerino";
+                const string destFilePath = "D:\\Downloads\\VisualiseR_Test\\Copy\\testerino\\test.txt";
+
+                //when
+                Assert.IsFalse(File.Exists(destDirPath));
+                FileUtil.CopyFile(sourceFilePath, destDirPath);
+
+                //then
+                Assert.IsTrue(File.Exists(destFilePath));
+                FileUtil.DeleleFile(destFilePath);
+                Assert.IsFalse(File.Exists(destFilePath));
+
+            }
+        }
+
+        [TestFixture]
+        public class MoveFileMethod
+        {
+            [Test]
+            public void HappyPath()
+            {
+                //given
+                const string sourceFilePath = "D:\\Downloads\\VisualiseR_Test\\Move\\test.txt";
+                FileUtil.CreateFileIfNotExists(sourceFilePath);
+                const string destDirectoryPath = "D:\\Downloads\\VisualiseR_Test\\Move\\testerino";
+                const string destFilePath= @"D:\Downloads\VisualiseR_Test\Move\testerino\test.txt";
+
+                //when
+                 Assert.IsTrue(File.Exists(sourceFilePath), "source file should exist before moving");
+                 Assert.IsFalse(File.Exists(destFilePath), "dest file should not exist before moving");
+                FileUtil.MoveFile(sourceFilePath, destDirectoryPath);
+
+                //then
+                Assert.IsFalse(File.Exists(sourceFilePath), "source file should not exist after moving");
+                Assert.IsTrue(File.Exists(destFilePath), "dest file should exist after moving");
+                FileUtil.DeleleFile(destFilePath);
+                FileUtil.DeleleFile(sourceFilePath);
+                Assert.IsFalse(File.Exists(destFilePath), "dest file should not exist");
+
             }
         }
     }

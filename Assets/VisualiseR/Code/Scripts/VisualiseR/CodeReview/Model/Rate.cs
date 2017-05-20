@@ -5,6 +5,6 @@
         Unrated,
         Uncritical,
         Minor,
-        Criticial
+        Critical
     }
 }

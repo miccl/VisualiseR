@@ -10,9 +10,10 @@ namespace VisualiseR.Util
         private static readonly JCsLogger Logger = new JCsLogger(typeof(PlayerPrefsUtil));
 
 
-        public const string AVATAR_KEY = "Avatar_Key";
-        public const string ROOM_KEY = "Room_Key";
-        public const string PLAYER_NAME_KEY = "Player_Name_Key";
+        public static readonly string AVATAR_KEY = "Avatar_Key";
+        public static readonly string ROOM_KEY = "Room_Key";
+        public static readonly string PLAYER_NAME_KEY = "Player_Name_Key";
+        public static readonly string MAIN_DIR = "Main_Dir";
 
 
         public static void saveObject(string key, object o)

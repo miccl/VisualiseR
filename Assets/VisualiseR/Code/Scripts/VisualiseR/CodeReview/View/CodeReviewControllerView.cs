@@ -168,12 +168,7 @@ namespace VisualiseR.CodeReview
         {
             InstiatePileParent();
 
-//            List<Vector3> pilePositions = MathUtil.ComputePilePositions(rates, PILE_VALUE_X_START,
             List<Vector3> pilePositions = GetPilePositions();
-            foreach (var position in pilePositions)
-            {
-                Debug.Log(position);
-            }
 
             Array rates = EnumUtil.GetValues<Rate>();
             for (var i = 0; i < pilePositions.Count; i++)

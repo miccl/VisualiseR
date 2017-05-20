@@ -58,7 +58,7 @@ namespace VisualiseR.CodeReview
         {
             _goodButtonSelectable.interactable = !_code.Rate.Equals(Rate.Uncritical);
             _okButtonSelectable.interactable = !_code.Rate.Equals(Rate.Minor);
-            _badButtonSelectable.interactable = !_code.Rate.Equals(Rate.Criticial);
+            _badButtonSelectable.interactable = !_code.Rate.Equals(Rate.Critical);
         }
 
         void Update()
@@ -97,7 +97,7 @@ namespace VisualiseR.CodeReview
 
         public void OnRateBadButtonClick()
         {
-            DispatchRatingIfChanged(Rate.Criticial);
+            DispatchRatingIfChanged(Rate.Critical);
         }
 
         private void DispatchRatingIfChanged(Rate rate)
