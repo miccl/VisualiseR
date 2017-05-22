@@ -8,6 +8,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// Controls the entire
+    /// </summary>
     public class CodeReviewControllerView : View
     {
         internal ICodeMedium _medium;

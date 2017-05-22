@@ -39,7 +39,10 @@ namespace VisualiseR.Main
         {
             _avatarDropdown.ClearOptions();
             _avatarDropdown.AddOptions(avatarTypes);
-            _avatarDropdown.captionText.text = CHOOSE_AVATAR_TEXT;
+            if (String.IsNullOrEmpty(_avatarDropdown.captionText.text))
+            {
+                _avatarDropdown.captionText.text = CHOOSE_AVATAR_TEXT;
+            }
         }
 
 

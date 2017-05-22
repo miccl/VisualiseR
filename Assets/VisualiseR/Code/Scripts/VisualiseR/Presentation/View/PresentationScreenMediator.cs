@@ -1,5 +1,6 @@
 ﻿using strange.extensions.mediation.impl;
 using VisualiseR.Common;
+using VisualiseR.Main;
 
 namespace VisualiseR.Presentation
 {

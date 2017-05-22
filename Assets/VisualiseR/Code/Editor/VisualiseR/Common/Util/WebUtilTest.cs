@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using VisualiseR.Util;
 
 namespace VisualiseR.Common
 {

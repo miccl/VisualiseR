@@ -1,6 +1,6 @@
 ﻿using strange.extensions.signal.impl;
 
-namespace VisualiseR.Common
+namespace VisualiseR.Main
 {
     public class LoadFilesSignal : Signal<string>
     {

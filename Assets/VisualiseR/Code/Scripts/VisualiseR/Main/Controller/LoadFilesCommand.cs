@@ -2,8 +2,10 @@
 using System.IO;
 using JetBrains.Annotations;
 using strange.extensions.command.impl;
+using VisualiseR.Common;
+using VisualiseR.Util;
 
-namespace VisualiseR.Common
+namespace VisualiseR.Main
 {
     /// <summary>
     /// Loads the files from Disk and creates _medium model.

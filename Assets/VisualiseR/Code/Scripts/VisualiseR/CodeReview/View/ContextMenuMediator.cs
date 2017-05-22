@@ -9,7 +9,7 @@ namespace VisualiseR.CodeReview
         public ContextMenuView _view { get; set; }
 
         [Inject]
-        public SelectedCodeRatingSignal SelectedCodeRatingSignal { get; set; }
+        public SelectCodeRatingSignal SelectCodeRatingSignal { get; set; }
 
         [Inject]
         public SaveCommentSignal SaveCommentSignal { get; set; }
@@ -56,7 +56,7 @@ namespace VisualiseR.CodeReview
 
         private void OnRateSelected(Code code, Rate rate)
         {
-            SelectedCodeRatingSignal.Dispatch(code, rate);
+            SelectCodeRatingSignal.Dispatch(code, rate);
             OnContextMenuCanceled();
         }
 

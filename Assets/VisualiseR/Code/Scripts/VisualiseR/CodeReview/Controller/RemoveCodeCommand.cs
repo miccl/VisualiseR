@@ -1,8 +1,10 @@
-﻿using System;
-using strange.extensions.command.impl;
+﻿using strange.extensions.command.impl;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// Delete
+    /// </summary>
     public class RemoveCodeCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(RemoveCodeCommand));

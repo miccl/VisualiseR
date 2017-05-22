@@ -90,7 +90,7 @@ namespace VisualiseR.CodeReview
             }
 
             commandBinder.Bind<NextCodeSignal>().To<NextCodeCommand>();
-            commandBinder.Bind<SelectedCodeRatingSignal>().To<SelectCodeRatingCommand>();
+            commandBinder.Bind<SelectCodeRatingSignal>().To<SelectCodeRatingCommand>();
             commandBinder.Bind<SaveCommentSignal>().To<SaveCommentCommand>();
             commandBinder.Bind<RemoveCodeSignal>().To<RemoveCodeCommand>();
         }

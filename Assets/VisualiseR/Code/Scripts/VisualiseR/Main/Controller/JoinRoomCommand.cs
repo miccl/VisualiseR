@@ -1,8 +1,9 @@
 ﻿using System;
 using strange.extensions.command.impl;
 using UnityTest;
+using VisualiseR.Common;
 
-namespace VisualiseR.Common
+namespace VisualiseR.Main
 {
     public class JoinRoomCommand : Command
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using strange.extensions.command.impl;
-using UnityEngine.SceneManagement;
+using VisualiseR.Common;
 using VisualiseR.Util;
 
-namespace VisualiseR.Common
+namespace VisualiseR.Main
 {
     public class CreateRoomCommand : Command
     {
@@ -27,10 +27,6 @@ namespace VisualiseR.Common
 
         [Inject]
         public ErrorSignal ErrorSignal { get; set; }
-
-        [Inject]
-        public RoomChangedSignal RoomChangedSignal { get; set; }
-
 
         public override void Execute()
         {

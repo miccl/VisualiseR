@@ -67,8 +67,10 @@ namespace VisualiseR.Main
             mediationBinder.Bind<CreateRoomView>().To<CreateRoomMediator>();
             mediationBinder.Bind<JoinRoomView>().To<JoinRoomMediator>();
             mediationBinder.Bind<SettingsView>().To<SettingsMediator>();
-
+            mediationBinder.Bind<HelpView>().To<HelpMediator>();
+            mediationBinder.Bind<AboutView>().To<AboutMediator>();
             mediationBinder.Bind<SelectDiskFileView>().To<SelectDiskFileMediator>();
+            mediationBinder.Bind<SelectWebFileView>().To<SelectWebFileMediator>();
         }
 
         private void BindCommands()
@@ -95,7 +97,6 @@ namespace VisualiseR.Main
         {
             injectionBinder.Bind<MediumChangedSignal>().ToSingleton();
             injectionBinder.Bind<ErrorSignal>().ToSingleton();
-            injectionBinder.Bind<RoomChangedSignal>().ToSingleton();
         }
     }
 }

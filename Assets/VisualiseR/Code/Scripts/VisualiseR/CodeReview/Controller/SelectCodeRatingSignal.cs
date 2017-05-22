@@ -2,7 +2,7 @@
 
 namespace VisualiseR.CodeReview
 {
-    public class SelectedCodeRatingSignal : Signal<Code, Rate>
+    public class SelectCodeRatingSignal : Signal<Code, Rate>
 
     {
 

@@ -3,12 +3,12 @@ using System.IO;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace VisualiseR.Common
+namespace VisualiseR.Util
 {
     public static class WebUtil
     {
 
-        private static readonly JCsLogger Logger = new JCsLogger(typeof(LoadFilesCommand));
+        private static readonly JCsLogger Logger = new JCsLogger(typeof(WebUtil));
 
         public static bool IsValidUrl([NotNull] string url)
         {

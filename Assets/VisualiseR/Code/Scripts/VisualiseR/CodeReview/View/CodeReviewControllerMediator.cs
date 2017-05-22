@@ -15,9 +15,6 @@ namespace VisualiseR.CodeReview
         public CodeReviewControllerView View { get; set; }
 
         [Inject]
-        public CodePositionChangedSignal CodePositionChangedSignal { get; set; }
-
-        [Inject]
         public NextCodeSignal NextCodeSignal { get; set; }
 
         [Inject]
