@@ -62,7 +62,8 @@ namespace VisualiseR.CodeReview
                 View._codeFragmentsWithRate = View._medium.GetCodeFragmentsWithRate(rate);
                 View.ClearScreens();
                 View.InitialiseScreens();
-                View.UpdateCode();
+                View.RemoveScreensIfNeeded();
+                NextCodeSignal.Dispatch((Code) View._codeFragmentsWithRate[0]);
             }
         }
 
@@ -113,7 +114,7 @@ namespace VisualiseR.CodeReview
             {
                 Code nextCode =
                     (Code) View._codeFragmentsWithRate.ElementAt((currPos + 1) % View._codeFragmentsWithRate.Count);
-                OnNextCode(nextCode);
+                NextCodeSignal.Dispatch(nextCode);
             }
         }
 

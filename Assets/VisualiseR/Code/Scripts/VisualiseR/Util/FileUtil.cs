@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
+using Google.ProtocolBuffers;
 using JetBrains.Annotations;
 
 namespace VisualiseR.Common
@@ -198,6 +201,12 @@ namespace VisualiseR.Common
                 Logger.ErrorFormat("Source file '{0}' does not exist", sourceFilePath);
             }
             return null;
+        }
+
+        public static string GetSizeInBytes(string picPath)
+        {
+            var sizeInBytes = new FileInfo(picPath).Length;
+            return String.Format("{0} Bytes", sizeInBytes);
         }
     }
 }

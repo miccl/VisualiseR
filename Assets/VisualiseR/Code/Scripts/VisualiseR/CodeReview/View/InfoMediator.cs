@@ -5,17 +5,25 @@ namespace VisualiseR.CodeReview
     public class InfoMediator : Mediator
     {
         [Inject]
-        public InfoView View { get; set; }
+        public InfoView _view { get; set; }
+
+        [Inject]
+        public NextCodeSignal NextCodeSignal { get; set; }
 
 
         public override void OnRegister()
         {
-            base.OnRegister();
+            NextCodeSignal.AddListener(OnNextCode);
         }
 
         public override void OnRemove()
         {
-            base.OnRemove();
+            NextCodeSignal.RemoveListener(OnNextCode);
+        }
+
+        private void OnNextCode(Code code)
+        {
+            _view.UpdateView(code);
         }
     }
 }

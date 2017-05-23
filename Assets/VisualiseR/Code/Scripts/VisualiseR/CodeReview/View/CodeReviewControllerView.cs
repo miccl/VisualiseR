@@ -17,7 +17,6 @@ namespace VisualiseR.CodeReview
         internal List<ICode> _codeFragmentsWithRate;
         public Rate _rate;
         internal IPlayer _player;
-        internal int _currCodePos;
 
 
         internal List<GameObject> screens = new List<GameObject>();
@@ -69,6 +68,11 @@ namespace VisualiseR.CodeReview
         private const float PILE_VALUE_Y = 0.1f;
 
 
+        private const float INFO_DISTANCE = 5;
+
+        private const int INFO_RADIUS = -75;
+
+
         protected override void Awake()
         {
             base.Awake();
@@ -85,22 +89,13 @@ namespace VisualiseR.CodeReview
             if (_medium != null && !_medium.IsEmpty())
             {
                 _codeFragmentsWithRate = _medium.GetCodeFragmentsWithRate(Rate.Unrated);
-                _currCodePos = 0;
                 InitialiseScreens();
                 InitialisePiles();
-                UpdateCode();
+                InstantiateInfoScreen();
+                NextCode(_codeFragmentsWithRate[0]);
             }
         }
 
-        internal void UpdateCode()
-        {
-            RemoveScreensIfNeeded();
-            for (int i = 0; i < screens.Count; i++)
-            {
-                CodeReviewScreenView screenView = screens[i].GetComponent<CodeReviewScreenView>();
-                screenView.ChangeCode(_codeFragmentsWithRate.ElementAt(i));
-            }
-        }
 
         internal void ClearScreens()
         {
@@ -169,7 +164,7 @@ namespace VisualiseR.CodeReview
 
         private void InitialisePiles()
         {
-            InstiatePileParent();
+            InstantiatePileParent();
 
             List<Vector3> pilePositions = GetPilePositions();
 
@@ -188,7 +183,7 @@ namespace VisualiseR.CodeReview
             }
         }
 
-        private void InstiatePileParent()
+        private void InstantiatePileParent()
         {
             if (_pileParent == null)
             {
@@ -222,7 +217,33 @@ namespace VisualiseR.CodeReview
             _piles.Add(pile);
         }
 
-        public void NextCode(Code code)
+        private void InstantiateInfoScreen()
+        {
+            var computeSpawnPositionFromStartPosition =
+                MathUtil.ComputeSpawnPositionFromStartPosition(INFO_DISTANCE, INFO_RADIUS, 90, 2);
+            if (computeSpawnPositionFromStartPosition != null)
+            {
+                Vector3 pos = (Vector3) computeSpawnPositionFromStartPosition;
+                Vector3 relativePos = Vector3.zero - pos;
+                Quaternion rotation = Quaternion.LookRotation(relativePos);
+
+                var info = (GameObject) Instantiate(Resources.Load("InfoCanvas"), pos, rotation);
+                info.transform.Rotate(0, -180, 0);
+                info.name = "InfoScreen";
+                info.transform.SetParent(_contextView.transform);
+
+                //TODO direkte verbindung verhindern
+                InfoView infoView = info.GetComponent<InfoView>();
+                infoView.UpdateView(_codeFragmentsWithRate[0]);
+            }
+        }
+
+        /// <summary>
+        /// Shows the given code in the center of the scene.
+        /// Rotates the others accordingly around.
+        /// </summary>
+        /// <param name="code"></param>
+        public void NextCode(ICode code)
         {
             int currPos = _codeFragmentsWithRate.IndexOf(code);
             foreach (var screen in screens)
