@@ -132,7 +132,7 @@ namespace VisualiseR.CodeReview
                 {
                     ICode code = new Code();
                     code.Name = pic.Title;
-
+                    code.Path = pic.Path;
                     var filePath = FileUtil.CopyFile(pic.Path,
                         DirectoryUtil.GetRatingDirectory(mainDirInfo.FullName, Rate.Unrated));
                     if (filePath != null)

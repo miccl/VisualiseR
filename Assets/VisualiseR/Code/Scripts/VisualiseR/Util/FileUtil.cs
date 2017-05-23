@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
-using Google.ProtocolBuffers;
+using System.Security.Principal;
 using JetBrains.Annotations;
 
 namespace VisualiseR.Common
@@ -82,7 +82,8 @@ namespace VisualiseR.Common
         /// <summary>
         /// Returns path with the exentsion
         /// </summary>
-        /// <param name="extension"></param>
+        /// <param name="filePath"></param>
+        /// <param name="fileExtension"></param>
         /// <returns></returns>
         public static string GetPathWithExtension(string filePath, string fileExtension)
         {
@@ -203,10 +204,30 @@ namespace VisualiseR.Common
             return null;
         }
 
-        public static string GetSizeInBytes(string picPath)
+        public static string GetSizeInBytes(string filePath)
         {
-            var sizeInBytes = new FileInfo(picPath).Length;
+            var sizeInBytes = new FileInfo(filePath).Length;
             return String.Format("{0} Bytes", sizeInBytes);
+        }
+
+        public static string GetOwner(string filePath)
+        {
+//            var fs = File.GetAccessControl(filePath);
+//
+//            var sid = fs.GetOwner(typeof(SecurityIdentifier));
+//            Console.WriteLine(sid); // SID
+//
+//            var ntAccount = sid.Translate(typeof(NTAccount));
+//            Console.WriteLine(ntAccount); // DOMAIN\username
+
+            return "Owner";
+        }
+
+        public static string GetLastModified(string filePath)
+        {
+            DateTime lastModified = File.GetLastWriteTime(filePath);
+
+            return lastModified.ToString("dd/MM/yyyy HH:mm:ss");
         }
     }
 }

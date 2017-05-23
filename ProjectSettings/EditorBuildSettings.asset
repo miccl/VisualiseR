@@ -6,11 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/VisualiseR/Scenes/Main.unity
+    path: Assets/VisualiseR/Content/Scenes/Main.unity
     guid: 8c22ac960505c0c489efcf9c79d776f5
   - enabled: 1
-    path: Assets/VisualiseR/Scenes/CodeReview.unity
+    path: Assets/VisualiseR/Content/Scenes/CodeReview.unity
     guid: 8d9dfa82075053d4da7f09a151aca1a5
   - enabled: 0
-    path: Assets/VisualiseR/Scenes/Presentation.unity
+    path: Assets/VisualiseR/Content/Scenes/Presentation.unity
     guid: 2b744d4eff688ee43b2b3c81747a0faf
