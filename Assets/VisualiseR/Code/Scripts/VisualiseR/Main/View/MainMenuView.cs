@@ -15,19 +15,30 @@ public class MainMenuView : View
     private GameObject _helpPanel;
     private GameObject _createRoomPanel;
     private GameObject _joinRoomPanel;
+    private AudioSource _backgroundAudioSource;
+    private bool _isMuted;
 
-    protected override void Start()
+    protected override void Awake()
     {
+        base.Awake();
         GameObject menuCanvas = UnityUtil.FindGameObject("MenuCanvas");
         _settingsPanel = menuCanvas.transform.FindChild("SettingsPanel").gameObject;
         _helpPanel = menuCanvas.transform.FindChild("HelpPanel").gameObject;
         _createRoomPanel = menuCanvas.transform.FindChild("CreateRoomPanel").gameObject;
         _joinRoomPanel = menuCanvas.transform.FindChild("JoinRoomPanel").gameObject;
 
+        _backgroundAudioSource = menuCanvas.GetComponent<AudioSource>();
+
 
         audioImage = transform.FindChild("AudioButton").GetComponent<Image>();
 
 //        _settingsPanel = GameObject.Find("SettingsPanel");
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        _isMuted = (PlayerPrefsUtil.RetrieveValue(PlayerPrefsUtil.AUDIO_MUTED, 0) != 0);
     }
 
     public void OnCreateRoomButtonClick()
@@ -50,16 +61,18 @@ public class MainMenuView : View
 
     public void OnAudioButtonClick()
     {
-        isAudioOn = !isAudioOn;
-        if (isAudioOn)
+        _isMuted = !_isMuted;
+        _backgroundAudioSource.mute = _isMuted;
+        if (!_isMuted)
         {
             audioImage.sprite = audioOnSprite;
-            //TODO how to toggle audio
+            _backgroundAudioSource.PlayDelayed(0);
         }
         else
         {
             audioImage.sprite = audioOffSprite;
         }
+
     }
 
     public void OnHelpButtonClick()
