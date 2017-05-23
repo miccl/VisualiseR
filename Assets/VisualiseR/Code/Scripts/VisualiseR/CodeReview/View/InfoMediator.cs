@@ -1,10 +1,7 @@
 ﻿using strange.extensions.mediation.impl;
-using UnityEditor;
-using UnityEngine;
 
 namespace VisualiseR.CodeReview
 {
-
     public class InfoMediator : Mediator
     {
         [Inject]

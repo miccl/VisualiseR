@@ -40,7 +40,11 @@ namespace VisualiseR.CodeReview
                 var rateDirInfo = DirectoryUtil.GetRatingDirectory(mainDir, code.Rate);
                 if (rateDirInfo != null && rateDirInfo.Exists)
                 {
-                    FileUtil.MoveFile(code.Pic.Path, rateDirInfo.FullName);
+                    string destFilePath = FileUtil.MoveFile(code.Pic.Path, rateDirInfo.FullName);
+                    if (destFilePath != null)
+                    {
+                        code.Pic.Path = destFilePath;
+                    }
                 }
             }
             else

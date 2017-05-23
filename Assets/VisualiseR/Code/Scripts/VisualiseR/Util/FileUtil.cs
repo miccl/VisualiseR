@@ -175,7 +175,7 @@ namespace VisualiseR.Common
         /// </summary>
         /// <param name="sourceFilePath"></param>
         /// <param name="destDirectoryPath"></param>
-        public static void MoveFile(string sourceFilePath, string destDirectoryPath)
+        public static string MoveFile(string sourceFilePath, string destDirectoryPath)
         {
             DirectoryUtil.CreateDirectoryIfNotExists(destDirectoryPath);
             if (File.Exists(sourceFilePath))
@@ -186,6 +186,7 @@ namespace VisualiseR.Common
                 {
                     Directory.Move(sourceFilePath, destFilePath);
                     Logger.InfoFormat("Moved file '{0}' to '{1}'", sourceFilePath, destFilePath);
+                    return destFilePath;
                 }
                 else
                 {
@@ -196,6 +197,7 @@ namespace VisualiseR.Common
             {
                 Logger.ErrorFormat("Source file '{0}' does not exist", sourceFilePath);
             }
+            return null;
         }
     }
 }
