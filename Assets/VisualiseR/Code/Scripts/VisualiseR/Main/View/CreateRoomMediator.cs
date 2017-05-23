@@ -16,9 +16,6 @@ namespace VisualiseR.Main
         public MediumChangedSignal MediumChangedSignal { get; set; }
 
         [Inject]
-        public ErrorSignal ErrorSignal { get; set; }
-
-        [Inject]
         public CreateRoomSignal CreateRoomSignal { get; set; }
 
         [Inject]
@@ -29,7 +26,6 @@ namespace VisualiseR.Main
             _view.SelectDiskFileButtonClickedSignal.AddListener(OnSelectDiskFileButtonClicked);
             _view.CreateRoomButtonClickedSignal.AddListener(OnCreateRoomButtonClick);
             MediumChangedSignal.AddListener(OnMediumChanged);
-            ErrorSignal.AddListener(OnError);
             _view.ChoosenMedium = Medium;
         }
 
@@ -43,7 +39,6 @@ namespace VisualiseR.Main
             _view.SelectDiskFileButtonClickedSignal.RemoveListener(OnSelectDiskFileButtonClicked);
             _view.CreateRoomButtonClickedSignal.RemoveListener(OnCreateRoomButtonClick);
             MediumChangedSignal.RemoveListener(OnMediumChanged);
-            ErrorSignal.RemoveListener(OnError);
         }
 
         private void OnCreateRoomButtonClick(string roomName, RoomType roomType, IPictureMedium medium)

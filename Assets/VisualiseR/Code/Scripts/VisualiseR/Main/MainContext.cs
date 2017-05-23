@@ -91,12 +91,13 @@ namespace VisualiseR.Main
             commandBinder.Bind<LoadFilesSignal>().To<LoadFilesCommand>();
             commandBinder.Bind<CreateRoomSignal>().To<CreateRoomCommand>();
             commandBinder.Bind<JoinRoomSignal>().To<JoinRoomSignal>();
+            commandBinder.Bind<MessageSignal>().To<MessageCommand>();
         }
 
         private void BindSignals()
         {
             injectionBinder.Bind<MediumChangedSignal>().ToSingleton();
-            injectionBinder.Bind<ErrorSignal>().ToSingleton();
+
         }
     }
 }

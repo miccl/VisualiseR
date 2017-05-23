@@ -26,7 +26,7 @@ namespace VisualiseR.Main
         public IPlayer player { get; set; }
 
         [Inject]
-        public ErrorSignal ErrorSignal { get; set; }
+        public MessageSignal MessageSignal { get; set; }
 
         public override void Execute()
         {
@@ -78,14 +78,15 @@ namespace VisualiseR.Main
             {
                 string errorMessage = "Room name wasn't choosen yet";
                 Logger.Error(errorMessage);
-                ErrorSignal.Dispatch(errorMessage);
+
+                MessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
                 return false;
             }
             if (_medium.IsEmpty())
             {
                 string errorMessage = "PictureMedium wasn't choosen yet";
                 Logger.Error(errorMessage);
-                ErrorSignal.Dispatch(errorMessage);
+                MessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
                 return false;
             }
             return true;

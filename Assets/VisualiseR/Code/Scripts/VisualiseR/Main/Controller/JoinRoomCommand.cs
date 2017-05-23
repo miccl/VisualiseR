@@ -1,6 +1,5 @@
 ﻿using System;
 using strange.extensions.command.impl;
-using UnityTest;
 using VisualiseR.Common;
 
 namespace VisualiseR.Main
@@ -13,13 +12,13 @@ namespace VisualiseR.Main
         public string RoomName { get; set; }
 
         [Inject]
-        public ErrorSignal ErrorSignal { get; set; }
+        public MessageSignal MessageSignal { get; set; }
 
         [Inject]
-        public IPlayer player { get; set; }
+        public IPlayer _player { get; set; }
 
         [Inject]
-        public IRoom room { get; set; }
+        public IRoom _room { get; set; }
 
         public override void Execute()
         {
@@ -27,7 +26,7 @@ namespace VisualiseR.Main
             {
                 //TODO
 
-                Logger.InfoFormat("Player {0} joined Room {}", player, room);
+                Logger.InfoFormat("Player {0} joined Room {}", _player, _room);
             }
         }
 
@@ -40,7 +39,7 @@ namespace VisualiseR.Main
                 {
                     string errorMessage = "Room name wasn't choosen yet";
                     Logger.Error(errorMessage);
-                    ErrorSignal.Dispatch(errorMessage);
+                    MessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
                     return false;
                 }
             }
