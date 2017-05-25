@@ -6,27 +6,31 @@ namespace VisualiseR.Presentation
 {
     public class NextSlideCommand : Command
     {
+        private static readonly JCsLogger Logger = new JCsLogger(typeof(NextSlideCommand));
+
         [Inject]
         public Player _player { get; set; }
 
         [Inject]
-        public CodeMedium _medium { get; set; }
+        public SlideMedium _medium { get; set; }
 
         [Inject]
-        public int position { get; set; }
-
-        [Inject]
-        public CodePositionChangedSignal _codePositionChangedSignal { get; set; }
+        public SlidePositionChangedSignal SlidePositionChangedSignal { get; set; }
 
         public override void Execute()
         {
             if (AcessList.NavigateCodeRight.Contains(_player.Type))
             {
-                if (_medium.CodeFragments.Count > 0)
+                if (_medium.Slides.Count > 0)
                 {
-                    position = (position + 1) % _medium.CodeFragments.Count;
-                    _codePositionChangedSignal.Dispatch(position);
+                    _medium.NextSlide();
+                    Logger.InfoFormat("Next slide (Curr pos: {0})", _medium.CurrentPos);
+                    SlidePositionChangedSignal.Dispatch();
                 }
+            }
+            else
+            {
+                Logger.InfoFormat("Player {0} has no rights for command '{1}'", _player, typeof(NextSlideCommand));
             }
         }
     }

@@ -1,6 +1,7 @@
-﻿using System.Collections;
-using System.IO;
+﻿using System;
+using System.Collections;
 using strange.extensions.mediation.impl;
+using strange.extensions.signal.impl;
 using UnityEngine;
 using VisualiseR.Common;
 
@@ -10,75 +11,47 @@ namespace VisualiseR.Presentation
     {
         private const string FILE_PREFIX = "file:///";
 
-        internal IPictureMedium _medium { get; set; }
+        internal Signal<IPlayer, ISlideMedium> NextSlideSignal = new Signal<IPlayer, ISlideMedium>();
+        internal Signal<IPlayer, ISlideMedium> PrevSlideSignal = new Signal<IPlayer, ISlideMedium>();
 
-        private IPicture _currPicture;
-        private int _currPicturePos;
+        internal ISlideMedium _medium { get; set; }
+        internal IPlayer _player { get; set; }
 
-        protected override void Awake()
+        public void Init(ISlideMedium slideMedium, IPlayer player)
         {
+            _medium = slideMedium;
+            _player = player;
+
             SetupMedium();
         }
 
-        internal void SetupMedium()
+        private void SetupMedium()
         {
-            if (_medium == null)
+            if (_medium != null)
             {
-                _medium = CreateMockMedium();
+                LoadCurrentSlide();
             }
-
-            _currPicturePos = 0;
-            _currPicture = _medium.GetPicture(0);
-
-            StartCoroutine(LoadImageIntoTexture(_currPicture.Path));
         }
 
-        //TODO vielleicht auslagern in einen Command
-        private IPictureMedium CreateMockMedium()
+        private void NextSlide()
         {
-            IPictureMedium medium = new PictureMedium
-            {
-                Name = "Test"
-            };
-
-            for (int i = 0; i < 3; i++)
-            {
-                var pic = "pic" + i;
-                Texture2D tex = Resources.Load<Texture2D>(pic);
-                string filePath = Application.persistentDataPath + pic + ".png";
-                File.WriteAllBytes(filePath, tex.EncodeToPNG());
-                medium.AddPicture(new Picture
-                {
-                    Title = pic,
-                    Path = filePath
-                });
-                Debug.Log(filePath);
-            }
-
-            return medium;
-        }
-
-        private void NextPicture()
-        {
-            _currPicturePos = (_currPicturePos + 1) % _medium.Pictures.Count;
-            LoadPictureIntoTexture(_currPicturePos);
+            NextSlideSignal.Dispatch(_player, _medium);
         }
 
         private void PrevPicture()
         {
-            _currPicturePos = _currPicturePos - 1;
-            if (_currPicturePos == -1)
-            {
-                _currPicturePos = _medium.Pictures.Count - 1;
-            }
-            LoadPictureIntoTexture(_currPicturePos);
+            PrevSlideSignal.Dispatch(_player, _medium);
         }
 
-        private void LoadPictureIntoTexture(int picturePos)
+        internal void LoadCurrentSlide()
         {
-            _currPicture = _medium.GetPicture(picturePos);
-            StartCoroutine(LoadImageIntoTexture(_currPicture.Path));
+            string path = _medium.CurrentSlide().Pic.Path;
+            if (!String.IsNullOrEmpty(path))
+            {
+                StartCoroutine(LoadImageIntoTexture(path));
+            }
         }
+
 
         IEnumerator LoadImageIntoTexture(string path)
         {
@@ -96,7 +69,7 @@ namespace VisualiseR.Presentation
         {
             if (Input.GetButtonDown("Fire1"))
             {
-                NextPicture();
+                NextSlide();
             }
 
             if (Input.GetButtonDown("Fire2"))

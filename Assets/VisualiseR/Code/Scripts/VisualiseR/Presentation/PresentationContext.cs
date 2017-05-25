@@ -55,6 +55,8 @@ namespace VisualiseR.Presentation
             injectionBinder.Bind<IPicture>().To<Picture>().ToSingleton();
             injectionBinder.Bind<IPlayer>().To<Player>().ToSingleton();
             injectionBinder.Bind<IRoom>().To<Room>().ToSingleton();
+            injectionBinder.Bind<ISlide>().To<Slide>().ToSingleton();
+            injectionBinder.Bind<ISlideMedium>().To<SlideMedium>().ToSingleton();
         }
 
         private void BindServices()
@@ -65,7 +67,6 @@ namespace VisualiseR.Presentation
         private void BindMediators()
         {
             mediationBinder.Bind<PresentationScreenView>().To<PresentationScreenMediator>();
-            mediationBinder.Bind<SelectDiskFileView>().To<SelectDiskFileMediator>();
         }
 
         private void BindCommands()
@@ -82,15 +83,14 @@ namespace VisualiseR.Presentation
                     .Once()
                     .InSequence();
             }
+            commandBinder.Bind<NextSlideSignal>().To<NextSlideCommand>();
+            commandBinder.Bind<PrevSlideSignal>().To<PrevSlideCommand>();
 
-            commandBinder.Bind<LoadFilesSignal>().To<LoadFilesCommand>();
-            commandBinder.Bind<SelectDiskFileSignal>().To<SelectDiskFileCommand>();
         }
 
         private void BindSignals()
         {
-            injectionBinder.Bind<ScoreChangedSignal>().ToSingleton();
-            injectionBinder.Bind<MediumChangedSignal>().ToSingleton();
+            injectionBinder.Bind<SlidePositionChangedSignal>().ToSingleton();
         }
     }
 }

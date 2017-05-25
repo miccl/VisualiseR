@@ -121,7 +121,7 @@ namespace VisualiseR.CodeReview
         private void ConstructCodeMedium(IPictureMedium medium)
         {
             string mainDirName = String.Format("{0}_{1}", medium.Name, DateTime.Now.Ticks);
-            string mainDir = Application.persistentDataPath + Path.DirectorySeparatorChar + mainDirName;
+            string mainDir = Application.persistentDataPath + Path.DirectorySeparatorChar + "CodeReviews" + Path.DirectorySeparatorChar + mainDirName;
             DirectoryInfo mainDirInfo = DirectoryUtil.CreateDirectorysForCodeReview(mainDir);
             if (mainDirInfo != null && mainDirInfo.Exists)
             {

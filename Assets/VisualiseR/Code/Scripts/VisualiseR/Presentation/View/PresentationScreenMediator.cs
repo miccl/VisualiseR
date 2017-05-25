@@ -10,27 +10,42 @@ namespace VisualiseR.Presentation
         public PresentationScreenView view { get; set; }
 
         [Inject]
-        public MediumChangedSignal mediumChangedSignal { get; set; }
+        public NextSlideSignal NextSlideSignal { get; set; }
 
         [Inject]
-        public LoadFilesSignal LoadFilesSignal { get; set; }
+        public PrevSlideSignal PrevSlideSignal{ get; set; }
+
+        [Inject]
+        public SlidePositionChangedSignal SlidePositionChangedSignal { get; set; }
 
 
         public override void OnRegister()
         {
-            mediumChangedSignal.AddListener(OnMediumChanged);
+            view.NextSlideSignal.AddListener(OnNextSlide);
+            view.PrevSlideSignal.AddListener(OnPrevSlide);
+            SlidePositionChangedSignal.AddListener(OnSlidePositionChanged);
         }
-
 
         public override void OnRemove()
         {
-            mediumChangedSignal.RemoveListener(OnMediumChanged);
+            view.NextSlideSignal.RemoveListener(OnNextSlide);
+            view.PrevSlideSignal.RemoveListener(OnPrevSlide);
+            SlidePositionChangedSignal.RemoveListener(OnSlidePositionChanged);
         }
 
-        public void OnMediumChanged(PictureMedium pictureMedium)
+        private void OnNextSlide(IPlayer player, ISlideMedium medium)
         {
-            view._medium = pictureMedium;
-            view.SetupMedium();
+            NextSlideSignal.Dispatch((Player) player, (SlideMedium) medium);
+        }
+
+        private void OnPrevSlide(IPlayer player, ISlideMedium medium)
+        {
+            PrevSlideSignal.Dispatch((Player) player, (SlideMedium) medium);
+        }
+
+        private void OnSlidePositionChanged()
+        {
+            view.LoadCurrentSlide();
         }
     }
 }
