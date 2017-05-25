@@ -19,12 +19,16 @@ namespace VisualiseR.Presentation
         [Inject]
         public TimerRunDownSignal TimerRunDownSignal { get; set; }
 
+        [Inject]
+        public ShowAllSignal ShowAllSignal{ get; set; }
+
 
         public override void OnRegister()
         {
             _view.OnContextMenuCanceled.AddListener(OnContextMenuCanceled);
             _view.ChangeTimerStatusSignal.AddListener(OnTimerStatusChanged);
             _view.SetTimerSignal.AddListener(SetTimer);
+            _view.ShowAllSignal.AddListener(OnShowAll);
             TimerRunDownSignal.AddListener(TimerRunDown);
         }
 
@@ -33,6 +37,7 @@ namespace VisualiseR.Presentation
             _view.OnContextMenuCanceled.RemoveListener(OnContextMenuCanceled);
             _view.ChangeTimerStatusSignal.RemoveListener(OnTimerStatusChanged);
             _view.SetTimerSignal.RemoveListener(SetTimer);
+            _view.ShowAllSignal.RemoveListener(OnShowAll);
             TimerRunDownSignal.RemoveListener(TimerRunDown);
         }
 
@@ -55,6 +60,11 @@ namespace VisualiseR.Presentation
         private void TimerRunDown()
         {
             _view.RefreshStartStopButtonText();
+        }
+
+        private void OnShowAll()
+        {
+            ShowAllSignal.Dispatch();
         }
     }
 }

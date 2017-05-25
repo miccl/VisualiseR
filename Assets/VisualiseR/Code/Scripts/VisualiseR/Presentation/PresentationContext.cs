@@ -1,11 +1,9 @@
-﻿using strange.examples.signals;
-using strange.extensions.command.api;
+﻿using strange.extensions.command.api;
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using UnityEngine;
 using VisualiseR.Common;
-using VisualiseR.Main;
 
 namespace VisualiseR.Presentation
 {
@@ -69,6 +67,7 @@ namespace VisualiseR.Presentation
             mediationBinder.Bind<PresentationScreenView>().To<PresentationScreenMediator>();
             mediationBinder.Bind<PresentationContextMenuView>().To<PresentationContextMenuMediator>();
             mediationBinder.Bind<TimerView>().To<TimerMediator>();
+            mediationBinder.Bind<SimplePresentationScreenView>().To<SimplePresentationScreenMediator>();
         }
 
         private void BindCommands()
@@ -88,7 +87,8 @@ namespace VisualiseR.Presentation
             commandBinder.Bind<NextSlideSignal>().To<NextSlideCommand>();
             commandBinder.Bind<PrevSlideSignal>().To<PrevSlideCommand>();
             commandBinder.Bind<ShowPresentationContextMenuSignal>().To<ShowPresentationContextMenuCommand>();
-
+            commandBinder.Bind<ShowAllSignal>().To<ShowAllCommand>();
+            commandBinder.Bind<SlideSelectedSignal>().To<SlideSelectedCommand>();
         }
 
         private void BindSignals()

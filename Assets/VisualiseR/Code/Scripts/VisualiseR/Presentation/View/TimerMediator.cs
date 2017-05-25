@@ -18,12 +18,16 @@ namespace VisualiseR.Presentation
         [Inject]
         public TimerRunDownSignal TimerRunDownSignal { get; set; }
 
+        [Inject]
+        public ShowAllSignal ShowAllSignal { get; set; }
+
 
         public override void OnRegister()
         {
             _view.TimerRunDownSignal.AddListener(OnTimerRunDown);
             ChangeTimerStatusSignal.AddListener(OnChangedTimerStatus);
             SetTimerSignal.AddListener(OnSetTime);
+            ShowAllSignal.AddListener(OnShowAll);
         }
 
 
@@ -32,12 +36,11 @@ namespace VisualiseR.Presentation
             _view.TimerRunDownSignal.AddListener(OnTimerRunDown);
             ChangeTimerStatusSignal.RemoveListener(OnChangedTimerStatus);
             SetTimerSignal.RemoveListener(OnSetTime);
-
+            ShowAllSignal.RemoveListener(OnShowAll);
         }
 
         private void OnChangedTimerStatus(TimerTypes timerType)
         {
-            Debug.Log("WARUM??? " + timerType);
             switch (timerType)
             {
                 case TimerTypes.Start:
@@ -62,6 +65,11 @@ namespace VisualiseR.Presentation
         private void OnTimerRunDown()
         {
             TimerRunDownSignal.Dispatch();
+        }
+
+        private void OnShowAll()
+        {
+            _view.Show(false);
         }
     }
 }

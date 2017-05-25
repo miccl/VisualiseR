@@ -18,8 +18,6 @@ namespace VisualiseR.Presentation
         internal ISlideMedium _medium { get; set; }
         internal IPlayer _player { get; set; }
 
-
-
         public void Init(ISlideMedium slideMedium, IPlayer player)
         {
             _medium = slideMedium;
@@ -41,7 +39,7 @@ namespace VisualiseR.Presentation
             NextSlideSignal.Dispatch(_player, _medium);
         }
 
-        private void PrevPicture()
+        private void PrevSlide()
         {
             PrevSlideSignal.Dispatch(_player, _medium);
         }
@@ -77,7 +75,7 @@ namespace VisualiseR.Presentation
 
             if (Input.GetButtonDown("Fire2"))
             {
-//                PrevPicture();
+//                PrevSlide();
                 ShowContextMenu();
             }
         }

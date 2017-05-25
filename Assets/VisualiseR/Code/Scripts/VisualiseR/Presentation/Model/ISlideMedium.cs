@@ -24,6 +24,8 @@ namespace VisualiseR.Presentation
 
         ISlide CurrentSlide();
 
+        void SetCurrentSlide(ISlide slide);
+
         bool IsEmpty();
     }
 }

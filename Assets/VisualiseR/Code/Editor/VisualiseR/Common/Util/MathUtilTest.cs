@@ -113,12 +113,88 @@ namespace VisualiseR.Common
             }
         }
 
-        internal static void AssertVectorsAreEqual(Vector3 expectedVector, Vector3 actualVector)
+        [TestFixture]
+        public class ComputeSpawnPositionsMethod
+        {
+            [Test]
+            public void Simple()
+            {
+                //given
+                float spawnDistance = 5;
+                float angleBeetweenElements = 45;
+                float startAngle = 0;
+                float endAngle = 180;
+                float startPosy = 2;
+                float posYDistance = 5;
+                float yTimes = 2;
+
+                //when
+                List<Vector3> positions =
+                    MathUtil.ComputeSpawnPositions(spawnDistance, angleBeetweenElements, startAngle, endAngle: endAngle,
+                        startPosY: startPosy, posYDistance: posYDistance, yTimes: yTimes);
+
+                //then
+                Assert.AreEqual(positions.Count, 10);
+                AssertVectorsAreEqual(positions[0], new Vector3(spawnDistance, startPosy, 0));
+                AssertVectorsAreEqual(positions[1], new Vector3(3.5f, startPosy, 3.5f));
+                AssertVectorsAreEqual(positions[2], new Vector3(0, startPosy, spawnDistance));
+                AssertVectorsAreEqual(positions[3], new Vector3(-3.5f, startPosy, 3.5f));
+                AssertVectorsAreEqual(positions[4], new Vector3(-spawnDistance, startPosy, 0));
+
+                AssertVectorsAreEqual(positions[5], new Vector3(spawnDistance, startPosy + posYDistance, 0));
+                AssertVectorsAreEqual(positions[6], new Vector3(3.5f, startPosy + posYDistance, 3.5f));
+                AssertVectorsAreEqual(positions[7], new Vector3(0, startPosy + posYDistance, spawnDistance));
+                AssertVectorsAreEqual(positions[8], new Vector3(-3.5f, startPosy + posYDistance, 3.5f));
+                AssertVectorsAreEqual(positions[9], new Vector3(-spawnDistance, startPosy + posYDistance, 0));
+            }
+        }
+
+
+        [TestFixture]
+        public class ComputeSomething
+        {
+            [Test]
+            public void Simple()
+            {
+                //given
+                float spawnDistance = 5;
+                int numberOfElements = 10;
+                float startAngle = 0;
+                float endAngle = 180;
+                float startPosy = 2;
+                float posYDistance = 5;
+                float maxStages = 3;
+
+                //when
+                List<Vector3> positions =
+                    MathUtil.ComputeSomething(spawnDistance, numberOfElements, startAngle, endAngle: endAngle,
+                        minAngleBetweenElements: 30, maxStages: maxStages,
+                        startPosY: startPosy, posYDistance: posYDistance);
+
+                //then
+                Assert.AreEqual(positions.Count, 10);
+                AssertVectorsAreEqual(positions[0], new Vector3(spawnDistance, startPosy, 0));
+                AssertVectorsAreEqual(positions[1], new Vector3(3.5f, startPosy, 3.5f));
+                AssertVectorsAreEqual(positions[2], new Vector3(0, startPosy, spawnDistance));
+                AssertVectorsAreEqual(positions[3], new Vector3(-3.5f, startPosy, 3.5f));
+                AssertVectorsAreEqual(positions[4], new Vector3(-spawnDistance, startPosy, 0));
+
+                AssertVectorsAreEqual(positions[5], new Vector3(spawnDistance, startPosy + posYDistance, 0));
+                AssertVectorsAreEqual(positions[6], new Vector3(3.5f, startPosy + posYDistance, 3.5f));
+                AssertVectorsAreEqual(positions[7], new Vector3(0, startPosy + posYDistance, spawnDistance));
+                AssertVectorsAreEqual(positions[8], new Vector3(-3.5f, startPosy + posYDistance, 3.5f));
+                AssertVectorsAreEqual(positions[9], new Vector3(-spawnDistance, startPosy + posYDistance, 0));
+            }
+        }
+
+
+        internal static void AssertVectorsAreEqual(Vector3 actualVector, Vector3 expectedVector)
         {
             float tolerance = 0.1f;
-            Assert.AreEqual(expectedVector.x, actualVector.x, tolerance);
-            Assert.AreEqual(expectedVector.y, actualVector.y, tolerance);
-            Assert.AreEqual(expectedVector.z, actualVector.z, tolerance);
+            Assert.AreEqual(expectedVector.x, actualVector.x, tolerance,
+                "wrong x vector (expected: " + expectedVector.x + ")");
+            Assert.AreEqual(expectedVector.y, actualVector.y, tolerance, "wrong y vector");
+            Assert.AreEqual(expectedVector.z, actualVector.z, tolerance, "wrong z vector");
         }
     }
 }

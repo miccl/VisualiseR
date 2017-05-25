@@ -33,6 +33,11 @@ namespace VisualiseR.Presentation
             return Slides.ElementAt(pos);
         }
 
+        public void SetCurrentSlide(ISlide slide)
+        {
+            CurrentPos = Slides.IndexOf(slide);
+        }
+
         public bool IsEmpty()
         {
             return String.IsNullOrEmpty(Name) && Slides.Count == 0;

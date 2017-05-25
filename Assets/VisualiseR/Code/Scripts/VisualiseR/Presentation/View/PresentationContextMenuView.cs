@@ -13,6 +13,7 @@ namespace VisualiseR.Presentation
         public Signal OnContextMenuCanceled = new Signal();
         public Signal<TimerTypes> ChangeTimerStatusSignal = new Signal<TimerTypes>();
         public Signal<float> SetTimerSignal = new Signal<float>();
+        public Signal ShowAllSignal = new Signal();
 
         private GameObject _mainPanel;
         private GameObject _timerPanel;
@@ -116,7 +117,8 @@ namespace VisualiseR.Presentation
 
         public void OnShowAllButton(BaseEventData data)
         {
-            throw new NotImplementedException("OnShowAllButton");
+            ShowAllSignal.Dispatch();
+            Destroy(gameObject);
         }
 
         public void OnShowNextNButton(BaseEventData data)
