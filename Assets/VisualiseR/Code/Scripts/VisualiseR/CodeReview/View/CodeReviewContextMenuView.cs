@@ -8,7 +8,7 @@ using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
-    public class ContextMenuView : View, DragDropHandler
+    public class CodeReviewContextMenuView : View, DragDropHandler
     {
         public Signal<Code, Rate> CodeRatingSelected = new Signal<Code, Rate>();
         public Signal<Code, string> CommentSaveButtonClickedSignal = new Signal<Code, string>();

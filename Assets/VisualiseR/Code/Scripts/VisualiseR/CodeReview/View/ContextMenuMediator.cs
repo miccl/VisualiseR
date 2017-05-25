@@ -6,7 +6,7 @@ namespace VisualiseR.CodeReview
     public class ContextMenuMediator : Mediator
     {
         [Inject]
-        public ContextMenuView _view { get; set; }
+        public CodeReviewContextMenuView _view { get; set; }
 
         [Inject]
         public SelectCodeRatingSignal SelectCodeRatingSignal { get; set; }

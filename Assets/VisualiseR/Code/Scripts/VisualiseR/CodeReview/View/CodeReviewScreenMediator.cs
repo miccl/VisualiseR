@@ -21,10 +21,14 @@ namespace VisualiseR.CodeReview
         [Inject]
         public RemoveCodeSignal RemoveCodeSignal { get; set; }
 
+        [Inject]
+        public ShowContextMenuSignal ShowContextMenuSignal { get; set; }
+
 
         public override void OnRegister()
         {
             _view.NextCodeSignal.AddListener(OnNextCodeSignal);
+            _view.ShowContextMenuSignal.AddListener(OnShowContextMenu);
             ContextMenuCanceledSignal.AddListener(OnContextMenuCanceled);
             CodeRatingChangedSignal.AddListener(OnCodeRatingChanged);
         }
@@ -32,9 +36,15 @@ namespace VisualiseR.CodeReview
         public override void OnRemove()
         {
             _view.NextCodeSignal.RemoveListener(OnNextCodeSignal);
+            _view.ShowContextMenuSignal.RemoveListener(OnShowContextMenu);
             ContextMenuCanceledSignal.RemoveListener(OnContextMenuCanceled);
             CodeRatingChangedSignal.RemoveListener(OnCodeRatingChanged);
 
+        }
+
+        private void OnShowContextMenu(GameObject gameObject, Code code)
+        {
+            ShowContextMenuSignal.Dispatch(gameObject, code);
         }
 
         private void OnNextCodeSignal(Code code)

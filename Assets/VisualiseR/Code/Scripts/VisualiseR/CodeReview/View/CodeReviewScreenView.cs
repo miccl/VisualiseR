@@ -11,6 +11,7 @@ namespace VisualiseR.CodeReview
     public class CodeReviewScreenView : View, DragDropHandler
     {
         public Signal<Code> NextCodeSignal = new Signal<Code>();
+        public Signal<GameObject, Code> ShowContextMenuSignal = new Signal<GameObject, Code>();
 
         private const string FILE_PREFIX = "file:///";
 
@@ -22,7 +23,6 @@ namespace VisualiseR.CodeReview
         private GameObject _gvrReticlePointer;
         private Text _infoText;
         private GvrPointerGraphicRaycaster pointerScript;
-        internal GameObject contextMenu;
 
 
         internal bool IsContextMenuShown;
@@ -126,7 +126,7 @@ namespace VisualiseR.CodeReview
         {
             if (!IsContextMenuShown)
             {
-                InstantiateContextMenu();
+                ShowContextMenuSignal.Dispatch(gameObject, (Code) _code);
                 IsContextMenuShown = true;
             }
         }
@@ -135,13 +135,13 @@ namespace VisualiseR.CodeReview
         {
             var position = GetContextMenuPosition();
             var rotation = GetContextMenuRotation();
-            contextMenu = Instantiate(Resources.Load("ContextMenuCanvas"), position, rotation) as GameObject;
+            GameObject contextMenu = Instantiate(Resources.Load("ContextMenuCanvas"), position, rotation) as GameObject;
             contextMenu.transform.Rotate(90, -180, 0);
             contextMenu.transform.SetParent(transform);
 
             //TODO direkte Verdrahtung entfernen
-            ContextMenuView contextMenuView = contextMenu.GetComponent<ContextMenuView>();
-            contextMenuView._code = _code;
+            CodeReviewContextMenuView codeReviewContextMenuView = contextMenu.GetComponent<CodeReviewContextMenuView>();
+            codeReviewContextMenuView._code = _code;
         }
 
         private Quaternion GetContextMenuRotation()
