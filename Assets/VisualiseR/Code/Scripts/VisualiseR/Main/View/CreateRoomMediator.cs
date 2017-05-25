@@ -16,20 +16,16 @@ namespace VisualiseR.Main
         public MediumChangedSignal MediumChangedSignal { get; set; }
 
         [Inject]
-        public ErrorSignal ErrorSignal { get; set; }
-
-        [Inject]
         public CreateRoomSignal CreateRoomSignal { get; set; }
 
         [Inject]
-        public IMedium Medium { get; set; }
+        public IPictureMedium Medium { get; set; }
 
         public override void OnRegister()
         {
             _view.SelectDiskFileButtonClickedSignal.AddListener(OnSelectDiskFileButtonClicked);
             _view.CreateRoomButtonClickedSignal.AddListener(OnCreateRoomButtonClick);
             MediumChangedSignal.AddListener(OnMediumChanged);
-            ErrorSignal.AddListener(OnError);
             _view.ChoosenMedium = Medium;
         }
 
@@ -43,12 +39,11 @@ namespace VisualiseR.Main
             _view.SelectDiskFileButtonClickedSignal.RemoveListener(OnSelectDiskFileButtonClicked);
             _view.CreateRoomButtonClickedSignal.RemoveListener(OnCreateRoomButtonClick);
             MediumChangedSignal.RemoveListener(OnMediumChanged);
-            ErrorSignal.RemoveListener(OnError);
         }
 
-        private void OnCreateRoomButtonClick(string roomName, RoomType roomType, IMedium medium)
+        private void OnCreateRoomButtonClick(string roomName, RoomType roomType, IPictureMedium medium)
         {
-            CreateRoomSignal.Dispatch(roomName, roomType, (Medium) medium);
+            CreateRoomSignal.Dispatch(roomName, roomType, (PictureMedium) medium);
         }
 
         private void OnSelectDiskFileButtonClicked()
@@ -56,11 +51,11 @@ namespace VisualiseR.Main
             SelectDiskFileSignal.Dispatch();
         }
 
-        private void OnMediumChanged(Medium medium)
+        private void OnMediumChanged(PictureMedium pictureMedium)
         {
             //TODO davor könnte beispielsweise eine Laderad kommen, bis dieser Aufruf getätigt wird
-            _view.ChoosenMedium = medium;
-            _view.ChooseMediumDropdown.captionText.text = medium.Name;
+            _view.ChoosenMedium = pictureMedium;
+            _view.ChooseMediumDropdown.captionText.text = pictureMedium.Name;
         }
     }
 }

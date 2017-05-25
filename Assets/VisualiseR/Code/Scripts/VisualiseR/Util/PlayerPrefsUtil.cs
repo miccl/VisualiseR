@@ -10,9 +10,11 @@ namespace VisualiseR.Util
         private static readonly JCsLogger Logger = new JCsLogger(typeof(PlayerPrefsUtil));
 
 
-        public const string AVATAR_KEY = "Avatar_Key";
-        public const string ROOM_KEY = "Room_Key";
-        public const string PLAYER_NAME_KEY = "Player_Name_Key";
+        public static readonly string AVATAR_KEY = "Avatar_Key";
+        public static readonly string ROOM_KEY = "Room_Key";
+        public static readonly string PLAYER_NAME_KEY = "Player_Name_Key";
+        public static readonly string MAIN_DIR = "Main_Dir";
+        public static readonly string AUDIO_MUTED = "Audio_Muted";
 
 
         public static void saveObject(string key, object o)
@@ -34,7 +36,12 @@ namespace VisualiseR.Util
         {
             Logger.InfoFormat("Saved value '{0}' under key '{1}' in player prefs", value, key);
             PlayerPrefs.SetString(key, value);
+        }
 
+        public static void SaveValue(string key, int value)
+        {
+            Logger.InfoFormat("Saved value '{0}' under key '{1}' in player prefs", value, key);
+            PlayerPrefs.SetInt(key, value);
         }
 
         public static string RetrieveValue(string key)
@@ -43,6 +50,22 @@ namespace VisualiseR.Util
             Logger.InfoFormat("Retrieved value '{0}' under key '{1}' from player prefs", value, key);
             return value;
         }
+
+        public static string RetrieveValue(string key, string defaultValue)
+        {
+            var value = PlayerPrefs.GetString(key, defaultValue);
+            Logger.InfoFormat("Retrieved value '{0}' under key '{1}' from player prefs", value, key);
+            return value;
+        }
+
+        public static int RetrieveValue(string key, int defaultValue)
+        {
+            var value = PlayerPrefs.GetInt(key, defaultValue);
+            Logger.InfoFormat("Retrieved value '{0}' under key '{1}' from player prefs", value, key);
+            return value;
+        }
+
+
 
     }
 }

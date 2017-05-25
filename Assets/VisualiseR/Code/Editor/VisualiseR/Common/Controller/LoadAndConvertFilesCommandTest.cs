@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using NUnit.Framework;
 using strange.extensions.injector.api;
+using VisualiseR.Main;
 
 namespace VisualiseR.Common
 {

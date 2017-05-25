@@ -1,8 +1,6 @@
-﻿using System.IO;
+﻿using System;
 using strange.extensions.mediation.impl;
 using UnityEngine;
-using VisualiseR.Common;
-using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
@@ -12,98 +10,56 @@ namespace VisualiseR.CodeReview
         public CodeReviewScreenView _view { get; set; }
 
         [Inject]
-        public MediumChangedSignal mediumChangedSignal { get; set; }
+        public ContextMenuCanceledSignal ContextMenuCanceledSignal { get; set; }
 
         [Inject]
-        public CodePositionChangedSignal _CodePositionChangedSignal { get; set; }
+        public CodeRatingChangedSignal CodeRatingChangedSignal { get; set; }
 
         [Inject]
-        public NextCodeSignal nextCodeSignal { get; set; }
+        public NextCodeSignal NextCodeSignal { get; set; }
 
         [Inject]
-        public PrevCodeSignal prevCodeSignal { get; set; }
-
-        [Inject]
-        public IMedium Medium { get; set; }
+        public RemoveCodeSignal RemoveCodeSignal { get; set; }
 
 
         public override void OnRegister()
         {
-            mediumChangedSignal.AddListener(OnMediumChanged);
-            _CodePositionChangedSignal.AddListener(OnCodePositionChanged);
             _view.NextCodeSignal.AddListener(OnNextCodeSignal);
-            _view.PrevCodeSignal.AddListener(OnPrevCodeSignal);
-
-            InitView();
-        }
-
-        private void InitView()
-        {
-            object o = PlayerPrefsUtil.RetrieveObject(PlayerPrefsUtil.ROOM_KEY);
-            if (o != null)
-            {
-                Room room = (Room) o;
-                Medium = room.Medium;
-            }
-            else
-            {
-                Medium = CreateMockMedium();
-            }
-
-            OnMediumChanged((Medium) Medium);
+            ContextMenuCanceledSignal.AddListener(OnContextMenuCanceled);
+            CodeRatingChangedSignal.AddListener(OnCodeRatingChanged);
         }
 
         public override void OnRemove()
         {
-            mediumChangedSignal.RemoveListener(OnMediumChanged);
-            _CodePositionChangedSignal.RemoveListener(OnCodePositionChanged);
             _view.NextCodeSignal.RemoveListener(OnNextCodeSignal);
-            _view.NextCodeSignal.RemoveListener(OnPrevCodeSignal);
+            ContextMenuCanceledSignal.RemoveListener(OnContextMenuCanceled);
+            CodeRatingChangedSignal.RemoveListener(OnCodeRatingChanged);
+
         }
 
-        public void OnMediumChanged(Medium medium)
+        private void OnNextCodeSignal(Code code)
         {
-            _view._medium = medium;
-            _view.SetupMedium();
+            NextCodeSignal.Dispatch(code);
         }
 
-        private void OnNextCodeSignal(IPlayer player, IMedium medium, int pos)
+        public void OnCodeChanged(ICode code)
         {
-            nextCodeSignal.Dispatch((Player) player, (Medium) medium, pos);
+            _view.ChangeCode(code);
         }
 
-        private void OnPrevCodeSignal(IPlayer player, IMedium medium, int pos)
+        private void OnCodeRatingChanged(Code code)
         {
-            prevCodeSignal.Dispatch((Player) player, (Medium) medium, pos);
-        }
-
-        private void OnCodePositionChanged(int pos)
-        {
-            Debug.Log("AHUUU");
-            _view._currPicturePos = pos;
-            _view.LoadPictureIntoTexture(pos);
-        }
-
-        private IMedium CreateMockMedium()
-        {
-            IMedium medium = new Medium
+            if (_view._code.Equals(code))
             {
-                Name = "test"
-            };
-
-            for (int i = 0; i < 3; i++)
-            {
-                var pic = "pic" + i;
-                Texture2D tex = Resources.Load<Texture2D>(pic);
-                string filePath = Application.persistentDataPath + pic + ".png";
-                File.WriteAllBytes(filePath, tex.EncodeToPNG());
-                medium.AddPicture(new Picture
-                {
-                    Title = pic,
-                    Path = filePath
-                });
+//                RemoveCodeSignal.Dispatch(code);
+//                TODO verstecken und dem entsprechenden Stapel zuweisen
             }
-            return medium;
+        }
+
+
+        private void OnContextMenuCanceled()
+        {
+            _view.IsContextMenuShown = false;
         }
     }
 }

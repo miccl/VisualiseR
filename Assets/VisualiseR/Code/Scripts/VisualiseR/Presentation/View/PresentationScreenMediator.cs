@@ -1,5 +1,6 @@
 ﻿using strange.extensions.mediation.impl;
 using VisualiseR.Common;
+using VisualiseR.Main;
 
 namespace VisualiseR.Presentation
 {
@@ -26,9 +27,9 @@ namespace VisualiseR.Presentation
             mediumChangedSignal.RemoveListener(OnMediumChanged);
         }
 
-        public void OnMediumChanged(Medium medium)
+        public void OnMediumChanged(PictureMedium pictureMedium)
         {
-            view._medium = medium;
+            view._medium = pictureMedium;
             view.SetupMedium();
         }
     }

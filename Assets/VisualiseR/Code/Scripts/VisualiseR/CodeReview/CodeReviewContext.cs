@@ -5,7 +5,6 @@ using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using UnityEngine;
 using VisualiseR.Common;
-using VisualiseR.Main;
 
 namespace VisualiseR.CodeReview
 {
@@ -56,7 +55,8 @@ namespace VisualiseR.CodeReview
         /// </summary>
         private void BindModels()
         {
-            injectionBinder.Bind<IMedium>().To<Medium>().ToSingleton();
+            injectionBinder.Bind<IPictureMedium>().To<PictureMedium>().ToSingleton();
+            injectionBinder.Bind<ICodeMedium>().To<CodeMedium>().ToSingleton();
             injectionBinder.Bind<IPicture>().To<Picture>().ToSingleton();
             injectionBinder.Bind<IPlayer>().To<Player>().ToSingleton();
             injectionBinder.Bind<IRoom>().To<Room>().ToSingleton();
@@ -70,6 +70,10 @@ namespace VisualiseR.CodeReview
         private void BindMediators()
         {
             mediationBinder.Bind<CodeReviewScreenView>().To<CodeReviewScreenMediator>();
+            mediationBinder.Bind<ContextMenuView>().To<ContextMenuMediator>();
+            mediationBinder.Bind<CodeReviewControllerView>().To<CodeReviewControllerMediator>();
+            mediationBinder.Bind<PileView>().To<PileMediator>();
+            mediationBinder.Bind<InfoView>().To<InfoMediator>();
         }
 
         private void BindCommands()
@@ -87,15 +91,19 @@ namespace VisualiseR.CodeReview
             }
 
             commandBinder.Bind<NextCodeSignal>().To<NextCodeCommand>();
-            commandBinder.Bind<PrevCodeSignal>().To<PrevCodeCommand>();
-
+            commandBinder.Bind<SelectCodeRatingSignal>().To<SelectCodeRatingCommand>();
+            commandBinder.Bind<SaveCommentSignal>().To<SaveCommentCommand>();
+            commandBinder.Bind<RemoveCodeSignal>().To<RemoveCodeCommand>();
         }
 
         private void BindSignals()
         {
             injectionBinder.Bind<ScoreChangedSignal>().ToSingleton();
-            injectionBinder.Bind<MediumChangedSignal>().ToSingleton();
             injectionBinder.Bind<CodePositionChangedSignal>().ToSingleton();
+            injectionBinder.Bind<ContextMenuCanceledSignal>().ToSingleton();
+            injectionBinder.Bind<CodeRatingChangedSignal>().ToSingleton();
+            injectionBinder.Bind<PileSelectedSignal>().ToSingleton();
+            injectionBinder.Bind<CommentChangedSignal>().ToSingleton();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace VisualiseR.Main
 
 
         private const string CHOOSE_AVATAR_TEXT = "Choose a avatar...";
-        private readonly List<string> avatarTypes = CSharpUtil.EnumToList<AvatarType>();
+        private readonly List<string> avatarTypes = EnumUtil.EnumToList<AvatarType>();
 
 
         protected override void Awake()
@@ -39,7 +39,10 @@ namespace VisualiseR.Main
         {
             _avatarDropdown.ClearOptions();
             _avatarDropdown.AddOptions(avatarTypes);
-            _avatarDropdown.captionText.text = CHOOSE_AVATAR_TEXT;
+            if (String.IsNullOrEmpty(_avatarDropdown.captionText.text))
+            {
+                _avatarDropdown.captionText.text = CHOOSE_AVATAR_TEXT;
+            }
         }
 
 

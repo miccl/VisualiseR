@@ -1,6 +1,4 @@
 ﻿using strange.extensions.mediation.impl;
-using UnityEngine;
-using VisualiseR.CodeReview;
 using VisualiseR.Common;
 
 namespace VisualiseR.Main
@@ -8,7 +6,7 @@ namespace VisualiseR.Main
     public class SelectDiskFileMediator : Mediator
     {
         [Inject]
-        public SelectDiskFileView _view{ get; set;}
+        public SelectDiskFileView _view { get; set; }
 
 
         [Inject]
@@ -24,7 +22,6 @@ namespace VisualiseR.Main
         public override void OnRemove()
         {
             _view._selectedFileSignal.RemoveListener(OnFileSelected);
-
         }
 
         private void OnFileSelected(string filePath)

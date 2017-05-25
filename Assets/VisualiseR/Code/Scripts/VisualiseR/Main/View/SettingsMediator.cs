@@ -15,13 +15,13 @@ namespace VisualiseR.Main
             Init();
         }
 
+        public override void OnRemove()
+        {
+        }
+
         private void Init()
         {
             RetrievePlayerPrefs();
-        }
-
-        public override void OnRemove()
-        {
         }
 
         private void RetrievePlayerPrefs()
@@ -41,10 +41,10 @@ namespace VisualiseR.Main
 
         private void RetrieveAvatarType()
         {
-            var avarType = PlayerPrefsUtil.RetrieveValue(PlayerPrefsUtil.AVATAR_KEY);
-            if (!String.IsNullOrEmpty(avarType))
+            var avatarType = PlayerPrefsUtil.RetrieveValue(PlayerPrefsUtil.AVATAR_KEY);
+            if (!String.IsNullOrEmpty(avatarType))
             {
-                _view._avatarDropdown.captionText.text = avarType;
+                _view._avatarDropdown.captionText.text = avatarType;
             }
         }
     }

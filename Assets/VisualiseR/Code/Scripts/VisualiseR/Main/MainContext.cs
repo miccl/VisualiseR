@@ -50,7 +50,7 @@ namespace VisualiseR.Main
         /// </summary>
         private void BindModels()
         {
-            injectionBinder.Bind<IMedium>().To<Medium>().ToSingleton();
+            injectionBinder.Bind<IPictureMedium>().To<PictureMedium>().ToSingleton();
             injectionBinder.Bind<IPicture>().To<Picture>().ToSingleton();
             injectionBinder.Bind<IPlayer>().To<Player>().ToSingleton();
             injectionBinder.Bind<IRoom>().To<Room>().ToSingleton();
@@ -67,8 +67,10 @@ namespace VisualiseR.Main
             mediationBinder.Bind<CreateRoomView>().To<CreateRoomMediator>();
             mediationBinder.Bind<JoinRoomView>().To<JoinRoomMediator>();
             mediationBinder.Bind<SettingsView>().To<SettingsMediator>();
-
+            mediationBinder.Bind<HelpView>().To<HelpMediator>();
+            mediationBinder.Bind<AboutView>().To<AboutMediator>();
             mediationBinder.Bind<SelectDiskFileView>().To<SelectDiskFileMediator>();
+            mediationBinder.Bind<SelectWebFileView>().To<SelectWebFileMediator>();
         }
 
         private void BindCommands()
@@ -89,13 +91,13 @@ namespace VisualiseR.Main
             commandBinder.Bind<LoadFilesSignal>().To<LoadFilesCommand>();
             commandBinder.Bind<CreateRoomSignal>().To<CreateRoomCommand>();
             commandBinder.Bind<JoinRoomSignal>().To<JoinRoomSignal>();
+            commandBinder.Bind<MessageSignal>().To<MessageCommand>();
         }
 
         private void BindSignals()
         {
             injectionBinder.Bind<MediumChangedSignal>().ToSingleton();
-            injectionBinder.Bind<ErrorSignal>().ToSingleton();
-            injectionBinder.Bind<RoomChangedSignal>().ToSingleton();
+
         }
     }
 }

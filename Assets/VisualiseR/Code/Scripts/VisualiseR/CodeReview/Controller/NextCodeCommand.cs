@@ -6,27 +6,22 @@ namespace VisualiseR.CodeReview
     public class NextCodeCommand : Command
     {
         [Inject]
-        public Player _player { get; set; }
-
-        [Inject]
-        public Medium _medium { get; set; }
-
-        [Inject]
-        public int position { get; set; }
+        public Code code { get; set; }
 
         [Inject]
         public CodePositionChangedSignal _codePositionChangedSignal { get; set; }
 
         public override void Execute()
         {
-            if (AcessList.NavigateCodeRight.Contains(_player.Type))
-            {
-                if (_medium.Pictures.Count > 0)
-                {
-                    position = (position + 1) % _medium.Pictures.Count;
-                    _codePositionChangedSignal.Dispatch(position);
-                }
-            }
+            //TODO überlegen, wie man das integriert. ist derzeit obsolete
+//            if (AcessList.NavigateCodeRight.Contains(_player.Type))
+//            {
+//                if (_medium.CodeFragments.Count > 0)
+//                {
+//                    position = (position + 1) % _medium.CodeFragments.Count;
+//                    _codePositionChangedSignal.Dispatch(position);
+//                }
+//            }
         }
     }
 }

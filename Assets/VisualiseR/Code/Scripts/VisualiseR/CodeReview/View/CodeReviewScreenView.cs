@@ -2,6 +2,7 @@
 using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
+using UnityEngine.UI;
 using VisualiseR.Common;
 using VisualiseR.Util;
 
@@ -9,55 +10,60 @@ namespace VisualiseR.CodeReview
 {
     public class CodeReviewScreenView : View, DragDropHandler
     {
+        public Signal<Code> NextCodeSignal = new Signal<Code>();
+
         private const string FILE_PREFIX = "file:///";
 
-        internal IMedium _medium;
-        public IPlayer _player;
+        internal ICode _code;
+        internal IPlayer _player;
 
-        internal int _currPicturePos;
-
-        public Signal<IPlayer, IMedium, int> NextCodeSignal = new Signal<IPlayer, IMedium, int>();
-        public Signal<IPlayer, IMedium, int> PrevCodeSignal = new Signal<IPlayer, IMedium, int>();
         private bool _isHeld;
+        public bool IsFirst { get; set; }
         private GameObject _gvrReticlePointer;
+        private Text _infoText;
+        private GvrPointerGraphicRaycaster pointerScript;
+        internal GameObject contextMenu;
+
+
+        internal bool IsContextMenuShown;
 
         protected override void Awake()
         {
             _isHeld = false;
             _gvrReticlePointer = GameObject.Find("GvrReticlePointer");
-            _player = new Player
-            {
-                Name = "Test",
-                Type = PlayerType.Host
-            };
+
+            pointerScript = GetComponent<GvrPointerGraphicRaycaster>();
         }
 
-        internal void SetupMedium()
+        protected override void Start()
         {
-            if (_medium != null && !_medium.IsEmpty())
+            base.Start();
+            LoadCode();
+        }
+
+        void Update()
+        {
+            HandleDragAndDrop();
+        }
+
+        public void Init(bool isFirst)
+        {
+            IsFirst = isFirst;
+        }
+
+        internal void LoadCode()
+        {
+            if (_code != null)
             {
-                _currPicturePos = 0;
-                LoadPictureIntoTexture(_currPicturePos);
+                LoadPictureIntoTexture(_code.Pic);
             }
         }
 
-
-        private void NextPicture()
+        internal void LoadPictureIntoTexture(IPicture pic)
         {
-            NextCodeSignal.Dispatch(_player, _medium, _currPicturePos);
-        }
-
-        private void PrevPicture()
-        {
-            PrevCodeSignal.Dispatch(_player, _medium, _currPicturePos);
-        }
-
-        internal void LoadPictureIntoTexture(int picturePos)
-        {
-            IPicture currPicture = _medium.GetPicture(picturePos);
-            if (currPicture != null)
+            if (pic != null)
             {
-                StartCoroutine(LoadImageIntoTexture(currPicture.Path));
+                StartCoroutine(LoadImageIntoTexture(pic.Path));
             }
             else
             {
@@ -75,40 +81,32 @@ namespace VisualiseR.CodeReview
             www.Dispose();
         }
 
-        void Update()
+        public void OnScreenClick()
         {
-            HandleDragAndDrop();
-            HandleInputs();
-        }
-
-        private void HandleInputs()
-        {
-            if (!_isHeld)
+            if (IsFirst)
             {
-                if (Input.GetButtonDown("Fire1"))
-                {
-                    NextPicture();
-                }
-                if (Input.GetButtonDown("Fire2"))
-                {
-                    PrevPicture();
-                }
+                ShowContextMenu();
+            }
+            else
+            {
+                NextCodeSignal.Dispatch((Code) _code);
             }
         }
+
 
         private void HandleDragAndDrop()
         {
             if (_isHeld)
             {
-                Ray ray = new Ray(_gvrReticlePointer.transform.position, _gvrReticlePointer.transform.forward);
-                float distance = Vector3.Distance(_gvrReticlePointer.transform.position, transform.position);
-                transform.position = ray.GetPoint(distance);
-
-                // Fix rotation
-                transform.rotation = Quaternion.LookRotation(-Camera.main.transform.forward);
-                transform.Rotate(-270, 180, 180);
-
-                //TODO Screen soll immer über dem Boden schweben, wenn per DD dies drunter soll es drüber gezogen werden.
+//                Ray ray = new Ray(_gvrReticlePointer.transform.position, _gvrReticlePointer.transform.forward);
+//                float distance = Vector3.Distance(_gvrReticlePointer.transform.position, transform.position);
+//                transform.position = ray.GetPoint(distance);
+//
+//                // Fix rotation
+//                transform.rotation = Quaternion.LookRotation(-Camera.main.transform.forward);
+//                transform.Rotate(-270, 180, 180);
+//
+//                //TODO Screen soll immer über dem Boden schweben, wenn per DD dies drunter soll es drüber gezogen werden.
             }
         }
 
@@ -121,6 +119,52 @@ namespace VisualiseR.CodeReview
         {
             _isHeld = false;
 //            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        }
+
+
+        public void ShowContextMenu()
+        {
+            if (!IsContextMenuShown)
+            {
+                InstantiateContextMenu();
+                IsContextMenuShown = true;
+            }
+        }
+
+        private void InstantiateContextMenu()
+        {
+            var position = GetContextMenuPosition();
+            var rotation = GetContextMenuRotation();
+            contextMenu = Instantiate(Resources.Load("ContextMenuCanvas"), position, rotation) as GameObject;
+            contextMenu.transform.Rotate(90, -180, 0);
+            contextMenu.transform.SetParent(transform);
+
+            //TODO direkte Verdrahtung entfernen
+            ContextMenuView contextMenuView = contextMenu.GetComponent<ContextMenuView>();
+            contextMenuView._code = _code;
+        }
+
+        private Quaternion GetContextMenuRotation()
+        {
+            //TODO überarbeiten
+            return transform.rotation;
+        }
+
+        private Vector3 GetContextMenuPosition()
+        {
+            //TODO irgendwann nochmal verbessern, derzeit schwankt das immer hin und her
+            Vector3 cameraBack = -Camera.main.transform.forward * 12;
+            Vector3 shift = new Vector3(0, 0, cameraBack.z);
+            Vector3 pos = transform.position + shift;
+            pos.y = 2;
+
+            return pos;
+        }
+
+        public void ChangeCode(ICode code)
+        {
+            _code = code;
+            LoadCode();
         }
     }
 }
