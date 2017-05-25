@@ -1,6 +1,5 @@
 ﻿using strange.extensions.mediation.impl;
 using VisualiseR.Common;
-using VisualiseR.Main;
 
 namespace VisualiseR.Presentation
 {
@@ -13,7 +12,7 @@ namespace VisualiseR.Presentation
         public NextSlideSignal NextSlideSignal { get; set; }
 
         [Inject]
-        public PrevSlideSignal PrevSlideSignal{ get; set; }
+        public PrevSlideSignal PrevSlideSignal { get; set; }
 
         [Inject]
         public SlidePositionChangedSignal SlidePositionChangedSignal { get; set; }

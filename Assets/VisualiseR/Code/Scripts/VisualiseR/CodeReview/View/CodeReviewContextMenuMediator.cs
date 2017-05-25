@@ -3,7 +3,7 @@ using strange.extensions.mediation.impl;
 
 namespace VisualiseR.CodeReview
 {
-    public class ContextMenuMediator : Mediator
+    public class CodeReviewContextMenuMediator : Mediator
     {
         [Inject]
         public CodeReviewContextMenuView _view { get; set; }

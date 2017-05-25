@@ -74,8 +74,14 @@ namespace VisualiseR.Presentation
 
             if (Input.GetButtonDown("Fire2"))
             {
-                PrevPicture();
+//                PrevPicture();
+                ShowContextMenu();
             }
+        }
+
+        private void ShowContextMenu()
+        {
+//            ShowPresentationContextMenuSignal.Dispatch(gameObject,
         }
     }
 }
