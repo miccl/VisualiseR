@@ -4,40 +4,65 @@ using strange.extensions.signal.impl;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using VisualiseR.Util;
 
-namespace VisualiseR.CodeReview
+namespace VisualiseR.Presentation
 {
     public class PresentationContextMenuView : View
     {
         public Signal OnContextMenuCanceled = new Signal();
+        public Signal<TimerTypes> ChangeTimerStatusSignal = new Signal<TimerTypes>();
+        public Signal<float> SetTimerSignal = new Signal<float>();
 
-        public ICode _code;
-
-        private GameObject _ratePanel;
-        private GameObject _editPanel;
-        private GameObject _commentPanel;
-        private GameObject _removePanel;
-        private InputField _commentInputField;
-        private bool _isHeld;
-        private GameObject _gvrReticlePointer;
-        private Selectable _goodButtonSelectable;
-        private Selectable _okButtonSelectable;
-        private Selectable _badButtonSelectable;
         private GameObject _mainPanel;
         private GameObject _timerPanel;
         private GameObject _showPanel;
+
+        private Text _startStopButtonText;
+        private Text _timerText;
+
+        private TimerView _timerView;
 
         protected override void Awake()
         {
             _mainPanel = gameObject.transform.FindChild("MainPanel").gameObject;
             _timerPanel = gameObject.transform.FindChild("TimerPanel").gameObject;
             _showPanel = gameObject.transform.FindChild("ShowPanel").gameObject;
+
+            _startStopButtonText = _timerPanel.transform.FindChild("CenterPanel").transform.FindChild("ButtonPanel").transform.FindChild("StartStopButton").GetComponentInChildren<Text>();
+
+            _timerView = UnityUtil.FindGameObject("TimerCanvas").GetComponent<TimerView>();
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            RefreshStartStopButtonText();
+            SetTimerText(_timerView._timeFrom);
+        }
+
+        private void SetTimerText(float timeInSeconds)
+        {
+//            _timerText.text = TimeUtil.FormatTime(timeInSeconds);
+        }
+
+        internal void RefreshStartStopButtonText()
+        {
+            if (_timerView.stop)
+            {
+                _startStopButtonText.text = "Start";
+            }
+            else
+            {
+                _startStopButtonText.text = "Stop";
+            }
         }
 
         public void OnTimerButtonClick(BaseEventData data)
         {
             _mainPanel.SetActive(false);
             _timerPanel.SetActive(true);
+            _timerView.Show(true);
         }
 
         public void OnShowButtonClick(BaseEventData data)
@@ -55,23 +80,32 @@ namespace VisualiseR.CodeReview
 
         public void OnTimerStartStopButton(BaseEventData data)
         {
-            throw new NotImplementedException("OnTimerStartStopButton");
+            if (_timerView.stop)
+            {
+                ChangeTimerStatusSignal.Dispatch(TimerTypes.Start);
+            }
+            else
+            {
+                ChangeTimerStatusSignal.Dispatch(TimerTypes.Stop);
+            }
+            RefreshStartStopButtonText();
         }
 
         public void OnTimerResetButton(BaseEventData data)
         {
-            throw new NotImplementedException("OnTimerStartStopButton");
+            ChangeTimerStatusSignal.Dispatch(TimerTypes.Reset);
+            RefreshStartStopButtonText();
         }
 
 
         public void OnTimerUpButton(BaseEventData data)
         {
-            throw new NotImplementedException("OnTimerUpButton");
+            SetTimerSignal.Dispatch(_timerView._timeFrom + 60);
         }
 
         public void OnTimerDownButton(BaseEventData data)
         {
-            throw new NotImplementedException("OnTimerDownButton");
+            SetTimerSignal.Dispatch(_timerView._timeFrom - 60);
         }
 
         public void OnTimerCancelButton(BaseEventData data)
@@ -95,6 +129,5 @@ namespace VisualiseR.CodeReview
             _showPanel.SetActive(false);
             _mainPanel.SetActive(true);
         }
-
     }
 }

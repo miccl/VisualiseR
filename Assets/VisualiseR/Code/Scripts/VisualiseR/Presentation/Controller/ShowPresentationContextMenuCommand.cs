@@ -1,6 +1,5 @@
 ﻿using strange.extensions.command.impl;
 using UnityEngine;
-using VisualiseR.CodeReview;
 
 public class ShowPresentationContextMenuCommand : Command
 {
@@ -17,12 +16,9 @@ public class ShowPresentationContextMenuCommand : Command
         var position = GetContextMenuPosition();
         var rotation = GetContextMenuRotation();
         GameObject contextMenu =
-            GameObject.Instantiate(Resources.Load("CodeReviewContextMenuCanvas"), position, rotation) as GameObject;
+            GameObject.Instantiate(Resources.Load("PresentationContextMenuCanvas"), position, rotation) as GameObject;
         contextMenu.transform.Rotate(90, -180, 0);
         contextMenu.transform.SetParent(_gameObject.transform);
-
-        //TODO direkte Verdrahtung entfernen
-        CodeReviewContextMenuView codeReviewContextMenuView = contextMenu.GetComponent<CodeReviewContextMenuView>();
     }
 
     private Quaternion GetContextMenuRotation()

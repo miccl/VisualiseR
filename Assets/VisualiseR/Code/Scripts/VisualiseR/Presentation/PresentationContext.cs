@@ -67,6 +67,8 @@ namespace VisualiseR.Presentation
         private void BindMediators()
         {
             mediationBinder.Bind<PresentationScreenView>().To<PresentationScreenMediator>();
+            mediationBinder.Bind<PresentationContextMenuView>().To<PresentationContextMenuMediator>();
+            mediationBinder.Bind<TimerView>().To<TimerMediator>();
         }
 
         private void BindCommands()
@@ -85,12 +87,17 @@ namespace VisualiseR.Presentation
             }
             commandBinder.Bind<NextSlideSignal>().To<NextSlideCommand>();
             commandBinder.Bind<PrevSlideSignal>().To<PrevSlideCommand>();
+            commandBinder.Bind<ShowPresentationContextMenuSignal>().To<ShowPresentationContextMenuCommand>();
 
         }
 
         private void BindSignals()
         {
             injectionBinder.Bind<SlidePositionChangedSignal>().ToSingleton();
+            injectionBinder.Bind<ChangeTimerStatusSignal>().ToSingleton();
+            injectionBinder.Bind<SetTimerSignal>().ToSingleton();
+            injectionBinder.Bind<TimerRunDownSignal>().ToSingleton();
+            injectionBinder.Bind<ContextMenuCanceledSignal>().ToSingleton();
         }
     }
 }

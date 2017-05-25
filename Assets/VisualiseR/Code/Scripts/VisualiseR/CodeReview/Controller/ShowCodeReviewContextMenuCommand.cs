@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace VisualiseR.CodeReview
 {
-    public class ShowContextMenuCommand : Command
+    public class ShowCodeReviewContextMenuCommand : Command
     {
         [Inject]
         public GameObject _gameObject { get; set; }

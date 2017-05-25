@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace VisualiseR.CodeReview
 {
-    public class ShowContextMenuSignal : Signal<GameObject, Code>
+    public class ShowCodeReviewContextMenuSignal : Signal<GameObject, Code>
     {
 
     }

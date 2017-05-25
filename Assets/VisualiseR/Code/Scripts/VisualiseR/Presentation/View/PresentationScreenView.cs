@@ -13,9 +13,12 @@ namespace VisualiseR.Presentation
 
         internal Signal<IPlayer, ISlideMedium> NextSlideSignal = new Signal<IPlayer, ISlideMedium>();
         internal Signal<IPlayer, ISlideMedium> PrevSlideSignal = new Signal<IPlayer, ISlideMedium>();
+        internal Signal<GameObject> ShowPresentationContextMenuSignal = new Signal<GameObject>();
 
         internal ISlideMedium _medium { get; set; }
         internal IPlayer _player { get; set; }
+
+
 
         public void Init(ISlideMedium slideMedium, IPlayer player)
         {
@@ -69,7 +72,7 @@ namespace VisualiseR.Presentation
         {
             if (Input.GetButtonDown("Fire1"))
             {
-                NextSlide();
+//                NextSlide();
             }
 
             if (Input.GetButtonDown("Fire2"))
@@ -81,7 +84,7 @@ namespace VisualiseR.Presentation
 
         private void ShowContextMenu()
         {
-//            ShowPresentationContextMenuSignal.Dispatch(gameObject,
+            ShowPresentationContextMenuSignal.Dispatch(gameObject);
         }
     }
 }

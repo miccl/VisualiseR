@@ -70,7 +70,7 @@ namespace VisualiseR.CodeReview
         private void BindMediators()
         {
             mediationBinder.Bind<CodeReviewScreenView>().To<CodeReviewScreenMediator>();
-            mediationBinder.Bind<CodeReviewContextMenuView>().To<PresentationContextMenuMediator>();
+            mediationBinder.Bind<CodeReviewContextMenuView>().To<CodeReviewContextMenuMediator>();
             mediationBinder.Bind<CodeReviewControllerView>().To<CodeReviewControllerMediator>();
             mediationBinder.Bind<PileView>().To<PileMediator>();
             mediationBinder.Bind<InfoView>().To<InfoMediator>();
@@ -94,7 +94,7 @@ namespace VisualiseR.CodeReview
             commandBinder.Bind<SelectCodeRatingSignal>().To<SelectCodeRatingCommand>();
             commandBinder.Bind<SaveCommentSignal>().To<SaveCommentCommand>();
             commandBinder.Bind<RemoveCodeSignal>().To<RemoveCodeCommand>();
-            commandBinder.Bind<ShowContextMenuSignal>().To<ShowContextMenuCommand>();
+            commandBinder.Bind<ShowCodeReviewContextMenuSignal>().To<ShowCodeReviewContextMenuCommand>();
         }
 
         private void BindSignals()

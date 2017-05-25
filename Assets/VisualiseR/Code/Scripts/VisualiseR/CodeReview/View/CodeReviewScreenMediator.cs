@@ -22,7 +22,7 @@ namespace VisualiseR.CodeReview
         public RemoveCodeSignal RemoveCodeSignal { get; set; }
 
         [Inject]
-        public ShowContextMenuSignal ShowContextMenuSignal { get; set; }
+        public ShowCodeReviewContextMenuSignal ShowCodeReviewContextMenuSignal { get; set; }
 
 
         public override void OnRegister()
@@ -44,7 +44,7 @@ namespace VisualiseR.CodeReview
 
         private void OnShowContextMenu(GameObject gameObject, Code code)
         {
-            ShowContextMenuSignal.Dispatch(gameObject, code);
+            ShowCodeReviewContextMenuSignal.Dispatch(gameObject, code);
         }
 
         private void OnNextCodeSignal(Code code)

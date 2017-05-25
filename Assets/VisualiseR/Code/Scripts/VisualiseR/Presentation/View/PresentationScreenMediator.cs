@@ -1,4 +1,5 @@
 ﻿using strange.extensions.mediation.impl;
+using UnityEngine;
 using VisualiseR.Common;
 
 namespace VisualiseR.Presentation
@@ -17,11 +18,14 @@ namespace VisualiseR.Presentation
         [Inject]
         public SlidePositionChangedSignal SlidePositionChangedSignal { get; set; }
 
+        [Inject]
+        public ShowPresentationContextMenuSignal ShowPresentationContextMenuSignal { get; set; }
 
         public override void OnRegister()
         {
             view.NextSlideSignal.AddListener(OnNextSlide);
             view.PrevSlideSignal.AddListener(OnPrevSlide);
+            view.ShowPresentationContextMenuSignal.AddListener(ShowContextMenu);
             SlidePositionChangedSignal.AddListener(OnSlidePositionChanged);
         }
 
@@ -29,6 +33,7 @@ namespace VisualiseR.Presentation
         {
             view.NextSlideSignal.RemoveListener(OnNextSlide);
             view.PrevSlideSignal.RemoveListener(OnPrevSlide);
+            view.ShowPresentationContextMenuSignal.RemoveListener(ShowContextMenu);
             SlidePositionChangedSignal.RemoveListener(OnSlidePositionChanged);
         }
 
@@ -45,6 +50,11 @@ namespace VisualiseR.Presentation
         private void OnSlidePositionChanged()
         {
             view.LoadCurrentSlide();
+        }
+
+        private void ShowContextMenu(GameObject go)
+        {
+            ShowPresentationContextMenuSignal.Dispatch(go);
         }
     }
 }
