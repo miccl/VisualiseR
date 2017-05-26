@@ -42,9 +42,9 @@ def handle_input(input_path):
     elif os.path.isfile(input_path):
         if is_code_file(input_path):
             return [input_path]
-            # convert_code_file(input_path)
     else:
         print_error("The input path is not valid.")
+        sys.exit(1)
 
 
 def traverse_directory(dir_path):
