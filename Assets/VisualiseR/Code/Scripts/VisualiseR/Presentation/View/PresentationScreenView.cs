@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Net.Mime;
 using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace VisualiseR.Presentation
         internal Signal<IPlayer, ISlideMedium> NextSlideSignal = new Signal<IPlayer, ISlideMedium>();
         internal Signal<IPlayer, ISlideMedium> PrevSlideSignal = new Signal<IPlayer, ISlideMedium>();
         internal Signal<GameObject> ShowPresentationContextMenuSignal = new Signal<GameObject>();
+        internal Signal ShowSceneMenuSignal = new Signal();
 
         internal ISlideMedium _medium { get; set; }
         internal IPlayer _player { get; set; }
@@ -60,7 +62,7 @@ namespace VisualiseR.Presentation
 
             yield return www;
 
-            Texture2D tex = new Texture2D(4, 4, TextureFormat.DXT1, false);
+            Texture2D tex = new Texture2D(1, 1, TextureFormat.RGBA32, false);
             www.LoadImageIntoTexture(tex);
             GetComponent<Renderer>().material.mainTexture = tex;
             www.Dispose();
@@ -71,6 +73,7 @@ namespace VisualiseR.Presentation
             if (Input.GetButtonDown("Fire1"))
             {
 //                NextSlide();
+                ShowSceneMenuSignal.Dispatch();
             }
 
             if (Input.GetButtonDown("Fire2"))

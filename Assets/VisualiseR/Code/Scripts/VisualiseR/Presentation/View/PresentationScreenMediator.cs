@@ -21,11 +21,15 @@ namespace VisualiseR.Presentation
         [Inject]
         public ShowPresentationContextMenuSignal ShowPresentationContextMenuSignal { get; set; }
 
+        [Inject]
+        public ShowSceneMenuSignal ShowSceneMenuSignal { get; set; }
+
         public override void OnRegister()
         {
             view.NextSlideSignal.AddListener(OnNextSlide);
             view.PrevSlideSignal.AddListener(OnPrevSlide);
             view.ShowPresentationContextMenuSignal.AddListener(ShowContextMenu);
+            view.ShowSceneMenuSignal.AddListener(OnShowScenMenu);
             SlidePositionChangedSignal.AddListener(OnSlidePositionChanged);
         }
 
@@ -34,6 +38,7 @@ namespace VisualiseR.Presentation
             view.NextSlideSignal.RemoveListener(OnNextSlide);
             view.PrevSlideSignal.RemoveListener(OnPrevSlide);
             view.ShowPresentationContextMenuSignal.RemoveListener(ShowContextMenu);
+            view.ShowSceneMenuSignal.RemoveListener(OnShowScenMenu);
             SlidePositionChangedSignal.RemoveListener(OnSlidePositionChanged);
         }
 
@@ -55,6 +60,11 @@ namespace VisualiseR.Presentation
         private void ShowContextMenu(GameObject go)
         {
             ShowPresentationContextMenuSignal.Dispatch(go);
+        }
+
+        private void OnShowScenMenu()
+        {
+            ShowSceneMenuSignal.Dispatch();
         }
     }
 }

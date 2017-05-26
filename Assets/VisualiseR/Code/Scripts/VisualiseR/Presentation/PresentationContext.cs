@@ -89,6 +89,7 @@ namespace VisualiseR.Presentation
             commandBinder.Bind<ShowPresentationContextMenuSignal>().To<ShowPresentationContextMenuCommand>();
             commandBinder.Bind<ShowAllSignal>().To<ShowAllCommand>();
             commandBinder.Bind<SlideSelectedSignal>().To<SlideSelectedCommand>();
+            commandBinder.Bind<ShowSceneMenuSignal>().To<ShowSceneMenuCommand>();
         }
 
         private void BindSignals()

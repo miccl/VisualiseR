@@ -42,7 +42,7 @@ namespace VisualiseR.Main
                 Logger.InfoFormat("Room {0} was created", room);
 
                 PlayerPrefsUtil.saveObject(PlayerPrefsUtil.ROOM_KEY, room);
-                UnityUtil.LoadScene(_roomType.ToString());
+                UnityUtil.LoadScene(_roomType);
 //                SceneManager.LoadScene(1);
             }
         }

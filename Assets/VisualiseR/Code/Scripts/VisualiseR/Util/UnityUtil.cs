@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using VisualiseR.Common;
 
 namespace VisualiseR.Util
 {
@@ -84,6 +85,15 @@ namespace VisualiseR.Util
             return go;
         }
 
+
+        public static void LoadScene(RoomType type)
+        {
+            LoadScene(type.ToString());
+        }
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="sceneName"></param>
         public static void LoadScene(string sceneName)
         {
             try
