@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// Command to select a disk file.
+    /// Uses <see cref="FileBrowser"/>.
+    /// </summary>
     public class SelectDiskFileCommand : Command
     {
 

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using VisualiseR.Common;
 
-namespace VisualiseR.Common
+namespace VisualiseR.Main
 {
     [Serializable]
     public class PictureMedium : IPictureMedium

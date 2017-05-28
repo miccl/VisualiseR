@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
+using VisualiseR.Common;
 
 namespace VisualiseR.Presentation
 {
-    public interface ISlideMedium
+    public interface ISlideMedium : IMedium
     {
-        string Name { get; set; }
         List<ISlide> Slides { get; set; }
         int CurrentPos { get; }
 

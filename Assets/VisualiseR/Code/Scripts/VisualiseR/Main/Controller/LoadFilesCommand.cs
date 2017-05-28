@@ -20,8 +20,6 @@ namespace VisualiseR.Main
         [Inject]
         public string uri { get; set; }
 
-        private ImageConversionStrategy _conversion;
-
         public override void Execute()
         {
             CheckIfValidFile();

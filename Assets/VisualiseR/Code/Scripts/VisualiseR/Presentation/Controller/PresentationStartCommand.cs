@@ -3,6 +3,7 @@ using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using UnityEngine;
 using VisualiseR.Common;
+using VisualiseR.Main;
 using VisualiseR.Util;
 
 namespace VisualiseR.Presentation
@@ -60,7 +61,7 @@ namespace VisualiseR.Presentation
             if (o != null)
             {
                 Room room = (Room) o;
-                IPictureMedium PictureMedium = room.Medium;
+                IPictureMedium PictureMedium = (IPictureMedium) room.Medium;
                 ConstructSlideMedium(PictureMedium);
             }
             else

@@ -5,6 +5,7 @@ using strange.extensions.context.api;
 using strange.extensions.mediation.impl;
 using UnityEngine;
 using VisualiseR.Common;
+using VisualiseR.Main;
 using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
@@ -88,7 +89,7 @@ namespace VisualiseR.CodeReview
             if (o != null)
             {
                 Room room = (Room) o;
-                PictureMedium = room.Medium;
+                PictureMedium = (IPictureMedium) room.Medium;
                 ConstructCodeMedium(PictureMedium);
             }
             else

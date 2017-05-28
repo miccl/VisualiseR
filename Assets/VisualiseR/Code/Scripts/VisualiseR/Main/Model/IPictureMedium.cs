@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using VisualiseR.Common;
 
-namespace VisualiseR.Common
+namespace VisualiseR.Main
 {
     public interface IPictureMedium : IMedium
     {

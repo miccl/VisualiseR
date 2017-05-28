@@ -1,4 +1,5 @@
-﻿using strange.extensions.command.impl;
+﻿using System;
+using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ namespace VisualiseR.Main
 
         public override void Execute()
         {
+            throw new NotImplementedException();
         }
     }
 }

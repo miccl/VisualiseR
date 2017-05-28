@@ -4,6 +4,10 @@ using VisualiseR.Common;
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// Command to join a room.
+    /// Tests if input is valid and the room exists.
+    /// </summary>
     public class JoinRoomCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(JoinRoomCommand));

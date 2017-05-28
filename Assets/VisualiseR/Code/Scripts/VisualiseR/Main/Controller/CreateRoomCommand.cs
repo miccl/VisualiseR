@@ -5,6 +5,11 @@ using VisualiseR.Util;
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// Creates a <see cref="IRoom"/>.
+    /// Constructs a room with the choosen <see cref="RoomType"/> and <see cref="IPictureMedium"/>.
+    /// Adds the <see cref="IPlayer"/> to the room .
+    /// </summary>
     public class CreateRoomCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(CreateRoomCommand));

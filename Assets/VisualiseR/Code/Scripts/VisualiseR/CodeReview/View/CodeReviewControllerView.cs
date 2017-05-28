@@ -114,14 +114,10 @@ namespace VisualiseR.CodeReview
 
                 bool isFirst = true;
                 List<Vector3> screenPositions = GetScreenPositions();
-                for (int i = 0; i < _codeFragmentsWithRate.Count; i++)
+                for (int i = 0; i < screenPositions.Count; i++)
                 {
-//                //TODO zu überprüfen, ob diese Abfrage auch richtig greift
-//                if (i <= _codeFragmentsWithRate.Count - 1)
-//                {
                     InstantiateScreen(screenPositions[i], isFirst);
                     isFirst = false;
-//                }
                 }
             }
         }

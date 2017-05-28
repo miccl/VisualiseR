@@ -4,6 +4,11 @@ using VisualiseR.Common;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// Command to get the next slide.
+    /// Tests if the player has the needed rights.
+    ///    
+    /// </summary>
     public class NextSlideCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(NextSlideCommand));
