@@ -16,6 +16,7 @@ namespace VisualiseR.Presentation
         internal Signal<IPlayer, ISlideMedium> PrevSlideSignal = new Signal<IPlayer, ISlideMedium>();
         internal Signal<GameObject> ShowPresentationContextMenuSignal = new Signal<GameObject>();
         internal Signal ShowSceneMenuSignal = new Signal();
+        private bool _IsSlideChanged;
 
         internal ISlideMedium _medium { get; set; }
         internal IPlayer _player { get; set; }
@@ -32,7 +33,7 @@ namespace VisualiseR.Presentation
         {
             if (_medium != null)
             {
-                LoadCurrentSlide();
+                LoadSlide();
             }
         }
 
@@ -46,7 +47,13 @@ namespace VisualiseR.Presentation
             PrevSlideSignal.Dispatch(_player, _medium);
         }
 
-        internal void LoadCurrentSlide()
+        internal void LoadSlide()
+        {
+            _IsSlideChanged = true;
+            LoadCurrentSlide();
+        }
+
+        private void LoadCurrentSlide()
         {
             string path = _medium.CurrentSlide().Pic.Path;
             if (!String.IsNullOrEmpty(path))
@@ -72,14 +79,19 @@ namespace VisualiseR.Presentation
         {
             if (Input.GetButtonDown("Fire1"))
             {
-//                NextSlide();
-                ShowSceneMenuSignal.Dispatch();
+                NextSlide();
+
+//                ShowSceneMenuSignal.Dispatch();
             }
 
-            if (Input.GetButtonDown("Fire2"))
+//            if (Input.GetButtonDown("Fire2"))
+//            {
+////                PrevSlide();
+//                ShowContextMenu();
+//            }
+
+            if (photonView.isMine)
             {
-//                PrevSlide();
-                ShowContextMenu();
             }
         }
 
@@ -87,5 +99,36 @@ namespace VisualiseR.Presentation
         {
             ShowPresentationContextMenuSignal.Dispatch(gameObject);
         }
+
+        // synchronsize with the others
+        void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            if (stream.isWriting)
+            {
+                if (_IsSlideChanged)
+                {
+                    Debug.Log("IsWriting");
+                    stream.SendNext(1);
+                    _IsSlideChanged = false;
+                  }
+//                stream.SendNext();
+//                stream.SendNext(_playerGlobal.position);
+//                stream.SendNext(_playerGlobal.rotation);
+//                stream.SendNext(_playerLocal.localPosition);
+//                stream.SendNext(_playerLocal.localRotation);
+            }
+            else
+            {
+//                Debug.Log("IsReading");
+//                ISlideMedium medium = (ISlideMedium) stream.ReceiveNext();
+                ShowContextMenu();
+                
+//                transform.position = (Vector3) stream.ReceiveNext();
+//                transform.rotation = (Quaternion) stream.ReceiveNext();
+//                Avatar.transform.localPosition = (Vector3) stream.ReceiveNext();
+//                Avatar.transform.localRotation = (Quaternion) stream.ReceiveNext();
+            }
+       }
+
     }
 }

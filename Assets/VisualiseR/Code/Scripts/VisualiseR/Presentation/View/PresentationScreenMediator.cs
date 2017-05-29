@@ -54,7 +54,7 @@ namespace VisualiseR.Presentation
 
         private void OnSlidePositionChanged()
         {
-            view.LoadCurrentSlide();
+            view.LoadSlide();
         }
 
         private void ShowContextMenu(GameObject go)

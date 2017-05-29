@@ -60,7 +60,7 @@ namespace VisualiseR.Presentation
             object o = PlayerPrefsUtil.RetrieveObject(PlayerPrefsUtil.ROOM_KEY);
             if (o != null)
             {
-                Room room = (Room) o;
+                Common.Room room = (Common.Room) o;
                 IPictureMedium PictureMedium = (IPictureMedium) room.Medium;
                 ConstructSlideMedium(PictureMedium);
             }

@@ -88,7 +88,7 @@ namespace VisualiseR.CodeReview
             object o = PlayerPrefsUtil.RetrieveObject(PlayerPrefsUtil.ROOM_KEY);
             if (o != null)
             {
-                Room room = (Room) o;
+                Common.Room room = (Common.Room) o;
                 PictureMedium = (IPictureMedium) room.Medium;
                 ConstructCodeMedium(PictureMedium);
             }

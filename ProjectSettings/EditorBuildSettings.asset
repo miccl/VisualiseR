@@ -5,12 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/VisualiseR/Content/Scenes/Main.unity
     guid: 8c22ac960505c0c489efcf9c79d776f5
-  - enabled: 1
+  - enabled: 0
     path: Assets/VisualiseR/Content/Scenes/CodeReview.unity
     guid: 8d9dfa82075053d4da7f09a151aca1a5
   - enabled: 1
     path: Assets/VisualiseR/Content/Scenes/Presentation.unity
     guid: 2b744d4eff688ee43b2b3c81747a0faf
+  - enabled: 0
+    path: Assets/Community_Assets/Photon Unity Networking/Demos/DemoSynchronization/DemoSynchronization-Scene.unity
+    guid: caec1ee6e27780946b8db3d1aebaa478

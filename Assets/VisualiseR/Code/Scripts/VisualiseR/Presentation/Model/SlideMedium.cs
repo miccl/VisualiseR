@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace VisualiseR.Presentation
 {
+    [Serializable]
     public class SlideMedium : ISlideMedium
     {
         public string Name { get; set; }

@@ -60,7 +60,7 @@ namespace VisualiseR.CodeReview
             injectionBinder.Bind<ICodeMedium>().To<CodeMedium>().ToSingleton();
             injectionBinder.Bind<IPicture>().To<Picture>().ToSingleton();
             injectionBinder.Bind<IPlayer>().To<Player>().ToSingleton();
-            injectionBinder.Bind<IRoom>().To<Room>().ToSingleton();
+            injectionBinder.Bind<IRoom>().To<Common.Room>().ToSingleton();
         }
 
         private void BindServices()

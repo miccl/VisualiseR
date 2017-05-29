@@ -1,7 +1,9 @@
-﻿using VisualiseR.Common;
+﻿using System;
+using VisualiseR.Common;
 
 namespace VisualiseR.Presentation
 {
+    [Serializable]
     public class Slide : ISlide
     {
         public string Name { get; set; }
