@@ -39,12 +39,18 @@ namespace VisualiseR.Presentation
 
         private void NextSlide()
         {
-            NextSlideSignal.Dispatch(_player, _medium);
+            if (!_player.IsEmpty())
+            {
+                NextSlideSignal.Dispatch(_player, _medium);
+            }
         }
 
         private void PrevSlide()
         {
-            PrevSlideSignal.Dispatch(_player, _medium);
+            if (!_player.IsEmpty())
+            {
+                PrevSlideSignal.Dispatch(_player, _medium);
+            }
         }
 
         internal void LoadSlide()
@@ -110,7 +116,7 @@ namespace VisualiseR.Presentation
                     Debug.Log("IsWriting");
                     stream.SendNext(1);
                     _IsSlideChanged = false;
-                  }
+                }
 //                stream.SendNext();
 //                stream.SendNext(_playerGlobal.position);
 //                stream.SendNext(_playerGlobal.rotation);
@@ -122,13 +128,12 @@ namespace VisualiseR.Presentation
 //                Debug.Log("IsReading");
 //                ISlideMedium medium = (ISlideMedium) stream.ReceiveNext();
                 ShowContextMenu();
-                
+
 //                transform.position = (Vector3) stream.ReceiveNext();
 //                transform.rotation = (Quaternion) stream.ReceiveNext();
 //                Avatar.transform.localPosition = (Vector3) stream.ReceiveNext();
 //                Avatar.transform.localRotation = (Quaternion) stream.ReceiveNext();
             }
-       }
-
+        }
     }
 }

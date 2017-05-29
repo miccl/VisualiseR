@@ -1,4 +1,5 @@
-﻿using strange.extensions.command.api;
+﻿using Networking.Photon;
+using strange.extensions.command.api;
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
@@ -69,6 +70,7 @@ namespace VisualiseR.Presentation
             mediationBinder.Bind<PresentationContextMenuView>().To<PresentationContextMenuMediator>();
             mediationBinder.Bind<TimerView>().To<TimerMediator>();
             mediationBinder.Bind<SimplePresentationScreenView>().To<SimplePresentationScreenMediator>();
+            mediationBinder.Bind<NetworkedPlayerView>().To<NetworkedPlayerMediator>();
         }
 
         private void BindCommands()
@@ -91,6 +93,7 @@ namespace VisualiseR.Presentation
             commandBinder.Bind<ShowAllSignal>().To<ShowAllCommand>();
             commandBinder.Bind<SlideSelectedSignal>().To<SlideSelectedCommand>();
             commandBinder.Bind<ShowSceneMenuSignal>().To<ShowSceneMenuCommand>();
+            commandBinder.Bind<InstantiatePlayerSignal>().To<InstantiatePlayerCommand>();
         }
 
         private void BindSignals()
@@ -100,6 +103,7 @@ namespace VisualiseR.Presentation
             injectionBinder.Bind<SetTimerSignal>().ToSingleton();
             injectionBinder.Bind<TimerRunDownSignal>().ToSingleton();
             injectionBinder.Bind<ContextMenuCanceledSignal>().ToSingleton();
+            injectionBinder.Bind<PlayerInstantiatedSignal>().ToSingleton();
         }
     }
 }

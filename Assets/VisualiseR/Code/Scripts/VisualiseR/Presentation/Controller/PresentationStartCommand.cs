@@ -24,21 +24,30 @@ namespace VisualiseR.Presentation
 
         public override void Execute()
         {
+            InitPlayer();
             InitView();
         }
 
 
         private void InitView()
         {
-            InitPlayer();
             InitScreen();
         }
 
         private void InitPlayer()
         {
             //TODO ordentlich player erzeugen
-            _player.Name = "Tim";
-            _player.Type = PlayerType.Host;
+            _player.Name = PlayerPrefsUtil.RetrieveValue(PlayerPrefsUtil.PLAYER_NAME_KEY);
+            _player.Type = GetPlayerType();
+        }
+
+        private PlayerType GetPlayerType()
+        {
+            if (PhotonNetwork.isMasterClient)
+            {
+                return PlayerType.Host;
+            }
+            return PlayerType.Client;
         }
 
         private void InitScreen()

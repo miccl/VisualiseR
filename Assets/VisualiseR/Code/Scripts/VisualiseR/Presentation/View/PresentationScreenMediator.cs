@@ -23,6 +23,9 @@ namespace VisualiseR.Presentation
 
         [Inject]
         public ShowSceneMenuSignal ShowSceneMenuSignal { get; set; }
+        
+        [Inject]
+        public PlayerInstantiatedSignal PlayerInstantiatedSignal { get; set; }
 
         public override void OnRegister()
         {
@@ -31,6 +34,7 @@ namespace VisualiseR.Presentation
             view.ShowPresentationContextMenuSignal.AddListener(ShowContextMenu);
             view.ShowSceneMenuSignal.AddListener(OnShowScenMenu);
             SlidePositionChangedSignal.AddListener(OnSlidePositionChanged);
+            PlayerInstantiatedSignal.AddListener(OnPlayerInstantiated);
         }
 
         public override void OnRemove()
@@ -40,6 +44,8 @@ namespace VisualiseR.Presentation
             view.ShowPresentationContextMenuSignal.RemoveListener(ShowContextMenu);
             view.ShowSceneMenuSignal.RemoveListener(OnShowScenMenu);
             SlidePositionChangedSignal.RemoveListener(OnSlidePositionChanged);
+            PlayerInstantiatedSignal.RemoveListener(OnPlayerInstantiated);
+
         }
 
         private void OnNextSlide(IPlayer player, ISlideMedium medium)
@@ -65,6 +71,11 @@ namespace VisualiseR.Presentation
         private void OnShowScenMenu()
         {
             ShowSceneMenuSignal.Dispatch();
+        }
+
+        private void OnPlayerInstantiated(Player player)
+        {
+            view._player = player;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using strange.extensions.mediation.impl;
+using strange.extensions.signal.impl;
 using UnityEngine;
-using MonoBehaviour = Photon.MonoBehaviour;
 
 namespace Networking.Photon
 {
@@ -8,10 +8,12 @@ namespace Networking.Photon
     /// Handles the synchronisation of the players.
     /// Uses <see cref="OnPhotonSerializeView"/> to synchronize with the other players.
     /// </summary>
-    public class NetworkedPlayer : View
+    public class NetworkedPlayerView : View
     {
         private static JCsLogger Logger;
 
+        internal Signal<bool> UserInstantiatedSignal = new Signal<bool>();
+        
         public GameObject Avatar;
 
         private Transform _playerGlobal;
@@ -20,7 +22,7 @@ namespace Networking.Photon
         protected override void Awake()
         {
             base.Awake();
-            Logger = new JCsLogger(typeof(NetworkedPlayer));
+            Logger = new JCsLogger(typeof(NetworkedPlayerView));
         }
 
         protected override void Start()
@@ -28,7 +30,6 @@ namespace Networking.Photon
             base.Start();
 
             Logger.Info("User is instantiated");
-
             if (PhotonNetwork.isMasterClient)
             {
                 Logger.Info("User is master");
@@ -40,6 +41,7 @@ namespace Networking.Photon
 
             if (photonView.isMine)
             {
+                UserInstantiatedSignal.Dispatch(PhotonNetwork.isMasterClient);
                 Logger.Info("Player is mine");
 
                 _playerGlobal = GameObject.Find("GvrNetworkedPlayer").transform;
