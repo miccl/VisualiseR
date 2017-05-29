@@ -24,18 +24,17 @@ namespace VisualiseR.Presentation
 
         public override void Execute()
         {
-            if (AcessList.NavigateCodeRight.Contains(_player.Type))
+            if (!_player.HasRight(AcessList.NavigateCodeRight))
             {
-                if (_medium.Slides.Count > 0)
-                {
-                    _medium.NextSlide();
-                    Logger.InfoFormat("Next slide (Curr pos: {0})", _medium.CurrentPos);
-                    SlidePositionChangedSignal.Dispatch();
-                }
+                Logger.InfoFormat(AcessList.errorMessageFormat, _player, typeof(NextSlideCommand));
+                return;
             }
-            else
+
+            if (_medium.Slides.Count > 0)
             {
-                Logger.InfoFormat("Player {0} has no rights for command '{1}'", _player, typeof(NextSlideCommand));
+                _medium.NextSlide();
+                Logger.InfoFormat("Next slide (Curr pos: {0})", _medium.CurrentPos);
+                SlidePositionChangedSignal.Dispatch();
             }
         }
     }

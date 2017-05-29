@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using VisualiseR.CodeReview;
 
 namespace VisualiseR.Common
 {
@@ -18,6 +20,11 @@ namespace VisualiseR.Common
         public override string ToString()
         {
             return string.Format("Name: {0} (Type: {1}, JoinDate: {2})", Name, Type, JoinDate);
+        }
+
+        public bool HasRight(List<PlayerType> command)
+        {
+            return command.Contains(Type);
         }
 
         public bool IsEmpty()

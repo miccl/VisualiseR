@@ -24,7 +24,6 @@ namespace VisualiseR.Presentation
 
         public override void Execute()
         {
-            InitPlayer();
             InitView();
         }
 
@@ -32,13 +31,6 @@ namespace VisualiseR.Presentation
         private void InitView()
         {
             InitScreen();
-        }
-
-        private void InitPlayer()
-        {
-            //TODO ordentlich player erzeugen
-            _player.Name = PlayerPrefsUtil.RetrieveValue(PlayerPrefsUtil.PLAYER_NAME_KEY);
-            _player.Type = GetPlayerType();
         }
 
         private PlayerType GetPlayerType()
@@ -77,7 +69,7 @@ namespace VisualiseR.Presentation
             {
                 _slideMedium = CreateMockMedium();
             }
-            view.Init(_slideMedium, _player);
+            view.Init(_slideMedium);
         }
 
         private void ConstructSlideMedium(IPictureMedium medium)

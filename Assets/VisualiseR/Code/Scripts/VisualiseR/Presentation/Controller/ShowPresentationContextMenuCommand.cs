@@ -1,13 +1,26 @@
 ﻿using strange.extensions.command.impl;
 using UnityEngine;
+using VisualiseR.CodeReview;
+using VisualiseR.Common;
 
 public class ShowPresentationContextMenuCommand : Command
 {
+    private static readonly JCsLogger Logger = new JCsLogger(typeof(ShowPresentationContextMenuCommand));
+
+    [Inject]
+    public Player _player { get; set; }
+
     [Inject]
     public GameObject _gameObject { get; set; }
 
     public override void Execute()
     {
+        if (!_player.HasRight(AcessList.NavigateCodeRight))
+        {
+            Logger.InfoFormat(AcessList.errorMessageFormat, _player, typeof(ShowPresentationContextMenuCommand));
+            return;
+        }
+
         InstantiateContextMenu();
     }
 
