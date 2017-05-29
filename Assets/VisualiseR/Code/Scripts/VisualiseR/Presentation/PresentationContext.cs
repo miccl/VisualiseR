@@ -94,6 +94,7 @@ namespace VisualiseR.Presentation
             commandBinder.Bind<SlideSelectedSignal>().To<SlideSelectedCommand>();
             commandBinder.Bind<ShowSceneMenuSignal>().To<ShowSceneMenuCommand>();
             commandBinder.Bind<InstantiatePlayerSignal>().To<InstantiatePlayerCommand>();
+            commandBinder.Bind<LoadFilesSignal>().To<LoadFilesCommand>();
         }
 
         private void BindSignals()
@@ -104,6 +105,7 @@ namespace VisualiseR.Presentation
             injectionBinder.Bind<TimerRunDownSignal>().ToSingleton();
             injectionBinder.Bind<ContextMenuCanceledSignal>().ToSingleton();
             injectionBinder.Bind<PlayerInstantiatedSignal>().ToSingleton();
+            injectionBinder.Bind<FilesLoadedSignal>().ToSingleton();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using strange.extensions.mediation.impl;
+﻿using System.Collections.Generic;
+using strange.extensions.mediation.impl;
 using UnityEngine;
 using VisualiseR.Common;
 
@@ -23,29 +24,41 @@ namespace VisualiseR.Presentation
 
         [Inject]
         public ShowSceneMenuSignal ShowSceneMenuSignal { get; set; }
-        
+
         [Inject]
         public PlayerInstantiatedSignal PlayerInstantiatedSignal { get; set; }
+
+        [Inject]
+        public LoadFilesSignal LoadFilesSignal { get; set; }
+
+        [Inject]
+        public FilesLoadedSignal FilesLoadedSignal { get; set; }
 
         public override void OnRegister()
         {
             view.NextSlideSignal.AddListener(OnNextSlide);
             view.PrevSlideSignal.AddListener(OnPrevSlide);
-            view.ShowPresentationContextMenuSignal.AddListener(ShowContextMenu);
+            view.ShowPresentationContextMenuSignal.AddListener(OnShowContextMenu);
             view.ShowSceneMenuSignal.AddListener(OnShowScenMenu);
             SlidePositionChangedSignal.AddListener(OnSlidePositionChanged);
             PlayerInstantiatedSignal.AddListener(OnPlayerInstantiated);
+            FilesLoadedSignal.AddListener(OnFilesLoaded);
+        }
+
+        private void OnFilesLoaded(SlideMedium medium, List<byte[]> images)
+        {
+            view.Init(medium, images);
         }
 
         public override void OnRemove()
         {
             view.NextSlideSignal.RemoveListener(OnNextSlide);
             view.PrevSlideSignal.RemoveListener(OnPrevSlide);
-            view.ShowPresentationContextMenuSignal.RemoveListener(ShowContextMenu);
+            view.ShowPresentationContextMenuSignal.RemoveListener(OnShowContextMenu);
             view.ShowSceneMenuSignal.RemoveListener(OnShowScenMenu);
             SlidePositionChangedSignal.RemoveListener(OnSlidePositionChanged);
             PlayerInstantiatedSignal.RemoveListener(OnPlayerInstantiated);
-
+            FilesLoadedSignal.RemoveListener(OnFilesLoaded);
         }
 
         private void OnNextSlide(IPlayer player, ISlideMedium medium)
@@ -60,12 +73,12 @@ namespace VisualiseR.Presentation
 
         private void OnSlidePositionChanged()
         {
-            view.LoadSlide();
+            view.LoadCurrentSlide();
         }
 
-        private void ShowContextMenu(GameObject go)
+        private void OnShowContextMenu(IPlayer player, GameObject screen)
         {
-            ShowPresentationContextMenuSignal.Dispatch(go);
+            ShowPresentationContextMenuSignal.Dispatch((Player) player, screen);
         }
 
         private void OnShowScenMenu()
@@ -76,6 +89,14 @@ namespace VisualiseR.Presentation
         private void OnPlayerInstantiated(Player player)
         {
             view._player = player;
+            if (player.Type.Equals(PlayerType.Host))
+            {
+                LoadFilesSignal.Dispatch(player);
+            }
+            else
+            {
+                view.RequestDataFromMaster();
+            }
         }
     }
 }

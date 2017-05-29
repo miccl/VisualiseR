@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Net.Mime;
+using System.Collections.Generic;
 using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
@@ -10,36 +8,102 @@ namespace VisualiseR.Presentation
 {
     public class PresentationScreenView : View
     {
+        private static JCsLogger Logger;
+
         private const string FILE_PREFIX = "file:///";
 
         internal Signal<IPlayer, ISlideMedium> NextSlideSignal = new Signal<IPlayer, ISlideMedium>();
         internal Signal<IPlayer, ISlideMedium> PrevSlideSignal = new Signal<IPlayer, ISlideMedium>();
-        internal Signal<GameObject> ShowPresentationContextMenuSignal = new Signal<GameObject>();
+        internal Signal<IPlayer, GameObject> ShowPresentationContextMenuSignal = new Signal<IPlayer, GameObject>();
         internal Signal ShowSceneMenuSignal = new Signal();
         private bool _IsSlideChanged;
+        private byte[] _globalTexture;
+        private byte[] _globalBytes;
+        private List<byte[]> _images = new List<byte[]>();
+        private int _currentPos;
 
         internal ISlideMedium _medium { get; set; }
         internal IPlayer _player { get; set; }
 
-        public void Init(ISlideMedium slideMedium, IPlayer player)
+        protected override void Awake()
+        {
+            base.Awake();
+            Logger = new JCsLogger(typeof(PresentationScreenView));
+        }
+
+        public void Init(ISlideMedium slideMedium, List<byte[]> images)
         {
             _medium = slideMedium;
-            _player = player;
+            _images = images;
 
             SetupMedium();
         }
 
+
         private void SetupMedium()
         {
-            if (_medium != null)
+            
+            if (_player == null)
             {
-                LoadSlide();
+                return;
+            }
+
+            if (_player.Type == PlayerType.Host)
+            {
+                Debug.Log("Is Host");
+                LoadCurrentSlide();
             }
         }
 
+        internal void RequestDataFromMaster()
+        {
+            Debug.Log("RequestDataFromMaster");
+            GetComponent<PhotonView>().RPC("OnDataRequest",
+                PhotonTargets.MasterClient,
+                PhotonNetwork.player.ID);
+            
+        }
+
+        [PunRPC]
+        void OnDataRequest(int playerId)
+        {
+            Debug.Log("OnDataRequest");
+//            GetComponent<PhotonView>().RPC("OnDataReceived",
+//                PhotonPlayer.Find(playerId),
+//                _currentPos, _images.ToArray());
+//            foreach (var image in _images)
+//            {
+                GetComponent<PhotonView>().RPC("OnDataReceived",
+                    PhotonPlayer.Find(playerId),
+                     _images[0]);
+            //TODO
+//            }
+        }
+
+        [PunRPC]
+        void OnDataReceived(byte[] image)
+        {
+            Debug.Log("OnDataReceived");
+            Debug.Log(image.Length);
+            _images.Add(image);            
+            Debug.Log("Received images from master");
+//            OnSlidePosChanged(currPos);
+        }
+
+        public void test()
+        {
+            test2(_images.ToArray());
+        }
+
+        private void test2(params byte[][] images)
+        {
+            
+        }
+
+
         private void NextSlide()
         {
-            if (!_player.IsEmpty())
+            if (_player != null && _medium != null)
             {
                 NextSlideSignal.Dispatch(_player, _medium);
             }
@@ -47,38 +111,37 @@ namespace VisualiseR.Presentation
 
         private void PrevSlide()
         {
-            if (!_player.IsEmpty())
+            if (_player != null && _medium != null)
             {
                 PrevSlideSignal.Dispatch(_player, _medium);
             }
         }
 
-        internal void LoadSlide()
+        internal void LoadCurrentSlide()
         {
-            _IsSlideChanged = true;
-            LoadCurrentSlide();
+            var currentPos = _medium.CurrentPos;
+            photonView.RPC("OnSlidePosChanged",
+                PhotonTargets.All,
+                currentPos);
         }
 
-        private void LoadCurrentSlide()
+        [PunRPC]
+        void OnSlidePosChanged(int pos)
         {
-            string path = _medium.CurrentSlide().Pic.Path;
-            if (!String.IsNullOrEmpty(path))
+            if (_images == null)
             {
-                StartCoroutine(LoadImageIntoTexture(path));
+                Logger.Error("Image is null");
+                return;
             }
+            _currentPos = pos;
+            LoadImageIntoTexture(_images[pos]);
         }
 
-
-        IEnumerator LoadImageIntoTexture(string path)
+        void LoadImageIntoTexture(byte[] bytes)
         {
-            WWW www = new WWW(FILE_PREFIX + path);
-
-            yield return www;
-
-            Texture2D tex = new Texture2D(1, 1, TextureFormat.RGBA32, false);
-            www.LoadImageIntoTexture(tex);
+            Texture2D tex = new Texture2D(4, 4, TextureFormat.RGBA32, false);
+            tex.LoadImage(bytes);
             GetComponent<Renderer>().material.mainTexture = tex;
-            www.Dispose();
         }
 
         void Update()
@@ -95,7 +158,6 @@ namespace VisualiseR.Presentation
 ////                PrevSlide();
 //                ShowContextMenu();
 //            }
-
             if (photonView.isMine)
             {
             }
@@ -103,37 +165,42 @@ namespace VisualiseR.Presentation
 
         private void ShowContextMenu()
         {
-            ShowPresentationContextMenuSignal.Dispatch(gameObject);
+            if (_player != null && !_player.IsEmpty())
+            {
+                ShowPresentationContextMenuSignal.Dispatch(_player, gameObject);
+            }
         }
 
-        // synchronsize with the others
+
+// synchronsize with the others
         void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
             if (stream.isWriting)
             {
-                if (_IsSlideChanged)
+                if (PhotonNetwork.isMasterClient)
                 {
-                    Debug.Log("IsWriting");
-                    stream.SendNext(1);
-                    _IsSlideChanged = false;
+//                    if (PhotonNetwork.room)
                 }
-//                stream.SendNext();
-//                stream.SendNext(_playerGlobal.position);
-//                stream.SendNext(_playerGlobal.rotation);
-//                stream.SendNext(_playerLocal.localPosition);
-//                stream.SendNext(_playerLocal.localRotation);
+//                PhotonNetwork
+//                if (_IsSlideChanged)
+//                {
+//                    Debug.Log("IsWriting");
+//                    stream.SendNext(_globalBytes);
+//                    _IsSlideChanged = false;
+//                }
             }
             else
             {
 //                Debug.Log("IsReading");
 //                ISlideMedium medium = (ISlideMedium) stream.ReceiveNext();
-                ShowContextMenu();
-
-//                transform.position = (Vector3) stream.ReceiveNext();
-//                transform.rotation = (Quaternion) stream.ReceiveNext();
-//                Avatar.transform.localPosition = (Vector3) stream.ReceiveNext();
-//                Avatar.transform.localRotation = (Quaternion) stream.ReceiveNext();
+//                ShowContextMenu();
+                Debug.Log("IsReading");
+                byte[] foo = (byte[]) stream.ReceiveNext();
+                Debug.Log(foo.Length);
+                LoadImageIntoTexture(foo);
+                Debug.Log("IsRFinished");
             }
+//                LoadImageIntoTexture(foo);
         }
     }
 }
