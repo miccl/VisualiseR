@@ -36,6 +36,10 @@ namespace VisualiseR.Presentation
         
         [Inject]
         public ShowReticlePointerSignal ShowReticlePointerSignal { get; set; }
+        
+        [Inject]
+        public ShowLoadingAnimationSignal ShowLoadingAnimationSignal { get; set; }
+
 
         public override void OnRegister()
         {
@@ -43,14 +47,10 @@ namespace VisualiseR.Presentation
             view.PrevSlideSignal.AddListener(OnPrevSlide);
             view.ShowPresentationContextMenuSignal.AddListener(OnShowContextMenu);
             view.ShowSceneMenuSignal.AddListener(OnShowScenMenu);
+            view.ShowLoadingAnimationSignal.AddListener(OnShowAnimation);
             SlidePositionChangedSignal.AddListener(OnSlidePositionChanged);
             PlayerInstantiatedSignal.AddListener(OnPlayerInstantiated);
             FilesLoadedSignal.AddListener(OnFilesLoaded);
-        }
-
-        private void OnFilesLoaded(SlideMedium medium, List<byte[]> images)
-        {
-            view.Init(medium, images);
         }
 
         public override void OnRemove()
@@ -59,9 +59,20 @@ namespace VisualiseR.Presentation
             view.PrevSlideSignal.RemoveListener(OnPrevSlide);
             view.ShowPresentationContextMenuSignal.RemoveListener(OnShowContextMenu);
             view.ShowSceneMenuSignal.RemoveListener(OnShowScenMenu);
+            view.ShowLoadingAnimationSignal.RemoveListener(OnShowAnimation);
             SlidePositionChangedSignal.RemoveListener(OnSlidePositionChanged);
             PlayerInstantiatedSignal.RemoveListener(OnPlayerInstantiated);
             FilesLoadedSignal.RemoveListener(OnFilesLoaded);
+        }
+
+        private void OnShowAnimation(bool show)
+        {
+            ShowLoadingAnimationSignal.Dispatch(show);
+        }
+
+        private void OnFilesLoaded(SlideMedium medium, List<byte[]> images)
+        {
+            view.Init(medium, images);
         }
 
         private void OnNextSlide(IPlayer player, ISlideMedium medium)

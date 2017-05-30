@@ -16,6 +16,7 @@ namespace VisualiseR.Presentation
         internal Signal<IPlayer, ISlideMedium> PrevSlideSignal = new Signal<IPlayer, ISlideMedium>();
         internal Signal<IPlayer> ShowPresentationContextMenuSignal = new Signal<IPlayer>();
         internal Signal<IPlayer> ShowSceneMenuSignal = new Signal<IPlayer>();
+        internal Signal<bool> ShowLoadingAnimationSignal = new Signal<bool>();
         private List<byte[]> _images = new List<byte[]>();
         private int _currentPos;
         private bool _isLoading;
@@ -49,6 +50,7 @@ namespace VisualiseR.Presentation
             if (_player.Type == PlayerType.Host)
             {
                 LoadCurrentSlide();
+                ShowLoadingAnimationSignal.Dispatch(false);
             }
         }
 
@@ -104,6 +106,7 @@ namespace VisualiseR.Presentation
             _isLoading = false;
             Logger.DebugFormat("Player (id '{0}'): Received all images from master", PhotonNetwork.player.ID);
             LoadImageIntoTexture(_images[_currentPos]);
+            ShowLoadingAnimationSignal.Dispatch(false);
         }
 
         private void NextSlide()

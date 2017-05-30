@@ -98,6 +98,7 @@ namespace VisualiseR.Presentation
             commandBinder.Bind<LoadFilesSignal>().To<LoadFilesCommand>();
             commandBinder.Bind<ShowTimeSignal>().To<ShowTimeCommand>();
             commandBinder.Bind<ShowReticlePointerSignal>().To<ShowReticlePointerCommand>();
+            commandBinder.Bind<ShowLoadingAnimationSignal>().To<ShowLoadingAnimationCommand>();
         }
 
         private void BindSignals()
