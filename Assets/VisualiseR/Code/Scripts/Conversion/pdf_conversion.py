@@ -2,7 +2,7 @@ import os
 import sys
 
 VALID_PDF_EXTENSIONS = [".pdf"]
-DENSITY = '300x300'
+DENSITY = '100'
 """Output quality in percent"""
 QUALITY = 100
 

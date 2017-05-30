@@ -16,11 +16,9 @@ namespace VisualiseR.Presentation
         internal Signal<IPlayer, ISlideMedium> PrevSlideSignal = new Signal<IPlayer, ISlideMedium>();
         internal Signal<IPlayer, GameObject> ShowPresentationContextMenuSignal = new Signal<IPlayer, GameObject>();
         internal Signal ShowSceneMenuSignal = new Signal();
-        private bool _IsSlideChanged;
-        private byte[] _globalTexture;
-        private byte[] _globalBytes;
         private List<byte[]> _images = new List<byte[]>();
         private int _currentPos;
+        private bool _isLoading;
 
         internal ISlideMedium _medium { get; set; }
         internal IPlayer _player { get; set; }
@@ -42,7 +40,6 @@ namespace VisualiseR.Presentation
 
         private void SetupMedium()
         {
-            
             if (_player == null)
             {
                 return;
@@ -50,56 +47,66 @@ namespace VisualiseR.Presentation
 
             if (_player.Type == PlayerType.Host)
             {
-                Debug.Log("Is Host");
+                Logger.Info("Is Host");
                 LoadCurrentSlide();
             }
         }
 
         internal void RequestDataFromMaster()
         {
-            Debug.Log("RequestDataFromMaster");
+            RequestDataFromMaster(PhotonNetwork.player.ID, 0);
+            _isLoading = true;
+        }
+
+        internal void RequestDataFromMaster(int playerId, int pos)
+        {
             GetComponent<PhotonView>().RPC("OnDataRequest",
                 PhotonTargets.MasterClient,
-                PhotonNetwork.player.ID);
-            
+                playerId, pos);
+            Logger.DebugFormat("Player (id '{0}'): Reqested data (pos '{1}') from master", playerId, pos);
         }
 
         [PunRPC]
-        void OnDataRequest(int playerId)
+        void OnDataRequest(int playerId, int pos)
         {
-            Debug.Log("OnDataRequest");
+            int Pos = -1;
+            byte[] Image = null;
+
+            if (_images.Count - 1 >= pos)
+            {
+                Pos = pos;
+                Image = _images[Pos];
+            }
+            GetComponent<PhotonView>().RPC("OnDataReceived",
+                PhotonPlayer.Find(playerId),
+                Pos, Image);
+            Logger.DebugFormat("Master: Send data (pos '{1}') to player (id '{0}')", playerId, pos);
+            _isLoading = false;
+            
+            //TODO interesting other alternative
 //            GetComponent<PhotonView>().RPC("OnDataReceived",
-//                PhotonPlayer.Find(playerId),
-//                _currentPos, _images.ToArray());
-//            foreach (var image in _images)
-//            {
-                GetComponent<PhotonView>().RPC("OnDataReceived",
-                    PhotonPlayer.Find(playerId),
-                     _images[0]);
-            //TODO
-//            }
+//                PhotonTargets.OthersBuffered,
+//                Pos, Image);
         }
 
-        [PunRPC]
-        void OnDataReceived(byte[] image)
+        [
+            PunRPC]
+        void OnDataReceived(int pos, byte[] image)
         {
-            Debug.Log("OnDataReceived");
-            Debug.Log(image.Length);
-            _images.Add(image);            
-            Debug.Log("Received images from master");
-//            OnSlidePosChanged(currPos);
-        }
+            if (pos >= 0)
+            {
+                _images.Insert(pos, image);
 
-        public void test()
-        {
-            test2(_images.ToArray());
-        }
+                Logger.DebugFormat("(id '{0}'): Received images from master (image: {1}, pos: {2})",
+                    PhotonNetwork.player.ID,
+                    image.Length, pos);
+                RequestDataFromMaster(PhotonNetwork.player.ID, ++pos);
+                return;
+            }
 
-        private void test2(params byte[][] images)
-        {
-            
+            Logger.DebugFormat("Player (id '{0}'): Received all images from master", PhotonNetwork.player.ID);
+            LoadImageIntoTexture(_images[_currentPos]);
         }
-
 
         private void NextSlide()
         {
@@ -133,6 +140,12 @@ namespace VisualiseR.Presentation
                 Logger.Error("Image is null");
                 return;
             }
+            if (_isLoading)
+            {
+                Logger.Error("User is still loading");
+                return;
+            }
+
             _currentPos = pos;
             LoadImageIntoTexture(_images[pos]);
         }
@@ -171,36 +184,8 @@ namespace VisualiseR.Presentation
             }
         }
 
-
-// synchronsize with the others
         void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
-            if (stream.isWriting)
-            {
-                if (PhotonNetwork.isMasterClient)
-                {
-//                    if (PhotonNetwork.room)
-                }
-//                PhotonNetwork
-//                if (_IsSlideChanged)
-//                {
-//                    Debug.Log("IsWriting");
-//                    stream.SendNext(_globalBytes);
-//                    _IsSlideChanged = false;
-//                }
-            }
-            else
-            {
-//                Debug.Log("IsReading");
-//                ISlideMedium medium = (ISlideMedium) stream.ReceiveNext();
-//                ShowContextMenu();
-                Debug.Log("IsReading");
-                byte[] foo = (byte[]) stream.ReceiveNext();
-                Debug.Log(foo.Length);
-                LoadImageIntoTexture(foo);
-                Debug.Log("IsRFinished");
-            }
-//                LoadImageIntoTexture(foo);
         }
     }
 }
