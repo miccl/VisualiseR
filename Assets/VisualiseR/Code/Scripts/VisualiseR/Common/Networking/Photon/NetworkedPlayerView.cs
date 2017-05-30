@@ -1,6 +1,7 @@
 ﻿using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
+using VisualiseR.Common;
 
 namespace Networking.Photon
 {
@@ -12,8 +13,9 @@ namespace Networking.Photon
     {
         private static JCsLogger Logger;
 
-        internal Signal<bool> UserInstantiatedSignal = new Signal<bool>();
-        
+        internal Signal<bool> UserStarted = new Signal<bool>();
+
+        internal IPlayer _player;
         public GameObject Avatar;
 
         private Transform _playerGlobal;
@@ -29,20 +31,19 @@ namespace Networking.Photon
         {
             base.Start();
 
-            Logger.Info("User is instantiated");
-            if (PhotonNetwork.isMasterClient)
-            {
-                Logger.Info("User is master");
-            }
-            else
-            {
-                Logger.Info("User is client");
-            }
-
             if (photonView.isMine)
             {
-                UserInstantiatedSignal.Dispatch(PhotonNetwork.isMasterClient);
-                Logger.Info("Player is mine");
+                if (PhotonNetwork.isMasterClient)
+                {
+                    Logger.Info("User is master");
+                }
+                else
+                {
+                    Logger.Info("User is client");
+                }
+
+
+                UserStarted.Dispatch(PhotonNetwork.isMasterClient);
 
                 _playerGlobal = GameObject.Find("GvrNetworkedPlayer").transform;
                 _playerLocal = _playerGlobal.Find("GvrFPSController/FirstPersonCharacter");
@@ -52,6 +53,12 @@ namespace Networking.Photon
 
                 Avatar.SetActive(false);
             }
+        }
+
+        internal void InitPlayer(Player player)
+        {
+            _player = player;
+            //TODO avatar und n
         }
 
 

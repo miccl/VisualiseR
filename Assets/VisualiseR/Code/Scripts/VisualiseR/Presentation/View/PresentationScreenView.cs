@@ -47,7 +47,6 @@ namespace VisualiseR.Presentation
 
             if (_player.Type == PlayerType.Host)
             {
-                Logger.Info("Is Host");
                 LoadCurrentSlide();
             }
         }
@@ -80,9 +79,7 @@ namespace VisualiseR.Presentation
             GetComponent<PhotonView>().RPC("OnDataReceived",
                 PhotonPlayer.Find(playerId),
                 Pos, Image);
-            Logger.DebugFormat("Master: Send data (pos '{1}') to player (id '{0}')", playerId, pos);
-            _isLoading = false;
-            
+            Logger.DebugFormat("Master: Send data (pos '{1}') to player (id '{0}')", playerId, pos);            
             //TODO interesting other alternative
 //            GetComponent<PhotonView>().RPC("OnDataReceived",
 //                PhotonTargets.OthersBuffered,
@@ -104,6 +101,7 @@ namespace VisualiseR.Presentation
                 return;
             }
 
+            _isLoading = false;
             Logger.DebugFormat("Player (id '{0}'): Received all images from master", PhotonNetwork.player.ID);
             LoadImageIntoTexture(_images[_currentPos]);
         }

@@ -11,23 +11,34 @@ namespace Networking.Photon
         
         [Inject]
         public IPlayer _player { get; set; }
-        
+                
         [Inject]
         public InstantiatePlayerSignal InstantiatePlayerSignal { get; set; }
+        
+        [Inject]
+        public PlayerInstantiatedSignal InstantiatedPlayerSignal { get; set; }
+
 
         public override void OnRegister()
         {
-            _view.UserInstantiatedSignal.AddListener(OnPlayerInstantiated);
+            _view.UserStarted.AddListener(OnUserStarted);
+            InstantiatedPlayerSignal.AddListener(OnPlayerInstantiated);
         }
 
         public override void OnRemove()
         {
-            _view.UserInstantiatedSignal.AddListener(OnPlayerInstantiated);
+            _view.UserStarted.RemoveListener(OnUserStarted);
+            InstantiatedPlayerSignal.RemoveListener(OnPlayerInstantiated);
         }
 
-        private void OnPlayerInstantiated(bool isMasterClient)
+        private void OnUserStarted(bool isMasterClient)
         {
             InstantiatePlayerSignal.Dispatch(isMasterClient);
+        }
+
+        private void OnPlayerInstantiated(Player player)
+        {
+            _view.InitPlayer(player);
         }
     }
 }

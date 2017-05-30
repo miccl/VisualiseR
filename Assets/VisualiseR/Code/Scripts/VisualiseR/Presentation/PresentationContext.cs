@@ -71,6 +71,7 @@ namespace VisualiseR.Presentation
             mediationBinder.Bind<TimerView>().To<TimerMediator>();
             mediationBinder.Bind<SimplePresentationScreenView>().To<SimplePresentationScreenMediator>();
             mediationBinder.Bind<NetworkedPlayerView>().To<NetworkedPlayerMediator>();
+            mediationBinder.Bind<NetworkController>().To<NetworkControllerMediator>();
         }
 
         private void BindCommands()
@@ -106,6 +107,7 @@ namespace VisualiseR.Presentation
             injectionBinder.Bind<ContextMenuCanceledSignal>().ToSingleton();
             injectionBinder.Bind<PlayerInstantiatedSignal>().ToSingleton();
             injectionBinder.Bind<FilesLoadedSignal>().ToSingleton();
+            injectionBinder.Bind<CreateOrJoinSignal>().ToSingleton();
         }
     }
 }
