@@ -97,6 +97,7 @@ namespace VisualiseR.Presentation
             commandBinder.Bind<InstantiatePlayerSignal>().To<InstantiatePlayerCommand>();
             commandBinder.Bind<LoadFilesSignal>().To<LoadFilesCommand>();
             commandBinder.Bind<ShowTimeSignal>().To<ShowTimeCommand>();
+            commandBinder.Bind<ShowReticlePointerSignal>().To<ShowReticlePointerCommand>();
         }
 
         private void BindSignals()

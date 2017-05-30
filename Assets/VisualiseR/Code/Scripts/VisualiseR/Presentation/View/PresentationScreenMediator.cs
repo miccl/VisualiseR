@@ -33,6 +33,9 @@ namespace VisualiseR.Presentation
 
         [Inject]
         public FilesLoadedSignal FilesLoadedSignal { get; set; }
+        
+        [Inject]
+        public ShowReticlePointerSignal ShowReticlePointerSignal { get; set; }
 
         public override void OnRegister()
         {
@@ -92,10 +95,12 @@ namespace VisualiseR.Presentation
             if (player.Type.Equals(PlayerType.Host))
             {
                 LoadFilesSignal.Dispatch(player);
+                ShowReticlePointerSignal.Dispatch(true);
             }
             else
             {
                 view.RequestDataFromMaster();
+                ShowReticlePointerSignal.Dispatch(false);
             }
         }
     }

@@ -35,6 +35,7 @@ namespace VisualiseR.Presentation
             _images = images;
 
             SetupMedium();
+            
         }
 
 
@@ -161,7 +162,7 @@ namespace VisualiseR.Presentation
                 NextSlide();
 
 //                ShowSceneMenuSignal.Dispatch(_player);
-                if (_player != null)
+                if (_player != null && !_player.IsEmpty())
                 {
                     ShowPresentationContextMenuSignal.Dispatch(_player);
                 }
