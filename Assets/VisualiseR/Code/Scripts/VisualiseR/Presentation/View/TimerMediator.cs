@@ -1,5 +1,6 @@
 ﻿using strange.extensions.mediation.impl;
 using UnityEngine;
+using VisualiseR.Common;
 using VisualiseR.Presentation;
 
 namespace VisualiseR.Presentation
@@ -20,11 +21,15 @@ namespace VisualiseR.Presentation
 
         [Inject]
         public ShowAllSignal ShowAllSignal { get; set; }
+        
+        [Inject]
+        public ShowTimeSignal ShowTimeSignal { get; set; }
 
 
         public override void OnRegister()
         {
             _view.TimerRunDownSignal.AddListener(OnTimerRunDown);
+            _view.ShowTimerSignal.AddListener(OnShowTimerSignal);
             ChangeTimerStatusSignal.AddListener(OnChangedTimerStatus);
             SetTimerSignal.AddListener(OnSetTime);
             ShowAllSignal.AddListener(OnShowAll);
@@ -34,6 +39,7 @@ namespace VisualiseR.Presentation
         public override void OnRemove()
         {
             _view.TimerRunDownSignal.AddListener(OnTimerRunDown);
+            _view.ShowTimerSignal.RemoveListener(OnShowTimerSignal);
             ChangeTimerStatusSignal.RemoveListener(OnChangedTimerStatus);
             SetTimerSignal.RemoveListener(OnSetTime);
             ShowAllSignal.RemoveListener(OnShowAll);
@@ -57,9 +63,15 @@ namespace VisualiseR.Presentation
             }
         }
 
-        private void OnSetTime(float timeInSeconds)
+        private void OnShowTimerSignal(bool show)
         {
-            _view.SetTimer(timeInSeconds);
+            ShowTimeSignal.Dispatch(show);
+        }
+
+        private void OnSetTime(float differenceInSeconds)
+        {
+            Debug.Log("SET TIME " + differenceInSeconds);
+            _view.SetTimer(_view._timeFrom + differenceInSeconds);
         }
 
         private void OnTimerRunDown()

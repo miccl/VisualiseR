@@ -9,12 +9,13 @@ namespace VisualiseR.Presentation
 
         public void OnQuitButtonClick(BaseEventData data)
         {
+            PhotonNetwork.LeaveRoom();
             UnityUtil.LoadScene("Main");
         }
 
         public void OnCancelButtonClick(BaseEventData data)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

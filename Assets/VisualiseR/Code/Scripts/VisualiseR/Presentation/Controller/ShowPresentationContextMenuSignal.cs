@@ -4,7 +4,7 @@ using VisualiseR.Common;
 
 namespace VisualiseR.Presentation
 {
-    public class ShowPresentationContextMenuSignal : Signal<Player, GameObject>
+    public class ShowPresentationContextMenuSignal : Signal<Player>
     {
 
     }

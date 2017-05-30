@@ -1,45 +1,34 @@
 ﻿using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using UnityEngine;
+using VisualiseR.CodeReview;
+using VisualiseR.Common;
 
 namespace VisualiseR.Presentation
 {
     public class ShowSceneMenuCommand : Command
     {
+        private static readonly JCsLogger Logger = new JCsLogger(typeof(ShowSceneMenuCommand));
+        
+        [Inject]
+        public Player _player { get; set; }
+        
         [Inject(ContextKeys.CONTEXT_VIEW)]
         public GameObject _contextView { get; set; }
-
+        
         public override void Execute()
         {
-            InstantiateSceneMenu();
+            if (_player.HasRight(AcessList.SceneMenu))
+            {
+                ShowSceneMenu();
+            }
         }
 
-        private void InstantiateSceneMenu()
+        private void ShowSceneMenu()
         {
-            var position = GetContextMenuPosition();
-            var rotation = GetContextMenuRotation();
-            GameObject contextMenu =
-                GameObject.Instantiate(Resources.Load("PresentationSceneMenuCanvas"), position, rotation) as GameObject;
-//            contextMenu.transform.Rotate(90, -180, 0);
-            contextMenu.transform.SetParent(_contextView.transform);
-        }
-
-        private Quaternion GetContextMenuRotation()
-        {
-            //TODO überarbeiten
-
-            return Quaternion.Euler(0,0,0);
-        }
-
-        private Vector3 GetContextMenuPosition()
-        {
-            //TODO irgendwann nochmal verbessern, derzeit schwankt das immer hin und her
-            Vector3 cameraBack = -Camera.main.transform.forward * 12;
-            Vector3 shift = new Vector3(0, 0, cameraBack.z);
-            Vector3 pos = Camera.main.transform.position + shift;
-            pos.y = 2;
-
-            return pos;
+            var sceneMenu = _contextView.transform.Find("Menus").transform.Find("PresentationSceneMenuCanvas").gameObject;
+            sceneMenu.SetActive(true);
+            Logger.InfoFormat("Scene menu is shown");
         }
     }
 }

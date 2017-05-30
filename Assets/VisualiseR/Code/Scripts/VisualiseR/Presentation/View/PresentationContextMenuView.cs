@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using strange.extensions.context.api;
 using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
@@ -9,9 +11,10 @@ using VisualiseR.Util;
 namespace VisualiseR.Presentation
 {
     public class PresentationContextMenuView : View
-    {
+    {        
         public Signal OnContextMenuCanceled = new Signal();
         public Signal<TimerTypes> ChangeTimerStatusSignal = new Signal<TimerTypes>();
+        public Signal<bool> ShowTimerSignal = new Signal<bool>();
         public Signal<float> SetTimerSignal = new Signal<float>();
         public Signal ShowAllSignal = new Signal();
 
@@ -22,6 +25,7 @@ namespace VisualiseR.Presentation
         private Text _startStopButtonText;
         private Text _timerText;
 
+        internal GameObject _contextView;
         private TimerView _timerView;
 
         protected override void Awake()
@@ -32,7 +36,6 @@ namespace VisualiseR.Presentation
 
             _startStopButtonText = _timerPanel.transform.FindChild("CenterPanel").transform.FindChild("ButtonPanel").transform.FindChild("StartStopButton").GetComponentInChildren<Text>();
 
-            _timerView = UnityUtil.FindGameObject("TimerCanvas").GetComponent<TimerView>();
         }
 
         protected override void Start()
@@ -41,6 +44,12 @@ namespace VisualiseR.Presentation
             RefreshStartStopButtonText();
             SetTimerText(_timerView._timeFrom);
         }
+
+        internal void Init(GameObject contextView)
+        {
+            _contextView = contextView;
+            _timerView = _contextView.transform.Find("TimerCanvas").GetComponent<TimerView>();
+        } 
 
         private void SetTimerText(float timeInSeconds)
         {
@@ -63,7 +72,7 @@ namespace VisualiseR.Presentation
         {
             _mainPanel.SetActive(false);
             _timerPanel.SetActive(true);
-            _timerView.Show(true);
+            ShowTimerSignal.Dispatch(true);
         }
 
         public void OnShowButtonClick(BaseEventData data)
@@ -76,7 +85,8 @@ namespace VisualiseR.Presentation
         public void OnCancelButtonClick(BaseEventData data)
         {
             OnContextMenuCanceled.Dispatch();
-            Destroy(gameObject);
+                        
+            gameObject.SetActive(false);
         }
 
         public void OnTimerStartStopButton(BaseEventData data)
@@ -101,12 +111,12 @@ namespace VisualiseR.Presentation
 
         public void OnTimerUpButton(BaseEventData data)
         {
-            SetTimerSignal.Dispatch(_timerView._timeFrom + 60);
+            SetTimerSignal.Dispatch(60);
         }
 
         public void OnTimerDownButton(BaseEventData data)
         {
-            SetTimerSignal.Dispatch(_timerView._timeFrom - 60);
+            SetTimerSignal.Dispatch(-60);
         }
 
         public void OnTimerCancelButton(BaseEventData data)

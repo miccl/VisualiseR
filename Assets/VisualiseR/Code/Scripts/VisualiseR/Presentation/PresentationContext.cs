@@ -96,6 +96,7 @@ namespace VisualiseR.Presentation
             commandBinder.Bind<ShowSceneMenuSignal>().To<ShowSceneMenuCommand>();
             commandBinder.Bind<InstantiatePlayerSignal>().To<InstantiatePlayerCommand>();
             commandBinder.Bind<LoadFilesSignal>().To<LoadFilesCommand>();
+            commandBinder.Bind<ShowTimeSignal>().To<ShowTimeCommand>();
         }
 
         private void BindSignals()

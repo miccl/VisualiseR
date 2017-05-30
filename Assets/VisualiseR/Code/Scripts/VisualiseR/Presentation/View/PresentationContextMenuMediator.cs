@@ -1,4 +1,6 @@
-﻿using strange.extensions.mediation.impl;
+﻿using strange.extensions.context.api;
+using strange.extensions.mediation.impl;
+using UnityEngine;
 
 namespace VisualiseR.Presentation
 {
@@ -21,7 +23,12 @@ namespace VisualiseR.Presentation
 
         [Inject]
         public ShowAllSignal ShowAllSignal{ get; set; }
-
+        
+        [Inject]
+        public ShowTimeSignal ShowTimeSignal { get; set; }
+        
+        [Inject(ContextKeys.CONTEXT_VIEW)]
+        public GameObject _contextView { get; set; }
 
         public override void OnRegister()
         {
@@ -29,7 +36,9 @@ namespace VisualiseR.Presentation
             _view.ChangeTimerStatusSignal.AddListener(OnTimerStatusChanged);
             _view.SetTimerSignal.AddListener(SetTimer);
             _view.ShowAllSignal.AddListener(OnShowAll);
+            _view.ShowTimerSignal.AddListener(OnShowTimerSignal);
             TimerRunDownSignal.AddListener(TimerRunDown);
+            _view.Init(_contextView);
         }
 
         public override void OnRemove()
@@ -38,7 +47,13 @@ namespace VisualiseR.Presentation
             _view.ChangeTimerStatusSignal.RemoveListener(OnTimerStatusChanged);
             _view.SetTimerSignal.RemoveListener(SetTimer);
             _view.ShowAllSignal.RemoveListener(OnShowAll);
+            _view.ShowTimerSignal.RemoveListener(OnShowTimerSignal);
             TimerRunDownSignal.RemoveListener(TimerRunDown);
+        }
+
+        private void OnShowTimerSignal(bool show)
+        {
+            ShowTimeSignal.Dispatch(show);
         }
 
         private void OnContextMenuCanceled()

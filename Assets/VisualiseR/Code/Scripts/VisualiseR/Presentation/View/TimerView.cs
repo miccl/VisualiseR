@@ -10,6 +10,7 @@ namespace VisualiseR.Presentation
     public class TimerView : View
     {
         public Signal TimerRunDownSignal = new Signal();
+        public Signal<bool> ShowTimerSignal = new Signal<bool>();
 
         private float _timeLeft;
         public float _timeFrom { get; private set; }
@@ -37,7 +38,6 @@ namespace VisualiseR.Presentation
             _timeFrom = timeInSeconds;
             _timeLeft = timeInSeconds;
             _timerText.text = TimeUtil.FormatTime(timeInSeconds);
-            Show(true);
         }
 
         public void StartTimer()
@@ -45,7 +45,6 @@ namespace VisualiseR.Presentation
             stop = false;
             Update();
             StartCoroutine(runTimer());
-            Show(true);
         }
 
         public void StopTimer()
@@ -58,7 +57,7 @@ namespace VisualiseR.Presentation
         {
             StopTimer();
             _timeLeft = _timeFrom;
-            ShowTime();
+            DisplayTime();
         }
 
         void Update()
@@ -78,12 +77,12 @@ namespace VisualiseR.Presentation
         {
             while (!stop)
             {
-                ShowTime();
+                DisplayTime();
                 yield return new WaitForSeconds(1f);
             }
         }
 
-        private void ShowTime()
+        private void DisplayTime()
         {
             _timerText.text = TimeUtil.FormatTime(_timeLeft);
         }
@@ -91,7 +90,7 @@ namespace VisualiseR.Presentation
 
         public void Show(bool isShown)
         {
-            _timerText.gameObject.SetActive(isShown);
+            ShowTimerSignal.Dispatch(isShown);
         }
     }
 }

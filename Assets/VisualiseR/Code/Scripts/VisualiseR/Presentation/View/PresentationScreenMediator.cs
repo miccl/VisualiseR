@@ -76,14 +76,14 @@ namespace VisualiseR.Presentation
             view.LoadCurrentSlide();
         }
 
-        private void OnShowContextMenu(IPlayer player, GameObject screen)
+        private void OnShowContextMenu(IPlayer player)
         {
-            ShowPresentationContextMenuSignal.Dispatch((Player) player, screen);
+            ShowPresentationContextMenuSignal.Dispatch((Player) player);
         }
 
-        private void OnShowScenMenu()
+        private void OnShowScenMenu(IPlayer player)
         {
-            ShowSceneMenuSignal.Dispatch();
+            ShowSceneMenuSignal.Dispatch((Player) player);
         }
 
         private void OnPlayerInstantiated(Player player)

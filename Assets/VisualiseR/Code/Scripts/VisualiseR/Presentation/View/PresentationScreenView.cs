@@ -14,8 +14,8 @@ namespace VisualiseR.Presentation
 
         internal Signal<IPlayer, ISlideMedium> NextSlideSignal = new Signal<IPlayer, ISlideMedium>();
         internal Signal<IPlayer, ISlideMedium> PrevSlideSignal = new Signal<IPlayer, ISlideMedium>();
-        internal Signal<IPlayer, GameObject> ShowPresentationContextMenuSignal = new Signal<IPlayer, GameObject>();
-        internal Signal ShowSceneMenuSignal = new Signal();
+        internal Signal<IPlayer> ShowPresentationContextMenuSignal = new Signal<IPlayer>();
+        internal Signal<IPlayer> ShowSceneMenuSignal = new Signal<IPlayer>();
         private List<byte[]> _images = new List<byte[]>();
         private int _currentPos;
         private bool _isLoading;
@@ -86,8 +86,7 @@ namespace VisualiseR.Presentation
 //                Pos, Image);
         }
 
-        [
-            PunRPC]
+        [PunRPC]
         void OnDataReceived(int pos, byte[] image)
         {
             if (pos >= 0)
@@ -161,7 +160,11 @@ namespace VisualiseR.Presentation
             {
                 NextSlide();
 
-//                ShowSceneMenuSignal.Dispatch();
+//                ShowSceneMenuSignal.Dispatch(_player);
+                if (_player != null)
+                {
+                    ShowPresentationContextMenuSignal.Dispatch(_player);
+                }
             }
 
 //            if (Input.GetButtonDown("Fire2"))
@@ -178,7 +181,7 @@ namespace VisualiseR.Presentation
         {
             if (_player != null && !_player.IsEmpty())
             {
-                ShowPresentationContextMenuSignal.Dispatch(_player, gameObject);
+                ShowPresentationContextMenuSignal.Dispatch(_player);
             }
         }
 
