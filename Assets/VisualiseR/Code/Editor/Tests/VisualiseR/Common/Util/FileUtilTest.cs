@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using NUnit.Framework;
+using VisualiseR.Util;
 
 namespace VisualiseR.Common
 {
@@ -122,7 +123,7 @@ namespace VisualiseR.Common
                 //when
 
                 //then
-                Assert.That(FileUtil.GetDirectoryName(jpgFile), Is.EqualTo(expectedDirectory));
+                Assert.That(FileUtil.GetDirectoryPath(jpgFile), Is.EqualTo(expectedDirectory));
             }
         }
 

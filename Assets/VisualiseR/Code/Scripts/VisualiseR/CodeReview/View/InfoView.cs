@@ -2,7 +2,7 @@
 using strange.extensions.mediation.impl;
 using UnityEngine;
 using UnityEngine.UI;
-using VisualiseR.Common;
+using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
@@ -51,10 +51,10 @@ namespace VisualiseR.CodeReview
         {
             _nameText.text = _code.Name;
             _ratingText.text = _code.Rate.ToString();
-            _pathText.text = FileUtil.GetDirectoryName(_code.Path);
-            _sizeText.text = FileUtil.GetSizeInBytes(_code.Path);
-            _ownerText.text = FileUtil.GetOwner(_code.Path);
-            _lastModifiedText.text = FileUtil.GetLastModified(_code.Path);
+            _pathText.text = FileUtil.GetDirectoryPath(_code.OldPath);
+            _sizeText.text = FileUtil.GetSizeInBytes(_code.OldPath);
+            _ownerText.text = FileUtil.GetOwner(_code.OldPath);
+            _lastModifiedText.text = FileUtil.GetLastModified(_code.OldPath);
             UpdateComment(_code.Comment);
         }
 

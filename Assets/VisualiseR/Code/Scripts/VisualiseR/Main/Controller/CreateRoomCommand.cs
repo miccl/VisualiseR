@@ -1,4 +1,5 @@
 ﻿using System;
+using strange.examples.multiplecontexts.main;
 using strange.extensions.command.impl;
 using VisualiseR.Common;
 using VisualiseR.Util;
@@ -46,6 +47,17 @@ namespace VisualiseR.Main
             ConstructRoom();
 
             PlayerPrefsUtil.saveObject(PlayerPrefsUtil.ROOM_KEY, Room);
+            LoadScene();
+        }
+
+        private void LoadScene()
+        {
+            if (!_RoomType.Equals(RoomType.Presentation) && !_RoomType.Equals(RoomType.CodeReview))
+            {
+                MessageSignal.Dispatch(new Message(MessageType.Info, "Not implemenented yet", "Scene coming soon (TM)"));
+                return;
+            }
+            
             UnityUtil.LoadScene(_RoomType);
         }
 

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IO;
 using NUnit.Framework;
+using VisualiseR.Util;
 
-namespace VisualiseR.Common
+namespace VisualiseR.Test.Util
 {
     public class DirectoryUtilTest
     {
@@ -81,7 +82,7 @@ namespace VisualiseR.Common
         [Test]
         public void HappyPath()
         {
-             //given
+            //given
             string mediumName = "D:/Downloads/VisualiseR_Test/CodeReview" + DateTime.Now.Ticks;
             string unratedDirName = "D:/Downloads/VisualiseR_Test/CodeReview/Unrated";
             string uncriticalDirName = "D:/Downloads/VisualiseR_Test/CodeReview/Uncritical";
@@ -97,8 +98,6 @@ namespace VisualiseR.Common
             Assert.IsTrue(Directory.Exists(minorDirName), "Directory '{0}' should exist ", minorDirName);
             Assert.IsTrue(Directory.Exists(criticalDirName), "Directory '{0}' should exist ", criticalDirName);
             //then
-
         }
-
     }
 }

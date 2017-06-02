@@ -6,7 +6,7 @@ namespace VisualiseR.CodeReview
     public class Code : ICode
     {
         public string Name { get; set; }
-        public string Path { get; set; }
+        public string OldPath { get; set; }
         public IPicture Pic { get; set; }
         public Rate Rate { get; set; }
         public string Comment { get; set; }
@@ -16,9 +16,13 @@ namespace VisualiseR.CodeReview
             Rate = Rate.Unrated;
         }
 
-        public void saveCommentToTxt()
+        public string SaveCommentToTxt()
         {
-            throw new NotImplementedException();
+            string text = "";
+            text += string.Format("Name: {0} {1}", Name, Environment.NewLine);
+            text += string.Format(" - Rating: {0} {1}", Rate,Environment.NewLine);
+            text += string.Format(" - Comment: {0} {1}", Comment, Environment.NewLine);
+            return text;
         }
     }
 }

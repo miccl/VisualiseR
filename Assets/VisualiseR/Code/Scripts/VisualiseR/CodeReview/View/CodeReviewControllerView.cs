@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using strange.extensions.mediation.impl;
+using strange.extensions.signal.impl;
 using UnityEngine;
 using VisualiseR.Common;
 using VisualiseR.Util;
@@ -13,6 +14,8 @@ namespace VisualiseR.CodeReview
     /// </summary>
     public class CodeReviewControllerView : View
     {
+        public Signal<ICodeMedium> ShowSceneMenuSignal = new Signal<ICodeMedium>();
+
         internal ICodeMedium _medium;
         internal List<ICode> _codeFragmentsWithRate;
         public Rate _rate;
@@ -93,6 +96,14 @@ namespace VisualiseR.CodeReview
                 InitialisePiles();
                 InstantiateInfoScreen();
                 NextCode(_codeFragmentsWithRate[0]);
+            }
+        }
+
+        void Update()
+        {
+            if (Input.GetButtonDown("Fire1"))
+            {
+                ShowSceneMenuSignal.Dispatch(_medium);
             }
         }
 

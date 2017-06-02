@@ -41,10 +41,6 @@ namespace VisualiseR.CodeReview
             LoadCode();
         }
 
-        void Update()
-        {
-            HandleDragAndDrop();
-        }
 
         public void Init(bool isFirst)
         {
