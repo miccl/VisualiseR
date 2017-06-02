@@ -40,11 +40,14 @@ namespace VisualiseR.CodeReview
 
         public void UpdateView(ICode code)
         {
-            if (code != null && !code.Equals(_code))
+            if (code == null)
             {
-                _code = code;
-                SetViewValues();
+                ResetView();
+                return;
             }
+
+            _code = code;
+            SetViewValues();
         }
 
         private void SetViewValues()
@@ -66,6 +69,16 @@ namespace VisualiseR.CodeReview
                 text = comment;
             }
             _commentText.text = text;
+        }
+
+        public void ResetView()
+        {
+            _nameText.text = "";
+            _ratingText.text = "";
+            _pathText.text = "";
+            _sizeText.text = "";
+            _ownerText.text = "";
+            _lastModifiedText.text = "";
         }
     }
 }

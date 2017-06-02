@@ -84,7 +84,14 @@ namespace VisualiseR.CodeReview
                 _view.ClearScreens();
                 _view.InitialiseScreens();
                 _view.RemoveScreensIfNeeded();
-                NextCodeSignal.Dispatch((Code) _view._codeFragmentsWithRate[0]);
+                if (_view._codeFragmentsWithRate.Count > 0)
+                {
+                    NextCodeSignal.Dispatch((Code) _view._codeFragmentsWithRate[0]);
+                }
+                else
+                {
+                    NextCodeSignal.Dispatch(null);
+                }
             }
         }
 
