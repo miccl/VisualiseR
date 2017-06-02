@@ -237,7 +237,6 @@ namespace VisualiseR.CodeReview
                 return;
             }
             int currPos = _codeFragmentsWithRate.IndexOf(code);
-            Debug.Log("Curr Pos:" + currPos);
             foreach (var screen in screens)
             {
                 var currCode = _codeFragmentsWithRate.ElementAt(currPos);
