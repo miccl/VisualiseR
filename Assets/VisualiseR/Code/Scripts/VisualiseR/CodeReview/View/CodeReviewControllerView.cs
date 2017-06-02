@@ -219,23 +219,10 @@ namespace VisualiseR.CodeReview
 
         private void InstantiateInfoScreen()
         {
-            var computeSpawnPositionFromStartPosition =
-                MathUtil.ComputeSpawnPositionFromStartPosition(INFO_DISTANCE, INFO_RADIUS, 90, 2);
-            if (computeSpawnPositionFromStartPosition != null)
-            {
-                Vector3 pos = (Vector3) computeSpawnPositionFromStartPosition;
-                Vector3 relativePos = Vector3.zero - pos;
-                Quaternion rotation = Quaternion.LookRotation(relativePos);
-
-                var info = (GameObject) Instantiate(Resources.Load("InfoCanvas"), pos, rotation);
-                info.transform.Rotate(0, -180, 0);
-                info.name = "InfoScreen";
-                info.transform.SetParent(_contextView.transform);
-
-                //TODO direkte verbindung verhindern
-                InfoView infoView = info.GetComponent<InfoView>();
-                infoView.UpdateView(_codeFragmentsWithRate[0]);
-            }
+            var infoScreen = _contextView.transform.Find("InfoCanvas");
+            //TODO direkte verbindung verhindern
+            InfoView infoView = infoScreen.GetComponent<InfoView>();
+            infoView.UpdateView(_codeFragmentsWithRate[0]);
         }
 
         /// <summary>

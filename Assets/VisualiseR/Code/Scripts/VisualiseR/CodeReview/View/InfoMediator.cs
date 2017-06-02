@@ -16,7 +16,7 @@ namespace VisualiseR.CodeReview
 
         public override void OnRegister()
         {
-            CommentChangedSignal.AddListener(OnNextCode);
+            NextCodeSignal.AddListener(OnNextCode);
             CommentChangedSignal.AddListener(OnCommentChanged);
         }
 
