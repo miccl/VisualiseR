@@ -1,8 +1,9 @@
 ﻿using strange.extensions.signal.impl;
+using VisualiseR.Common;
 
 namespace VisualiseR.Presentation
 {
-    public class ContextMenuCanceledSignal : Signal
+    public class ShowSceneMenuSignal : Signal<Player, SlideMedium>
     {
 
     }

@@ -67,11 +67,11 @@ namespace VisualiseR.Presentation
         private void BindMediators()
         {
             mediationBinder.Bind<PresentationScreenView>().To<PresentationScreenMediator>();
-            mediationBinder.Bind<PresentationContextMenuView>().To<PresentationContextMenuMediator>();
             mediationBinder.Bind<TimerView>().To<TimerMediator>();
             mediationBinder.Bind<SimplePresentationScreenView>().To<SimplePresentationScreenMediator>();
             mediationBinder.Bind<NetworkedPlayerView>().To<NetworkedPlayerMediator>();
             mediationBinder.Bind<NetworkController>().To<NetworkControllerMediator>();
+            mediationBinder.Bind<PresentationSceneMenuView>().To<PresentationSceneMenuMediator>();
         }
 
         private void BindCommands()
@@ -90,10 +90,9 @@ namespace VisualiseR.Presentation
             }
             commandBinder.Bind<NextSlideSignal>().To<NextSlideCommand>();
             commandBinder.Bind<PrevSlideSignal>().To<PrevSlideCommand>();
-            commandBinder.Bind<ShowPresentationContextMenuSignal>().To<ShowPresentationContextMenuCommand>();
             commandBinder.Bind<ShowAllSignal>().To<ShowAllCommand>();
             commandBinder.Bind<SlideSelectedSignal>().To<SlideSelectedCommand>();
-            commandBinder.Bind<ShowSceneMenuSignal>().To<ShowSceneMenuCommand>();
+            commandBinder.Bind<ShowSceneMenuSignal>().To<ShowPresentationSceneMenuCommand>();
             commandBinder.Bind<InstantiatePlayerSignal>().To<InstantiatePlayerCommand>();
             commandBinder.Bind<LoadFilesSignal>().To<LoadFilesCommand>();
             commandBinder.Bind<ShowTimeSignal>().To<ShowTimeCommand>();
@@ -107,10 +106,10 @@ namespace VisualiseR.Presentation
             injectionBinder.Bind<ChangeTimerStatusSignal>().ToSingleton();
             injectionBinder.Bind<SetTimerSignal>().ToSingleton();
             injectionBinder.Bind<TimerRunDownSignal>().ToSingleton();
-            injectionBinder.Bind<ContextMenuCanceledSignal>().ToSingleton();
             injectionBinder.Bind<PlayerInstantiatedSignal>().ToSingleton();
             injectionBinder.Bind<FilesLoadedSignal>().ToSingleton();
             injectionBinder.Bind<CreateOrJoinSignal>().ToSingleton();
+            injectionBinder.Bind<PresentationSceneMenuIsShownSignal>().ToSingleton();
         }
     }
 }

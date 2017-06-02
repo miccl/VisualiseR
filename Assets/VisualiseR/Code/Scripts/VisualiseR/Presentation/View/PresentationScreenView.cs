@@ -3,6 +3,7 @@ using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
 using VisualiseR.Common;
+using VisualiseR.Util;
 
 namespace VisualiseR.Presentation
 {
@@ -14,12 +15,12 @@ namespace VisualiseR.Presentation
 
         internal Signal<IPlayer, ISlideMedium> NextSlideSignal = new Signal<IPlayer, ISlideMedium>();
         internal Signal<IPlayer, ISlideMedium> PrevSlideSignal = new Signal<IPlayer, ISlideMedium>();
-        internal Signal<IPlayer> ShowPresentationContextMenuSignal = new Signal<IPlayer>();
-        internal Signal<IPlayer> ShowSceneMenuSignal = new Signal<IPlayer>();
+        internal Signal<IPlayer, ISlideMedium> ShowSceneMenuSignal = new Signal<IPlayer, ISlideMedium>();
         internal Signal<bool> ShowLoadingAnimationSignal = new Signal<bool>();
         private List<byte[]> _images = new List<byte[]>();
         private int _currentPos;
         private bool _isLoading;
+        internal bool _isSceneMenuShown = false;
 
         internal ISlideMedium _medium { get; set; }
         internal IPlayer _player { get; set; }
@@ -160,32 +161,28 @@ namespace VisualiseR.Presentation
 
         void Update()
         {
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonDown(ButtonUtil.SUBMIT))
             {
-                NextSlide();
-
-//                ShowSceneMenuSignal.Dispatch(_player);
-                if (_player != null && !_player.IsEmpty())
+                if (!_isSceneMenuShown)
                 {
-                    ShowPresentationContextMenuSignal.Dispatch(_player);
+                    NextSlide();
                 }
             }
-
-//            if (Input.GetButtonDown("Fire2"))
-//            {
-////                PrevSlide();
-//                ShowContextMenu();
-//            }
-            if (photonView.isMine)
+            
+            if (Input.GetButtonDown(ButtonUtil.CANCEL))
             {
+                if (!_isSceneMenuShown)
+                {
+                    ShowSceneMenu();
+                }
             }
         }
 
-        private void ShowContextMenu()
+        private void ShowSceneMenu()
         {
-            if (_player != null && !_player.IsEmpty())
+            if (_player != null && !_player.IsEmpty() && _medium != null)
             {
-                ShowPresentationContextMenuSignal.Dispatch(_player);
+                ShowSceneMenuSignal.Dispatch(_player, _medium);
             }
         }
 
