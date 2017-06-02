@@ -2,7 +2,7 @@
 
 namespace VisualiseR.CodeReview
 {
-    public class ContextMenuCanceledSignal : Signal
+    public class CodeReviewSceneMenuIsShownSignal : Signal<bool>
     {
     }
 }

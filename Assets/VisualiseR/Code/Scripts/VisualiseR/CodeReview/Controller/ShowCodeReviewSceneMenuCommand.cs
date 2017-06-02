@@ -4,15 +4,18 @@ using UnityEngine;
 
 namespace VisualiseR.CodeReview
 {
-    public class ShowSceneMenuCommand : Command
+    public class ShowCodeReviewSceneMenuCommand : Command
     {
-        private static readonly JCsLogger Logger = new JCsLogger(typeof(ShowSceneMenuCommand));
+        private static readonly JCsLogger Logger = new JCsLogger(typeof(ShowCodeReviewSceneMenuCommand));
 
         [Inject]
         public CodeMedium _codeMedium { get; set; }
         
         [Inject(ContextKeys.CONTEXT_VIEW)]
         public GameObject _contextView { get; set; }
+        
+        [Inject]
+        public CodeReviewSceneMenuIsShownSignal CodeReviewSceneMenuIsShownSignal { get; set; }
 
         public override void Execute()
         {
@@ -21,11 +24,12 @@ namespace VisualiseR.CodeReview
 
         private void ShowSceneMenu()
         {
+            Logger.InfoFormat("Showing scene menu");
             var sceneMenu = _contextView.transform.Find("Menus").transform.Find("CodeReviewSceneMenuCanvas").gameObject;
             sceneMenu.SetActive(true);
-            Logger.InfoFormat("Scene menu is shown");
             var sceneMenuView = sceneMenu.GetComponent<CodeReviewSceneMenuView>();
             sceneMenuView.Init(_codeMedium);
+            CodeReviewSceneMenuIsShownSignal.Dispatch(true);
         }
     }
 }

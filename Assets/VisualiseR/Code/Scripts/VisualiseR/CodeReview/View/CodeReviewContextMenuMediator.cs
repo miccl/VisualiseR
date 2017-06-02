@@ -15,7 +15,7 @@ namespace VisualiseR.CodeReview
         public SaveCommentSignal SaveCommentSignal { get; set; }
 
         [Inject]
-        public ContextMenuCanceledSignal ContextMenuCanceledSignal { get; set; }
+        public CodeReviewContextMenuIsShownSignal CodeReviewContextMenuIsShownSignal { get; set; }
 
         [Inject]
         public RemoveCodeSignal RemoveCodeSignal { get; set; }
@@ -44,7 +44,7 @@ namespace VisualiseR.CodeReview
 
         private void OnContextMenuCanceled()
         {
-            ContextMenuCanceledSignal.Dispatch();
+            CodeReviewContextMenuIsShownSignal.Dispatch(false);
             Destroy(gameObject);
         }
 
@@ -68,7 +68,6 @@ namespace VisualiseR.CodeReview
 
         private void OnNextCode(Code code)
         {
-
             OnContextMenuCanceled();
         }
     }

@@ -92,8 +92,7 @@ namespace VisualiseR.CodeReview
                     .InSequence();
             }
 
-            commandBinder.Bind<ShowSceneMenuSignal>().To<ShowSceneMenuCommand>();
-            commandBinder.Bind<NextCodeSignal>().To<NextCodeCommand>();
+            commandBinder.Bind<ShowSceneMenuSignal>().To<ShowCodeReviewSceneMenuCommand>();
             commandBinder.Bind<SelectCodeRatingSignal>().To<SelectCodeRatingCommand>();
             commandBinder.Bind<SaveCommentSignal>().To<SaveCommentCommand>();
             commandBinder.Bind<RemoveCodeSignal>().To<RemoveCodeCommand>();
@@ -105,10 +104,12 @@ namespace VisualiseR.CodeReview
         {
             injectionBinder.Bind<ScoreChangedSignal>().ToSingleton();
             injectionBinder.Bind<CodePositionChangedSignal>().ToSingleton();
-            injectionBinder.Bind<ContextMenuCanceledSignal>().ToSingleton();
+            injectionBinder.Bind<CodeReviewContextMenuIsShownSignal>().ToSingleton();
             injectionBinder.Bind<CodeRatingChangedSignal>().ToSingleton();
             injectionBinder.Bind<PileSelectedSignal>().ToSingleton();
             injectionBinder.Bind<CommentChangedSignal>().ToSingleton();
+            injectionBinder.Bind<CodeReviewSceneMenuIsShownSignal>().ToSingleton();
+            injectionBinder.Bind<NextCodeSignal>().ToSingleton();
         }
     }
 }

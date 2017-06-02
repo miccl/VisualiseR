@@ -6,14 +6,20 @@ namespace VisualiseR.CodeReview
 {
     public class ShowCodeReviewContextMenuCommand : Command
     {
+        private static readonly JCsLogger Logger = new JCsLogger(typeof(ShowCodeReviewContextMenuCommand));
+        
         [Inject]
         public GameObject _gameObject { get; set; }
 
         [Inject]
         public Code _code { get; set; }
+        
+        [Inject]
+        public CodeReviewContextMenuIsShownSignal CodeReviewContextMenuIsShownSignal { get; set; }
 
         public override void Execute()
         {
+            Logger.Info("Showing context menu");
             InstantiateContextMenu();
         }
 
@@ -29,6 +35,8 @@ namespace VisualiseR.CodeReview
             //TODO direkte Verdrahtung entfernen
             CodeReviewContextMenuView codeReviewContextMenuView = contextMenu.GetComponent<CodeReviewContextMenuView>();
             codeReviewContextMenuView._code = _code;
+
+            CodeReviewContextMenuIsShownSignal.Dispatch(true);
         }
 
         private Quaternion GetContextMenuRotation()

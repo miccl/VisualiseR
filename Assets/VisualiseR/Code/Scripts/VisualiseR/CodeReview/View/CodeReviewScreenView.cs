@@ -4,11 +4,10 @@ using strange.extensions.signal.impl;
 using UnityEngine;
 using UnityEngine.UI;
 using VisualiseR.Common;
-using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
-    public class CodeReviewScreenView : View, DragDropHandler
+    public class CodeReviewScreenView : View
     {
         public Signal<Code> NextCodeSignal = new Signal<Code>();
         public Signal<GameObject, Code> ShowContextMenuSignal = new Signal<GameObject, Code>();
@@ -25,7 +24,8 @@ namespace VisualiseR.CodeReview
         private GvrPointerGraphicRaycaster pointerScript;
 
 
-        internal bool IsContextMenuShown;
+        internal bool _isContextMenuShown = false;
+        internal bool _isSceneMenuShown = false;
 
         protected override void Awake()
         {
@@ -79,6 +79,11 @@ namespace VisualiseR.CodeReview
 
         public void OnScreenClick()
         {
+            if (_isContextMenuShown || _isSceneMenuShown)
+            {
+                return;
+            }
+
             if (IsFirst)
             {
                 ShowContextMenu();
@@ -89,42 +94,14 @@ namespace VisualiseR.CodeReview
             }
         }
 
-
-        private void HandleDragAndDrop()
-        {
-            if (_isHeld)
-            {
-//                Ray ray = new Ray(_gvrReticlePointer.transform.position, _gvrReticlePointer.transform.forward);
-//                float distance = Vector3.Distance(_gvrReticlePointer.transform.position, transform.position);
-//                transform.position = ray.GetPoint(distance);
-//
-//                // Fix rotation
-//                transform.rotation = Quaternion.LookRotation(-Camera.main.transform.forward);
-//                transform.Rotate(-270, 180, 180);
-//
-//                //TODO Screen soll immer über dem Boden schweben, wenn per DD dies drunter soll es drüber gezogen werden.
-            }
-        }
-
-        public void HandleGazeTriggerStart()
-        {
-            _isHeld = true;
-        }
-
-        public void HandleGazeTriggerEnd()
-        {
-            _isHeld = false;
-//            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-        }
-
-
         public void ShowContextMenu()
         {
-            if (!IsContextMenuShown)
+            if (_isContextMenuShown)
             {
-                ShowContextMenuSignal.Dispatch(gameObject, (Code) _code);
-                IsContextMenuShown = true;
+                return;
             }
+            
+            ShowContextMenuSignal.Dispatch(gameObject, (Code) _code);
         }
 
         private void InstantiateContextMenu()

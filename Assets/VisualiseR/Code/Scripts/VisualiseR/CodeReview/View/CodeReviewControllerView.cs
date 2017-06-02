@@ -28,6 +28,8 @@ namespace VisualiseR.CodeReview
         internal GameObject _contextView;
         private GameObject _screenParent;
         private GameObject _pileParent;
+        internal bool _isSceneMenuShown = false;
+        internal bool _isContextMenuShown = false;
 
 
         /// <summary>
@@ -98,15 +100,6 @@ namespace VisualiseR.CodeReview
                 NextCode(_codeFragmentsWithRate[0]);
             }
         }
-
-        void Update()
-        {
-            if (Input.GetButtonDown("Fire1"))
-            {
-                ShowSceneMenuSignal.Dispatch(_medium);
-            }
-        }
-
 
         internal void ClearScreens()
         {
@@ -253,6 +246,7 @@ namespace VisualiseR.CodeReview
         public void NextCode(ICode code)
         {
             int currPos = _codeFragmentsWithRate.IndexOf(code);
+            Debug.Log("Curr Pos:" + currPos);
             foreach (var screen in screens)
             {
                 var currCode = _codeFragmentsWithRate.ElementAt(currPos);
@@ -281,6 +275,19 @@ namespace VisualiseR.CodeReview
                 var lastScreen = screens.Last();
                 Destroy(lastScreen);
                 screens.Remove(lastScreen);
+            }
+        }
+
+        void Update()
+        {
+            if (Input.GetButtonDown(ButtonUtil.CANCEL))
+            {
+                if (_isSceneMenuShown || _isContextMenuShown)
+                {
+                    return;
+                }
+                ShowSceneMenuSignal.Dispatch(_medium);
+
             }
         }
     }

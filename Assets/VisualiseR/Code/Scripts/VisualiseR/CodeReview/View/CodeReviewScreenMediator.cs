@@ -10,7 +10,10 @@ namespace VisualiseR.CodeReview
         public CodeReviewScreenView _view { get; set; }
 
         [Inject]
-        public ContextMenuCanceledSignal ContextMenuCanceledSignal { get; set; }
+        public CodeReviewContextMenuIsShownSignal CodeReviewContextMenuIsShownSignal { get; set; }
+        
+        [Inject]
+        public CodeReviewSceneMenuIsShownSignal CodeReviewSceneMenuIsShownSignal { get; set; }
 
         [Inject]
         public CodeRatingChangedSignal CodeRatingChangedSignal { get; set; }
@@ -29,7 +32,8 @@ namespace VisualiseR.CodeReview
         {
             _view.NextCodeSignal.AddListener(OnNextCodeSignal);
             _view.ShowContextMenuSignal.AddListener(OnShowContextMenu);
-            ContextMenuCanceledSignal.AddListener(OnContextMenuCanceled);
+            CodeReviewContextMenuIsShownSignal.AddListener(OnContextMenuIsShown);
+            CodeReviewSceneMenuIsShownSignal.AddListener(OnSceneMenuIsShown);
             CodeRatingChangedSignal.AddListener(OnCodeRatingChanged);
         }
 
@@ -37,7 +41,8 @@ namespace VisualiseR.CodeReview
         {
             _view.NextCodeSignal.RemoveListener(OnNextCodeSignal);
             _view.ShowContextMenuSignal.RemoveListener(OnShowContextMenu);
-            ContextMenuCanceledSignal.RemoveListener(OnContextMenuCanceled);
+            CodeReviewContextMenuIsShownSignal.RemoveListener(OnContextMenuIsShown);
+            CodeReviewSceneMenuIsShownSignal.RemoveListener(OnSceneMenuIsShown);
             CodeRatingChangedSignal.RemoveListener(OnCodeRatingChanged);
 
         }
@@ -67,9 +72,15 @@ namespace VisualiseR.CodeReview
         }
 
 
-        private void OnContextMenuCanceled()
+        private void OnContextMenuIsShown(bool isShown)
         {
-            _view.IsContextMenuShown = false;
+            _view._isContextMenuShown = isShown;
         }
+        
+        private void OnSceneMenuIsShown(bool isShown)
+        {
+            _view._isContextMenuShown = isShown;
+        }
+
     }
 }

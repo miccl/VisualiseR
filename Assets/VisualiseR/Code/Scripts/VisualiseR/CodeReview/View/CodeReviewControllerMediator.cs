@@ -38,7 +38,12 @@ namespace VisualiseR.CodeReview
 
         [Inject(ContextKeys.CONTEXT_VIEW)]
         public GameObject contextView { get; set; }
+        
+        [Inject]
+        public CodeReviewSceneMenuIsShownSignal CodeReviewSceneMenuIsShownSignal { get; set; }
 
+        [Inject]
+        public CodeReviewContextMenuIsShownSignal CodeReviewContextMenuIsShownSignal { get; set; }
 
         public override void OnRegister()
         {
@@ -47,6 +52,8 @@ namespace VisualiseR.CodeReview
             RemoveCodeSignal.AddListener(OnRemoveCode);
             CodeRatingChangedSignal.AddListener(OnCodeRatingChanged);
             PileSelectedSignal.AddListener(OnPileSelected);
+            CodeReviewSceneMenuIsShownSignal.AddListener(OnSceneMenuIsShown);
+            CodeReviewContextMenuIsShownSignal.AddListener(OnContextMenuIsShown);
 
             InitView();
         }
@@ -58,6 +65,9 @@ namespace VisualiseR.CodeReview
             RemoveCodeSignal.RemoveListener(OnRemoveCode);
             CodeRatingChangedSignal.RemoveListener(OnCodeRatingChanged);
             PileSelectedSignal.RemoveListener(OnPileSelected);
+            CodeReviewSceneMenuIsShownSignal.RemoveListener(OnSceneMenuIsShown);
+            CodeReviewContextMenuIsShownSignal.RemoveListener(OnContextMenuIsShown);
+
         }
 
         private void OnShowSceneMenuSignal(ICodeMedium medium)
@@ -77,6 +87,17 @@ namespace VisualiseR.CodeReview
                 NextCodeSignal.Dispatch((Code) _view._codeFragmentsWithRate[0]);
             }
         }
+
+        private void OnSceneMenuIsShown(bool isShown)
+        {
+            _view._isSceneMenuShown = isShown;
+        }
+        
+        private void OnContextMenuIsShown(bool isShown)
+        {
+            _view._isContextMenuShown = isShown;
+        }
+
 
         private void OnCodeRatingChanged(Code code)
         {

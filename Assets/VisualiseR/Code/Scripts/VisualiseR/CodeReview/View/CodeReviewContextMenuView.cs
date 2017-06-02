@@ -8,7 +8,7 @@ using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
-    public class CodeReviewContextMenuView : View, DragDropHandler
+    public class CodeReviewContextMenuView : View
     {
         public Signal<Code, Rate> CodeRatingSelected = new Signal<Code, Rate>();
         public Signal<Code, string> CommentSaveButtonClickedSignal = new Signal<Code, string>();
@@ -63,7 +63,43 @@ namespace VisualiseR.CodeReview
 
         void Update()
         {
-            HandleDragAndDrop();
+            if (Input.GetButtonDown(ButtonUtil.CANCEL))
+            {
+                Cancel();
+            }
+        }
+
+        private void Cancel()
+        {
+            if (_mainPanel.activeSelf)
+            {
+                HideView();
+                return;
+            }
+
+            if (_ratePanel.activeSelf)
+            {
+                OnRateCancelButtonClick();
+                return;
+            }
+
+            if (_editPanel.activeSelf)
+            {
+                OnEditCancelButtonClick();
+                return;
+            }
+
+            if (_commentPanel.activeSelf)
+            {
+                OnCommentCancelButtonClick();
+                return;
+            }
+
+            if (_removePanel.activeSelf)
+            {
+                OnRemoveNoButtonClick();
+                return;
+            }
         }
 
         public void OnRateButtonClick(BaseEventData eventData)
@@ -80,8 +116,7 @@ namespace VisualiseR.CodeReview
 
         public void OnCancelButtonClick()
         {
-            OnContextMenuCanceled.Dispatch();
-            Destroy(gameObject);
+            HideView();
         }
 
         public void OnRateGoodButtonClick()
@@ -159,31 +194,10 @@ namespace VisualiseR.CodeReview
             _editPanel.SetActive(true);
         }
 
-        private void HandleDragAndDrop()
+        private void HideView()
         {
-            if (_isHeld)
-            {
-                Ray ray = new Ray(_gvrReticlePointer.transform.position, _gvrReticlePointer.transform.forward);
-                float distance = Vector3.Distance(_gvrReticlePointer.transform.position, transform.position);
-                transform.position = ray.GetPoint(distance);
-
-                // Fix rotation
-                transform.rotation = Quaternion.LookRotation(-Camera.main.transform.forward);
-                transform.Rotate(-270, 180, 180);
-
-                //TODO Screen soll immer über dem Boden schweben, wenn per DD dies drunter soll es drüber gezogen werden.
-            }
-        }
-
-        public void HandleGazeTriggerStart()
-        {
-            _isHeld = true;
-        }
-
-        public void HandleGazeTriggerEnd()
-        {
-            _isHeld = false;
-//            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            OnContextMenuCanceled.Dispatch();
+            Destroy(gameObject);
         }
     }
 }
