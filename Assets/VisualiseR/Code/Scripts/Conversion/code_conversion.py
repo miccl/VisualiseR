@@ -25,8 +25,8 @@ def read_input(argv):
         input_path = argv[0]
         output_directory_path = argv[1]
         return input_path, output_directory_path
-    except TypeError:
-        print('usage: python code_conversion.py <input_path> <output_dir_path>')
+    except IndexError:
+        print('Usage: python code_conversion.py <input_path> <output_dir_path>')
         sys.exit(1)
 
 

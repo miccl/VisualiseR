@@ -25,7 +25,7 @@ def read_input(argv):
         input_path = argv[0]
         output_path = argv[1]
         return input_path, output_path
-    except TypeError:
+    except IndexError:
         print('usage: python pdf_conversion.py <input_path> <output_path>')
         sys.exit(1)
 
