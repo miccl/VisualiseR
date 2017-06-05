@@ -9,6 +9,8 @@ namespace VisualiseR.Presentation
 {
     public class SmallScreenView : View
     {
+        [SerializeField] private bool isMain;
+
         private static JCsLogger Logger;
 
         private const string FILE_PREFIX = "file:///";
@@ -31,34 +33,38 @@ namespace VisualiseR.Presentation
             _images = images;
 
             SetupMedium();
-            
         }
 
 
         private void SetupMedium()
         {
-            if (_player == null)
-            {
-                LoadImageIntoTexture(_images[0]);
-                return;
-            }
-
-            if (_player.Type == PlayerType.Host)
-            {
-                LoadCurrentSlide();
-            }
+            LoadCurrentSlide(0);
         }
 
         internal void LoadCurrentSlide()
         {
             var currentPos = _medium.CurrentPos;
+            LoadCurrentSlide(currentPos);
+        }
+
+        internal void LoadCurrentSlide(int pos)
+        {
             if (_images == null)
             {
                 Logger.Error("Image is null");
                 return;
             }
-            
-            LoadImageIntoTexture(_images[currentPos]);
+
+            if (!isMain)
+            {
+                if (pos == _medium.Slides.Count - 1)
+                {
+                    return;
+                }
+                pos++;
+            }
+
+            LoadImageIntoTexture(_images[pos]);
         }
 
 
@@ -68,6 +74,5 @@ namespace VisualiseR.Presentation
             tex.LoadImage(bytes);
             GetComponent<Renderer>().material.mainTexture = tex;
         }
-
     }
 }
