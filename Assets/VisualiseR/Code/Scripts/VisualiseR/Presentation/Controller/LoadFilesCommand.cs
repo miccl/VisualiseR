@@ -10,6 +10,8 @@ namespace VisualiseR.Presentation
 {
     public class LoadFilesCommand : Command
     {
+        private static readonly JCsLogger Logger = new JCsLogger(typeof(LoadFilesCommand));
+        
         private const string FILE_PREFIX = "file:///";
 
         [Inject]
@@ -28,8 +30,9 @@ namespace VisualiseR.Presentation
                 ISlideMedium medium = RetrieveFiles();
                 List<byte[]> images = GetFileBytes(medium);
                 FilesLoadedSignal.Dispatch((SlideMedium) medium, images);
-
+                Logger.Info("Files loaded");
             }
+
         }
 
         private List<byte[]> GetFileBytes(ISlideMedium medium)

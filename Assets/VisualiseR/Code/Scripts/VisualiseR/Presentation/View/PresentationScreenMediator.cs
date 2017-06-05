@@ -73,6 +73,7 @@ namespace VisualiseR.Presentation
 
         private void OnFilesLoaded(SlideMedium medium, List<byte[]> images)
         {
+            Debug.Log("Init");
             view.Init(medium, images);
         }
 

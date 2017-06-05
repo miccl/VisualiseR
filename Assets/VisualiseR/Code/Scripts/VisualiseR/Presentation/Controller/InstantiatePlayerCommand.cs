@@ -21,6 +21,10 @@ namespace VisualiseR.Presentation
         {
             Player.Name = PlayerPrefsUtil.RetrieveValue(PlayerPrefsUtil.PLAYER_NAME_KEY);
             Player.Type = _isMasterClient ? PlayerType.Host : PlayerType.Client;
+            if (Player.Type.Equals(PlayerType.Host))
+            {
+                
+            }
             Logger.InfoFormat("Instantiated player '{0}'", Player);
             PlayerInstantiatedSignal.Dispatch((Player) Player);
         }

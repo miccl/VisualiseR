@@ -130,5 +130,24 @@ namespace VisualiseR.Util
             float zPos = Mathf.Sin(alphaRad) * spawnDistance;
             return new Vector3(xPos, yPos, zPos);
         }
+        
+        /// <summary>
+        /// Computes position with give parameters.
+        /// </summary>
+        /// <param name="spawnDistance">The distance between zero position</param>
+        /// <param name="spawnAngle">The angle degree.</param>
+        /// <param name="posY">The position in y angle.</param>
+        /// <returns></returns>
+        public static Vector3 ComputeSpawnPosition(float spawnDistance, float spawnAngle, float posX, float posY)
+        {
+// convert from degree to radiance
+            float alphaRad = spawnAngle * Mathf.Deg2Rad;
+
+// compute x and z position based on the random value, y pos is a random value between given yPosMin and xPosMax
+            float xPos = Mathf.Cos(alphaRad) * spawnDistance;
+            float yPos = posY;
+            float zPos = Mathf.Sin(alphaRad) * spawnDistance;
+            return new Vector3(xPos, yPos, zPos);
+        }
     }
 }

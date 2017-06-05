@@ -24,13 +24,19 @@ namespace VisualiseR.Presentation
 
         public override void Execute()
         {
-            var screen = GetPresentationScreen();
-            DeactivatePresentationScreen(screen);
+            var screen = DeactivateOtherObjects();
             InitialiseSimpleScreens(screen);
             Logger.InfoFormat("All slides are shown");
         }
 
-        private GameObject GetPresentationScreen()
+        private GameObject DeactivateOtherObjects()
+        {
+            var screen = DeactivateScreen();
+            DeactivateWalls();
+            return screen;
+        }
+
+        private static GameObject DeactivateScreen()
         {
             GameObject screen = GameObject.Find("Presentation_Screen");
             if (screen == null)
@@ -38,12 +44,14 @@ namespace VisualiseR.Presentation
                 Logger.ErrorFormat("Couldn't find game object '{0}'", "Presentation_Screen");
                 return null;
             }
+            screen.SetActive(false);
             return screen;
         }
 
-        private void DeactivatePresentationScreen(GameObject screen)
+        private void DeactivateWalls()
         {
-            screen.SetActive(false);
+            var walls = GameObject.Find("Environment");
+            walls.SetActive(false);
         }
 
         private void InitialiseSimpleScreens(GameObject screen)

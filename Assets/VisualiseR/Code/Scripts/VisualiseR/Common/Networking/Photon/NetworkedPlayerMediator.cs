@@ -7,7 +7,7 @@ namespace Networking.Photon
     public class NetworkedPlayerMediator : Mediator
     {
         [Inject]
-        public NetworkedPlayerView _view { get; set; }
+        public NetworkedPlayer _view { get; set; }
         
         [Inject]
         public IPlayer _player { get; set; }
@@ -21,17 +21,17 @@ namespace Networking.Photon
 
         public override void OnRegister()
         {
-            _view.UserStarted.AddListener(OnUserStarted);
+            _view.PlayerInstantiated.AddListener(OnPlayerInstantiated);
             InstantiatedPlayerSignal.AddListener(OnPlayerInstantiated);
         }
 
         public override void OnRemove()
         {
-            _view.UserStarted.RemoveListener(OnUserStarted);
+            _view.PlayerInstantiated.RemoveListener(OnPlayerInstantiated);
             InstantiatedPlayerSignal.RemoveListener(OnPlayerInstantiated);
         }
 
-        private void OnUserStarted(bool isMasterClient)
+        private void OnPlayerInstantiated(bool isMasterClient)
         {
             InstantiatePlayerSignal.Dispatch(isMasterClient);
         }

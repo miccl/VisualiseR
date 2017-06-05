@@ -1,5 +1,6 @@
 ﻿using strange.extensions.mediation.impl;
 using UnityEngine;
+using VisualiseR.Presentation;
 using VisualiseR.Util;
 
 namespace Networking.Photon
@@ -27,6 +28,11 @@ namespace Networking.Photon
         {
             base.Start();
             PhotonNetwork.ConnectUsingSettings("0.1");
+        }
+
+        public void Init(string roomName)
+        {
+            _roomName = roomName;
         }
 
         /// <summary>

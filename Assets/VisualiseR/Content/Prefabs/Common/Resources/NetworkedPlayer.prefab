@@ -132,10 +132,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1731396173356868}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc8492d6ecd8e0545bcfe412d9bc2f0f, type: 3}
+  m_Script: {fileID: 11500000, guid: d481aed2fb6bb644ab3d27454b0fd34e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Avatar: {fileID: 1506101812024968}
+  Avatar: {fileID: 0}
 --- !u!114 &114902304103857474
 MonoBehaviour:
   m_ObjectHideFlags: 1

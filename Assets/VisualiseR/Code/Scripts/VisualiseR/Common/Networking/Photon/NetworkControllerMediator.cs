@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using strange.extensions.mediation.impl;
 using VisualiseR.Presentation;
 
@@ -23,7 +24,7 @@ namespace Networking.Photon
 
         private void OnCreateOrJoinSignal(string roomName)
         {
-            _view._roomName = roomName;
+            _view.Init(roomName);
         }
     }
 }

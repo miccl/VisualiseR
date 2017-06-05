@@ -2,6 +2,7 @@
 using strange.extensions.signal.impl;
 using UnityEngine;
 using VisualiseR.Common;
+using VisualiseR.Presentation;
 
 namespace Networking.Photon
 {
@@ -9,11 +10,11 @@ namespace Networking.Photon
     /// Handles the synchronisation of the players.
     /// Uses <see cref="OnPhotonSerializeView"/> to synchronize with the other players.
     /// </summary>
-    public class NetworkedPlayerView : View
+    public class NetworkedPlayer : View
     {
         private static JCsLogger Logger;
 
-        internal Signal<bool> UserStarted = new Signal<bool>();
+        internal Signal<bool> PlayerInstantiated = new Signal<bool>();
 
         internal IPlayer _player;
         public GameObject Avatar;
@@ -24,7 +25,7 @@ namespace Networking.Photon
         protected override void Awake()
         {
             base.Awake();
-            Logger = new JCsLogger(typeof(NetworkedPlayerView));
+            Logger = new JCsLogger(typeof(NetworkedPlayer));
         }
 
         protected override void Start()
@@ -43,15 +44,30 @@ namespace Networking.Photon
                 }
 
 
-                UserStarted.Dispatch(PhotonNetwork.isMasterClient);
+                PlayerInstantiated.Dispatch(PhotonNetwork.isMasterClient);
 
                 _playerGlobal = GameObject.Find("GvrNetworkedPlayer").transform;
+                AdjustPosition(_playerGlobal);
                 _playerLocal = _playerGlobal.Find("GvrFPSController/FirstPersonCharacter");
 
                 transform.SetParent(_playerLocal);
                 transform.localPosition = Vector3.zero;
 
                 Avatar.SetActive(false);
+            }
+        }
+
+        private void AdjustPosition(Transform playerGlobal)
+        {
+            if (PhotonNetwork.isMasterClient)
+            {
+                _playerGlobal.position = Positions.HOST_POS;
+                _playerGlobal.rotation = Quaternion.Euler(0,-180,0);
+            }
+            else
+            {
+                _playerGlobal.position = Positions.CLIENT_POS;
+                _playerGlobal.rotation = Quaternion.Euler(0,0,0);
             }
         }
 

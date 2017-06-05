@@ -46,7 +46,8 @@ namespace VisualiseR.Presentation
         protected override void Start()
         {
             base.Start();
-            RefreshStartStopButtonText();
+//            RefreshStartStopButtonText();
+            //TODO
         }
         
         internal void Init(GameObject contextView, IPlayer player, ISlideMedium medium)

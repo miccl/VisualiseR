@@ -6,9 +6,9 @@ namespace VisualiseR.Common
     public enum RoomType
     {
         CodeReview,
+        Presentation,
         LiveCoding,
         ArchitecturalReview,
-        Presentation,
         Showroom
     }
 }

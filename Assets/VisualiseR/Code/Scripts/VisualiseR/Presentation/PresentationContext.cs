@@ -69,7 +69,7 @@ namespace VisualiseR.Presentation
             mediationBinder.Bind<PresentationScreenView>().To<PresentationScreenMediator>();
             mediationBinder.Bind<TimerView>().To<TimerMediator>();
             mediationBinder.Bind<SimplePresentationScreenView>().To<SimplePresentationScreenMediator>();
-            mediationBinder.Bind<NetworkedPlayerView>().To<NetworkedPlayerMediator>();
+            mediationBinder.Bind<NetworkedPlayer>().To<NetworkedPlayerMediator>();
             mediationBinder.Bind<NetworkController>().To<NetworkControllerMediator>();
             mediationBinder.Bind<PresentationSceneMenuView>().To<PresentationSceneMenuMediator>();
         }
