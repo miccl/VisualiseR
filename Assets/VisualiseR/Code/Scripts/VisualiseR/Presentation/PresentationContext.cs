@@ -72,6 +72,7 @@ namespace VisualiseR.Presentation
             mediationBinder.Bind<NetworkedPlayer>().To<NetworkedPlayerMediator>();
             mediationBinder.Bind<NetworkController>().To<NetworkControllerMediator>();
             mediationBinder.Bind<PresentationSceneMenuView>().To<PresentationSceneMenuMediator>();
+            mediationBinder.Bind<SmallScreenView>().To<SmallScreenMediator>();
         }
 
         private void BindCommands()
