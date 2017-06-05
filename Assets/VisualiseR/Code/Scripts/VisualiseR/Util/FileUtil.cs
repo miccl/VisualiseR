@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Security.Principal;
 using JetBrains.Annotations;
 
 namespace VisualiseR.Util
@@ -156,7 +154,7 @@ namespace VisualiseR.Util
             CreateDirectoryIfNotExists(filePath);
             if (!File.Exists(filePath))
             {
-                File.Create(filePath);
+                File.Create(filePath).Dispose();
                 Logger.InfoFormat("Created file '{0}'", filePath);
             }
         }
