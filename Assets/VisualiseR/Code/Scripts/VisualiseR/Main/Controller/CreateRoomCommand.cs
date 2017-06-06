@@ -39,6 +39,7 @@ namespace VisualiseR.Main
             Logger.DebugFormat("RoomName: {0}", _RoomName);
             Logger.DebugFormat("RoomType: {0}", _RoomType);
             Logger.DebugFormat("pictureMedium: {0}", _medium);
+            
             if (!IsInputValid())
             {
                 return;
@@ -47,6 +48,7 @@ namespace VisualiseR.Main
             ConstructRoom();
 
             PlayerPrefsUtil.saveObject(PlayerPrefsUtil.ROOM_KEY, Room);
+            MessageSignal.Dispatch(new Message(MessageType.Info, "Sucess", string.Format("Room {0} was sucessfully created", _RoomName)));
             LoadScene();
         }
 
