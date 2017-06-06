@@ -2,6 +2,7 @@
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using UnityEngine;
+using UnityEngine.Rendering;
 using VisualiseR.Util;
 
 namespace VisualiseR.Presentation
@@ -11,8 +12,8 @@ namespace VisualiseR.Presentation
         private static readonly JCsLogger Logger = new JCsLogger(typeof(ShowAllCommand));
 
         private static readonly float SPAWN_DISTANCE = 20;
-        private static readonly float START_ANGLE = 0;
-        private static readonly float END_ANGLE = 180;
+        private static readonly float START_ANGLE = 180;
+        private static readonly float END_ANGLE = 360;
         private static readonly float MIN_AGNLE_BETWEEN_ELEMENTS = 20;
         private static readonly float MAX_STAGES = 3;
         private static readonly float START_POS_Y = 5;
@@ -74,8 +75,8 @@ namespace VisualiseR.Presentation
 
         private List<Vector3> GetPositions(ISlideMedium slides)
         {
-            return MathUtil.ComputeSomething(SPAWN_DISTANCE, slides.Slides.Count, START_ANGLE, END_ANGLE,
-                MIN_AGNLE_BETWEEN_ELEMENTS, MAX_STAGES, START_POS_Y, POS_Y_DISTANCE);
+            return ScreenPositionUtil.ComputeSpawnPositionsWithAngle(SPAWN_DISTANCE, slides.Slides.Count, START_ANGLE, END_ANGLE,
+                MIN_AGNLE_BETWEEN_ELEMENTS, MAX_STAGES, START_POS_Y, POS_Y_DISTANCE, Camera.main.transform.position.x, Camera.main.transform.position.z);
         }
 
         private void InstantiateSimpleScreenParent()
@@ -91,7 +92,7 @@ namespace VisualiseR.Presentation
 
         private void InstantiatePresentationScreen(Vector3 pos, ISlide slide, int slidePos)
         {
-            Vector3 relativePos = Vector3.zero - pos;
+            Vector3 relativePos = Camera.main.transform.position - pos;
             Quaternion rotation = Quaternion.LookRotation(relativePos);
 
             var screen =

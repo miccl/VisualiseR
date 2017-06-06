@@ -10,7 +10,7 @@ using VisualiseR.Util;
 namespace VisualiseR.CodeReview
 {
     /// <summary>
-    /// Controls the entire
+    /// Controls the entire code review scene.
     /// </summary>
     public class CodeReviewControllerView : View
     {
@@ -138,7 +138,7 @@ namespace VisualiseR.CodeReview
 
         private List<Vector3> GetScreenPositions()
         {
-            return MathUtil.ComputeSpawnPositionsWithElements(SCREEN_DISTANCE, MAX_NUMBER_OF_SCREENS_SHOWN,
+            return ScreenPositionUtil.ComputeSpawnPositionsWithElements(SCREEN_DISTANCE, MAX_NUMBER_OF_SCREENS_SHOWN,
                 SCREEN_RADIUS,
                 SCREEN_START_ANGLE, SCREEN_VALUE_Y);
         }
@@ -196,7 +196,7 @@ namespace VisualiseR.CodeReview
         private static List<Vector3> GetPilePositions()
         {
             int pileCount = EnumUtil.Length<Rate>();
-            return MathUtil.ComputeSpawnPositionsWithElements(PILE_DISTANCE, pileCount, PILE_RADIUS, PILE_START_ANGLE,
+            return ScreenPositionUtil.ComputeSpawnPositionsWithElements(PILE_DISTANCE, pileCount, PILE_RADIUS, PILE_START_ANGLE,
                 PILE_VALUE_Y);
         }
 
