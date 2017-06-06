@@ -181,7 +181,7 @@ namespace VisualiseR.Presentation
 
         void Update()
         {
-            if (Input.GetButtonDown(ButtonUtil.SUBMIT))
+            if (Input.GetButtonDown(ButtonUtil.SUBMIT) || Input.GetButtonDown("Fire1"))
             {
                 if (!_isSceneMenuShown)
                 {
