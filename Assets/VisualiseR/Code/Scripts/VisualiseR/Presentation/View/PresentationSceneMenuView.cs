@@ -180,6 +180,10 @@ namespace VisualiseR.Presentation
 
         private void Hide()
         {
+            _mainPanel.SetActive(true);
+            _showPanel.SetActive(false);
+            _timerPanel.SetActive(false);
+            
             OnContextMenuCanceled.Dispatch();
             gameObject.SetActive(false);
         }

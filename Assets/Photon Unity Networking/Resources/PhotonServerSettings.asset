@@ -48,4 +48,5 @@ MonoBehaviour:
   - OnSlidePosChanged
   - OnPositionRequest
   - OnPositionReceived
+  - OnSyncing
   DisableAutoOpenWizard: 1

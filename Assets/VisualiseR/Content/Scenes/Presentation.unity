@@ -135,7 +135,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 107589563}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: 11.51, y: 5.81, z: 12.93}
+  m_LocalPosition: {x: 10.7, y: 5.81, z: 12.93}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1887438429}
@@ -440,7 +440,6 @@ GameObject:
   - component: {fileID: 463269773}
   - component: {fileID: 463269772}
   - component: {fileID: 463269771}
-  - component: {fileID: 463269776}
   - component: {fileID: 463269777}
   m_Layer: 0
   m_Name: Presentation_Screen
@@ -535,19 +534,6 @@ RectTransform:
   m_AnchoredPosition: {x: -10, y: 8}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &463269776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 463269770}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates: []
-  delegates: []
 --- !u!114 &463269777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1730,7 +1716,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1433102463
 Transform:
   m_ObjectHideFlags: 0
@@ -1871,7 +1857,7 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1498118119}
-  m_LocalRotation: {x: -0, y: -0.89905024, z: 0, w: -0.43784544}
+  m_LocalRotation: {x: -0, y: -0.8990503, z: 0, w: -0.43784547}
   m_LocalPosition: {x: 0, y: 0, z: 20.35}
   m_LocalScale: {x: 0.00135, y: 0.00135, z: 0.00135}
   m_Children:

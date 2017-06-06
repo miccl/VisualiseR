@@ -196,6 +196,12 @@ namespace VisualiseR.CodeReview
 
         private void HideView()
         {
+            _mainPanel.SetActive(true);
+            _ratePanel.SetActive(false);
+            _editPanel.SetActive(false);
+            _commentPanel.SetActive(false);
+            _removePanel.SetActive(false);
+
             OnContextMenuCanceled.Dispatch();
             Destroy(gameObject);
         }
