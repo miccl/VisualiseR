@@ -88,6 +88,7 @@ namespace VisualiseR.Main
             }
 
             commandBinder.Bind<SelectDiskFileSignal>().To<SelectDiskFileCommand>();
+            commandBinder.Bind<SelectWebFileSignal>().To<SelectWebFileCommand>();
             commandBinder.Bind<LoadFilesSignal>().To<LoadFilesCommand>();
             commandBinder.Bind<CreateRoomSignal>().To<CreateRoomCommand>();
             commandBinder.Bind<JoinRoomSignal>().To<JoinRoomCommand>();
