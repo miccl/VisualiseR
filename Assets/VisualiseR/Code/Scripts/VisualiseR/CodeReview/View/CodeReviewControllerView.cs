@@ -138,7 +138,8 @@ namespace VisualiseR.CodeReview
 
         private List<Vector3> GetScreenPositions()
         {
-            return ScreenPositionUtil.ComputeSpawnPositionsWithElements(SCREEN_DISTANCE, MAX_NUMBER_OF_SCREENS_SHOWN,
+            var screensShown = Math.Min(MAX_NUMBER_OF_SCREENS_SHOWN, _codeFragmentsWithRate.Count);
+            return ScreenPositionUtil.ComputeSpawnPositionsWithElements(SCREEN_DISTANCE, screensShown,
                 SCREEN_RADIUS,
                 SCREEN_START_ANGLE, SCREEN_VALUE_Y);
         }
