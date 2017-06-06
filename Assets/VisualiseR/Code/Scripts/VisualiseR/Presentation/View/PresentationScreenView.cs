@@ -16,11 +16,12 @@ namespace VisualiseR.Presentation
         internal Signal<IPlayer, ISlideMedium> NextSlideSignal = new Signal<IPlayer, ISlideMedium>();
         internal Signal<IPlayer, ISlideMedium> PrevSlideSignal = new Signal<IPlayer, ISlideMedium>();
         internal Signal<IPlayer, ISlideMedium> ShowSceneMenuSignal = new Signal<IPlayer, ISlideMedium>();
-        internal Signal<bool> ShowLoadingAnimationSignal = new Signal<bool>();
+        internal Signal<bool, string> ShowLoadingAnimationSignal = new Signal<bool, string>();
         private List<byte[]> _images = new List<byte[]>();
         private int _currentPos;
         private bool _isLoading;
         internal bool _isSceneMenuShown = false;
+        private int _imageCount;
 
         internal ISlideMedium _medium { get; set; }
         internal IPlayer _player { get; set; }
@@ -51,7 +52,7 @@ namespace VisualiseR.Presentation
             if (_player.Type == PlayerType.Host)
             {
                 LoadCurrentSlide();
-                ShowLoadingAnimationSignal.Dispatch(false);
+                ShowLoadingAnimationSignal.Dispatch(false, "");
             }
         }
 
@@ -74,8 +75,14 @@ namespace VisualiseR.Presentation
         {
             int Pos = -1;
             byte[] Image = null;
-
-            if (_images.Count - 1 >= pos)
+            if (pos == 0)
+            {
+                GetComponent<PhotonView>().RPC("OnSyncing",
+                    PhotonPlayer.Find(playerId),
+                    _images.Count);
+            }
+            
+            if (pos <= _images.Count - 1)
             {
                 Pos = pos;
                 Image = _images[Pos];
@@ -89,6 +96,12 @@ namespace VisualiseR.Presentation
 //                PhotonTargets.OthersBuffered,
 //                Pos, Image);
         }
+        
+        [PunRPC]
+        void OnSyncing(int imageCount)
+        {
+            _imageCount = imageCount;
+        }
 
         [PunRPC]
         void OnDataReceived(int pos, byte[] image)
@@ -101,13 +114,20 @@ namespace VisualiseR.Presentation
                     PhotonNetwork.player.ID,
                     image.Length, pos);
                 RequestDataFromMaster(PhotonNetwork.player.ID, ++pos);
+                DisplaySyncProgress(pos);
                 return;
             }
 
             _isLoading = false;
             Logger.DebugFormat("Player (id '{0}'): Received all images from master", PhotonNetwork.player.ID);
             LoadImageIntoTexture(_images[_currentPos]);
-            ShowLoadingAnimationSignal.Dispatch(false);
+            ShowLoadingAnimationSignal.Dispatch(false, "");
+        }
+
+        private void DisplaySyncProgress(int pos)
+        {
+            string text = string.Format("Syncing ... ({0}/{1})", pos, _imageCount);
+            ShowLoadingAnimationSignal.Dispatch(true, text);
         }
 
         private void NextSlide()

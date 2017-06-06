@@ -66,9 +66,9 @@ namespace VisualiseR.Presentation
 
         }
 
-        private void OnShowAnimation(bool show)
+        private void OnShowAnimation(bool show, string text)
         {
-            ShowLoadingAnimationSignal.Dispatch(show);
+            ShowLoadingAnimationSignal.Dispatch(show, text);
         }
 
         private void OnFilesLoaded(SlideMedium medium, List<byte[]> images)
