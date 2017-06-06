@@ -91,7 +91,7 @@ namespace VisualiseR.Presentation
             }
             commandBinder.Bind<NextSlideSignal>().To<NextSlideCommand>();
             commandBinder.Bind<PrevSlideSignal>().To<PrevSlideCommand>();
-            commandBinder.Bind<ShowAllSignal>().To<ShowAllCommand>();
+            commandBinder.Bind<ShowAllSignal>().To<ShowAllSlidesCommand>();
             commandBinder.Bind<SlideSelectedSignal>().To<SlideSelectedCommand>();
             commandBinder.Bind<ShowSceneMenuSignal>().To<ShowPresentationSceneMenuCommand>();
             commandBinder.Bind<InstantiatePlayerSignal>().To<InstantiatePlayerCommand>();

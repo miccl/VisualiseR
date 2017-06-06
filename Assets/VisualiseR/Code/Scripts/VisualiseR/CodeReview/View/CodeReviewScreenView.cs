@@ -29,6 +29,7 @@ namespace VisualiseR.CodeReview
 
         protected override void Awake()
         {
+            base.Awake();
             _isHeld = false;
             _gvrReticlePointer = GameObject.Find("GvrReticlePointer");
 
@@ -102,36 +103,6 @@ namespace VisualiseR.CodeReview
             }
             
             ShowContextMenuSignal.Dispatch(gameObject, (Code) _code);
-        }
-
-        private void InstantiateContextMenu()
-        {
-            var position = GetContextMenuPosition();
-            var rotation = GetContextMenuRotation();
-            GameObject contextMenu = Instantiate(Resources.Load("ContextMenuCanvas"), position, rotation) as GameObject;
-            contextMenu.transform.Rotate(90, -180, 0);
-            contextMenu.transform.SetParent(transform);
-
-            //TODO direkte Verdrahtung entfernen
-            CodeReviewContextMenuView codeReviewContextMenuView = contextMenu.GetComponent<CodeReviewContextMenuView>();
-            codeReviewContextMenuView._code = _code;
-        }
-
-        private Quaternion GetContextMenuRotation()
-        {
-            //TODO überarbeiten
-            return transform.rotation;
-        }
-
-        private Vector3 GetContextMenuPosition()
-        {
-            //TODO irgendwann nochmal verbessern, derzeit schwankt das immer hin und her
-            Vector3 cameraBack = -Camera.main.transform.forward * 12;
-            Vector3 shift = new Vector3(0, 0, cameraBack.z);
-            Vector3 pos = transform.position + shift;
-            pos.y = 2;
-
-            return pos;
         }
 
         public void ChangeCode(ICode code)

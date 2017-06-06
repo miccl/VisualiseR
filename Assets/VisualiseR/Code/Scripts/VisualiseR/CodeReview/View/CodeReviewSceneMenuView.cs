@@ -2,6 +2,7 @@
 using strange.extensions.signal.impl;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using VisualiseR.Presentation;
 using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
@@ -10,6 +11,7 @@ namespace VisualiseR.CodeReview
     {
         public Signal ExportButtonClickSignal = new Signal();
         public Signal SceneMenuCanceledSignal = new Signal();
+        public Signal ShowAllCodeSignal = new Signal();
 
         internal ICodeMedium _medium;
 
@@ -25,6 +27,11 @@ namespace VisualiseR.CodeReview
                 OnCancelButtonClick(null);
             }
         }
+
+        public void OnShowAllButtonClick(BaseEventData data)
+        {
+            ShowAllCodeSignal.Dispatch();
+        }
         
         public void OnExportButtonClick(BaseEventData data)
         {
@@ -39,8 +46,13 @@ namespace VisualiseR.CodeReview
 
         public void OnCancelButtonClick(BaseEventData data)
         {
+            Hide();
+        }
+
+        public void Hide()
+        {
             gameObject.SetActive(false);
-            SceneMenuCanceledSignal.Dispatch();   
+            SceneMenuCanceledSignal.Dispatch();
         }
     }
 }

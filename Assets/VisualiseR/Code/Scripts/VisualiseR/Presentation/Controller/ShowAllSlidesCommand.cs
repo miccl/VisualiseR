@@ -7,9 +7,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.Presentation
 {
-    public class ShowAllCommand : Command
+    public class ShowAllSlidesCommand : Command
     {
-        private static readonly JCsLogger Logger = new JCsLogger(typeof(ShowAllCommand));
+        private static readonly JCsLogger Logger = new JCsLogger(typeof(ShowAllSlidesCommand));
 
         private static readonly float SPAWN_DISTANCE = 20;
         private static readonly float START_ANGLE = 180;
@@ -103,7 +103,7 @@ namespace VisualiseR.Presentation
 
             //TODO direkte verbindung verhindern
             SimplePresentationScreenView screenView = screen.GetComponent<SimplePresentationScreenView>();
-            screenView.Init(slide, slidePos);
+            screenView.Init(slide);
         }
     }
 }

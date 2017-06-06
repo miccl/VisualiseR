@@ -20,9 +20,14 @@ namespace VisualiseR.CodeReview
         {
             string text = "";
             text += string.Format("Name: {0} {1}", Name, Environment.NewLine);
-            text += string.Format(" - Rating: {0} {1}", Rate,Environment.NewLine);
+            text += string.Format(" - Rating: {0} {1}", Rate, Environment.NewLine);
             text += string.Format(" - Comment: {0} {1}", Comment, Environment.NewLine);
             return text;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Code [Name: {0}, Rate: {1}]", Name, Rate);
         }
     }
 }

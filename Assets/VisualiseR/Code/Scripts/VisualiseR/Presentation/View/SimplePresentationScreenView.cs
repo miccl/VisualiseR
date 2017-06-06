@@ -16,12 +16,10 @@ namespace VisualiseR.Presentation
 
         internal ISlide _slide { get; set; }
         internal IPlayer _player { get; set; }
-        internal int _pos { get; set; }
 
-        public void Init(ISlide slide, int pos)
+        public void Init(ISlide slide)
         {
             _slide = slide;
-            _pos = pos;
 
             SetupMedium();
         }

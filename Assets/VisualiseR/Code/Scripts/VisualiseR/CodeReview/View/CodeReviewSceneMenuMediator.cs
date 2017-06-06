@@ -12,11 +12,16 @@ namespace VisualiseR.CodeReview
         
         [Inject]
         public CodeReviewSceneMenuIsShownSignal CodeReviewSceneMenuIsShownSignal { get; set; }
+        
+        [Inject]
+        public ShowAllCodeSignal ShowAllCodeSignal { get; set; }
+
 
         public override void OnRegister()
         {
             _view.ExportButtonClickSignal.AddListener(OnExportButtonClick);
             _view.SceneMenuCanceledSignal.AddListener(OnSceneMenuCanceled);
+            _view.ShowAllCodeSignal.AddListener(OnShowAllCode);
         }
 
         public override void OnRemove()
@@ -24,6 +29,7 @@ namespace VisualiseR.CodeReview
         {
             _view.ExportButtonClickSignal.RemoveListener(OnExportButtonClick);
             _view.SceneMenuCanceledSignal.AddListener(OnSceneMenuCanceled);
+            _view.ShowAllCodeSignal.RemoveListener(OnShowAllCode);
         }
 
         private void OnExportButtonClick()
@@ -34,6 +40,11 @@ namespace VisualiseR.CodeReview
         private void OnSceneMenuCanceled()
         {
             CodeReviewSceneMenuIsShownSignal.Dispatch(false);
+        }
+
+        private void OnShowAllCode()
+        {
+            ShowAllCodeSignal.Dispatch();
         }
     }
  

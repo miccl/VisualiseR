@@ -2,7 +2,9 @@
 
 namespace VisualiseR.CodeReview
 {
-    public class CodePositionChangedSignal : Signal<int>
+    public class ShowAllCodeSignal : Signal
+
     {
+
     }
 }

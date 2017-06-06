@@ -76,6 +76,7 @@ namespace VisualiseR.CodeReview
             mediationBinder.Bind<PileView>().To<PileMediator>();
             mediationBinder.Bind<InfoView>().To<InfoMediator>();
             mediationBinder.Bind<CodeReviewSceneMenuView>().To<CodeReviewSceneMenuMediator>();
+            mediationBinder.Bind<SimpleCodeReviewScreenView>().To<SimpleCodeReviewScreenMediator>();
         }
 
         private void BindCommands()
@@ -98,12 +99,13 @@ namespace VisualiseR.CodeReview
             commandBinder.Bind<RemoveCodeSignal>().To<RemoveCodeCommand>();
             commandBinder.Bind<ShowCodeReviewContextMenuSignal>().To<ShowCodeReviewContextMenuCommand>();
             commandBinder.Bind<ExportToTxtSignal>().To<ExportToTxtCommand>();
+            commandBinder.Bind<ShowAllCodeSignal>().To<ShowAllCodeCommand>();
+            commandBinder.Bind<CodeSelectedSignal>().To<CodeSelectedCommand>();
         }
 
         private void BindSignals()
         {
             injectionBinder.Bind<ScoreChangedSignal>().ToSingleton();
-            injectionBinder.Bind<CodePositionChangedSignal>().ToSingleton();
             injectionBinder.Bind<CodeReviewContextMenuIsShownSignal>().ToSingleton();
             injectionBinder.Bind<CodeRatingChangedSignal>().ToSingleton();
             injectionBinder.Bind<PileSelectedSignal>().ToSingleton();
