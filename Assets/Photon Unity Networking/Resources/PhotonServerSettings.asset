@@ -46,4 +46,6 @@ MonoBehaviour:
   - OnDataReceived
   - OnDataRequest
   - OnSlidePosChanged
+  - OnPositionRequest
+  - OnPositionReceived
   DisableAutoOpenWizard: 1
