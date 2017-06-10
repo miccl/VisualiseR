@@ -43,6 +43,7 @@ namespace VisualiseR.Main
         {
             base.Start();
             _isMuted = (PlayerPrefsUtil.RetrieveValue(PlayerPrefsUtil.AUDIO_MUTED, 0) != 0);
+            PlayMusic(_isMuted);
         }
 
         public void OnCreateRoomButtonClick()
@@ -66,8 +67,14 @@ namespace VisualiseR.Main
         public void OnAudioButtonClick()
         {
             _isMuted = !_isMuted;
-            _backgroundAudioSource.mute = _isMuted;
-            if (!_isMuted)
+            PlayerPrefsUtil.SaveValue(PlayerPrefsUtil.AUDIO_MUTED, _isMuted ? 1 : 0);
+            PlayMusic(_isMuted);
+        }
+
+        private void PlayMusic(bool isMuted)
+        {
+            _backgroundAudioSource.mute = isMuted;
+            if (!isMuted)
             {
                 audioImage.sprite = audioOnSprite;
                 _backgroundAudioSource.PlayDelayed(0);
