@@ -38,11 +38,10 @@ namespace VisualiseR.Presentation
         public void Init(Player player)
         {
             _player = player;
-            AdjustPosition();
             InitView();
         }
         
-        private void AdjustPosition()
+        internal void AdjustPosition()
         {
             if (PhotonNetwork.isMasterClient)
             {

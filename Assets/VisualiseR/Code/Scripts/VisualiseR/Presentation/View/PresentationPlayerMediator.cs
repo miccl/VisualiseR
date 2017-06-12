@@ -16,6 +16,9 @@ namespace VisualiseR.Presentation
         [Inject]
         public ShowLaserSignal ShowLaserSignal { get; set; }
         
+        [Inject]
+        public ShowLoadingAnimationSignal ShowLoadingAnimationSignal { get; set; }
+        
         [Inject(ContextKeys.CONTEXT_VIEW)]
         public GameObject _contextView { get; set; }
 
@@ -23,6 +26,7 @@ namespace VisualiseR.Presentation
         {
             PlayerInstantiatedSignal.AddListener(OnPlayerInstantiated);
             ShowLaserSignal.AddListener(OnShowLaser);
+            ShowLoadingAnimationSignal.AddListener(OnShowLoadingAnimation);
             _view._contextView = _contextView;
         }
 
@@ -41,6 +45,14 @@ namespace VisualiseR.Presentation
         private void OnShowLaser(bool show)
         {
             _view.ShowLaser(show);
+        }
+
+        private void OnShowLoadingAnimation(bool show, string text)
+        {
+            if (!show)
+            {
+                _view.AdjustPosition();
+            }
         }
     }
 }
