@@ -73,6 +73,7 @@ namespace VisualiseR.Presentation
             mediationBinder.Bind<NetworkController>().To<NetworkControllerMediator>();
             mediationBinder.Bind<PresentationSceneMenuView>().To<PresentationSceneMenuMediator>();
             mediationBinder.Bind<SmallScreenView>().To<SmallScreenMediator>();
+            mediationBinder.Bind<PlayerView>().To<PlayerMediator>();
         }
 
         private void BindCommands()
@@ -97,7 +98,6 @@ namespace VisualiseR.Presentation
             commandBinder.Bind<InstantiatePlayerSignal>().To<InstantiatePlayerCommand>();
             commandBinder.Bind<LoadFilesSignal>().To<LoadFilesCommand>();
             commandBinder.Bind<ShowTimeSignal>().To<ShowTimeCommand>();
-            commandBinder.Bind<ShowReticlePointerSignal>().To<ShowReticlePointerCommand>();
             commandBinder.Bind<ShowLoadingAnimationSignal>().To<ShowLoadingAnimationCommand>();
         }
 
@@ -111,6 +111,7 @@ namespace VisualiseR.Presentation
             injectionBinder.Bind<FilesLoadedSignal>().ToSingleton();
             injectionBinder.Bind<CreateOrJoinSignal>().ToSingleton();
             injectionBinder.Bind<PresentationSceneMenuIsShownSignal>().ToSingleton();
+            injectionBinder.Bind<ShowLaserSignal>().ToSingleton();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using strange.extensions.command.impl;
+using UnityEngine.VR;
 using VisualiseR.Util;
 
 namespace VisualiseR.Presentation
@@ -12,7 +13,7 @@ namespace VisualiseR.Presentation
 
         public override void Execute()
         {
-            //TODO vr einschalten??!
+            VRSettings.enabled = true;
             CreateOrJoinRoom();
         }
 

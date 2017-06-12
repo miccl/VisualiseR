@@ -32,7 +32,7 @@ namespace VisualiseR.Main
         public IPlayer Player { get; set; }
 
         [Inject]
-        public MessageSignal MessageSignal { get; set; }
+        public ShowMessageSignal ShowMessageSignal { get; set; }
 
         public override void Execute()
         {
@@ -48,7 +48,7 @@ namespace VisualiseR.Main
             ConstructRoom();
 
             PlayerPrefsUtil.saveObject(PlayerPrefsUtil.ROOM_KEY, Room);
-            MessageSignal.Dispatch(new Message(MessageType.Info, "Sucess", string.Format("Room {0} was sucessfully created", _RoomName)));
+            ShowMessageSignal.Dispatch(new Message(MessageType.Info, "Sucess", string.Format("Room {0} was sucessfully created", _RoomName)));
             LoadScene();
         }
 
@@ -56,7 +56,7 @@ namespace VisualiseR.Main
         {
             if (!_RoomType.Equals(RoomType.Presentation) && !_RoomType.Equals(RoomType.CodeReview))
             {
-                MessageSignal.Dispatch(new Message(MessageType.Info, "Not implemenented yet", "Scene coming soon (TM)"));
+                ShowMessageSignal.Dispatch(new Message(MessageType.Info, "Not implemenented yet", "Scene coming soon (TM)"));
                 return;
             }
             
@@ -105,14 +105,14 @@ namespace VisualiseR.Main
                 string errorMessage = "Room name wasn't choosen yet";
                 Logger.Error(errorMessage);
 
-                MessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
+                ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
                 return false;
             }
             if (_medium.IsEmpty())
             {
                 string errorMessage = "PictureMedium wasn't choosen yet";
                 Logger.Error(errorMessage);
-                MessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
+                ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
                 return false;
             }
 
@@ -120,7 +120,7 @@ namespace VisualiseR.Main
             {
                 string errorMessage = string.Format("Room with name {0} already exists", _RoomName);
                 Logger.Error(errorMessage);
-                MessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
+                ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
                 return false;
             }
             return true;

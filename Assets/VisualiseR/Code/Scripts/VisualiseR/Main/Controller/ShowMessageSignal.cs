@@ -2,7 +2,7 @@
 
 namespace VisualiseR.Main
 {
-    public class MessageSignal : Signal<Message>
+    public class ShowMessageSignal : Signal<Message>
     {
 
     }

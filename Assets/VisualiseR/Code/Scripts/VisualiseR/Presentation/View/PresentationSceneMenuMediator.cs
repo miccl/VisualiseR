@@ -1,6 +1,4 @@
-﻿using strange.extensions.context.api;
-using strange.extensions.mediation.impl;
-using UnityEngine;
+﻿using strange.extensions.mediation.impl;
 using VisualiseR.Common;
 
 namespace VisualiseR.Presentation
@@ -30,6 +28,9 @@ namespace VisualiseR.Presentation
         
         [Inject]
         public ShowTimeSignal ShowTimeSignal { get; set; }
+        
+        [Inject]
+        public ShowLaserSignal ShowLaserSignal { get; set; }
        
         public override void OnRegister()
         {
@@ -39,6 +40,7 @@ namespace VisualiseR.Presentation
             _view.ShowPreviousSignal.AddListener(OnShowPrevious);
             _view.ShowAllSignal.AddListener(OnShowAll);
             _view.ShowTimerSignal.AddListener(OnShowTimerSignal);
+            _view.ShowLaserSignal.AddListener(OnShowLaser);
             TimerRunDownSignal.AddListener(TimerRunDown);
         }
 
@@ -55,6 +57,7 @@ namespace VisualiseR.Presentation
             _view.ShowPreviousSignal.RemoveListener(OnShowPrevious);
             _view.ShowAllSignal.RemoveListener(OnShowAll);
             _view.ShowTimerSignal.RemoveListener(OnShowTimerSignal);
+            _view.ShowLaserSignal.AddListener(OnShowLaser);
             TimerRunDownSignal.RemoveListener(TimerRunDown);
         }
 
@@ -87,6 +90,11 @@ namespace VisualiseR.Presentation
         private void OnShowAll()
         {
             ShowAllSignal.Dispatch();
+        }
+        
+        private void OnShowLaser(bool show)
+        {
+            ShowLaserSignal.Dispatch(show);
         }
     }
 }

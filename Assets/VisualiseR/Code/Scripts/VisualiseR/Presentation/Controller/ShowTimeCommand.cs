@@ -21,9 +21,9 @@ namespace VisualiseR.Presentation
 
         private void ShowTime()
         {
-            var timerView = _contextView.transform.Find("TimerCanvas").gameObject;
+            var timerView = _contextView.transform.Find("Timer").gameObject;
             timerView.SetActive(_show);
-            Logger.InfoFormat("Time Canvas shown: {0}", _show);
+            Logger.InfoFormat("Time shown: {0}", _show);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace VisualiseR.Main
         public MediumChangedSignal _MediumChangedSignal { get; set; }
 
         [Inject]
-        public MessageSignal MessageSignal { get; set; }
+        public ShowMessageSignal ShowMessageSignal { get; set; }
 
         [Inject]
         public string uri { get; set; }
@@ -50,7 +50,7 @@ namespace VisualiseR.Main
         {
             if (!DirectoryUtil.IsValidNotEmptyDirectory(uri) && !WebUtil.IsValidUrl(uri))
             {
-                MessageSignal.Dispatch(new Message(MessageType.Error, "Invalid Input",
+                ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Invalid Input",
                     string.Format("The chosen uri '{0}'file was invalid", uri)));
                 throw new FileNotFoundException(uri);
             }

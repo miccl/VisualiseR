@@ -31,5 +31,10 @@ namespace VisualiseR.Common
         {
             return String.IsNullOrEmpty(Name) || String.IsNullOrEmpty(Type.ToString());
         }
+
+        public bool IsHost()
+        {
+            return Type.Equals(PlayerType.Host);
+        }
     }
 }

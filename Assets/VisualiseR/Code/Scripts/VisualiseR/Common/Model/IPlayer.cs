@@ -9,5 +9,6 @@ namespace VisualiseR.Common
         DateTime JoinDate { get;}
 
         bool IsEmpty();
+        bool IsHost();
     }
 }

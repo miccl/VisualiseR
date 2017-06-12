@@ -181,6 +181,11 @@ namespace VisualiseR.Presentation
 
         void Update()
         {
+            if (_player == null || !_player.IsHost())
+            {
+                return;
+            }
+
             if (Input.GetButtonDown(ButtonUtil.SUBMIT) || Input.GetButtonDown("Fire1"))
             {
                 if (!_isSceneMenuShown)

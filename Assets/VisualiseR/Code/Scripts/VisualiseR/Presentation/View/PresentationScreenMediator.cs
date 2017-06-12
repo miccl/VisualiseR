@@ -30,10 +30,7 @@ namespace VisualiseR.Presentation
 
         [Inject]
         public FilesLoadedSignal FilesLoadedSignal { get; set; }
-        
-        [Inject]
-        public ShowReticlePointerSignal ShowReticlePointerSignal { get; set; }
-        
+                
         [Inject]
         public ShowLoadingAnimationSignal ShowLoadingAnimationSignal { get; set; }
         
@@ -73,7 +70,6 @@ namespace VisualiseR.Presentation
 
         private void OnFilesLoaded(SlideMedium medium, List<byte[]> images)
         {
-            Debug.Log("Init");
             view.Init(medium, images);
         }
 
@@ -103,12 +99,10 @@ namespace VisualiseR.Presentation
             if (player.Type.Equals(PlayerType.Host))
             {
                 LoadFilesSignal.Dispatch(player);
-                ShowReticlePointerSignal.Dispatch(true);
             }
             else
             {
                 view.RequestDataFromMaster();
-                ShowReticlePointerSignal.Dispatch(false);
             }
         }
 

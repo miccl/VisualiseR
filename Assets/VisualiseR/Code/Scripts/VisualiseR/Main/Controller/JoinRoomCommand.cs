@@ -20,7 +20,7 @@ namespace VisualiseR.Main
         public IRoom Room { get; set; }
 
         [Inject]
-        public MessageSignal MessageSignal { get; set; }
+        public ShowMessageSignal ShowMessageSignal { get; set; }
 
         public override void Execute()
         {
@@ -50,7 +50,7 @@ namespace VisualiseR.Main
             {
                 string errorMessage = "Room name wasn't choosen yet";
                 Logger.Error(errorMessage);
-                MessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
+                ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
                 return false;
             }
 
@@ -58,7 +58,7 @@ namespace VisualiseR.Main
             {
                 string errorMessage = string.Format("Room with name '{0}' doesnt exist", _roomName);
                 Logger.Error(errorMessage);
-                MessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
+                ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
                 return false;
             }
 

@@ -23,7 +23,7 @@ namespace VisualiseR.Presentation
 
         private void ShowLoadingAnimation()
         {
-            var loadingCanvas = _contextView.transform.Find("LoadingCanvas");
+            var loadingCanvas = _contextView.transform.Find("LoadingAnimation");
             loadingCanvas.gameObject.SetActive(_show);
             if (_show)
             {

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using strange.extensions.mediation.impl;
-using UnityEngine;
 using VisualiseR.Common;
 
 namespace VisualiseR.Presentation
@@ -21,10 +20,7 @@ namespace VisualiseR.Presentation
 
         [Inject]
         public FilesLoadedSignal FilesLoadedSignal { get; set; }
-        
-        [Inject]
-        public ShowReticlePointerSignal ShowReticlePointerSignal { get; set; }
-        
+                
         [Inject]
         public ShowLoadingAnimationSignal ShowLoadingAnimationSignal { get; set; }
         

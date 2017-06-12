@@ -15,13 +15,13 @@ namespace VisualiseR.Main
 
         public override void OnRegister()
         {
-            _view._selectedFileSignal.AddListener(OnFileSelected);
+            _view.SelectedFileSignal.AddListener(OnFileSelected);
             _view.Init();
         }
 
         public override void OnRemove()
         {
-            _view._selectedFileSignal.RemoveListener(OnFileSelected);
+            _view.SelectedFileSignal.RemoveListener(OnFileSelected);
         }
 
         private void OnFileSelected(string filePath)

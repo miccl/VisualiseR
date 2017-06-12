@@ -24,10 +24,10 @@ using System.Collections;
 /// when its not directly in their field of view.
 public class GvrLaserPointerImpl : GvrBasePointer {
   /// Small offset to prevent z-fighting of the reticle (meters).
-  private const float Z_OFFSET_EPSILON = 0.1f;
+  private const float Z_OFFSET_EPSILON = 0f;
 
   /// Size of the reticle in meters as seen from 1 meter.
-  private const float RETICLE_SIZE = 0.01f;
+  private const float RETICLE_SIZE = 0.1f;
 
   public Camera MainCamera { private get; set; }
 
@@ -160,8 +160,8 @@ public class GvrLaserPointerImpl : GvrBasePointer {
 
       float reticleDistanceFromCamera =
         (Reticle.transform.position - MainCamera.transform.position).magnitude;
-      float scale = RETICLE_SIZE * reticleDistanceFromCamera;
-      Reticle.transform.localScale = new Vector3(scale, scale, scale);
+      float scale = RETICLE_SIZE * reticleDistanceFromCamera ;
+      Reticle.transform.localScale = new Vector3(5, 5, 5);
     }
 
     if (LaserLineRenderer == null) {

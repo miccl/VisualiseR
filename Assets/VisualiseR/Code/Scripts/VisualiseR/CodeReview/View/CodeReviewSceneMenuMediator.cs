@@ -15,6 +15,9 @@ namespace VisualiseR.CodeReview
         
         [Inject]
         public ShowAllCodeSignal ShowAllCodeSignal { get; set; }
+        
+        [Inject]
+        public ShowLaserSignal ShowLaserSignal { get; set; }
 
 
         public override void OnRegister()
@@ -22,6 +25,7 @@ namespace VisualiseR.CodeReview
             _view.ExportButtonClickSignal.AddListener(OnExportButtonClick);
             _view.SceneMenuCanceledSignal.AddListener(OnSceneMenuCanceled);
             _view.ShowAllCodeSignal.AddListener(OnShowAllCode);
+            _view.ShowLaserSignal.AddListener(OnShowLaser);
         }
 
         public override void OnRemove()
@@ -30,6 +34,7 @@ namespace VisualiseR.CodeReview
             _view.ExportButtonClickSignal.RemoveListener(OnExportButtonClick);
             _view.SceneMenuCanceledSignal.AddListener(OnSceneMenuCanceled);
             _view.ShowAllCodeSignal.RemoveListener(OnShowAllCode);
+            _view.ShowLaserSignal.RemoveListener(OnShowLaser);
         }
 
         private void OnExportButtonClick()
@@ -45,6 +50,11 @@ namespace VisualiseR.CodeReview
         private void OnShowAllCode()
         {
             ShowAllCodeSignal.Dispatch();
+        }
+        
+        private void OnShowLaser(bool show)
+        {
+            ShowLaserSignal.Dispatch(show);
         }
     }
  

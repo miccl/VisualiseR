@@ -5,7 +5,7 @@ using VisualiseR.Util;
 
 namespace VisualiseR.Main
 {
-    public class MessageCommand : Command
+    public class ShowMessageCommand : Command
     {
         [Inject]
         public Message _message { get; set; }

@@ -6,7 +6,7 @@ namespace VisualiseR.Main
 {
     public class SelectDiskFileView : View
     {
-        public Signal<string> _selectedFileSignal = new Signal<string>();
+        public Signal<string> SelectedFileSignal = new Signal<string>();
 
         [SerializeField] private GUISkin _skin;
 
@@ -47,7 +47,7 @@ namespace VisualiseR.Main
                     var selectedFile = fb.outputFile;
                     if (selectedFile == null)
                     {
-                        _selectedFileSignal.Dispatch(null);
+                        SelectedFileSignal.Dispatch(null);
                         Debug.Log("Cancel hit");
                         return;
                     }
@@ -56,7 +56,7 @@ namespace VisualiseR.Main
                     if (output != null)
                     {
                         Debug.Log("Ouput File = \"" + output.FullName + "\"");
-                        _selectedFileSignal.Dispatch(output.FullName);
+                        SelectedFileSignal.Dispatch(output.FullName);
                     }
                 }
             }

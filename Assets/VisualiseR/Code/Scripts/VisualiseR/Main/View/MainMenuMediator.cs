@@ -8,7 +8,7 @@ namespace VisualiseR.Main
         public MainMenuView _view { get; set; }
         
         [Inject]
-        public MessageSignal MessageSignal { get; set; }
+        public ShowMessageSignal ShowMessageSignal { get; set; }
 
         public override void OnRegister()
         {
@@ -22,7 +22,7 @@ namespace VisualiseR.Main
 
         private void OnMessage(Message msg)
         {
-            MessageSignal.Dispatch(msg);
+            ShowMessageSignal.Dispatch(msg);
         }
     }
 }
