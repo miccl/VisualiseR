@@ -1,8 +1,7 @@
-using System.ComponentModel;
 using strange.extensions.mediation.impl;
 using VisualiseR.Presentation;
 
-namespace Networking.Photon
+namespace VisualiseR.Common
 {
     public class NetworkControllerMediator : Mediator
     {

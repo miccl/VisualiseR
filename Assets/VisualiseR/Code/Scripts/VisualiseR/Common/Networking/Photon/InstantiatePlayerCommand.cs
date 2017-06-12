@@ -2,7 +2,7 @@ using strange.extensions.command.impl;
 using VisualiseR.Common;
 using VisualiseR.Util;
 
-namespace VisualiseR.Presentation
+namespace VisualiseR.Common
 {
     public class InstantiatePlayerCommand : Command
     {

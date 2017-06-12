@@ -1,9 +1,8 @@
 ﻿using strange.extensions.mediation.impl;
 using UnityEngine;
-using VisualiseR.Presentation;
 using VisualiseR.Util;
 
-namespace Networking.Photon
+namespace VisualiseR.Common
 {
     /// <summary>
     /// Handles connecting to the photon network and instantiating the player.

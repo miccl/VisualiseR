@@ -1,7 +1,7 @@
 using strange.extensions.signal.impl;
 using VisualiseR.Common;
 
-namespace VisualiseR.Presentation
+namespace VisualiseR.Common
 {
     public class PlayerInstantiatedSignal : Signal<Player>
     {

@@ -1,5 +1,6 @@
 ﻿using strange.extensions.command.impl;
 using UnityEngine.VR;
+using VisualiseR.Common;
 using VisualiseR.Util;
 
 namespace VisualiseR.Presentation

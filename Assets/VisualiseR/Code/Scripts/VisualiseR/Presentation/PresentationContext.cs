@@ -1,5 +1,4 @@
-﻿using Networking.Photon;
-using strange.extensions.command.api;
+﻿using strange.extensions.command.api;
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
@@ -73,7 +72,7 @@ namespace VisualiseR.Presentation
             mediationBinder.Bind<NetworkController>().To<NetworkControllerMediator>();
             mediationBinder.Bind<PresentationSceneMenuView>().To<PresentationSceneMenuMediator>();
             mediationBinder.Bind<SmallScreenView>().To<SmallScreenMediator>();
-            mediationBinder.Bind<PlayerView>().To<PlayerMediator>();
+            mediationBinder.Bind<PresentationPlayerView>().To<PresentationPlayerMediator>();
         }
 
         private void BindCommands()

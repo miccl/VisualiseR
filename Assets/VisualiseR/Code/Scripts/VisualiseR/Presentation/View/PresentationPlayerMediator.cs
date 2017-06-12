@@ -5,10 +5,10 @@ using VisualiseR.Common;
 
 namespace VisualiseR.Presentation
 {
-    public class PlayerMediator : Mediator
+    public class PresentationPlayerMediator : Mediator
     {
         [Inject]
-        public PlayerView _view { get; set; }
+        public PresentationPlayerView _view { get; set; }
         
         [Inject]
         public PlayerInstantiatedSignal PlayerInstantiatedSignal { get; set; }
