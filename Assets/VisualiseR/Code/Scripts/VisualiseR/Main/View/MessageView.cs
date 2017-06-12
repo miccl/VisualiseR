@@ -1,4 +1,5 @@
-﻿using strange.extensions.mediation.impl;
+﻿using System.Collections;
+using strange.extensions.mediation.impl;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,14 +13,16 @@ namespace VisualiseR.Main
         private Transform _title;
         internal Text _titleLabel;
         private Image _titleImage;
+        private Button _okButton;
 
         protected override void Awake()
         {
             base.Awake();
             _messagePanel = transform.Find("MessagePanel");
             
-            _centerPanel = _messagePanel.FindChild("CenterPanel");
+            _centerPanel = _messagePanel.Find("CenterPanel");
             _infoText = _centerPanel.Find("InfoText").GetComponent<Text>();
+            _okButton = _centerPanel.Find("OkButton").GetComponent<Button>();
 
             _title = _messagePanel.FindChild("Title");
             _titleLabel = _title.GetComponentInChildren<Text>();
@@ -55,10 +58,22 @@ namespace VisualiseR.Main
         {
             var color = Color.blue;
             _titleImage.color = color;
+            _okButton.gameObject.SetActive(false);
+            StartCoroutine(WaitAndClose());
+        }
 
+        private IEnumerator WaitAndClose()
+        {
+            yield return new WaitForSeconds(2f);
+            Destroy();
         }
 
         public void OnOkButtonClick()
+        {
+            Destroy();
+        }
+
+        private void Destroy()
         {
             Destroy(gameObject);
         }
