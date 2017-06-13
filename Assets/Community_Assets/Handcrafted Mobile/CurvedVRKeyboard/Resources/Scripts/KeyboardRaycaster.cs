@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using VisualiseR.Util;
+
 namespace CurvedVRKeyboard {
 
     public class KeyboardRaycaster: KeyboardComponent {
@@ -49,7 +51,7 @@ namespace CurvedVRKeyboard {
 #if !UNITY_HAS_GOOGLEVR
                     if(Input.GetButtonDown(clickInputName)) {// If key clicked
 #else
-                    if(GvrController.TouchDown) {
+                    if(GvrController.TouchDown ||Input.GetButtonDown(ButtonUtil.SUBMIT) || Input.GetMouseButtonDown(0)) {
 #endif
                         keyItemCurrent.Click();
                         keyboardStatus.HandleClick(keyItemCurrent);
