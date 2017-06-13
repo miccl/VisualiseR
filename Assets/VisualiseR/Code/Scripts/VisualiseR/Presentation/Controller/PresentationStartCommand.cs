@@ -1,8 +1,7 @@
 ﻿using strange.extensions.command.impl;
-using strange.extensions.context.api;
-using UnityEngine;
+using UnityEngine.VR;
 using VisualiseR.Common;
-using VisualiseR.Main;
+using VisualiseR.Util;
 
 namespace VisualiseR.Presentation
 {
@@ -11,45 +10,22 @@ namespace VisualiseR.Presentation
         private static readonly JCsLogger Logger = new JCsLogger(typeof(PresentationStartCommand));
 
         [Inject]
-        public LoadFilesSignal LoadFilesSignal { get; set; }
-
-        [Inject]
-        public SelectDiskFileSignal SelectDiskFileSignal { get; set; }
-
-        [Inject(ContextKeys.CONTEXT_VIEW)]
-        public GameObject contextView { get; set; }
-
+        public CreateOrJoinSignal CreateOrJoinSignal { get; set; }
 
         public override void Execute()
         {
-            InitView();
-            SetupPath();
-            InitFileBrowser();
+            VRSettings.enabled = true;
+            CreateOrJoinRoom();
         }
 
-        private void InitFileBrowser()
+        private void CreateOrJoinRoom()
         {
-            SelectDiskFileSignal.Dispatch();
-        }
-
-        private void InitView()
-        {
-            InitStand();
-        }
-
-        private void InitStand()
-        {
-            GameObject go = GameObject.Instantiate(Resources.Load("Presentation_Screen") as GameObject);
-            go.name = "Screen";
-            go.transform.parent = contextView.transform;
-        }
-
-        private void SetupPath()
-        {
-//            string path = "D:/VisualiseR_Test/FullDirectory";
-//            string path = "/storage/emulated/0/Pictures/aviary-sample";
-//            var url = "https://www.planwallpaper.com/static/images/desktop-year-of-the-tiger-images-wallpaper.jpg";
-//            LoadFilesSignal.Dispatch(url);
+            object o = PlayerPrefsUtil.RetrieveObject(PlayerPrefsUtil.ROOM_KEY);
+            if (o != null)
+            {
+                Common.Room room = (Common.Room) o;
+                CreateOrJoinSignal.Dispatch(room.Name);
+            }
         }
     }
 }

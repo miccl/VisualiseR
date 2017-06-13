@@ -17,6 +17,7 @@ namespace VisualiseR.Main
         private static readonly string SELECT_WEB_FILE = "Choose web file";
 
         public Signal SelectDiskFileButtonClickedSignal = new Signal();
+        public Signal SelectWebFileButtonClickedSignal = new Signal();
 
         public Signal<string, RoomType, IPictureMedium> CreateRoomButtonClickedSignal =
             new Signal<string, RoomType, IPictureMedium>();
@@ -28,7 +29,7 @@ namespace VisualiseR.Main
         internal IPictureMedium ChoosenMedium;
 
         private readonly List<string> _roomTypes = EnumUtil.EnumToList<RoomType>();
-        private readonly List<string> _chooseMediumTypes = new List<string> {SELECT_WEB_FILE, SELECT_DISK_FILE};
+        private readonly List<string> _chooseMediumTypes = new List<string> {"None", SELECT_DISK_FILE, SELECT_WEB_FILE};
 
         private GameObject _mainMenuPanelView;
 
@@ -79,15 +80,15 @@ namespace VisualiseR.Main
         //TODO vielleicht überlegen, das woanders hin zu verlagern..., denn die view soll ja möglichst ohne logik bleiben.
         public void OnChooseRoomIndexChange(int index)
         {
+            if (index == _chooseMediumTypes.IndexOf(SELECT_WEB_FILE))
+            {
+                SelectWebFileButtonClickedSignal.Dispatch();
+            }
+
             if (index == _chooseMediumTypes.IndexOf(SELECT_DISK_FILE))
             {
                 SelectDiskFileButtonClickedSignal.Dispatch();
-            }
-            else if (index == _chooseMediumTypes.IndexOf(SELECT_WEB_FILE))
-            {
-                ChoosenMedium = null;
-                ChooseMediumDropdown.captionText.text = CHOOSE_MEDIUM_TEXT;
-                throw new NotImplementedException();
+                return;
             }
         }
 

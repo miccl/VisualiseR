@@ -2,9 +2,7 @@
 
 namespace VisualiseR.Presentation
 {
-
     public class PresentationStartSignal : Signal
     {
-
     }
 }

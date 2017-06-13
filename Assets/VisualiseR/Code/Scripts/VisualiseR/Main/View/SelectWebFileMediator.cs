@@ -1,4 +1,6 @@
-﻿using strange.extensions.mediation.impl;
+﻿using strange.extensions.context.api;
+using strange.extensions.mediation.impl;
+using UnityEngine;
 using VisualiseR.Common;
 
 namespace VisualiseR.Main
@@ -11,14 +13,25 @@ namespace VisualiseR.Main
 
         [Inject]
         public LoadFilesSignal LoadFilesSignal { get; set; }
+        
+        [Inject(ContextKeys.CONTEXT_VIEW)]
+        public GameObject _contextView { get; set; }
 
 
         public override void OnRegister()
         {
+            _view.UrlSelected.AddListener(OnUrlSelected);
+            _view._contextView = _contextView;
         }
 
         public override void OnRemove()
         {
+            _view.UrlSelected.AddListener(OnUrlSelected);
+        }
+
+        private void OnUrlSelected(string url)
+        {
+           LoadFilesSignal.Dispatch(url);
         }
     }
 }

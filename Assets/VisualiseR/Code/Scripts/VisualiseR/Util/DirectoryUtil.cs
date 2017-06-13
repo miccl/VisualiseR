@@ -1,8 +1,9 @@
 ﻿using System.IO;
 using System.Linq;
+using JetBrains.Annotations;
 using VisualiseR.CodeReview;
 
-namespace VisualiseR.Common
+namespace VisualiseR.Util
 {
     public static class DirectoryUtil
     {
@@ -50,6 +51,22 @@ namespace VisualiseR.Common
         {
             var dirPath = mainDir + Path.DirectorySeparatorChar + rate;
             return new DirectoryInfo(dirPath);
+        }
+
+        /// <summary>
+        /// Returns the parent directory path.
+        /// Returns null, if the directory doesn't exist.
+        /// </summary>
+        /// <param name="dirPath"></param>
+        /// <returns></returns>
+        [CanBeNull]
+        public static string GetParentDirectory(string dirPath)
+        {
+            if (!Directory.Exists(dirPath))
+            {
+                return null;
+            }
+            return Directory.GetParent(dirPath).FullName;
         }
     }
 }

@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using VisualiseR.CodeReview;
+using VisualiseR.Util;
 
 namespace VisualiseR.Common
 {
@@ -17,12 +20,22 @@ namespace VisualiseR.Common
 
         public override string ToString()
         {
-            return string.Format("Name: {0} (Type: {1}, JoinDate: {2})", Name, Type, JoinDate);
+            return string.Format("Name: {0} (Type: {1}, Avatar: {2}, JoinDate: {3})", Name, Type, Avatar, JoinDate);
+        }
+
+        public bool HasRight(List<PlayerType> command)
+        {
+            return command.Contains(Type);
         }
 
         public bool IsEmpty()
         {
             return String.IsNullOrEmpty(Name) || String.IsNullOrEmpty(Type.ToString());
+        }
+
+        public bool IsHost()
+        {
+            return Type.Equals(PlayerType.Host);
         }
     }
 }

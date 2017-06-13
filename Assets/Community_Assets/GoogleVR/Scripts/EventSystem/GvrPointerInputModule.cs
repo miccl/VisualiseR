@@ -13,7 +13,7 @@
 
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using VisualiseR.Util;
 #if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
 using UnityEngine.VR;
 #endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
@@ -141,9 +141,9 @@ public class GvrPointerInputModule : BaseInputModule {
     UpdateReticle(previousObject);
 
     // True during the frame that the trigger has been pressed.
-    bool triggerDown = Input.GetMouseButtonDown(0);
+    bool triggerDown = Input.GetMouseButtonDown(0) || Input.GetButtonDown(ButtonUtil.SUBMIT);
     // True if the trigger is held down.
-    bool triggering = Input.GetMouseButton(0);
+    bool triggering = Input.GetMouseButton(0) || Input.GetButton(ButtonUtil.SUBMIT);
 
     #if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
     triggerDown |= GvrController.ClickButtonDown;

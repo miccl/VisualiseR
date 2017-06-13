@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using strange.extensions.mediation.impl;
+using strange.extensions.signal.impl;
 using UnityEngine;
 using VisualiseR.Common;
 using VisualiseR.Util;
@@ -9,10 +10,12 @@ using VisualiseR.Util;
 namespace VisualiseR.CodeReview
 {
     /// <summary>
-    /// Controls the entire
+    /// Controls the entire code review scene.
     /// </summary>
     public class CodeReviewControllerView : View
     {
+        public Signal<ICodeMedium> ShowSceneMenuSignal = new Signal<ICodeMedium>();
+
         internal ICodeMedium _medium;
         internal List<ICode> _codeFragmentsWithRate;
         public Rate _rate;
@@ -25,6 +28,8 @@ namespace VisualiseR.CodeReview
         internal GameObject _contextView;
         private GameObject _screenParent;
         private GameObject _pileParent;
+        internal bool _isSceneMenuShown = false;
+        internal bool _isContextMenuShown = false;
 
 
         /// <summary>
@@ -96,7 +101,6 @@ namespace VisualiseR.CodeReview
             }
         }
 
-
         internal void ClearScreens()
         {
             foreach (var screen in screens)
@@ -114,14 +118,10 @@ namespace VisualiseR.CodeReview
 
                 bool isFirst = true;
                 List<Vector3> screenPositions = GetScreenPositions();
-                for (int i = 0; i < _codeFragmentsWithRate.Count; i++)
+                for (int i = 0; i < screenPositions.Count; i++)
                 {
-//                //TODO zu überprüfen, ob diese Abfrage auch richtig greift
-//                if (i <= _codeFragmentsWithRate.Count - 1)
-//                {
                     InstantiateScreen(screenPositions[i], isFirst);
                     isFirst = false;
-//                }
                 }
             }
         }
@@ -138,7 +138,8 @@ namespace VisualiseR.CodeReview
 
         private List<Vector3> GetScreenPositions()
         {
-            return MathUtil.ComputeSpawnPositionsWithElements(SCREEN_DISTANCE, MAX_NUMBER_OF_SCREENS_SHOWN,
+            var screensShown = Math.Min(MAX_NUMBER_OF_SCREENS_SHOWN, _codeFragmentsWithRate.Count);
+            return ScreenPositionUtil.ComputeSpawnPositionsWithElements(SCREEN_DISTANCE, screensShown,
                 SCREEN_RADIUS,
                 SCREEN_START_ANGLE, SCREEN_VALUE_Y);
         }
@@ -196,7 +197,7 @@ namespace VisualiseR.CodeReview
         private static List<Vector3> GetPilePositions()
         {
             int pileCount = EnumUtil.Length<Rate>();
-            return MathUtil.ComputeSpawnPositionsWithElements(PILE_DISTANCE, pileCount, PILE_RADIUS, PILE_START_ANGLE,
+            return ScreenPositionUtil.ComputeSpawnPositionsWithElements(PILE_DISTANCE, pileCount, PILE_RADIUS, PILE_START_ANGLE,
                 PILE_VALUE_Y);
         }
 
@@ -219,23 +220,10 @@ namespace VisualiseR.CodeReview
 
         private void InstantiateInfoScreen()
         {
-            var computeSpawnPositionFromStartPosition =
-                MathUtil.ComputeSpawnPositionFromStartPosition(INFO_DISTANCE, INFO_RADIUS, 90, 2);
-            if (computeSpawnPositionFromStartPosition != null)
-            {
-                Vector3 pos = (Vector3) computeSpawnPositionFromStartPosition;
-                Vector3 relativePos = Vector3.zero - pos;
-                Quaternion rotation = Quaternion.LookRotation(relativePos);
-
-                var info = (GameObject) Instantiate(Resources.Load("InfoCanvas"), pos, rotation);
-                info.transform.Rotate(0, -180, 0);
-                info.name = "InfoScreen";
-                info.transform.SetParent(_contextView.transform);
-
-                //TODO direkte verbindung verhindern
-                InfoView infoView = info.GetComponent<InfoView>();
-                infoView.UpdateView(_codeFragmentsWithRate[0]);
-            }
+            var infoScreen = _contextView.transform.Find("InfoCanvas");
+            //TODO direkte verbindung verhindern
+            InfoView infoView = infoScreen.GetComponent<InfoView>();
+            infoView.UpdateView(_codeFragmentsWithRate[0]);
         }
 
         /// <summary>
@@ -245,6 +233,10 @@ namespace VisualiseR.CodeReview
         /// <param name="code"></param>
         public void NextCode(ICode code)
         {
+            if (code == null)
+            {
+                return;
+            }
             int currPos = _codeFragmentsWithRate.IndexOf(code);
             foreach (var screen in screens)
             {
@@ -274,6 +266,19 @@ namespace VisualiseR.CodeReview
                 var lastScreen = screens.Last();
                 Destroy(lastScreen);
                 screens.Remove(lastScreen);
+            }
+        }
+
+        void Update()
+        {
+            if (Input.GetButtonDown(ButtonUtil.CANCEL))
+            {
+                if (_isSceneMenuShown || _isContextMenuShown)
+                {
+                    return;
+                }
+                ShowSceneMenuSignal.Dispatch(_medium);
+
             }
         }
     }

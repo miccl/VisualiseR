@@ -1,29 +1,32 @@
-﻿using strange.extensions.mediation.impl;
+﻿using System.Collections;
+using strange.extensions.mediation.impl;
 using UnityEngine;
 using UnityEngine.UI;
-using VisualiseR.Util;
 
 namespace VisualiseR.Main
 {
     public class MessageView : View
     {
+        private Transform _messagePanel;
+        private Transform _centerPanel;
         internal Text _infoText;
+        private Transform _title;
         internal Text _titleLabel;
-        private GameObject _centerPanel;
-        private Image _centerPanelImage;
-        private GameObject _menuCanvas;
         private Image _titleImage;
+        private Button _okButton;
 
         protected override void Awake()
         {
             base.Awake();
-            _infoText = UnityUtil.FindGameObjectInChild("InfoText").GetComponent<Text>();
-            _titleLabel = transform.FindChild("Title").GetComponentInChildren<Text>();
-            _titleImage = transform.FindChild("Title").GetComponent<Image>();
-            _centerPanel = transform.FindChild("CenterPanel").gameObject;
+            _messagePanel = transform.Find("MessagePanel");
+            
+            _centerPanel = _messagePanel.Find("CenterPanel");
+            _infoText = _centerPanel.Find("InfoText").GetComponent<Text>();
+            _okButton = _centerPanel.Find("OkButton").GetComponent<Button>();
 
-            _menuCanvas = UnityUtil.FindGameObject("MenuCanvas");
-
+            _title = _messagePanel.FindChild("Title");
+            _titleLabel = _title.GetComponentInChildren<Text>();
+            _titleImage = _title.GetComponent<Image>();
         }
 
         public void Init(MessageType type, string title, string message)
@@ -55,12 +58,24 @@ namespace VisualiseR.Main
         {
             var color = Color.blue;
             _titleImage.color = color;
+            _okButton.gameObject.SetActive(false);
+            StartCoroutine(WaitAndClose());
+        }
 
+        private IEnumerator WaitAndClose()
+        {
+            yield return new WaitForSeconds(2f);
+            Destroy();
         }
 
         public void OnOkButtonClick()
         {
-            Destroy(gameObject.transform.parent.gameObject);
+            Destroy();
+        }
+
+        private void Destroy()
+        {
+            Destroy(gameObject);
         }
     }
 }

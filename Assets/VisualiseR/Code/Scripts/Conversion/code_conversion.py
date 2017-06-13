@@ -25,8 +25,8 @@ def read_input(argv):
         input_path = argv[0]
         output_directory_path = argv[1]
         return input_path, output_directory_path
-    except TypeError:
-        print('usage: python code_conversion.py <input_path> <output_dir_path>')
+    except IndexError:
+        print('Usage: python code_conversion.py <input_path> <output_dir_path>')
         sys.exit(1)
 
 
@@ -42,9 +42,9 @@ def handle_input(input_path):
     elif os.path.isfile(input_path):
         if is_code_file(input_path):
             return [input_path]
-            # convert_code_file(input_path)
     else:
         print_error("The input path is not valid.")
+        sys.exit(1)
 
 
 def traverse_directory(dir_path):

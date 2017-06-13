@@ -1,4 +1,5 @@
 ﻿using strange.extensions.mediation.impl;
+using UnityEngine;
 
 namespace VisualiseR.CodeReview
 {
@@ -16,7 +17,7 @@ namespace VisualiseR.CodeReview
 
         public override void OnRegister()
         {
-            CommentChangedSignal.AddListener(OnNextCode);
+            NextCodeSignal.AddListener(OnNextCode);
             CommentChangedSignal.AddListener(OnCommentChanged);
         }
 

@@ -30,7 +30,7 @@ using strange.extensions.mediation.api;
 
 namespace strange.extensions.mediation.impl
 {
-	public class View : MonoBehaviour, IView
+	public class View : Photon.MonoBehaviour, IView
 	{
 		/// Leave this value true most of the time. If for some reason you want
 		/// a view to exist outside a context you can set it to false. The only

@@ -4,13 +4,13 @@ using strange.extensions.signal.impl;
 using UnityEngine;
 using UnityEngine.UI;
 using VisualiseR.Common;
-using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
-    public class CodeReviewScreenView : View, DragDropHandler
+    public class CodeReviewScreenView : View
     {
         public Signal<Code> NextCodeSignal = new Signal<Code>();
+        public Signal<GameObject, Code> ShowContextMenuSignal = new Signal<GameObject, Code>();
 
         private const string FILE_PREFIX = "file:///";
 
@@ -22,13 +22,14 @@ namespace VisualiseR.CodeReview
         private GameObject _gvrReticlePointer;
         private Text _infoText;
         private GvrPointerGraphicRaycaster pointerScript;
-        internal GameObject contextMenu;
 
 
-        internal bool IsContextMenuShown;
+        internal bool _isContextMenuShown = false;
+        internal bool _isSceneMenuShown = false;
 
         protected override void Awake()
         {
+            base.Awake();
             _isHeld = false;
             _gvrReticlePointer = GameObject.Find("GvrReticlePointer");
 
@@ -41,10 +42,6 @@ namespace VisualiseR.CodeReview
             LoadCode();
         }
 
-        void Update()
-        {
-            HandleDragAndDrop();
-        }
 
         public void Init(bool isFirst)
         {
@@ -83,6 +80,11 @@ namespace VisualiseR.CodeReview
 
         public void OnScreenClick()
         {
+            if (_isContextMenuShown || _isSceneMenuShown)
+            {
+                return;
+            }
+
             if (IsFirst)
             {
                 ShowContextMenu();
@@ -93,72 +95,14 @@ namespace VisualiseR.CodeReview
             }
         }
 
-
-        private void HandleDragAndDrop()
-        {
-            if (_isHeld)
-            {
-//                Ray ray = new Ray(_gvrReticlePointer.transform.position, _gvrReticlePointer.transform.forward);
-//                float distance = Vector3.Distance(_gvrReticlePointer.transform.position, transform.position);
-//                transform.position = ray.GetPoint(distance);
-//
-//                // Fix rotation
-//                transform.rotation = Quaternion.LookRotation(-Camera.main.transform.forward);
-//                transform.Rotate(-270, 180, 180);
-//
-//                //TODO Screen soll immer über dem Boden schweben, wenn per DD dies drunter soll es drüber gezogen werden.
-            }
-        }
-
-        public void HandleGazeTriggerStart()
-        {
-            _isHeld = true;
-        }
-
-        public void HandleGazeTriggerEnd()
-        {
-            _isHeld = false;
-//            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-        }
-
-
         public void ShowContextMenu()
         {
-            if (!IsContextMenuShown)
+            if (_isContextMenuShown)
             {
-                InstantiateContextMenu();
-                IsContextMenuShown = true;
+                return;
             }
-        }
-
-        private void InstantiateContextMenu()
-        {
-            var position = GetContextMenuPosition();
-            var rotation = GetContextMenuRotation();
-            contextMenu = Instantiate(Resources.Load("ContextMenuCanvas"), position, rotation) as GameObject;
-            contextMenu.transform.Rotate(90, -180, 0);
-            contextMenu.transform.SetParent(transform);
-
-            //TODO direkte Verdrahtung entfernen
-            ContextMenuView contextMenuView = contextMenu.GetComponent<ContextMenuView>();
-            contextMenuView._code = _code;
-        }
-
-        private Quaternion GetContextMenuRotation()
-        {
-            //TODO überarbeiten
-            return transform.rotation;
-        }
-
-        private Vector3 GetContextMenuPosition()
-        {
-            //TODO irgendwann nochmal verbessern, derzeit schwankt das immer hin und her
-            Vector3 cameraBack = -Camera.main.transform.forward * 12;
-            Vector3 shift = new Vector3(0, 0, cameraBack.z);
-            Vector3 pos = transform.position + shift;
-            pos.y = 2;
-
-            return pos;
+            
+            ShowContextMenuSignal.Dispatch(gameObject, (Code) _code);
         }
 
         public void ChangeCode(ICode code)

@@ -1,7 +1,6 @@
 //#define LOG4NET // log4net logging active?
-//
-//
-//#define LOG_UNITY // Debug.Log* active?
+
+#define LOG_UNITY // Debug.Log* active?
 
 #define UNITY // running inside the unity runtime environment?
 
@@ -43,7 +42,7 @@ public class JCsLogger
 
 #if LOG4NET
     private ILog log;
-      #endif
+#endif
 
     /// <summary>
     ///     A logger to be used for logging statements in the code.
@@ -69,7 +68,7 @@ public class JCsLogger
     /// </summary>
     static JCsLogger()
     {
-#if UNITY
+#if UNITY && LOG4NET
         string configFile = Application.dataPath + "/Plugins/log4net/log4net.xml";
         if (Application.platform == RuntimePlatform.WindowsPlayer)
         {
@@ -105,6 +104,9 @@ public class JCsLogger
 #if LOG4NET
             result = log.IsDebugEnabled;
 #endif
+#if LOG_UNITY
+            result = UnityEngine.Debug.logger.logEnabled;
+#endif
             return result;
         }
     }
@@ -118,6 +120,10 @@ public class JCsLogger
 #if LOG4NET
             result = log.IsInfoEnabled;
 #endif
+#if LOG_UNITY
+            result = UnityEngine.Debug.logger.logEnabled;
+#endif
+
             return result;
         }
     }
@@ -131,6 +137,10 @@ public class JCsLogger
 #if LOG4NET
             result = log.IsWarnEnabled;
 #endif
+#if LOG_UNITY
+            result = UnityEngine.Debug.logger.logEnabled;
+#endif
+
             return result;
         }
     }
@@ -144,6 +154,10 @@ public class JCsLogger
 #if LOG4NET
             result = log.IsErrorEnabled;
 #endif
+#if LOG_UNITY
+            result = UnityEngine.Debug.logger.logEnabled;
+#endif
+
             return result;
         }
     }
@@ -157,6 +171,10 @@ public class JCsLogger
 #if LOG4NET
             result = log.IsFatalEnabled;
 #endif
+#if LOG_UNITY
+            result = UnityEngine.Debug.logger.logEnabled;
+#endif
+
             return result;
         }
     }

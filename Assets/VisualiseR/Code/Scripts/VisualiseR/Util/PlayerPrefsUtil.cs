@@ -43,6 +43,7 @@ namespace VisualiseR.Util
             Logger.InfoFormat("Saved value '{0}' under key '{1}' in player prefs", value, key);
             PlayerPrefs.SetInt(key, value);
         }
+        
 
         public static string RetrieveValue(string key)
         {

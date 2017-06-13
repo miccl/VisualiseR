@@ -53,7 +53,7 @@ namespace VisualiseR.Main
             injectionBinder.Bind<IPictureMedium>().To<PictureMedium>().ToSingleton();
             injectionBinder.Bind<IPicture>().To<Picture>().ToSingleton();
             injectionBinder.Bind<IPlayer>().To<Player>().ToSingleton();
-            injectionBinder.Bind<IRoom>().To<Room>().ToSingleton();
+            injectionBinder.Bind<IRoom>().To<Common.Room>().ToSingleton();
         }
 
         private void BindServices()
@@ -88,10 +88,11 @@ namespace VisualiseR.Main
             }
 
             commandBinder.Bind<SelectDiskFileSignal>().To<SelectDiskFileCommand>();
+            commandBinder.Bind<SelectWebFileSignal>().To<SelectWebFileCommand>();
             commandBinder.Bind<LoadFilesSignal>().To<LoadFilesCommand>();
             commandBinder.Bind<CreateRoomSignal>().To<CreateRoomCommand>();
-            commandBinder.Bind<JoinRoomSignal>().To<JoinRoomSignal>();
-            commandBinder.Bind<MessageSignal>().To<MessageCommand>();
+            commandBinder.Bind<JoinRoomSignal>().To<JoinRoomCommand>();
+            commandBinder.Bind<ShowMessageSignal>().To<ShowMessageCommand>();
         }
 
         private void BindSignals()

@@ -1,67 +1,95 @@
 ﻿using System;
+using strange.examples.multiplecontexts.main;
 using strange.extensions.command.impl;
 using VisualiseR.Common;
 using VisualiseR.Util;
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// Creates a <see cref="IRoom"/>.
+    /// Constructs a Room with the choosen <see cref="RoomType"/> and <see cref="IPictureMedium"/>.
+    /// Adds the <see cref="IPlayer"/> to the Room .
+    /// </summary>
     public class CreateRoomCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(CreateRoomCommand));
 
 
         [Inject]
-        public string _roomName { get; set; }
+        public string _RoomName { get; set; }
 
         [Inject]
-        public RoomType _roomType { get; set; }
+        public RoomType _RoomType { get; set; }
 
         [Inject]
         public PictureMedium _medium { get; set; }
 
         [Inject]
-        public IRoom room { get; set; }
+        public IRoom Room { get; set; }
 
         [Inject]
-        public IPlayer player { get; set; }
+        public IPlayer Player { get; set; }
 
         [Inject]
-        public MessageSignal MessageSignal { get; set; }
+        public ShowMessageSignal ShowMessageSignal { get; set; }
 
         public override void Execute()
         {
-            Logger.DebugFormat("roomName: {0}", _roomName);
-            Logger.DebugFormat("roomType: {0}", _roomType);
+            Logger.DebugFormat("RoomName: {0}", _RoomName);
+            Logger.DebugFormat("RoomType: {0}", _RoomType);
             Logger.DebugFormat("pictureMedium: {0}", _medium);
-            if (IsInputValid())
+            
+            if (!IsInputValid())
             {
-                ConstructRoom();
-                //TODO Photon Raum erstellen...
-                //TODO Entsprechende Szene laden...
-                //TODO
-                Logger.InfoFormat("Room {0} was created", room);
-
-                PlayerPrefsUtil.saveObject(PlayerPrefsUtil.ROOM_KEY, room);
-                UnityUtil.LoadScene(_roomType.ToString());
-//                SceneManager.LoadScene(1);
+                return;
             }
+
+            ConstructRoom();
+
+            PlayerPrefsUtil.saveObject(PlayerPrefsUtil.ROOM_KEY, Room);
+            ShowMessageSignal.Dispatch(new Message(MessageType.Info, "Sucess", string.Format("Room {0} was sucessfully created", _RoomName)));
+            LoadScene();
         }
+
+        private void LoadScene()
+        {
+            if (!_RoomType.Equals(RoomType.Presentation) && !_RoomType.Equals(RoomType.CodeReview))
+            {
+                ShowMessageSignal.Dispatch(new Message(MessageType.Info, "Not implemenented yet", "Scene coming soon (TM)"));
+                return;
+            }
+            
+            UnityUtil.LoadScene(_RoomType);
+        }
+
+        private bool RoomAlreadyExists()
+        {
+            //TODO machen
+
+            if (_RoomType.Equals(RoomType.Presentation))
+            {
+//                return PhotonNetwork.CreateRoom(_RoomName);
+            }
+            return false;
+        }
+
 
         private void ConstructRoom()
         {
-            room.Name = _roomName;
-            room.Type = _roomType;
-            room.Medium = _medium;
-            AddPlayer();
-            //TODO wie kreiere ich die Spieler ?!?!?!
+            Room.Name = _RoomName;
+            Room.Type = _RoomType;
+            Room.Medium = _medium;
+            AddHostPlayer();
+            Logger.InfoFormat("Room {0} was created", Room);
         }
 
-        private void AddPlayer()
+        private void AddHostPlayer()
         {
             var playerName = PlayerPrefsUtil.RetrieveValue(PlayerPrefsUtil.PLAYER_NAME_KEY);
-            player.Name = playerName;
-            player.Type = PlayerType.Host;
-            room.AddPlayer(player);
+            Player.Name = playerName;
+            Player.Type = PlayerType.Host;
+            Room.AddPlayer(Player);
         }
 
         /// <summary>
@@ -70,23 +98,29 @@ namespace VisualiseR.Main
         /// </summary>
         private bool IsInputValid()
         {
-//TODO Die Validerung sollte wohl woanders gemacht werden, wahrscheinlich im Model?! zumindestens die formale Validierung?
-//TODO Fehlernachricht anzeigen
 //TODO vielleicht andere Validierungen hinzufügen (keine Sonderzeichen...)
 //TODO Photon ist der Raumname schon vergeben???
-            if (String.IsNullOrEmpty(_roomName))
+            if (String.IsNullOrEmpty(_RoomName))
             {
                 string errorMessage = "Room name wasn't choosen yet";
                 Logger.Error(errorMessage);
 
-                MessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
+                ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
                 return false;
             }
             if (_medium.IsEmpty())
             {
                 string errorMessage = "PictureMedium wasn't choosen yet";
                 Logger.Error(errorMessage);
-                MessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
+                ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
+                return false;
+            }
+
+            if (RoomAlreadyExists())
+            {
+                string errorMessage = string.Format("Room with name {0} already exists", _RoomName);
+                Logger.Error(errorMessage);
+                ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
                 return false;
             }
             return true;

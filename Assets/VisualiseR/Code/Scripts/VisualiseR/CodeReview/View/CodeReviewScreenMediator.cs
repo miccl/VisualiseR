@@ -10,7 +10,10 @@ namespace VisualiseR.CodeReview
         public CodeReviewScreenView _view { get; set; }
 
         [Inject]
-        public ContextMenuCanceledSignal ContextMenuCanceledSignal { get; set; }
+        public CodeReviewContextMenuIsShownSignal CodeReviewContextMenuIsShownSignal { get; set; }
+        
+        [Inject]
+        public CodeReviewSceneMenuIsShownSignal CodeReviewSceneMenuIsShownSignal { get; set; }
 
         [Inject]
         public CodeRatingChangedSignal CodeRatingChangedSignal { get; set; }
@@ -21,20 +24,32 @@ namespace VisualiseR.CodeReview
         [Inject]
         public RemoveCodeSignal RemoveCodeSignal { get; set; }
 
+        [Inject]
+        public ShowCodeReviewContextMenuSignal ShowCodeReviewContextMenuSignal { get; set; }
+
 
         public override void OnRegister()
         {
             _view.NextCodeSignal.AddListener(OnNextCodeSignal);
-            ContextMenuCanceledSignal.AddListener(OnContextMenuCanceled);
+            _view.ShowContextMenuSignal.AddListener(OnShowContextMenu);
+            CodeReviewContextMenuIsShownSignal.AddListener(OnContextMenuIsShown);
+            CodeReviewSceneMenuIsShownSignal.AddListener(OnSceneMenuIsShown);
             CodeRatingChangedSignal.AddListener(OnCodeRatingChanged);
         }
 
         public override void OnRemove()
         {
             _view.NextCodeSignal.RemoveListener(OnNextCodeSignal);
-            ContextMenuCanceledSignal.RemoveListener(OnContextMenuCanceled);
+            _view.ShowContextMenuSignal.RemoveListener(OnShowContextMenu);
+            CodeReviewContextMenuIsShownSignal.RemoveListener(OnContextMenuIsShown);
+            CodeReviewSceneMenuIsShownSignal.RemoveListener(OnSceneMenuIsShown);
             CodeRatingChangedSignal.RemoveListener(OnCodeRatingChanged);
 
+        }
+
+        private void OnShowContextMenu(GameObject gameObject, Code code)
+        {
+            ShowCodeReviewContextMenuSignal.Dispatch(gameObject, code);
         }
 
         private void OnNextCodeSignal(Code code)
@@ -57,9 +72,15 @@ namespace VisualiseR.CodeReview
         }
 
 
-        private void OnContextMenuCanceled()
+        private void OnContextMenuIsShown(bool isShown)
         {
-            _view.IsContextMenuShown = false;
+            _view._isContextMenuShown = isShown;
         }
+        
+        private void OnSceneMenuIsShown(bool isShown)
+        {
+            _view._isContextMenuShown = isShown;
+        }
+
     }
 }

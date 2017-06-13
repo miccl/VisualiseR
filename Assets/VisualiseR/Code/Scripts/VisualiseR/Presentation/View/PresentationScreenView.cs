@@ -1,108 +1,218 @@
-﻿using System.Collections;
-using System.IO;
+using System.Collections.Generic;
 using strange.extensions.mediation.impl;
+using strange.extensions.signal.impl;
 using UnityEngine;
 using VisualiseR.Common;
+using VisualiseR.Util;
 
 namespace VisualiseR.Presentation
 {
     public class PresentationScreenView : View
     {
+        private static JCsLogger Logger;
+
         private const string FILE_PREFIX = "file:///";
 
-        internal IPictureMedium _medium { get; set; }
+        internal Signal<IPlayer, ISlideMedium> NextSlideSignal = new Signal<IPlayer, ISlideMedium>();
+        internal Signal<IPlayer, ISlideMedium> PrevSlideSignal = new Signal<IPlayer, ISlideMedium>();
+        internal Signal<IPlayer, ISlideMedium> ShowSceneMenuSignal = new Signal<IPlayer, ISlideMedium>();
+        internal Signal<bool, string> ShowLoadingAnimationSignal = new Signal<bool, string>();
+        private List<byte[]> _images = new List<byte[]>();
+        private int _currentPos;
+        private bool _isLoading;
+        internal bool _isSceneMenuShown = false;
+        private int _imageCount;
 
-        private IPicture _currPicture;
-        private int _currPicturePos;
+        internal ISlideMedium _medium { get; set; }
+        internal IPlayer _player { get; set; }
 
         protected override void Awake()
         {
+            base.Awake();
+            Logger = new JCsLogger(typeof(PresentationScreenView));
+        }
+
+        public void Init(ISlideMedium slideMedium, List<byte[]> images)
+        {
+            _medium = slideMedium;
+            _images = images;
+
             SetupMedium();
+            
         }
 
-        internal void SetupMedium()
+
+        private void SetupMedium()
         {
-            if (_medium == null)
+            if (_player == null)
             {
-                _medium = CreateMockMedium();
+                return;
             }
 
-            _currPicturePos = 0;
-            _currPicture = _medium.GetPicture(0);
-
-            StartCoroutine(LoadImageIntoTexture(_currPicture.Path));
+            if (_player.Type == PlayerType.Host)
+            {
+                LoadCurrentSlide();
+                ShowLoadingAnimationSignal.Dispatch(false, "");
+            }
         }
 
-        //TODO vielleicht auslagern in einen Command
-        private IPictureMedium CreateMockMedium()
+        internal void RequestDataFromMaster()
         {
-            IPictureMedium medium = new PictureMedium
-            {
-                Name = "Test"
-            };
+            RequestDataFromMaster(PhotonNetwork.player.ID, 0);
+            _isLoading = true;
+        }
 
-            for (int i = 0; i < 3; i++)
+        internal void RequestDataFromMaster(int playerId, int pos)
+        {
+            GetComponent<PhotonView>().RPC("OnDataRequest",
+                PhotonTargets.MasterClient,
+                playerId, pos);
+            Logger.DebugFormat("Player (id '{0}'): Reqested data (pos '{1}') from master", playerId, pos);
+        }
+
+        [PunRPC]
+        void OnDataRequest(int playerId, int pos)
+        {
+            int Pos = -1;
+            byte[] Image = null;
+            if (pos == 0)
             {
-                var pic = "pic" + i;
-                Texture2D tex = Resources.Load<Texture2D>(pic);
-                string filePath = Application.persistentDataPath + pic + ".png";
-                File.WriteAllBytes(filePath, tex.EncodeToPNG());
-                medium.AddPicture(new Picture
-                {
-                    Title = pic,
-                    Path = filePath
-                });
-                Debug.Log(filePath);
+                GetComponent<PhotonView>().RPC("OnSyncing",
+                    PhotonPlayer.Find(playerId),
+                    _images.Count);
+            }
+            
+            if (pos <= _images.Count - 1)
+            {
+                Pos = pos;
+                Image = _images[Pos];
+            }
+            GetComponent<PhotonView>().RPC("OnDataReceived",
+                PhotonPlayer.Find(playerId),
+                Pos, Image);
+            Logger.DebugFormat("Master: Send data (pos '{1}') to player (id '{0}')", playerId, pos);            
+            //TODO interesting other alternative
+//            GetComponent<PhotonView>().RPC("OnDataReceived",
+//                PhotonTargets.OthersBuffered,
+//                Pos, Image);
+        }
+        
+        [PunRPC]
+        void OnSyncing(int imageCount)
+        {
+            _imageCount = imageCount;
+        }
+
+        [PunRPC]
+        void OnDataReceived(int pos, byte[] image)
+        {
+            if (pos >= 0)
+            {
+                _images.Insert(pos, image);
+
+                Logger.DebugFormat("(id '{0}'): Received images from master (image: {1}, pos: {2})",
+                    PhotonNetwork.player.ID,
+                    image.Length, pos);
+                RequestDataFromMaster(PhotonNetwork.player.ID, ++pos);
+                DisplaySyncProgress(pos);
+                return;
             }
 
-            return medium;
+            _isLoading = false;
+            Logger.DebugFormat("Player (id '{0}'): Received all images from master", PhotonNetwork.player.ID);
+            LoadImageIntoTexture(_images[_currentPos]);
+            ShowLoadingAnimationSignal.Dispatch(false, "");
         }
 
-        private void NextPicture()
+        private void DisplaySyncProgress(int pos)
         {
-            _currPicturePos = (_currPicturePos + 1) % _medium.Pictures.Count;
-            LoadPictureIntoTexture(_currPicturePos);
+            string text = string.Format("Syncing ... ({0}/{1})", pos, _imageCount);
+            ShowLoadingAnimationSignal.Dispatch(true, text);
         }
 
-        private void PrevPicture()
+        private void NextSlide()
         {
-            _currPicturePos = _currPicturePos - 1;
-            if (_currPicturePos == -1)
+            if (_player != null && _medium != null)
             {
-                _currPicturePos = _medium.Pictures.Count - 1;
+                NextSlideSignal.Dispatch(_player, _medium);
             }
-            LoadPictureIntoTexture(_currPicturePos);
         }
 
-        private void LoadPictureIntoTexture(int picturePos)
+        private void PrevSlide()
         {
-            _currPicture = _medium.GetPicture(picturePos);
-            StartCoroutine(LoadImageIntoTexture(_currPicture.Path));
+            if (_player != null && _medium != null)
+            {
+                PrevSlideSignal.Dispatch(_player, _medium);
+            }
         }
 
-        IEnumerator LoadImageIntoTexture(string path)
+        internal void LoadCurrentSlide()
         {
-            WWW www = new WWW(FILE_PREFIX + path);
+            var currentPos = _medium.CurrentPos;
+            photonView.RPC("OnSlidePosChanged",
+                PhotonTargets.All,
+                currentPos);
+        }
 
-            yield return www;
+        [PunRPC]
+        void OnSlidePosChanged(int pos)
+        {
+            if (_images == null)
+            {
+                Logger.Error("Image is null");
+                return;
+            }
+            if (_isLoading)
+            {
+                Logger.Error("User is still loading");
+                return;
+            }
 
-            Texture2D tex = new Texture2D(4, 4, TextureFormat.DXT1, false);
-            www.LoadImageIntoTexture(tex);
+            _currentPos = pos;
+            LoadImageIntoTexture(_images[pos]);
+        }
+
+        void LoadImageIntoTexture(byte[] bytes)
+        {
+            Texture2D tex = new Texture2D(4, 4, TextureFormat.RGBA32, false);
+            tex.LoadImage(bytes);
             GetComponent<Renderer>().material.mainTexture = tex;
-            www.Dispose();
         }
 
         void Update()
         {
-            if (Input.GetButtonDown("Fire1"))
+            if (_player == null || !_player.IsHost())
             {
-                NextPicture();
+                return;
             }
 
-            if (Input.GetButtonDown("Fire2"))
+            if (Input.GetButtonDown(ButtonUtil.SUBMIT) || Input.GetButtonDown("Fire1"))
             {
-                PrevPicture();
+                if (!_isSceneMenuShown)
+                {
+                    NextSlide();
+                }
             }
+            
+            if (Input.GetButtonDown(ButtonUtil.CANCEL))
+            {
+                if (!_isSceneMenuShown)
+                {
+                    ShowSceneMenu();
+                }
+            }
+        }
+
+        private void ShowSceneMenu()
+        {
+            if (_player != null && !_player.IsEmpty() && _medium != null)
+            {
+                ShowSceneMenuSignal.Dispatch(_player, _medium);
+            }
+        }
+
+        void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
         }
     }
 }

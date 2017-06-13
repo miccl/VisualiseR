@@ -18,9 +18,10 @@ namespace VisualiseR.Main
         public MediumChangedSignal _MediumChangedSignal { get; set; }
 
         [Inject]
-        public string uri { get; set; }
+        public ShowMessageSignal ShowMessageSignal { get; set; }
 
-        private ImageConversionStrategy _conversion;
+        [Inject]
+        public string uri { get; set; }
 
         public override void Execute()
         {
@@ -28,7 +29,7 @@ namespace VisualiseR.Main
 
             List<string> filePaths = new List<string>();
             LoadFiles(filePaths);
-            var  medium = ConstructMedium(Path.GetFileNameWithoutExtension(uri), filePaths);
+            var medium = ConstructMedium(Path.GetFileNameWithoutExtension(uri), filePaths);
 
             _MediumChangedSignal.Dispatch((PictureMedium) medium);
         }
@@ -49,7 +50,8 @@ namespace VisualiseR.Main
         {
             if (!DirectoryUtil.IsValidNotEmptyDirectory(uri) && !WebUtil.IsValidUrl(uri))
             {
-                //TODO implement error message
+                ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Invalid Input",
+                    string.Format("The chosen uri '{0}'file was invalid", uri)));
                 throw new FileNotFoundException(uri);
             }
         }
@@ -106,12 +108,14 @@ namespace VisualiseR.Main
 
         private IPictureMedium ConstructMedium(string name, List<string> filePaths)
         {
-            IPictureMedium medium = new PictureMedium {
+            IPictureMedium medium = new PictureMedium
+            {
                 Name = Path.GetFileNameWithoutExtension(name)
             };
             foreach (var filePath in filePaths)
             {
-                IPicture picture = new Picture {
+                IPicture picture = new Picture
+                {
                     Title = Path.GetFileNameWithoutExtension(filePath),
                     Path = filePath
                 };

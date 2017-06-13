@@ -5,6 +5,7 @@ using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using UnityEngine;
 using VisualiseR.Common;
+using VisualiseR.Main;
 
 namespace VisualiseR.CodeReview
 {
@@ -59,7 +60,7 @@ namespace VisualiseR.CodeReview
             injectionBinder.Bind<ICodeMedium>().To<CodeMedium>().ToSingleton();
             injectionBinder.Bind<IPicture>().To<Picture>().ToSingleton();
             injectionBinder.Bind<IPlayer>().To<Player>().ToSingleton();
-            injectionBinder.Bind<IRoom>().To<Room>().ToSingleton();
+            injectionBinder.Bind<IRoom>().To<Common.Room>().ToSingleton();
         }
 
         private void BindServices()
@@ -70,10 +71,12 @@ namespace VisualiseR.CodeReview
         private void BindMediators()
         {
             mediationBinder.Bind<CodeReviewScreenView>().To<CodeReviewScreenMediator>();
-            mediationBinder.Bind<ContextMenuView>().To<ContextMenuMediator>();
+            mediationBinder.Bind<CodeReviewContextMenuView>().To<CodeReviewContextMenuMediator>();
             mediationBinder.Bind<CodeReviewControllerView>().To<CodeReviewControllerMediator>();
             mediationBinder.Bind<PileView>().To<PileMediator>();
             mediationBinder.Bind<InfoView>().To<InfoMediator>();
+            mediationBinder.Bind<CodeReviewSceneMenuView>().To<CodeReviewSceneMenuMediator>();
+            mediationBinder.Bind<SimpleCodeReviewScreenView>().To<SimpleCodeReviewScreenMediator>();
         }
 
         private void BindCommands()
@@ -90,20 +93,26 @@ namespace VisualiseR.CodeReview
                     .InSequence();
             }
 
-            commandBinder.Bind<NextCodeSignal>().To<NextCodeCommand>();
+            commandBinder.Bind<ShowSceneMenuSignal>().To<ShowCodeReviewSceneMenuCommand>();
             commandBinder.Bind<SelectCodeRatingSignal>().To<SelectCodeRatingCommand>();
             commandBinder.Bind<SaveCommentSignal>().To<SaveCommentCommand>();
             commandBinder.Bind<RemoveCodeSignal>().To<RemoveCodeCommand>();
+            commandBinder.Bind<ShowCodeReviewContextMenuSignal>().To<ShowCodeReviewContextMenuCommand>();
+            commandBinder.Bind<ExportToTxtSignal>().To<ExportToTxtCommand>();
+            commandBinder.Bind<ShowAllCodeSignal>().To<ShowAllCodeCommand>();
+            commandBinder.Bind<CodeSelectedSignal>().To<CodeSelectedCommand>();
         }
 
         private void BindSignals()
         {
             injectionBinder.Bind<ScoreChangedSignal>().ToSingleton();
-            injectionBinder.Bind<CodePositionChangedSignal>().ToSingleton();
-            injectionBinder.Bind<ContextMenuCanceledSignal>().ToSingleton();
+            injectionBinder.Bind<CodeReviewContextMenuIsShownSignal>().ToSingleton();
             injectionBinder.Bind<CodeRatingChangedSignal>().ToSingleton();
             injectionBinder.Bind<PileSelectedSignal>().ToSingleton();
             injectionBinder.Bind<CommentChangedSignal>().ToSingleton();
+            injectionBinder.Bind<CodeReviewSceneMenuIsShownSignal>().ToSingleton();
+            injectionBinder.Bind<NextCodeSignal>().ToSingleton();
+            injectionBinder.Bind<ShowLaserSignal>().ToSingleton();
         }
     }
 }

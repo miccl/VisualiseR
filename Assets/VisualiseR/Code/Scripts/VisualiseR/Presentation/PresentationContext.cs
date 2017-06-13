@@ -1,5 +1,4 @@
-﻿using strange.examples.signals;
-using strange.extensions.command.api;
+﻿using strange.extensions.command.api;
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
@@ -54,7 +53,9 @@ namespace VisualiseR.Presentation
             injectionBinder.Bind<IPictureMedium>().To<PictureMedium>().ToSingleton();
             injectionBinder.Bind<IPicture>().To<Picture>().ToSingleton();
             injectionBinder.Bind<IPlayer>().To<Player>().ToSingleton();
-            injectionBinder.Bind<IRoom>().To<Room>().ToSingleton();
+            injectionBinder.Bind<IRoom>().To<Common.Room>().ToSingleton();
+            injectionBinder.Bind<ISlide>().To<Slide>().ToSingleton();
+            injectionBinder.Bind<ISlideMedium>().To<SlideMedium>().ToSingleton();
         }
 
         private void BindServices()
@@ -65,7 +66,13 @@ namespace VisualiseR.Presentation
         private void BindMediators()
         {
             mediationBinder.Bind<PresentationScreenView>().To<PresentationScreenMediator>();
-            mediationBinder.Bind<SelectDiskFileView>().To<SelectDiskFileMediator>();
+            mediationBinder.Bind<TimerView>().To<TimerMediator>();
+            mediationBinder.Bind<SimplePresentationScreenView>().To<SimplePresentationScreenMediator>();
+            mediationBinder.Bind<NetworkedPlayer>().To<NetworkedPlayerMediator>();
+            mediationBinder.Bind<NetworkController>().To<NetworkControllerMediator>();
+            mediationBinder.Bind<PresentationSceneMenuView>().To<PresentationSceneMenuMediator>();
+            mediationBinder.Bind<SmallScreenView>().To<SmallScreenMediator>();
+            mediationBinder.Bind<PresentationPlayerView>().To<PresentationPlayerMediator>();
         }
 
         private void BindCommands()
@@ -82,15 +89,28 @@ namespace VisualiseR.Presentation
                     .Once()
                     .InSequence();
             }
-
+            commandBinder.Bind<NextSlideSignal>().To<NextSlideCommand>();
+            commandBinder.Bind<PrevSlideSignal>().To<PrevSlideCommand>();
+            commandBinder.Bind<ShowAllSignal>().To<ShowAllSlidesCommand>();
+            commandBinder.Bind<SlideSelectedSignal>().To<SlideSelectedCommand>();
+            commandBinder.Bind<ShowSceneMenuSignal>().To<ShowPresentationSceneMenuCommand>();
+            commandBinder.Bind<InstantiatePlayerSignal>().To<InstantiatePlayerCommand>();
             commandBinder.Bind<LoadFilesSignal>().To<LoadFilesCommand>();
-            commandBinder.Bind<SelectDiskFileSignal>().To<SelectDiskFileCommand>();
+            commandBinder.Bind<ShowTimeSignal>().To<ShowTimeCommand>();
+            commandBinder.Bind<ShowLoadingAnimationSignal>().To<ShowLoadingAnimationCommand>();
         }
 
         private void BindSignals()
         {
-            injectionBinder.Bind<ScoreChangedSignal>().ToSingleton();
-            injectionBinder.Bind<MediumChangedSignal>().ToSingleton();
+            injectionBinder.Bind<SlidePositionChangedSignal>().ToSingleton();
+            injectionBinder.Bind<ChangeTimerStatusSignal>().ToSingleton();
+            injectionBinder.Bind<SetTimerSignal>().ToSingleton();
+            injectionBinder.Bind<TimerRunDownSignal>().ToSingleton();
+            injectionBinder.Bind<PlayerInstantiatedSignal>().ToSingleton();
+            injectionBinder.Bind<FilesLoadedSignal>().ToSingleton();
+            injectionBinder.Bind<CreateOrJoinSignal>().ToSingleton();
+            injectionBinder.Bind<PresentationSceneMenuIsShownSignal>().ToSingleton();
+            injectionBinder.Bind<ShowLaserSignal>().ToSingleton();
         }
     }
 }

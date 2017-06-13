@@ -1,4 +1,5 @@
 ﻿using strange.extensions.mediation.impl;
+using strange.extensions.signal.impl;
 using UnityEngine;
 using UnityEngine.UI;
 using VisualiseR.Util;
@@ -7,6 +8,8 @@ namespace VisualiseR.Main
 {
     public class JoinRoomView : View
     {
+        internal Signal<string> JoinRoomButtonClickSignal = new Signal<string>();
+        
         internal InputField RoomNameInputField;
 
         private GameObject _mainMenuPanelView;
@@ -22,9 +25,10 @@ namespace VisualiseR.Main
 
         public void OnJoinRoomButtonClick()
         {
-            if (IsValidInput())
+            var roomName = RoomNameInputField.text;
+            if (roomName != null)
             {
-                //TODO Join Room Signal...
+                JoinRoomButtonClickSignal.Dispatch(roomName);
             }
         }
 
@@ -32,26 +36,6 @@ namespace VisualiseR.Main
         {
             _mainMenuPanelView.SetActive(true);
             gameObject.SetActive(false);
-        }
-
-
-        /// <summary>
-        /// Test, if all needed information are choosen.
-        /// If not, a error message is displayed with
-        /// </summary>
-        private bool IsValidInput()
-        {
-            //TODO Die Validerung sollte wohl woanders gemacht werden, wahrscheinlich im Model?! zumindestens die formale Validierung?
-            //TODO Fehlernachricht anzeigen
-            //TODO vielleicht andere Validierungen hinzufügen (keine Sonderzeichen...)
-            //TODO Photon ist der Raumname schon vergeben???
-            if (RoomNameInputField.text == null)
-            {
-                Debug.LogFormat("Room name wasn't choosen yet ({0})", RoomNameInputField.text);
-                return false;
-            }
-
-            return true;
         }
     }
 }

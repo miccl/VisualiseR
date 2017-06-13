@@ -11,6 +11,9 @@ namespace VisualiseR.Main
 
         [Inject]
         public SelectDiskFileSignal SelectDiskFileSignal { get; set; }
+        
+        [Inject]
+        public SelectWebFileSignal SelectWebFileSignal { get; set; }
 
         [Inject]
         public MediumChangedSignal MediumChangedSignal { get; set; }
@@ -24,21 +27,23 @@ namespace VisualiseR.Main
         public override void OnRegister()
         {
             _view.SelectDiskFileButtonClickedSignal.AddListener(OnSelectDiskFileButtonClicked);
+            _view.SelectWebFileButtonClickedSignal.AddListener(OnSelectWebFileButtonClicked);
             _view.CreateRoomButtonClickedSignal.AddListener(OnCreateRoomButtonClick);
             MediumChangedSignal.AddListener(OnMediumChanged);
             _view.ChoosenMedium = Medium;
         }
 
-        private void OnError(string msg)
-        {
-            _view.DisplayErrorMessage(msg);
-        }
-
         public override void OnRemove()
         {
             _view.SelectDiskFileButtonClickedSignal.RemoveListener(OnSelectDiskFileButtonClicked);
+            _view.SelectWebFileButtonClickedSignal.RemoveListener(OnSelectWebFileButtonClicked);
             _view.CreateRoomButtonClickedSignal.RemoveListener(OnCreateRoomButtonClick);
             MediumChangedSignal.RemoveListener(OnMediumChanged);
+        }
+
+        private void OnError(string msg)
+        {
+            _view.DisplayErrorMessage(msg);
         }
 
         private void OnCreateRoomButtonClick(string roomName, RoomType roomType, IPictureMedium medium)
@@ -56,6 +61,11 @@ namespace VisualiseR.Main
             //TODO davor könnte beispielsweise eine Laderad kommen, bis dieser Aufruf getätigt wird
             _view.ChoosenMedium = pictureMedium;
             _view.ChooseMediumDropdown.captionText.text = pictureMedium.Name;
+        }
+
+        private void OnSelectWebFileButtonClicked()
+        {
+            SelectWebFileSignal.Dispatch();
         }
     }
 }

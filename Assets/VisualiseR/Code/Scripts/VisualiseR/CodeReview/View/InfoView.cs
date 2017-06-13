@@ -2,7 +2,7 @@
 using strange.extensions.mediation.impl;
 using UnityEngine;
 using UnityEngine.UI;
-using VisualiseR.Common;
+using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
@@ -40,21 +40,24 @@ namespace VisualiseR.CodeReview
 
         public void UpdateView(ICode code)
         {
-            if (code != null && !code.Equals(_code))
+            if (code == null)
             {
-                _code = code;
-                SetViewValues();
+                ResetView();
+                return;
             }
+
+            _code = code;
+            SetViewValues();
         }
 
         private void SetViewValues()
         {
             _nameText.text = _code.Name;
             _ratingText.text = _code.Rate.ToString();
-            _pathText.text = FileUtil.GetDirectoryName(_code.Path);
-            _sizeText.text = FileUtil.GetSizeInBytes(_code.Path);
-            _ownerText.text = FileUtil.GetOwner(_code.Path);
-            _lastModifiedText.text = FileUtil.GetLastModified(_code.Path);
+            _pathText.text = FileUtil.GetDirectoryPath(_code.OldPath);
+            _sizeText.text = FileUtil.GetSizeInBytes(_code.OldPath);
+            _ownerText.text = FileUtil.GetOwner(_code.OldPath);
+            _lastModifiedText.text = FileUtil.GetLastModified(_code.OldPath);
             UpdateComment(_code.Comment);
         }
 
@@ -66,6 +69,16 @@ namespace VisualiseR.CodeReview
                 text = comment;
             }
             _commentText.text = text;
+        }
+
+        public void ResetView()
+        {
+            _nameText.text = "";
+            _ratingText.text = "";
+            _pathText.text = "";
+            _sizeText.text = "";
+            _ownerText.text = "";
+            _lastModifiedText.text = "";
         }
     }
 }

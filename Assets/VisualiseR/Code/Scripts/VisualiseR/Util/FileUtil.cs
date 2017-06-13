@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Security.Principal;
 using JetBrains.Annotations;
 
-namespace VisualiseR.Common
+namespace VisualiseR.Util
 {
     public static class FileUtil
     {
@@ -54,7 +52,7 @@ namespace VisualiseR.Common
         /// </summary>
         /// <param name="filePath"></param>
         /// <returns></returns>
-        public static string GetDirectoryName([NotNull] string filePath)
+        public static string GetDirectoryPath([NotNull] string filePath)
         {
             return Path.GetDirectoryName(filePath);
         }
@@ -87,7 +85,7 @@ namespace VisualiseR.Common
         /// <returns></returns>
         public static string GetPathWithExtension(string filePath, string fileExtension)
         {
-            return GetDirectoryName(filePath) + Path.DirectorySeparatorChar +
+            return GetDirectoryPath(filePath) + Path.DirectorySeparatorChar +
                    GetFileNameWithoutExtension(filePath) + "." + fileExtension;
         }
 
@@ -139,7 +137,7 @@ namespace VisualiseR.Common
         /// <param name="filePath"></param>
         private static void CreateDirectoryIfNotExists(string filePath)
         {
-            string directoryPath = GetDirectoryName(filePath);
+            string directoryPath = GetDirectoryPath(filePath);
             if (!Directory.Exists(directoryPath))
             {
                 Directory.CreateDirectory(directoryPath);
@@ -156,7 +154,7 @@ namespace VisualiseR.Common
             CreateDirectoryIfNotExists(filePath);
             if (!File.Exists(filePath))
             {
-                File.Create(filePath);
+                File.Create(filePath).Dispose();
                 Logger.InfoFormat("Created file '{0}'", filePath);
             }
         }
@@ -228,6 +226,11 @@ namespace VisualiseR.Common
             DateTime lastModified = File.GetLastWriteTime(filePath);
 
             return lastModified.ToString("dd/MM/yyyy HH:mm:ss");
+        }
+
+        public static void WriteFile(string filePath, string text)
+        {
+            File.WriteAllText(filePath, text);
         }
     }
 }
