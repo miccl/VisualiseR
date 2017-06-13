@@ -96,7 +96,7 @@ namespace VisualiseR.Presentation
         private void OnPlayerInstantiated(Player player)
         {
             view._player = player;
-            if (player.Type.Equals(PlayerType.Host))
+            if (player.IsHost())
             {
                 LoadFilesSignal.Dispatch(player);
             }

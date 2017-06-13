@@ -49,7 +49,7 @@ namespace VisualiseR.Presentation
         }
         private void OnSlidePositionChanged()
         {
-            if (view._player.Type.Equals(PlayerType.Host))
+            if (view._player.IsHost())
             {
                 view.LoadCurrentSlide();
             }

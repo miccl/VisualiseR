@@ -25,7 +25,7 @@ namespace VisualiseR.Presentation
 
         public override void Execute()
         {
-            if (_player.Type.Equals(PlayerType.Host))
+            if (_player.IsHost())
             {
                 ISlideMedium medium = RetrieveFiles();
                 List<byte[]> images = GetFileBytes(medium);
