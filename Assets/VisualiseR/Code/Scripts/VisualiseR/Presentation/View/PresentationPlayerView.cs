@@ -46,9 +46,6 @@ namespace VisualiseR.Presentation
             if (PhotonNetwork.isMasterClient)
             {
                 _playerGlobal.position = Positions.HOST_POS;
-//                _playerGlobal.rotation = Quaternion.Euler(0, -180, 0);
-//                _remainingClientPositions = GetStandPositions();
-                Debug.Log("SIZE12313: " + _remainingClientPositions.Count);
             }
             else
             {

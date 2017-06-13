@@ -38,8 +38,9 @@ namespace VisualiseR.Common
 
                 transform.SetParent(_playerLocal);
                 transform.localPosition = Vector3.zero;
+                transform.localRotation = Quaternion.identity;
 
-                _avatar.SetActive(false);
+//                _avatar.SetActive(false);
 
                 InstantiatePlayer.Dispatch(PhotonNetwork.isMasterClient);
             }
@@ -48,9 +49,39 @@ namespace VisualiseR.Common
         internal void InitPlayer(Player player)
         {
             _player = player;
+            
+            InitAvatar();
             //TODO avatar und n
         }
 
+        private void InitAvatar()
+        {
+            Color color;
+            switch (_player.Avatar)
+            {
+                case AvatarType.Blue:
+                    color = Color.blue;
+                    break;
+                case AvatarType.Green:
+                    color = Color.green;
+                    break;
+                case AvatarType.Red:
+                    color = Color.red;
+                    break;
+                case AvatarType.Yellow:
+                    color = Color.yellow;
+                    break;
+                default:
+                    color = Color.blue;
+                    break;
+            }
+            DyeAvatar(color);
+        }
+
+        private void DyeAvatar(Color color)
+        {
+            _avatar.transform.Find("Head").GetComponent<MeshRenderer>().material.color = color;
+        }
 
 // synchronsize with the others
         void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

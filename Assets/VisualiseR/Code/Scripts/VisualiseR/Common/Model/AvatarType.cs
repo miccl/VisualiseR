@@ -6,6 +6,8 @@ namespace VisualiseR.Common
     public enum AvatarType
     {
         Blue,
-        Red
+        Red,
+        Green,
+        Yellow
     }
 }

@@ -21,6 +21,7 @@ namespace VisualiseR.Common
         {
             Player.Name = PlayerPrefsUtil.RetrieveValue(PlayerPrefsUtil.PLAYER_NAME_KEY);
             Player.Type = _isMasterClient ? PlayerType.Host : PlayerType.Client;
+            Player.Avatar = PlayerPrefsUtil.RetrieveValue(PlayerPrefsUtil.AVATAR_KEY).ToEnum<AvatarType>();
             if (Player.Type.Equals(PlayerType.Host))
             {
                 

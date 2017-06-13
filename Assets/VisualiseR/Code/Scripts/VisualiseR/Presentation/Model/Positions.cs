@@ -6,8 +6,8 @@ namespace VisualiseR.Presentation
     public class Positions
     {
         public static readonly Vector3 HOST_POS = new Vector3(11, 5, 17);
-
-        public static readonly Vector3 CLIENT_POS = new Vector3(-5, 5, 5);
+        
+        public static readonly Vector3 CLIENT_ADJUSTMENT = new Vector3(0, 2, 0);
 
         public static List<Vector3> GetRowSeatPositions(Vector3 startPosition, Vector3 endPosition, int amountOfSeats)
         {
@@ -20,7 +20,7 @@ namespace VisualiseR.Presentation
             var currentPos = startPosition;
             while (startPosition.x <= currentPos.x && currentPos.x <= endPosition.x)
             {
-                positions.Add(currentPos);
+                positions.Add(currentPos + CLIENT_ADJUSTMENT);
                 currentPos += spaceBetweenSeats;
             }
             return positions;

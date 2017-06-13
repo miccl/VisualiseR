@@ -6,6 +6,7 @@ namespace VisualiseR.Common
     {
         string Name { get; set; }
         PlayerType Type { get; set; }
+        AvatarType Avatar { get; set; }
         DateTime JoinDate { get;}
 
         bool IsEmpty();
