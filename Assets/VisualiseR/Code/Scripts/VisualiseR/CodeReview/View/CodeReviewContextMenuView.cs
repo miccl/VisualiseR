@@ -79,7 +79,7 @@ namespace VisualiseR.CodeReview
         {
             if (_mainPanel.activeSelf)
             {
-                HideView();
+                OnCancelButtonClick();
                 return;
             }
 

@@ -19,7 +19,6 @@ namespace VisualiseR.CodeReview
 
         public override void Execute()
         {
-            Logger.Info("Showing context menu");
             InstantiateContextMenu();
         }
         
@@ -28,7 +27,6 @@ namespace VisualiseR.CodeReview
             var keyboard = _contextView.transform.Find("Menus").transform.Find("Keyboard").gameObject;
             keyboard.SetActive(show);
             Logger.InfoFormat("Keyboard is {0}", show ? "shown" : "hidden");
-//            CodeReviewContextMenuIsShownSignal.Dispatch(true);
         }
     }
 }

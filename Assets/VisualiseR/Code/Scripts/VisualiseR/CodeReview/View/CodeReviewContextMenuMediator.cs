@@ -48,8 +48,8 @@ namespace VisualiseR.CodeReview
 
         private void OnContextMenuCanceled()
         {
-            CodeReviewContextMenuIsShownSignal.Dispatch(false);
             _view.HideView();
+            CodeReviewContextMenuIsShownSignal.Dispatch(false);
         }
 
         private void OnCommentAdded(Code code, string text)
