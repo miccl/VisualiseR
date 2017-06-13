@@ -14,6 +14,7 @@ namespace VisualiseR.CodeReview
         public Signal<Code, string> CommentSaveButtonClickedSignal = new Signal<Code, string>();
         public Signal<Code> RemoveCodeSignal = new Signal<Code>();
         public Signal OnContextMenuCanceled = new Signal();
+        public Signal<bool> ShowKeyboardSignal = new Signal<bool>();
 
         public ICode _code;
 
@@ -54,6 +55,11 @@ namespace VisualiseR.CodeReview
             SetupRateButtons();
         }
 
+        public void Init(ICode code)
+        {
+            _code = code;
+        }
+
         private void SetupRateButtons()
         {
             _goodButtonSelectable.interactable = !_code.Rate.Equals(Rate.Uncritical);
@@ -73,7 +79,7 @@ namespace VisualiseR.CodeReview
         {
             if (_mainPanel.activeSelf)
             {
-                HideView();
+                OnCancelButtonClick();
                 return;
             }
 
@@ -116,7 +122,7 @@ namespace VisualiseR.CodeReview
 
         public void OnCancelButtonClick()
         {
-            HideView();
+            OnContextMenuCanceled.Dispatch();
         }
 
         public void OnRateGoodButtonClick()
@@ -152,11 +158,16 @@ namespace VisualiseR.CodeReview
 
         public void OnCommentButtonClick()
         {
+            ShowKeyboardSignal.Dispatch(true);
             _editPanel.SetActive(false);
             _commentPanel.SetActive(true);
             if (!String.IsNullOrEmpty(_code.Comment))
             {
                 _commentInputField.text = _code.Comment;
+            }
+            else
+            {
+                _commentInputField.text = "";
             }
         }
 
@@ -181,6 +192,7 @@ namespace VisualiseR.CodeReview
         {
             _commentPanel.SetActive(false);
             _editPanel.SetActive(true);
+            ShowKeyboardSignal.Dispatch(false);
         }
 
         public void OnRemoveYesButtonClick()
@@ -194,16 +206,17 @@ namespace VisualiseR.CodeReview
             _editPanel.SetActive(true);
         }
 
-        private void HideView()
+        internal void HideView()
         {
             _mainPanel.SetActive(true);
             _ratePanel.SetActive(false);
             _editPanel.SetActive(false);
             _commentPanel.SetActive(false);
             _removePanel.SetActive(false);
+            ShowKeyboardSignal.Dispatch(false);
+            _code = null;
 
-            OnContextMenuCanceled.Dispatch();
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

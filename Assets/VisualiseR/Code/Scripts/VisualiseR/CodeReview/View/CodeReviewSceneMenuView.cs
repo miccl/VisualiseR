@@ -3,7 +3,6 @@ using strange.extensions.signal.impl;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using VisualiseR.Presentation;
 using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
@@ -16,15 +15,7 @@ namespace VisualiseR.CodeReview
         public Signal<bool> ShowLaserSignal = new Signal<bool>();
 
         internal ICodeMedium _medium;
-        internal bool _isLaserShown = false;
         private Text _showLaserButtonText;
-
-        protected override void Awake()
-        {
-            base.Awake();
-            var showPanel = transform.Find("ShowPanel");
-            _showLaserButtonText = showPanel.Find("ShowLaserButton").GetComponentInChildren<Text>();
-        }
 
         public void Init(ICodeMedium medium)
         {
@@ -42,13 +33,6 @@ namespace VisualiseR.CodeReview
         public void OnShowAllButtonClick(BaseEventData data)
         {
             ShowAllCodeSignal.Dispatch();
-        }
-
-        public void OnShowLaserButtonClick(BaseEventData data)
-        {
-            _isLaserShown = !_isLaserShown;
-            _showLaserButtonText.text = _isLaserShown ? "Show Laser" : "Hide Laser";
-            ShowLaserSignal.Dispatch(_isLaserShown);
         }
         
         public void OnExportButtonClick(BaseEventData data)

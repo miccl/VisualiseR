@@ -27,7 +27,7 @@ namespace VisualiseR.CodeReview
 
         public override string ToString()
         {
-            return string.Format("Code [Name: {0}, Rate: {1}]", Name, Rate);
+            return string.Format("Code [Name: {0}, Rate: {1}, Comment: {2}]", Name, Rate, Comment);
         }
     }
 }

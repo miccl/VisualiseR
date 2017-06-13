@@ -22,10 +22,9 @@ GameObject:
   - component: {fileID: 33516116813948524}
   - component: {fileID: 64972276180022934}
   - component: {fileID: 23839417588035726}
-  - component: {fileID: 223492135773600790}
-  - component: {fileID: 114199588713780058}
   - component: {fileID: 114479767203547428}
   - component: {fileID: 114554321223368068}
+  - component: {fileID: 114242135133875898}
   m_Layer: 0
   m_Name: CodeReview_Screen
   m_TagString: Untagged
@@ -86,7 +85,7 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114199588713780058
+--- !u!114 &114242135133875898
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -94,13 +93,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1609028098721250}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 739800cd36aba44e9b04ce977e5784bd, type: 3}
+  m_Script: {fileID: 11500000, guid: eb5dd43baba2d4dc1bab789615567e3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   raycastMode: 0
-  ignoreReversedGraphics: 1
-  blockingObjects: 0
-  blockingMask:
+  raycasterEventMask:
     serializedVersion: 2
     m_Bits: 4294967295
 --- !u!114 &114479767203547428
@@ -144,26 +141,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5d8898523261804f83a2c9e368fb7c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!223 &223492135773600790
-Canvas:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1609028098721250}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
 --- !u!224 &224497484809301608
 RectTransform:
   m_ObjectHideFlags: 1
