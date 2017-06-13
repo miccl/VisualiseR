@@ -102,6 +102,7 @@ namespace VisualiseR.CodeReview
         
         private void OnContextMenuIsShown(bool isShown)
         {
+            Debug.Log("Context menu: " + isShown);
             _view._isContextMenuShown = isShown;
         }
 

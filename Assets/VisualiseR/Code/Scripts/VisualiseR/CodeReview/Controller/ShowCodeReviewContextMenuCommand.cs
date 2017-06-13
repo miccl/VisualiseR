@@ -1,5 +1,6 @@
 ﻿using System;
 using strange.extensions.command.impl;
+using strange.extensions.context.api;
 using UnityEngine;
 
 namespace VisualiseR.CodeReview
@@ -14,6 +15,9 @@ namespace VisualiseR.CodeReview
         [Inject]
         public Code _code { get; set; }
         
+        [Inject(ContextKeys.CONTEXT_VIEW)]
+        public GameObject _contextView { get; set; }
+        
         [Inject]
         public CodeReviewContextMenuIsShownSignal CodeReviewContextMenuIsShownSignal { get; set; }
 
@@ -22,38 +26,15 @@ namespace VisualiseR.CodeReview
             Logger.Info("Showing context menu");
             InstantiateContextMenu();
         }
-
+        
         private void InstantiateContextMenu()
         {
-            var position = GetContextMenuPosition();
-            var rotation = GetContextMenuRotation();
-            GameObject contextMenu =
-                GameObject.Instantiate(Resources.Load("CodeReviewContextMenuCanvas"), position, rotation) as GameObject;
-            contextMenu.transform.Rotate(90, -180, 0);
-            contextMenu.transform.SetParent(_gameObject.transform);
-
-            //TODO direkte Verdrahtung entfernen
+            var contextMenu = _contextView.transform.Find("Menus").transform.Find("CodeReviewContextMenuCanvas").gameObject;
+            contextMenu.SetActive(true);
             CodeReviewContextMenuView codeReviewContextMenuView = contextMenu.GetComponent<CodeReviewContextMenuView>();
-            codeReviewContextMenuView._code = _code;
-
+            codeReviewContextMenuView.Init(_code);
+            
             CodeReviewContextMenuIsShownSignal.Dispatch(true);
-        }
-
-        private Quaternion GetContextMenuRotation()
-        {
-            //TODO überarbeiten
-            return _gameObject.transform.rotation;
-        }
-
-        private Vector3 GetContextMenuPosition()
-        {
-            //TODO irgendwann nochmal verbessern, derzeit schwankt das immer hin und her
-            Vector3 cameraBack = -Camera.main.transform.forward * 12;
-            Vector3 shift = new Vector3(0, 0, cameraBack.z);
-            Vector3 pos = _gameObject.transform.position + shift;
-            pos.y = 2;
-
-            return pos;
         }
     }
 }

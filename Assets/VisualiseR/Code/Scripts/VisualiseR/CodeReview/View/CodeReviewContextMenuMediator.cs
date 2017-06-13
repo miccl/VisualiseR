@@ -22,7 +22,9 @@ namespace VisualiseR.CodeReview
 
         [Inject]
         public NextCodeSignal NextCodeSignal { get; set; }
-
+        
+        [Inject]
+        public ShowKeyboardSignal ShowKeyboardSignal { get; set; }
 
         public override void OnRegister()
         {
@@ -30,6 +32,7 @@ namespace VisualiseR.CodeReview
             _view.CommentSaveButtonClickedSignal.AddListener(OnCommentAdded);
             _view.OnContextMenuCanceled.AddListener(OnContextMenuCanceled);
             _view.RemoveCodeSignal.AddListener(OnRemoveCode);
+            _view.ShowKeyboardSignal.AddListener(OnShowKeyboard);
             NextCodeSignal.AddListener(OnNextCode);
         }
 
@@ -39,13 +42,14 @@ namespace VisualiseR.CodeReview
             _view.CommentSaveButtonClickedSignal.RemoveListener(OnCommentAdded);
             _view.OnContextMenuCanceled.RemoveListener(OnContextMenuCanceled);
             _view.RemoveCodeSignal.RemoveListener(OnRemoveCode);
+            _view.ShowKeyboardSignal.RemoveListener(OnShowKeyboard);
             NextCodeSignal.RemoveListener(OnNextCode);
         }
 
         private void OnContextMenuCanceled()
         {
             CodeReviewContextMenuIsShownSignal.Dispatch(false);
-            Destroy(gameObject);
+            _view.HideView();
         }
 
         private void OnCommentAdded(Code code, string text)
@@ -69,6 +73,11 @@ namespace VisualiseR.CodeReview
         private void OnNextCode(Code code)
         {
             OnContextMenuCanceled();
+        }
+
+        private void OnShowKeyboard(bool show)
+        {
+            ShowKeyboardSignal.Dispatch(show);
         }
     }
 }
