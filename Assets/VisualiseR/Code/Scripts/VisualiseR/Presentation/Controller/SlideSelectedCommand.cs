@@ -29,7 +29,7 @@ namespace VisualiseR.Presentation
 
         private GameObject ActivateScreen()
         {
-            GameObject screen = _contextView.transform.Find("Screens").transform.Find("Presentation_Screen").gameObject;
+            GameObject screen = _contextView.transform.Find("Screens").transform.gameObject;
             screen.SetActive(true);
             return screen;
         }

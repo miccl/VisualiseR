@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using UnityEngine;
@@ -37,15 +38,12 @@ namespace VisualiseR.Presentation
             return screen;
         }
 
+        [CanBeNull]
         private static GameObject DeactivateScreen()
         {
-            GameObject screen = GameObject.Find("Presentation_Screen");
-            if (screen == null)
-            {
-                Logger.ErrorFormat("Couldn't find game object '{0}'", "Presentation_Screen");
-                return null;
-            }
-            screen.SetActive(false);
+            GameObject screens = UnityUtil.FindGameObject("Screens");
+            screens.SetActive(false);
+            var screen = screens.transform.Find("Presentation_Screen").gameObject;
             return screen;
         }
 

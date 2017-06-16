@@ -129,6 +129,7 @@ namespace VisualiseR.Presentation
             if (_player.IsHost())
             {
                 _laser.SetActive(true);
+                _globalElements.SetActive(false);
                 ShowLaser(false);
             }
             else

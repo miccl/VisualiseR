@@ -69,7 +69,7 @@ namespace VisualiseR.Util
             GameObject go = GameObject.Find(gameObjectName);
             if (go == null)
             {
-                Logger.ErrorFormat("Cannot find '{0}' script", gameObjectName);
+                Logger.ErrorFormat("Cannot find game object '{0}' ", gameObjectName);
             }
             return go;
         }
@@ -80,11 +80,10 @@ namespace VisualiseR.Util
             GameObject go = GameObject.Find(gameObjectName);
             if (go == null)
             {
-                Logger.ErrorFormat("Cannot find '{0}' script", gameObjectName);
+                Logger.ErrorFormat("Cannot find game object '{0}' ", gameObjectName);
             }
             return go;
         }
-
 
         public static void LoadScene(RoomType type)
         {
