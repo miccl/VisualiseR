@@ -43,12 +43,14 @@ namespace VisualiseR.Common
             if (!string.IsNullOrEmpty(_roomName))
             {
                 //TODO abfangen, wenn ein Raum gejoined wurde, der nicht existiert...
-                RoomOptions roomOptions = new RoomOptions() { };
+                RoomOptions roomOptions = InitRoomOptions();
+                
                 if (PhotonNetwork.JoinOrCreateRoom(_roomName, roomOptions, TypedLobby.Default))
                 {
                     Logger.InfoFormat("Created or joined room '{0}'", _roomName);
                     return;
                 }
+                
                 Logger.ErrorFormat("Couldn't create or join the room '{0}'", _roomName);
                 UnityUtil.LoadScene("Main");
             }
@@ -57,6 +59,16 @@ namespace VisualiseR.Common
         void OnJoinedRoom()
         {
             PhotonNetwork.Instantiate("NetworkedPlayer", Vector3.zero, Quaternion.identity, 0);
+        }
+
+        private static RoomOptions InitRoomOptions()
+        {
+            RoomOptions roomOptions = new RoomOptions
+            {
+                IsVisible = true,
+                MaxPlayers = 21
+            };
+            return roomOptions;
         }
     }
 }
