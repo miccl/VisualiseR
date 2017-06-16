@@ -69,7 +69,6 @@ namespace VisualiseR.Main
 
             if (_RoomType.Equals(RoomType.Presentation))
             {
-//                return PhotonNetwork.CreateRoom(_RoomName);
             }
             return false;
         }

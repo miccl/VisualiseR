@@ -10,7 +10,7 @@ namespace VisualiseR.Common
     /// </summary>
     public class NetworkController : View
     {
-        private static JCsLogger Logger;
+        private JCsLogger Logger;
 
         internal string _roomName = null;
 

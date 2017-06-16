@@ -15,7 +15,6 @@ namespace VisualiseR.Main
         [SerializeField] private Sprite audioOffSprite;
         [SerializeField] private Sprite audioOnSprite;
 
-        private bool isAudioOn = true;
         private Image audioImage;
         private GameObject _helpPanel;
         private GameObject _createRoomPanel;
@@ -94,12 +93,6 @@ namespace VisualiseR.Main
         public void OnQuitButtonClick()
         {
             Application.Quit();
-
-//#if UNITY_EDITOR
-//        EditorApplication.isPlaying = false;
-//#else
-//        Application.Quit();
-//#endif
         }
     }
 }

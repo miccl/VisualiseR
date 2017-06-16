@@ -9,7 +9,7 @@ namespace VisualiseR.Presentation
 {
     public class PresentationPlayerView : View
     {
-        private static JCsLogger Logger;
+        private JCsLogger Logger;
         
         private GameObject _reticlePointer;
         private GameObject _laser;
@@ -89,7 +89,7 @@ namespace VisualiseR.Presentation
             Debug.Log("ANGEFRAGTE POSITION = " + r);
             Debug.Log("GROOSSE = " + remainingClientPositions.Count);
             Vector3 pos = remainingClientPositions[r];
-//            remainingClientPositions.RemoveAt(r);
+//          _remainingClientPositions.RemoveAt(r);
 //            Vector3 pos = new Vector3(-9.3f, 4.4f, 0.4f);
             return pos;
         }
@@ -159,7 +159,7 @@ namespace VisualiseR.Presentation
             Logger.InfoFormat("Logger is {0}", _isLaserShown ? "shown" : "hidden");
         }
         
-        void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        void OnPhotonSerializeView(PhotonStream stream)
         {
             if (stream.isWriting)
             {

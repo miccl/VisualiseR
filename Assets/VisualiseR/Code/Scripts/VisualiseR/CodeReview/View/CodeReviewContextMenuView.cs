@@ -24,8 +24,6 @@ namespace VisualiseR.CodeReview
         private GameObject _commentPanel;
         private GameObject _removePanel;
         private InputField _commentInputField;
-        private bool _isHeld;
-        private GameObject _gvrReticlePointer;
         private Selectable _goodButtonSelectable;
         private Selectable _okButtonSelectable;
         private Selectable _badButtonSelectable;
@@ -42,11 +40,6 @@ namespace VisualiseR.CodeReview
             _goodButtonSelectable = _ratePanel.transform.FindChild("CenterPanel").transform.FindChild("GoodButton").GetComponent<Selectable>();
             _okButtonSelectable = _ratePanel.transform.FindChild("CenterPanel").transform.FindChild("OkButton").GetComponent<Selectable>();
             _badButtonSelectable = _ratePanel.transform.FindChild("CenterPanel").transform.FindChild("BadButton").GetComponent<Selectable>();
-
-
-//            UnityUtil.AddEventTriggerListener(_mainPanel.transform.FindChild("RateButton").gameObject.GetComponent<EventTrigger>(), EventTriggerType.PointerClick, OnRateButtonClick);
-
-            _gvrReticlePointer = GameObject.Find("GvrReticlePointer");
         }
 
         protected override void Start()

@@ -22,6 +22,7 @@ namespace VisualiseR.Util
             WWW www = new WWW(url);
             while (!www.isDone)
             {
+                //TODO show progess?!
             }
 
             string fileName = GetFileName(url);

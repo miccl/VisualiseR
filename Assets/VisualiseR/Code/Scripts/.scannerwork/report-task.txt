@@ -1,0 +1,5 @@
+projectKey=miccl:VisualiseR
+serverUrl=http://localhost:9000
+dashboardUrl=http://localhost:9000/dashboard/index/miccl:VisualiseR
+ceTaskId=AVywqED50615O-xgB30c
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AVywqED50615O-xgB30c

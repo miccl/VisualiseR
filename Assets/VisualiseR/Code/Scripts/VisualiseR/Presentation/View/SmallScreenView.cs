@@ -11,7 +11,7 @@ namespace VisualiseR.Presentation
     {
         [SerializeField] private bool isMain;
 
-        private static JCsLogger Logger;
+        private JCsLogger Logger;
 
         private const string FILE_PREFIX = "file:///";
 

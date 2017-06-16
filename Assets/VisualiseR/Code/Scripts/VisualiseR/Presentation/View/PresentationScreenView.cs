@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
+using UnityEngine.UI;
 using VisualiseR.Common;
 using VisualiseR.Util;
 
@@ -9,7 +10,7 @@ namespace VisualiseR.Presentation
 {
     public class PresentationScreenView : View
     {
-        private static JCsLogger Logger;
+        private JCsLogger Logger;
 
         private const string FILE_PREFIX = "file:///";
 
@@ -38,7 +39,6 @@ namespace VisualiseR.Presentation
             _images = images;
 
             SetupMedium();
-            
         }
 
 
@@ -81,23 +81,19 @@ namespace VisualiseR.Presentation
                     PhotonPlayer.Find(playerId),
                     _images.Count);
             }
-            
+
             if (pos <= _images.Count - 1)
             {
                 Pos = pos;
                 Image = _images[Pos];
             }
-            
+
             photonView.RPC("OnDataReceived",
                 PhotonPlayer.Find(playerId),
                 Pos, Image);
-            Logger.DebugFormat("Master: Send data (pos '{1}') to player (id '{0}')", playerId, pos);            
-            //TODO interesting other alternative
-//            photonView.RPC("OnDataReceived",
-//                PhotonTargets.OthersBuffered,
-//                Pos, Image);
+            Logger.DebugFormat("Master: Send data (pos '{1}') to player (id '{0}')", playerId, pos);
         }
-        
+
         [PunRPC]
         void OnSyncing(int imageCount)
         {
@@ -187,20 +183,20 @@ namespace VisualiseR.Presentation
                 return;
             }
 
-            if (Input.GetButtonDown(ButtonUtil.SUBMIT) || Input.GetButtonDown("Fire1"))
+            if (_isSceneMenuShown)
             {
-                if (!_isSceneMenuShown)
-                {
-                    NextSlide();
-                }
+                return;
             }
-            
-            if (Input.GetButtonDown(ButtonUtil.CANCEL))
+
+            if (ButtonUtil.SubmitPressed())
             {
-                if (!_isSceneMenuShown)
-                {
-                    ShowSceneMenu();
-                }
+                NextSlide();
+                return;
+            }
+
+            if (ButtonUtil.CancelPressed())
+            {
+                ShowSceneMenu();
             }
         }
 
@@ -210,10 +206,6 @@ namespace VisualiseR.Presentation
             {
                 ShowSceneMenuSignal.Dispatch(_player, _medium);
             }
-        }
-
-        void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-        {
         }
     }
 }

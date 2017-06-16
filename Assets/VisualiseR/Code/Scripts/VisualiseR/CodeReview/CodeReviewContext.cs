@@ -65,7 +65,6 @@ namespace VisualiseR.CodeReview
 
         private void BindServices()
         {
-            // TODO
         }
 
         private void BindMediators()

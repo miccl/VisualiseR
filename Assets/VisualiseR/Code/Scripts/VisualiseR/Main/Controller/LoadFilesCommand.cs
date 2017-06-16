@@ -87,25 +87,18 @@ namespace VisualiseR.Main
 
             if (FileUtil.IsCodeFile(filePath))
             {
-                //TODO
-//                return Convert(filePath, new ConvertCodeToJpeg());
+                //TODO convert
             }
 
             if (FileUtil.IsPdfFile(filePath))
             {
-                //TODO
-//                return Convert(filePath, new ConvertPdfToJpeg());
+                //TODO convert
             }
 
             Logger.WarnFormat("File ({0}) has no valid type and therefore could not be converted.", filePath);
             return null;
         }
-
-        private string Convert([NotNull] string filePath, [NotNull] ImageConversionStrategy strategy)
-        {
-            return strategy.Convert(filePath);
-        }
-
+        
         private IPictureMedium ConstructMedium(string name, List<string> filePaths)
         {
             IPictureMedium medium = new PictureMedium

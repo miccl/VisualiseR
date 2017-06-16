@@ -10,7 +10,7 @@ namespace VisualiseR.Presentation
 {
     public class PresentationSceneMenuView : View
     {
-        private static JCsLogger Logger;
+        private JCsLogger Logger;
 
         internal GameObject _contextView;
         private GameObject _mainPanel;

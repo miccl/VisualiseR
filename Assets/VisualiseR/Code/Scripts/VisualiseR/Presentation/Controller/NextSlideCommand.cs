@@ -24,9 +24,9 @@ namespace VisualiseR.Presentation
 
         public override void Execute()
         {
-            if (!_player.HasRight(AcessList.NavigateCodeRight))
+            if (!_player.HasRight(AcessList.NAVIGATE_CODE))
             {
-                Logger.InfoFormat(AcessList.errorMessageFormat, _player, typeof(NextSlideCommand));
+                Logger.InfoFormat(AcessList.ERROR_MESSAGE, _player, typeof(NextSlideCommand));
                 return;
             }
 

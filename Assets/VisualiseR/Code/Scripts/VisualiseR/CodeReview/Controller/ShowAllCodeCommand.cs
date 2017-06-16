@@ -2,7 +2,6 @@
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using UnityEngine;
-using UnityEngine.Rendering;
 using VisualiseR.Common;
 using VisualiseR.Util;
 
@@ -109,7 +108,6 @@ namespace VisualiseR.CodeReview
             screen.name = "SimpleScreen_" + codePos;
             screen.transform.SetParent(_simpleScreenParent.transform);
 
-            //TODO direkte verbindung verhindern
             SimpleCodeReviewScreenView screenView = screen.GetComponent<SimpleCodeReviewScreenView>();
             screenView.Init(code, player);
         }

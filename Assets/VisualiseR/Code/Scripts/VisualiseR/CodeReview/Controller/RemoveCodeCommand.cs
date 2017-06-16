@@ -1,4 +1,5 @@
 ﻿using strange.extensions.command.impl;
+using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
@@ -15,10 +16,8 @@ namespace VisualiseR.CodeReview
 
         public override void Execute()
         {
-            Logger.InfoFormat("Code {0} was removed", code);
-            //TODO Von der Platte holen
-
-//            throw new NotImplementedException();
+            FileUtil.DeleleFile(code.Pic.Path);
+            Logger.InfoFormat("Code '{0}' was removed", code);
         }
     }
 }

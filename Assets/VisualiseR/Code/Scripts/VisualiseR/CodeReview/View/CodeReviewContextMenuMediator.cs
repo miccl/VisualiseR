@@ -72,6 +72,7 @@ namespace VisualiseR.CodeReview
 
         private void OnNextCode(Code code)
         {
+            _view._code = code;
             OnContextMenuCanceled();
         }
 

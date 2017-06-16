@@ -23,7 +23,6 @@ namespace VisualiseR.CodeReview
 
 
         internal List<GameObject> screens = new List<GameObject>();
-        private List<GameObject> _piles = new List<GameObject>();
 
         internal GameObject _contextView;
         private GameObject _screenParent;
@@ -214,8 +213,6 @@ namespace VisualiseR.CodeReview
 
             PileView pileView = pile.GetComponent<PileView>();
             pileView.Init(rate, codes);
-
-            _piles.Add(pile);
         }
 
         private void InstantiateInfoScreen()

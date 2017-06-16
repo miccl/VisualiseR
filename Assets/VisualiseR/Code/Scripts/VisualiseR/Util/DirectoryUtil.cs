@@ -37,13 +37,10 @@ namespace VisualiseR.Util
         public static DirectoryInfo CreateDirectorysForCodeReview(string mainDir)
         {
             var mainDirInfo = CreateDirectoryIfNotExists(mainDir);
-            var unratedDir = CreateDirectoryIfNotExists(mainDirInfo.FullName + Path.DirectorySeparatorChar +
-                                                        Rate.Unrated);
-            var uncriticalDir = CreateDirectoryIfNotExists(mainDirInfo.FullName + Path.DirectorySeparatorChar +
-                                                           Rate.Uncritical);
-            var minorDir = CreateDirectoryIfNotExists(mainDirInfo.FullName + Path.DirectorySeparatorChar + Rate.Minor);
-            var CriticalDir = CreateDirectoryIfNotExists(mainDirInfo.FullName + Path.DirectorySeparatorChar +
-                                                         Rate.Critical);
+            CreateDirectoryIfNotExists(mainDirInfo.FullName + Path.DirectorySeparatorChar + Rate.Unrated);
+            CreateDirectoryIfNotExists(mainDirInfo.FullName + Path.DirectorySeparatorChar + Rate.Uncritical);
+            CreateDirectoryIfNotExists(mainDirInfo.FullName + Path.DirectorySeparatorChar + Rate.Minor);
+            CreateDirectoryIfNotExists(mainDirInfo.FullName + Path.DirectorySeparatorChar + Rate.Critical);
             return mainDirInfo;
         }
 

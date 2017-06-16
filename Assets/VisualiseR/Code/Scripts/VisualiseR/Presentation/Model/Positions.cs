@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace VisualiseR.Presentation
 {
-    public class Positions
+    public static class Positions
     {
         public static readonly Vector3 HOST_POS = new Vector3(11, 5, 17);
         

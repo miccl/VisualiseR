@@ -23,7 +23,7 @@ namespace VisualiseR.Presentation
         public PresentationSceneMenuIsShownSignal PresentationSceneMenuIsShownSignal { get; set; }
         public override void Execute()
         {
-            if (_player.HasRight(AcessList.SceneMenu))
+            if (_player.HasRight(AcessList.SCENE_MENU))
             {
                 ShowSceneMenu();
             }

@@ -210,14 +210,7 @@ namespace VisualiseR.Util
 
         public static string GetOwner(string filePath)
         {
-//            var fs = File.GetAccessControl(filePath);
-//
-//            var sid = fs.GetOwner(typeof(SecurityIdentifier));
-//            Console.WriteLine(sid); // SID
-//
-//            var ntAccount = sid.Translate(typeof(NTAccount));
-//            Console.WriteLine(ntAccount); // DOMAIN\username
-
+            //TODO get last modifier
             return "Owner";
         }
 

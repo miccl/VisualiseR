@@ -10,7 +10,7 @@ namespace VisualiseR.Common
     /// </summary>
     public class NetworkedPlayer : View
     {
-        private static JCsLogger Logger;
+        private JCsLogger Logger;
 
         internal Signal<bool> InstantiatePlayer = new Signal<bool>();
 
@@ -40,7 +40,7 @@ namespace VisualiseR.Common
                 transform.localPosition = Vector3.zero;
                 transform.localRotation = Quaternion.identity;
 
-//                _avatar.SetActive(false);
+                _avatar.SetActive(false);
 
                 InstantiatePlayer.Dispatch(PhotonNetwork.isMasterClient);
             }
@@ -51,7 +51,6 @@ namespace VisualiseR.Common
             _player = player;
             
             InitAvatar();
-            //TODO avatar und n
         }
 
         private void InitAvatar()
@@ -59,9 +58,6 @@ namespace VisualiseR.Common
             Color color;
             switch (_player.Avatar)
             {
-                case AvatarType.Blue:
-                    color = Color.blue;
-                    break;
                 case AvatarType.Green:
                     color = Color.green;
                     break;
@@ -71,7 +67,7 @@ namespace VisualiseR.Common
                 case AvatarType.Yellow:
                     color = Color.yellow;
                     break;
-                default:
+                default: 
                     color = Color.blue;
                     break;
             }
@@ -84,7 +80,7 @@ namespace VisualiseR.Common
         }
 
 // synchronsize with the others
-        void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        void OnPhotonSerializeView(PhotonStream stream)
         {
             if (stream.isWriting)
             {
