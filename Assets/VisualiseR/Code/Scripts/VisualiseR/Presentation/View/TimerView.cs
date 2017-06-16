@@ -47,6 +47,11 @@ namespace VisualiseR.Presentation
 
         public void StartTimer()
         {
+            if (_timeFrom <= 0 ||_timeLeft <= 0)
+            {
+                return;
+            }
+            
             stop = false;
             Update();
             StartCoroutine(runTimer());
@@ -78,7 +83,7 @@ namespace VisualiseR.Presentation
 
         private void TimerRunDown()
         {
-            StopTimer(); 
+            StopTimer();
             _timeLeft = 0;
             audioSource.Play();
             _animation.Play();
