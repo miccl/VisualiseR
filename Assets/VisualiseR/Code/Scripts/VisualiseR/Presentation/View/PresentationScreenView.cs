@@ -64,7 +64,7 @@ namespace VisualiseR.Presentation
 
         internal void RequestDataFromMaster(int playerId, int pos)
         {
-            GetComponent<PhotonView>().RPC("OnDataRequest",
+            photonView.RPC("OnDataRequest",
                 PhotonTargets.MasterClient,
                 playerId, pos);
             Logger.DebugFormat("Player (id '{0}'): Reqested data (pos '{1}') from master", playerId, pos);
@@ -77,7 +77,7 @@ namespace VisualiseR.Presentation
             byte[] Image = null;
             if (pos == 0)
             {
-                GetComponent<PhotonView>().RPC("OnSyncing",
+                photonView.RPC("OnSyncing",
                     PhotonPlayer.Find(playerId),
                     _images.Count);
             }
@@ -87,12 +87,13 @@ namespace VisualiseR.Presentation
                 Pos = pos;
                 Image = _images[Pos];
             }
-            GetComponent<PhotonView>().RPC("OnDataReceived",
+            
+            photonView.RPC("OnDataReceived",
                 PhotonPlayer.Find(playerId),
                 Pos, Image);
             Logger.DebugFormat("Master: Send data (pos '{1}') to player (id '{0}')", playerId, pos);            
             //TODO interesting other alternative
-//            GetComponent<PhotonView>().RPC("OnDataReceived",
+//            photonView.RPC("OnDataReceived",
 //                PhotonTargets.OthersBuffered,
 //                Pos, Image);
         }

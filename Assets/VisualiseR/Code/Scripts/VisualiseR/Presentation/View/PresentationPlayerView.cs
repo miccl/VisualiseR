@@ -55,7 +55,7 @@ namespace VisualiseR.Presentation
         
         internal void RequestPositionFromMaster()
         {
-            GetComponent<PhotonView>().RPC("OnPositionRequest",
+            photonView.RPC("OnPositionRequest",
                 PhotonTargets.MasterClient,
                 PhotonNetwork.player.ID);
             Logger.DebugFormat("Player (id '{0}'): Reqested position from master", PhotonNetwork.player.ID);
@@ -65,7 +65,7 @@ namespace VisualiseR.Presentation
         void OnPositionRequest(int playerId)
         {
             Vector3 playerPos = GetRandomStandPosition();
-            GetComponent<PhotonView>().RPC("OnPositionReceived",
+            photonView.RPC("OnPositionReceived",
                 PhotonPlayer.Find(playerId),
                 playerPos);
             Logger.DebugFormat("Master: Send position (pos '{1}') to player (id '{0}')", playerId, playerPos);
