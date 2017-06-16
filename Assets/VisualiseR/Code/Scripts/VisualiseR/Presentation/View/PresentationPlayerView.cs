@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using strange.extensions.mediation.impl;
 using UnityEngine;
 using VisualiseR.Common;
+using VisualiseR.Util;
 using Random = UnityEngine.Random;
 
 namespace VisualiseR.Presentation
@@ -43,16 +44,25 @@ namespace VisualiseR.Presentation
         
         internal void AdjustPosition()
         {
+
             if (PhotonNetwork.isMasterClient)
             {
                 _playerGlobal.position = Positions.HOST_POS;
             }
             else
             {
+                PlayDoorSqueek();
                 RequestPositionFromMaster();
             }
         }
-        
+
+        private void PlayDoorSqueek()
+        {
+            var door = UnityUtil.FindGameObject("Door");
+            var audioSource = door.GetComponent<GvrAudioSource>();
+            audioSource.Play();
+        }
+
         internal void RequestPositionFromMaster()
         {
             photonView.RPC("OnPositionRequest",
