@@ -1,7 +1,10 @@
 using System.IO;
 using System.Text;
 using strange.extensions.command.impl;
+using UnityEditor;
+using UnityEngine;
 using VisualiseR.Util;
+using FileUtil = VisualiseR.Util.FileUtil;
 
 namespace VisualiseR.CodeReview
 {
@@ -14,12 +17,16 @@ namespace VisualiseR.CodeReview
         [Inject]
         public CodeMedium _medium { get; set; }
 
+        [Inject]
+        public ShowMessageSignal ShowMessageSignal { get; set; }
+
         public override void Execute()
         {
             string dirPath = GetDirPath();
             string text = GetText();
             FileUtil.WriteFile(dirPath, text);
             Logger.InfoFormat("Exported informations in file '{0}'", dirPath);
+            ShowMessageSignal.Dispatch(string.Format("Exported file to {0}", dirPath));
         }
 
         private string GetDirPath()

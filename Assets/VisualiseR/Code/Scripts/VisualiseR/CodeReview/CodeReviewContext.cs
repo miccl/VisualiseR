@@ -101,6 +101,7 @@ namespace VisualiseR.CodeReview
             commandBinder.Bind<ShowAllCodeSignal>().To<ShowAllCodeCommand>();
             commandBinder.Bind<CodeSelectedSignal>().To<CodeSelectedCommand>();
             commandBinder.Bind<ShowKeyboardSignal>().To<ShowKeyboardCommand>();
+            commandBinder.Bind<ShowMessageSignal>().To<ShowMessageCommand>();
         }
 
         private void BindSignals()
