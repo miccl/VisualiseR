@@ -326,6 +326,7 @@ GameObject:
   - component: {fileID: 244164970}
   - component: {fileID: 244164968}
   - component: {fileID: 244164969}
+  - component: {fileID: 244164973}
   m_Layer: 0
   m_Name: Timer
   m_TagString: Untagged
@@ -440,6 +441,21 @@ RectTransform:
   m_AnchoredPosition: {x: 11.27, y: 4.87}
   m_SizeDelta: {x: 3600, y: 2000}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!111 &244164973
+Animation:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 244164967}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: e3ecf45b8f28549468b407f594d3c372, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: e3ecf45b8f28549468b407f594d3c372, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &416963378
 GameObject:
   m_ObjectHideFlags: 0
@@ -3029,6 +3045,42 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 605ebc76f8c2a0e43857c91d380b5217, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1682430780 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100000, guid: ac8771389398b81498631d7e9ff05c88, type: 3}
+  m_PrefabInternal: {fileID: 1935223463}
+--- !u!114 &1682430784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1682430780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dbca64e524ea44f9b26142ec59aca8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bypassRoomEffects: 0
+  directivityAlpha: 0
+  directivitySharpness: 1
+  listenerDirectivityAlpha: 0
+  listenerDirectivitySharpness: 1
+  gainDb: 0
+  occlusionEnabled: 0
+  playOnAwake: 0
+  sourceClip: {fileID: 8300000, guid: 69cd677cc590077478b94ac04f10898a, type: 3}
+  sourceLoop: 0
+  sourceMute: 0
+  sourcePitch: 1
+  sourcePriority: 128
+  sourceDopplerLevel: 1
+  sourceSpread: 0
+  sourceVolume: 1
+  sourceRolloffMode: 0
+  sourceMaxDistance: 500
+  sourceMinDistance: 1
+  hrtfEnabled: 1
+  audioSource: {fileID: 0}
 --- !u!1 &1702731063
 GameObject:
   m_ObjectHideFlags: 0
@@ -3360,6 +3412,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 2d1f6938fed1eb2438efc4caced8e146, type: 2}
+    - target: {fileID: 100000, guid: ac8771389398b81498631d7e9ff05c88, type: 3}
+      propertyPath: m_Name
+      value: Door
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ac8771389398b81498631d7e9ff05c88, type: 3}
   m_IsPrefabParent: 0

@@ -22,12 +22,14 @@ namespace VisualiseR.Presentation
         private Text _timerText;
 
         private GvrAudioSource audioSource;
-        
+        private Animation _animation;
+
         protected override void Awake()
         {
             base.Awake();
             _timerText = transform.GetComponentInChildren<Text>();
             audioSource = GetComponent<GvrAudioSource>();
+            _animation = GetComponent<Animation>();
         }
 
         protected override void Start()
@@ -76,17 +78,21 @@ namespace VisualiseR.Presentation
 
         private void TimerRunDown()
         {
-            StopTimer();
+            StopTimer(); 
             _timeLeft = 0;
             audioSource.Play();
-            Blink();
+            _animation.Play();
             TimerRunDownSignal.Dispatch();
+            StartCoroutine(StopAfterSeconds());
         }
 
-        private void Blink()
+        private IEnumerator StopAfterSeconds()
         {
-            
+            yield return new WaitForSeconds(5f);
+            audioSource.Stop();
+            _animation.Stop();
         }
+
 
         private IEnumerator runTimer()
         {
