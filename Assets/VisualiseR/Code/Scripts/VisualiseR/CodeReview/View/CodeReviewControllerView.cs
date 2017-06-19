@@ -128,12 +128,10 @@ namespace VisualiseR.CodeReview
 
         private void InitialisePiles()
         {
-            InstantiatePileParent();
-
-            List<Vector3> pilePositions = GetPilePositions();
-
+            _pileParent = _contextView.transform.Find("Piles").gameObject;
+            
             Array rates = EnumUtil.GetValues<Rate>();
-            for (var i = 0; i < pilePositions.Count; i++)
+            for (var i = 0; i < rates.Length; i++)
             {
                 Rate currRate = (Rate) rates.GetValue(i);
                 List<ICode> currCode = new List<ICode>();
@@ -142,40 +140,15 @@ namespace VisualiseR.CodeReview
                     currCode = new List<ICode>(_medium.CodeFragments);
                 }
 
-                var pilePos = pilePositions[pilePositions.Count - i - 1];
-                InstantiatePile(currRate, pilePos, currCode);
+                InstantiatePile(currRate, currCode);
             }
         }
 
-        private void InstantiatePileParent()
+        private void InstantiatePile(Rate rate, List<ICode> codes)
         {
-            if (_pileParent == null)
-            {
-                _pileParent = new GameObject();
-                _pileParent.name = "Piles";
-                _pileParent.transform.SetParent(_contextView.transform);
-            }
-        }
-
-        private static List<Vector3> GetPilePositions()
-        {
-            int pileCount = EnumUtil.Length<Rate>();
-            return ScreenPositionUtil.ComputeSpawnPositionsWithElements(PILE_DISTANCE, pileCount, PILE_RADIUS,
-                PILE_START_ANGLE,
-                PILE_VALUE_Y);
-        }
-
-
-        private void InstantiatePile(Rate rate, Vector3 pos, List<ICode> codes)
-        {
-            Vector3 relativePos = Vector3.zero - pos;
-            Quaternion rotation = Quaternion.LookRotation(relativePos);
-
-            var pile = (GameObject) Instantiate(Resources.Load("PileCanvas"), pos, rotation);
-            pile.name = "Pile_" + rate;
-            pile.transform.Rotate(67.5f, -180, 0);
-            pile.transform.SetParent(_pileParent.transform);
-
+            var pileName = "Pile_" + rate;
+            var pile = _pileParent.transform.Find(pileName);
+            
             PileView pileView = pile.GetComponent<PileView>();
             pileView.Init(rate, codes);
         }
