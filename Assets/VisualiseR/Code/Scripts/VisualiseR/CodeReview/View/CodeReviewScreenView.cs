@@ -50,22 +50,27 @@ namespace VisualiseR.CodeReview
 
         internal void LoadCode()
         {
-            if (_code != null)
+            if (!gameObject.activeSelf)
             {
-                LoadPictureIntoTexture(_code.Pic);
+                return;
             }
+            
+            if (_code == null)
+            {
+                return;
+            }
+            
+            LoadPictureIntoTexture(_code.Pic);
         }
 
         internal void LoadPictureIntoTexture(IPicture pic)
         {
-            if (pic != null)
-            {
-                StartCoroutine(LoadImageIntoTexture(pic.Path));
-            }
-            else
+            if (pic == null)
             {
                 Debug.LogError("No Picture to load");
+                return;
             }
+            StartCoroutine(LoadImageIntoTexture(pic.Path));
         }
 
         IEnumerator LoadImageIntoTexture(string path)

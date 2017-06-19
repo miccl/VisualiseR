@@ -81,9 +81,7 @@ namespace VisualiseR.CodeReview
             {
                 _view._rate = rate;
                 _view._codeFragmentsWithRate = _view._medium.GetCodeFragmentsWithRate(rate);
-                _view.ClearScreens();
-                _view.InitialiseScreens();
-                _view.RemoveScreensIfNeeded();
+                _view.ActivateOrDeactivateScreens();
                 if (_view._codeFragmentsWithRate.Count > 0)
                 {
                     NextCodeSignal.Dispatch((Code) _view._codeFragmentsWithRate[0]);
@@ -109,7 +107,7 @@ namespace VisualiseR.CodeReview
         private void OnCodeRatingChanged(Code code)
         {
             _view._codeFragmentsWithRate.Remove(code);
-            _view.RemoveScreensIfNeeded();
+            _view.ActivateOrDeactivateScreens();
             GetNextCodeFragment(code);
         }
 

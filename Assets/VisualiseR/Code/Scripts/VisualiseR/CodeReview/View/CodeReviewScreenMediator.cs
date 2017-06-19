@@ -39,7 +39,6 @@ namespace VisualiseR.CodeReview
             _view.ShowContextMenuSignal.RemoveListener(OnShowContextMenu);
             CodeReviewContextMenuIsShownSignal.RemoveListener(OnContextMenuIsShown);
             CodeReviewSceneMenuIsShownSignal.RemoveListener(OnSceneMenuIsShown);
-
         }
 
         private void OnShowContextMenu(GameObject gameObject, Code code)

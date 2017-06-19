@@ -29,6 +29,9 @@ namespace VisualiseR.CodeReview
         private GameObject _pileParent;
         internal bool _isSceneMenuShown = false;
         internal bool _isContextMenuShown = false;
+        private GameObject _screen1;
+        private GameObject _screen2;
+        private GameObject _screen3;
 
 
         /// <summary>
@@ -100,67 +103,27 @@ namespace VisualiseR.CodeReview
             }
         }
 
-        internal void ClearScreens()
-        {
-            foreach (var screen in screens)
-            {
-                Destroy(screen);
-            }
-            screens.Clear();
-        }
-
         internal void InitialiseScreens()
         {
             if (_codeFragmentsWithRate.Count > 0)
             {
-                InstantiateScreenParent();
-
+                var screenCount = 3;
                 bool isFirst = true;
-                List<Vector3> screenPositions = GetScreenPositions();
-                for (int i = 0; i < screenPositions.Count; i++)
+                var screensGO = _contextView.transform.Find("Screens");
+
+                for (int i = 1; i <= screenCount; i++)
                 {
-                    InstantiateScreen(screenPositions[i], isFirst);
+                    var screenName = "Screen" + i;
+                    var screen = screensGO.Find(screenName).gameObject;
+
+                    CodeReviewScreenView screenView = screen.GetComponent<CodeReviewScreenView>();
+                    screenView.Init(isFirst);
+
+                    screens.Add(screen);
                     isFirst = false;
                 }
             }
         }
-
-        private void InstantiateScreenParent()
-        {
-            if (_screenParent == null)
-            {
-                _screenParent = new GameObject();
-                _screenParent.name = "Screens";
-                _screenParent.transform.SetParent(_contextView.transform);
-            }
-        }
-
-        private List<Vector3> GetScreenPositions()
-        {
-            var screensShown = Math.Min(MAX_NUMBER_OF_SCREENS_SHOWN, _codeFragmentsWithRate.Count);
-            return ScreenPositionUtil.ComputeSpawnPositionsWithElements(SCREEN_DISTANCE, screensShown,
-                SCREEN_RADIUS,
-                SCREEN_START_ANGLE, SCREEN_VALUE_Y);
-        }
-
-        private void InstantiateScreen(Vector3 pos, bool isFirst)
-        {
-            //fix rotation
-            Vector3 relativePos = Vector3.zero - pos;
-            Quaternion rotation = Quaternion.LookRotation(relativePos);
-
-            var screen = (GameObject) Instantiate(Resources.Load("CodeReview_Screen"), pos, rotation);
-            screen.transform.Rotate(-270, 180, 180);
-            screen.name = "Screen";
-            screen.transform.SetParent(_screenParent.transform);
-
-            //TODO direkte verbindung verhindern
-            CodeReviewScreenView screenView = screen.GetComponent<CodeReviewScreenView>();
-            screenView.Init(isFirst);
-
-            screens.Add(screen);
-        }
-
 
         private void InitialisePiles()
         {
@@ -196,7 +159,8 @@ namespace VisualiseR.CodeReview
         private static List<Vector3> GetPilePositions()
         {
             int pileCount = EnumUtil.Length<Rate>();
-            return ScreenPositionUtil.ComputeSpawnPositionsWithElements(PILE_DISTANCE, pileCount, PILE_RADIUS, PILE_START_ANGLE,
+            return ScreenPositionUtil.ComputeSpawnPositionsWithElements(PILE_DISTANCE, pileCount, PILE_RADIUS,
+                PILE_START_ANGLE,
                 PILE_VALUE_Y);
         }
 
@@ -253,17 +217,7 @@ namespace VisualiseR.CodeReview
         {
             _medium.RemoveCodeFragment(code);
             _codeFragmentsWithRate.Remove(code);
-            RemoveScreensIfNeeded();
-        }
-
-        internal void RemoveScreensIfNeeded()
-        {
-            while (_codeFragmentsWithRate.Count < screens.Count)
-            {
-                var lastScreen = screens.Last();
-                Destroy(lastScreen);
-                screens.Remove(lastScreen);
-            }
+            ActivateOrDeactivateScreens();
         }
 
         void Update()
@@ -275,8 +229,15 @@ namespace VisualiseR.CodeReview
                     return;
                 }
                 ShowSceneMenuSignal.Dispatch(_medium);
-
             }
+        }
+
+        public void ActivateOrDeactivateScreens()
+        {
+            var count = _codeFragmentsWithRate.Count;
+            screens[0].SetActive(count > 0);
+            screens[1].SetActive(count > 1);
+            screens[2].SetActive(count > 2);
         }
     }
 }

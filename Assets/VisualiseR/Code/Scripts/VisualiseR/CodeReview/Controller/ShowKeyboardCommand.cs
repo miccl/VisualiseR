@@ -25,8 +25,13 @@ namespace VisualiseR.CodeReview
         private void InstantiateContextMenu()
         {
             var keyboard = _contextView.transform.Find("Menus").transform.Find("Keyboard").gameObject;
+            if (keyboard.activeSelf == show) return;
+            
             keyboard.SetActive(show);
-            Logger.InfoFormat("Keyboard is {0}", show ? "shown" : "hidden");
+            if (show)
+            {
+                Logger.InfoFormat("Keyboard is shown");
+            }
         }
     }
 }
