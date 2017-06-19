@@ -3,7 +3,7 @@ import os
 import sys
 
 VALID_CODE_EXTENSIONS = [".java", ".cs", ".py", ".c"]
-OUTPUT_FORMAT = 'jpeg'
+OUTPUT_FORMAT = 'png'
 
 
 def main():

@@ -77,7 +77,7 @@ namespace VisualiseR.CodeReview
         {
             WWW www = new WWW(FILE_PREFIX + path);
             yield return www;
-            Texture2D tex = new Texture2D(4, 4, TextureFormat.DXT1, false);
+            Texture2D tex = new Texture2D(6, 4, TextureFormat.RGBA32, false);
             www.LoadImageIntoTexture(tex);
             GetComponent<Renderer>().material.mainTexture = tex;
             www.Dispose();
