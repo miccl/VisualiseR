@@ -111,6 +111,7 @@ namespace VisualiseR.Presentation
             injectionBinder.Bind<CreateOrJoinSignal>().ToSingleton();
             injectionBinder.Bind<PresentationSceneMenuIsShownSignal>().ToSingleton();
             injectionBinder.Bind<ShowLaserSignal>().ToSingleton();
+            injectionBinder.Bind<ChangeClockTypeSignal>().ToSingleton();
         }
     }
 }

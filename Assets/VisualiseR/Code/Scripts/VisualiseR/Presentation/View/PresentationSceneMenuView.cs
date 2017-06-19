@@ -22,7 +22,8 @@ namespace VisualiseR.Presentation
         private Text _startStopButtonText;
 
         public Signal OnContextMenuCanceled = new Signal();
-        public Signal<TimerTypes> ChangeTimerStatusSignal = new Signal<TimerTypes>();
+        public Signal<TimerType> ChangeTimerStatusSignal = new Signal<TimerType>();
+        public Signal<ClockType> ChangeClockTypesSignal = new Signal<ClockType>();
         public Signal<bool> ShowTimerSignal = new Signal<bool>();
         public Signal<float> SetTimerSignal = new Signal<float>();
         public Signal<bool> ShowLaserSignal = new Signal<bool>();
@@ -34,6 +35,7 @@ namespace VisualiseR.Presentation
         
         internal bool _isLaserShown = false;
         private Text _showLaserButtonText;
+        private Text _clockTypeButtonText;
 
 
         protected override void Awake()
@@ -47,6 +49,7 @@ namespace VisualiseR.Presentation
 
             _startStopButtonText = _timerPanel.transform.Find("CenterPanel").Find("ButtonPanel")
                 .Find("StartStopButton").GetComponentInChildren<Text>();
+            _clockTypeButtonText = _timerPanel.transform.Find("BottomPanel").Find("TimerTypeButton").GetComponentInChildren<Text>();
             _showLaserButtonText = _showPanel.transform.Find("CenterPanel").
                 Find("ShowLaserButton").GetComponentInChildren<Text>();
 
@@ -127,22 +130,35 @@ namespace VisualiseR.Presentation
             Hide();
         }
 
+        public void OnClockTypeButton(BaseEventData data)
+        {
+            if (_clockTypeButtonText.text.Equals(ClockType.Countdown.ToString()))
+            {
+                _clockTypeButtonText.text = ClockType.Stopwatch.ToString();
+            } else if (_clockTypeButtonText.text.Equals(ClockType.Stopwatch.ToString()))
+            {
+                _clockTypeButtonText.text = ClockType.Countdown.ToString();
+            }
+            ChangeClockTypesSignal.Dispatch(_clockTypeButtonText.text.ToEnum<ClockType>());
+
+        }
+
         public void OnTimerStartStopButton(BaseEventData data)
         {
             if (_timerView.stop)
             {
-                ChangeTimerStatusSignal.Dispatch(TimerTypes.Start);
+                ChangeTimerStatusSignal.Dispatch(TimerType.Start);
             }
             else
             {
-                ChangeTimerStatusSignal.Dispatch(TimerTypes.Stop);
+                ChangeTimerStatusSignal.Dispatch(TimerType.Stop);
             }
             RefreshStartStopButtonText();
         }
 
         public void OnTimerResetButton(BaseEventData data)
         {
-            ChangeTimerStatusSignal.Dispatch(TimerTypes.Reset);
+            ChangeTimerStatusSignal.Dispatch(TimerType.Reset);
             RefreshStartStopButtonText();
         }
 

@@ -1,6 +1,6 @@
 ﻿namespace VisualiseR.Presentation
 {
-    public enum TimerTypes
+    public enum TimerType
     {
         Start,
         Stop,

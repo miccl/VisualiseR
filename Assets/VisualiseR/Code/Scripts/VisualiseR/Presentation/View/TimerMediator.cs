@@ -1,7 +1,4 @@
 ﻿using strange.extensions.mediation.impl;
-using UnityEngine;
-using VisualiseR.Common;
-using VisualiseR.Presentation;
 
 namespace VisualiseR.Presentation
 {
@@ -25,6 +22,8 @@ namespace VisualiseR.Presentation
         [Inject]
         public ShowTimeSignal ShowTimeSignal { get; set; }
 
+        [Inject]
+        public ChangeClockTypeSignal ChangeClockTypeSignal { get; set; }
 
         public override void OnRegister()
         {
@@ -33,6 +32,7 @@ namespace VisualiseR.Presentation
             ChangeTimerStatusSignal.AddListener(OnChangedTimerStatus);
             SetTimerSignal.AddListener(OnSetTime);
             ShowAllSignal.AddListener(OnShowAll);
+            ChangeClockTypeSignal.AddListener(OnClockTypeChanged);
         }
 
 
@@ -43,19 +43,20 @@ namespace VisualiseR.Presentation
             ChangeTimerStatusSignal.RemoveListener(OnChangedTimerStatus);
             SetTimerSignal.RemoveListener(OnSetTime);
             ShowAllSignal.RemoveListener(OnShowAll);
+            ChangeClockTypeSignal.RemoveListener(OnClockTypeChanged);
         }
 
-        private void OnChangedTimerStatus(TimerTypes timerType)
+        private void OnChangedTimerStatus(TimerType timerType)
         {
             switch (timerType)
             {
-                case TimerTypes.Start:
+                case TimerType.Start:
                     _view.StartTimer();
                     break;
-                case TimerTypes.Stop:
+                case TimerType.Stop:
                     _view.StopTimer();
                     break;
-                case TimerTypes.Reset:
+                case TimerType.Reset:
                     _view.ResetTimer();
                     break;
                 default:
@@ -70,7 +71,6 @@ namespace VisualiseR.Presentation
 
         private void OnSetTime(float differenceInSeconds)
         {
-            Debug.Log("SET TIME " + differenceInSeconds);
             _view.SetTimer(_view._timeFrom + differenceInSeconds);
         }
 
@@ -82,6 +82,11 @@ namespace VisualiseR.Presentation
         private void OnShowAll()
         {
             _view.Show(false);
+        }
+
+        private void OnClockTypeChanged(ClockType type)
+        {
+            _view.ChangeClockType(type);
         }
     }
 }

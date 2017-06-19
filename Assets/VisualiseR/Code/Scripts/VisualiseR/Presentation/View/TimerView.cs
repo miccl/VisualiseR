@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
@@ -12,6 +14,7 @@ namespace VisualiseR.Presentation
         public Signal TimerRunDownSignal = new Signal();
         public Signal<bool> ShowTimerSignal = new Signal<bool>();
 
+        public ClockType _type = ClockType.Countdown;
         private float _timeLeft;
         public float _timeFrom { get; private set; }
         public bool stop = true;
@@ -47,11 +50,11 @@ namespace VisualiseR.Presentation
 
         public void StartTimer()
         {
-            if (_timeFrom <= 0 ||_timeLeft <= 0)
+            if (_type.Equals(ClockType.Countdown) && (_timeFrom <= 0 || _timeLeft <= 0))
             {
                 return;
             }
-            
+
             stop = false;
             Update();
             StartCoroutine(runTimer());
@@ -66,14 +69,31 @@ namespace VisualiseR.Presentation
         public void ResetTimer()
         {
             StopTimer();
-            _timeLeft = _timeFrom;
+            switch (_type)
+            {
+                case ClockType.Stopwatch:
+                    _timeLeft = 0;
+                    break;
+                default:
+                    _timeLeft = _timeFrom;
+                    break;
+            }
             DisplayTime();
         }
 
         void Update()
         {
             if (stop) return;
-            _timeLeft -= Time.deltaTime;
+            switch (_type)
+            {
+                case ClockType.Stopwatch:
+                    _timeLeft += Time.deltaTime;
+                    break;
+                default:
+                    _timeLeft -= Time.deltaTime;
+                    break;
+            }
+
 
             if (_timeLeft < 0)
             {
@@ -117,6 +137,17 @@ namespace VisualiseR.Presentation
         public void Show(bool isShown)
         {
             ShowTimerSignal.Dispatch(isShown);
+        }
+
+        public void ChangeClockType(ClockType type)
+        {
+            if (_type.Equals(type))
+            {
+                return;
+            }
+
+            _type = type;
+            ResetTimer();
         }
     }
 }

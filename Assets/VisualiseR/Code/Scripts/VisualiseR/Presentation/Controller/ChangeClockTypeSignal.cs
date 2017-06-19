@@ -2,8 +2,8 @@
 
 namespace VisualiseR.Presentation
 {
-    public class ChangeTimerStatusSignal: Signal<TimerType>
+    public class ChangeClockTypeSignal : Signal<ClockType>
     {
-
+        
     }
 }

@@ -31,6 +31,9 @@ namespace VisualiseR.Presentation
         
         [Inject]
         public ShowLaserSignal ShowLaserSignal { get; set; }
+        
+        [Inject]
+        public ChangeClockTypeSignal ChangeClockTypeSignal { get; set; }
        
         public override void OnRegister()
         {
@@ -41,6 +44,7 @@ namespace VisualiseR.Presentation
             _view.ShowAllSignal.AddListener(OnShowAll);
             _view.ShowTimerSignal.AddListener(OnShowTimerSignal);
             _view.ShowLaserSignal.AddListener(OnShowLaser);
+            _view.ChangeClockTypesSignal.AddListener(OnClockTypeChanged);
             TimerRunDownSignal.AddListener(TimerRunDown);
         }
 
@@ -58,6 +62,7 @@ namespace VisualiseR.Presentation
             _view.ShowAllSignal.RemoveListener(OnShowAll);
             _view.ShowTimerSignal.RemoveListener(OnShowTimerSignal);
             _view.ShowLaserSignal.AddListener(OnShowLaser);
+            _view.ChangeClockTypesSignal.AddListener(OnClockTypeChanged);
             TimerRunDownSignal.RemoveListener(TimerRunDown);
         }
 
@@ -72,7 +77,7 @@ namespace VisualiseR.Presentation
             PresentationSceneMenuIsShownSignal.Dispatch(false);
         }
 
-        private void OnTimerStatusChanged(TimerTypes timerTypes)
+        private void OnTimerStatusChanged(TimerType timerTypes)
         {
             ChangeTimerStatusSignal.Dispatch(timerTypes);
         }
@@ -91,10 +96,15 @@ namespace VisualiseR.Presentation
         {
             ShowAllSignal.Dispatch();
         }
-        
+
         private void OnShowLaser(bool show)
         {
             ShowLaserSignal.Dispatch(show);
+        }
+
+        private void OnClockTypeChanged(ClockType type)
+        {
+            ChangeClockTypeSignal.Dispatch(type);
         }
     }
 }
