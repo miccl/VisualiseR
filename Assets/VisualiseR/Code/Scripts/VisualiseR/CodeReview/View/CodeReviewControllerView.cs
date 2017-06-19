@@ -172,6 +172,7 @@ namespace VisualiseR.CodeReview
             {
                 return;
             }
+            
             int currPos = _codeFragmentsWithRate.IndexOf(code);
             foreach (var screen in screens)
             {
