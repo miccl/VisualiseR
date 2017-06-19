@@ -14,7 +14,10 @@ namespace VisualiseR.Presentation
             List<Vector3> positions = new List<Vector3>();
             if (startPosition.x > endPosition.x)
             {
-                return GetRowSeatPositions(endPosition, startPosition, amountOfSeats);
+                var temp = startPosition;
+                startPosition = endPosition;
+                endPosition = temp;
+                return GetRowSeatPositions(startPosition, endPosition, amountOfSeats);
             }
             Vector3 spaceBetweenSeats = DifferenceBetweenVectors(startPosition, endPosition) / (amountOfSeats - 1);
             var currentPos = startPosition;

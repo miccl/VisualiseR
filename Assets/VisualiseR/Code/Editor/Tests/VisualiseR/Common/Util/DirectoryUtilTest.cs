@@ -90,7 +90,7 @@ namespace VisualiseR.Test.Util
             string criticalDirName = "D:/Downloads/VisualiseR_Test/CodeReview/Critical";
 
             //when
-            var mainDirInfo = DirectoryUtil.CreateDirectorysForCodeReview(mediumName);
+            DirectoryUtil.CreateDirectorysForCodeReview(mediumName);
 
             Assert.IsTrue(Directory.Exists(mediumName), "Directory '{0}' should exist ", mediumName);
             Assert.IsTrue(Directory.Exists(unratedDirName), "Directory '{0}' should exist ", unratedDirName);

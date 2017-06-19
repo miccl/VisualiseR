@@ -225,7 +225,7 @@ namespace VisualiseR.CodeReview
             _view._isShowAll = true;
         }
 
-        private void OnCodeSelected(Code arg1, Player arg2)
+        private void OnCodeSelected(Code code, Player player)
         {
             _view._isShowAll = false;
         }

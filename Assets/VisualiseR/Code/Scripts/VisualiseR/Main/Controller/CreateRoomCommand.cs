@@ -65,11 +65,8 @@ namespace VisualiseR.Main
 
         private bool RoomAlreadyExists()
         {
-            //TODO machen
+            //TODO depending on room type 
 
-            if (_RoomType.Equals(RoomType.Presentation))
-            {
-            }
             return false;
         }
 
