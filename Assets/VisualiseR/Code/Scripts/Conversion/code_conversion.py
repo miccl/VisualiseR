@@ -43,7 +43,7 @@ def handle_input(input_path):
         if is_code_file(input_path):
             return [input_path]
     else:
-        print_error("The input path is not valid.")
+        print("Error: The input path '%s'is not valid." % input_path)
         sys.exit(1)
 
 
@@ -115,16 +115,6 @@ def execute_pygment_on_file(output_format, output_file, input_file):
     """
     console_command = 'pygmentize -f {0} -o {1} {2}'.format(output_format, output_file, input_file)
     os.system(console_command)
-
-
-def print_error(s):
-    """
-    Prints error message and terminates the application.
-    :param s: string to print.
-    """
-    print("Error:", s)
-    sys.exit(1)
-
 
 if __name__ == "__main__":
     main()
