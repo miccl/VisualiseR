@@ -9,13 +9,13 @@ namespace VisualiseR.CodeReview
 
         [Inject]
         public ExportToTxtSignal ExportToTxtSignal { get; set; }
-        
+
         [Inject]
         public CodeReviewSceneMenuIsShownSignal CodeReviewSceneMenuIsShownSignal { get; set; }
-        
+
         [Inject]
         public ShowAllCodeSignal ShowAllCodeSignal { get; set; }
-        
+
         [Inject]
         public ShowLaserSignal ShowLaserSignal { get; set; }
 
@@ -51,11 +51,10 @@ namespace VisualiseR.CodeReview
         {
             ShowAllCodeSignal.Dispatch();
         }
-        
+
         private void OnShowLaser(bool show)
         {
             ShowLaserSignal.Dispatch(show);
         }
     }
- 
 }

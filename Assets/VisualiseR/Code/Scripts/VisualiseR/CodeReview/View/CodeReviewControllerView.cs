@@ -29,6 +29,7 @@ namespace VisualiseR.CodeReview
         private GameObject _pileParent;
         internal bool _isSceneMenuShown = false;
         internal bool _isContextMenuShown = false;
+        public bool _isShowAll = false;
         private GameObject _screen1;
         private GameObject _screen2;
         private GameObject _screen3;
@@ -224,7 +225,7 @@ namespace VisualiseR.CodeReview
         {
             if (Input.GetButtonDown(ButtonUtil.CANCEL))
             {
-                if (_isSceneMenuShown || _isContextMenuShown)
+                if (_isSceneMenuShown || _isContextMenuShown || _isShowAll)
                 {
                     return;
                 }

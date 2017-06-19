@@ -44,6 +44,12 @@ namespace VisualiseR.CodeReview
 
         [Inject]
         public CodeReviewContextMenuIsShownSignal CodeReviewContextMenuIsShownSignal { get; set; }
+        
+        [Inject]
+        public ShowAllCodeSignal ShowAllCodeSignal { get; set; }
+        
+        [Inject]
+        public CodeSelectedSignal CodeSelectedSignal { get; set; }
 
         public override void OnRegister()
         {
@@ -54,6 +60,8 @@ namespace VisualiseR.CodeReview
             PileSelectedSignal.AddListener(OnPileSelected);
             CodeReviewSceneMenuIsShownSignal.AddListener(OnSceneMenuIsShown);
             CodeReviewContextMenuIsShownSignal.AddListener(OnContextMenuIsShown);
+            ShowAllCodeSignal.AddListener(OnShowAllCode);
+            CodeSelectedSignal.AddListener(OnCodeSelected);
 
             InitView();
         }
@@ -67,6 +75,8 @@ namespace VisualiseR.CodeReview
             PileSelectedSignal.RemoveListener(OnPileSelected);
             CodeReviewSceneMenuIsShownSignal.RemoveListener(OnSceneMenuIsShown);
             CodeReviewContextMenuIsShownSignal.RemoveListener(OnContextMenuIsShown);
+            ShowAllCodeSignal.RemoveListener(OnShowAllCode);
+            CodeSelectedSignal.RemoveListener(OnCodeSelected);
 
         }
 
@@ -97,7 +107,7 @@ namespace VisualiseR.CodeReview
         {
             _view._isSceneMenuShown = isShown;
         }
-        
+
         private void OnContextMenuIsShown(bool isShown)
         {
             _view._isContextMenuShown = isShown;
@@ -208,6 +218,16 @@ namespace VisualiseR.CodeReview
                 medium.AddCodeFragment(code);
             }
             return medium;
+        }
+
+        private void OnShowAllCode()
+        {
+            _view._isShowAll = true;
+        }
+
+        private void OnCodeSelected(Code arg1, Player arg2)
+        {
+            _view._isShowAll = false;
         }
     }
 }
