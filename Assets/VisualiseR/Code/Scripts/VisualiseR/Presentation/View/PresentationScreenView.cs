@@ -12,13 +12,13 @@ namespace VisualiseR.Presentation
     {
         private JCsLogger Logger;
 
-        private const string FILE_PREFIX = "file:///";
-
         internal Signal<IPlayer, ISlideMedium> NextSlideSignal = new Signal<IPlayer, ISlideMedium>();
         internal Signal<IPlayer, ISlideMedium> PrevSlideSignal = new Signal<IPlayer, ISlideMedium>();
         internal Signal<IPlayer, ISlideMedium> ShowSceneMenuSignal = new Signal<IPlayer, ISlideMedium>();
         internal Signal<bool, string> ShowLoadingAnimationSignal = new Signal<bool, string>();
+        
         private List<byte[]> _images = new List<byte[]>();
+        
         private int _currentPos;
         private bool _isLoading;
         internal bool _isSceneMenuShown = false;

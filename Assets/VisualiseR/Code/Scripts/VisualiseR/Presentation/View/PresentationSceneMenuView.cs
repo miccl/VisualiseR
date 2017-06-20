@@ -11,32 +11,31 @@ namespace VisualiseR.Presentation
     public class PresentationSceneMenuView : View
     {
         private JCsLogger Logger;
-
-        internal GameObject _contextView;
-        private GameObject _mainPanel;
-        private GameObject _timerPanel;
-        private GameObject _showPanel;
-
-        private TimerView _timerView;
-
-        private Text _startStopButtonText;
-
+        
         public Signal OnContextMenuCanceled = new Signal();
         public Signal<TimerType> ChangeTimerStatusSignal = new Signal<TimerType>();
         public Signal<ClockType> ChangeClockTypesSignal = new Signal<ClockType>();
         public Signal<bool> ShowTimerSignal = new Signal<bool>();
         public Signal<float> SetTimerSignal = new Signal<float>();
         public Signal<bool> ShowLaserSignal = new Signal<bool>();
-        
         public Signal<IPlayer, ISlideMedium> ShowPreviousSignal = new Signal<IPlayer, ISlideMedium>();
         public Signal ShowAllSignal = new Signal();
+
         private ISlideMedium _medium;
         private IPlayer _player;
-        
-        internal bool _isLaserShown = false;
+
+        internal GameObject _contextView;
+        private GameObject _mainPanel;
+        private GameObject _timerPanel;
+        private GameObject _showPanel;
+
+        private Text _startStopButtonText;
         private Text _showLaserButtonText;
         private Text _clockTypeButtonText;
 
+        private TimerView _timerView;
+        
+        internal bool _isLaserShown = false;
 
         protected override void Awake()
         {
@@ -195,7 +194,6 @@ namespace VisualiseR.Presentation
         public void OnShowLaserButtonClick(BaseEventData data)
         {
             _isLaserShown = !_isLaserShown;
-//            ChangeLaserText();
             ShowLaserSignal.Dispatch(_isLaserShown);
             Hide();
         }

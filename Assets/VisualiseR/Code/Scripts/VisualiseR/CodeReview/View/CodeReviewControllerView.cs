@@ -21,7 +21,6 @@ namespace VisualiseR.CodeReview
         public Rate _rate;
         internal IPlayer _player;
 
-
         internal List<GameObject> screens = new List<GameObject>();
 
         internal GameObject _contextView;

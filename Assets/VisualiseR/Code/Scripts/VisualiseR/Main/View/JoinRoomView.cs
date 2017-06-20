@@ -10,14 +10,14 @@ namespace VisualiseR.Main
     {
         internal Signal<string> JoinRoomButtonClickSignal = new Signal<string>();
         
-        internal InputField RoomNameInputField;
+        internal InputField _roomNameInputField;
 
         private GameObject _mainMenuPanelView;
 
         protected override void Awake()
         {
             base.Awake();
-            RoomNameInputField = UnityUtil.FindGameObjectInChild("RoomNamePanel").GetComponentInChildren<InputField>();
+            _roomNameInputField = UnityUtil.FindGameObjectInChild("RoomNamePanel").GetComponentInChildren<InputField>();
 
             GameObject menuCanvas = UnityUtil.FindGameObject("MenuCanvas");
             _mainMenuPanelView = menuCanvas.transform.FindChild("MainMenuPanel").gameObject;
@@ -25,7 +25,7 @@ namespace VisualiseR.Main
 
         public void OnJoinRoomButtonClick()
         {
-            var roomName = RoomNameInputField.text;
+            var roomName = _roomNameInputField.text;
             if (roomName != null)
             {
                 JoinRoomButtonClickSignal.Dispatch(roomName);

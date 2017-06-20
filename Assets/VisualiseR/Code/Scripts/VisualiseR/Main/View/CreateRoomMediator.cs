@@ -34,7 +34,7 @@ namespace VisualiseR.Main
             _view.CreateRoomButtonClickedSignal.AddListener(OnCreateRoomButtonClick);
             MediumChangedSignal.AddListener(OnMediumChanged);
             SelectionCanceledSignal.AddListener(OnSelectionCanceled);
-            _view.ChoosenMedium = Medium;
+            _view._choosenMedium = Medium;
         }
 
         public override void OnRemove()
@@ -64,7 +64,7 @@ namespace VisualiseR.Main
         private void OnMediumChanged(PictureMedium pictureMedium)
         {
             //TODO davor könnte beispielsweise eine Laderad kommen, bis dieser Aufruf getätigt wird
-            _view.ChoosenMedium = pictureMedium;
+            _view._choosenMedium = pictureMedium;
             _view._chooseMediumDropdown.captionText.text = pictureMedium.Name;
         }
 

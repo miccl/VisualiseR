@@ -15,7 +15,7 @@ namespace VisualiseR.Main
         [SerializeField] private Sprite audioOffSprite;
         [SerializeField] private Sprite audioOnSprite;
 
-        private Image audioImage;
+        private Image _audioImage;
         private GameObject _helpPanel;
         private GameObject _createRoomPanel;
         private GameObject _joinRoomPanel;
@@ -35,7 +35,7 @@ namespace VisualiseR.Main
             _backgroundAudioSource = menuCanvas.GetComponent<AudioSource>();
 
 
-            audioImage = transform.FindChild("AudioButton").GetComponent<Image>();
+            _audioImage = transform.FindChild("AudioButton").GetComponent<Image>();
         }
 
         protected override void Start()
@@ -75,12 +75,12 @@ namespace VisualiseR.Main
             _backgroundAudioSource.mute = isMuted;
             if (!isMuted)
             {
-                audioImage.sprite = audioOnSprite;
+                _audioImage.sprite = audioOnSprite;
                 _backgroundAudioSource.PlayDelayed(0);
             }
             else
             {
-                audioImage.sprite = audioOffSprite;
+                _audioImage.sprite = audioOffSprite;
             }
         }
 

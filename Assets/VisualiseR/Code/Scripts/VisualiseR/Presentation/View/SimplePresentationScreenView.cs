@@ -5,14 +5,13 @@ using strange.extensions.signal.impl;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using VisualiseR.Common;
+using VisualiseR.Util;
 
 namespace VisualiseR.Presentation
 {
     public class SimplePresentationScreenView : View
     {
         public Signal<Slide> SlideClickedSignal = new Signal<Slide>();
-
-        private const string FILE_PREFIX = "file:///";
 
         internal ISlide _slide { get; set; }
         internal IPlayer _player { get; set; }
@@ -44,7 +43,7 @@ namespace VisualiseR.Presentation
 
         IEnumerator LoadImageIntoTexture(string path)
         {
-            WWW www = new WWW(FILE_PREFIX + path);
+            WWW www = new WWW(FileUtil.FILE_PREFIX + path);
 
             yield return www;
 

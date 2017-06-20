@@ -1,31 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using strange.extensions.mediation.impl;
 using UnityEngine;
 using VisualiseR.Common;
 using VisualiseR.Util;
-using Random = UnityEngine.Random;
 
 namespace VisualiseR.Presentation
 {
     public class PresentationPlayerView : View
     {
+        public static readonly int AMOUNT_OF_SEATS = 5;
+        
         private JCsLogger Logger;
         
+        private Player _player;
+        private Transform _playerGlobal;
+
+        internal GameObject _contextView;
         private GameObject _reticlePointer;
         private GameObject _laser;
-        private bool _isLaserShown;
-        private bool _firstFalse;
-        private Player _player;
-        
-        public static readonly int AMOUNT_OF_SEATS = 5;
-
-        private GameObject _globalReticlePointer;
         private GameObject _globalLaser;
         private GameObject _globalElements;
-        internal GameObject _contextView;
-        private Transform _playerGlobal;
-        
+        private GameObject _globalReticlePointer;
+
+        private bool _isLaserShown;
+        private bool _firstFalse;
+
+
         protected override void Awake()
         {
             base.Awake();

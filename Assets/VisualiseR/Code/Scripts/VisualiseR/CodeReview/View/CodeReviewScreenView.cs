@@ -4,6 +4,7 @@ using strange.extensions.signal.impl;
 using UnityEngine;
 using UnityEngine.UI;
 using VisualiseR.Common;
+using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
@@ -12,14 +13,11 @@ namespace VisualiseR.CodeReview
         public Signal<Code> NextCodeSignal = new Signal<Code>();
         public Signal<GameObject, Code> ShowContextMenuSignal = new Signal<GameObject, Code>();
 
-        private const string FILE_PREFIX = "file:///";
-
         internal ICode _code;
         internal IPlayer _player;
 
         public bool IsFirst { get; set; }
         private Text _infoText;
-
 
         internal bool _isContextMenuShown = false;
         internal bool _isSceneMenuShown = false;
@@ -63,7 +61,7 @@ namespace VisualiseR.CodeReview
 
         IEnumerator LoadImageIntoTexture(string path)
         {
-            WWW www = new WWW(FILE_PREFIX + path);
+            WWW www = new WWW(FileUtil.FILE_PREFIX + path);
             yield return www;
             Texture2D tex = new Texture2D(6, 4, TextureFormat.RGBA32, false);
             www.LoadImageIntoTexture(tex);

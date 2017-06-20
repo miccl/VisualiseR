@@ -10,14 +10,13 @@ namespace VisualiseR.Main
 {
     public class SettingsView : View
     {
+        private const string CHOOSE_AVATAR_TEXT = "Choose a avatar...";
+
+        private readonly List<string> avatarTypes = EnumUtil.EnumToList<AvatarType>();
+        
         private GameObject _mainMenuPanelView;
         internal InputField _playerNameInputField;
         internal Dropdown _avatarDropdown;
-
-
-        private const string CHOOSE_AVATAR_TEXT = "Choose a avatar...";
-        private readonly List<string> avatarTypes = EnumUtil.EnumToList<AvatarType>();
-
 
         protected override void Awake()
         {

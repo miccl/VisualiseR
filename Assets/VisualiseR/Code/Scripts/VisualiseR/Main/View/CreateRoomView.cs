@@ -18,15 +18,13 @@ namespace VisualiseR.Main
 
         public Signal SelectDiskFileButtonClickedSignal = new Signal();
         public Signal SelectWebFileButtonClickedSignal = new Signal();
-
         public Signal<string, RoomType, IPictureMedium> CreateRoomButtonClickedSignal =
             new Signal<string, RoomType, IPictureMedium>();
-
 
         internal Dropdown _roomTypeDropdown;
         internal InputField _roomNameInputField;
         internal Dropdown _chooseMediumDropdown;
-        internal IPictureMedium ChoosenMedium;
+        internal IPictureMedium _choosenMedium;
 
         private readonly List<string> _roomTypes = EnumUtil.EnumToList<RoomType>();
         private readonly List<string> _chooseMediumTypes = new List<string> {"None", SELECT_DISK_FILE, SELECT_WEB_FILE};
@@ -74,7 +72,7 @@ namespace VisualiseR.Main
         public void OnCreateRoomButtonClick()
         {
             CreateRoomButtonClickedSignal.Dispatch(_roomNameInputField.text,
-                _roomTypes[_roomTypeDropdown.value].ToEnum<RoomType>(), ChoosenMedium);
+                _roomTypes[_roomTypeDropdown.value].ToEnum<RoomType>(), _choosenMedium);
         }
 
         public void OnBackButtonClick()

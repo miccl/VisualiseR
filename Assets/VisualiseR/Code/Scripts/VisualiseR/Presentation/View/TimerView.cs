@@ -18,20 +18,19 @@ namespace VisualiseR.Presentation
         private float _timeLeft;
         public float _timeFrom { get; private set; }
         public bool stop = true;
-
         private float _minutes;
         private float _seconds;
 
         private Text _timerText;
 
-        private GvrAudioSource audioSource;
+        private GvrAudioSource _audioSource;
         private Animation _animation;
 
         protected override void Awake()
         {
             base.Awake();
             _timerText = transform.GetComponentInChildren<Text>();
-            audioSource = GetComponent<GvrAudioSource>();
+            _audioSource = GetComponent<GvrAudioSource>();
             _animation = GetComponent<Animation>();
         }
 
@@ -105,7 +104,7 @@ namespace VisualiseR.Presentation
         {
             StopTimer();
             _timeLeft = 0;
-            audioSource.Play();
+            _audioSource.Play();
             _animation.Play();
             TimerRunDownSignal.Dispatch();
             StartCoroutine(StopAfterSeconds());
@@ -114,7 +113,7 @@ namespace VisualiseR.Presentation
         private IEnumerator StopAfterSeconds()
         {
             yield return new WaitForSeconds(5f);
-            audioSource.Stop();
+            _audioSource.Stop();
             _animation.Stop();
         }
 

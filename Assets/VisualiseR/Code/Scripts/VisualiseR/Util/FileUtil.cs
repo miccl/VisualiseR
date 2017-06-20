@@ -8,10 +8,11 @@ namespace VisualiseR.Util
     public static class FileUtil
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(FileUtil));
-
+        
+        public static readonly string FILE_PREFIX = "file:///";
+        
         private static readonly List<string> ImageExtensions =
             new List<string> {".JPG", ".JPEG", ".JPE", ".BMP", ".GIF", ".PNG"};
-
 
         private static readonly List<string> CodeExtensions = new List<string> {".JAVA", ".CS", ".PY", ".C"};
         private static readonly List<string> PdfExtensions = new List<string> {".PDF"};

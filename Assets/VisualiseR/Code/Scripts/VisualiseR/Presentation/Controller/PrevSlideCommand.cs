@@ -17,7 +17,6 @@ namespace VisualiseR.Presentation
         [Inject]
         public SlidePositionChangedSignal SlidePositionChangedSignal { get; set; }
 
-
         public override void Execute()
         {
             if (!_player.HasRight(AcessList.NAVIGATE_CODE))

@@ -12,8 +12,6 @@ namespace VisualiseR.Presentation
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(LoadFilesCommand));
         
-        private const string FILE_PREFIX = "file:///";
-
         [Inject]
         public Player _player { get; set; }
 
@@ -47,7 +45,7 @@ namespace VisualiseR.Presentation
 
         private byte[] loadFile(string filePath)
         {
-            WWW www = new WWW(FILE_PREFIX + filePath);
+            WWW www = new WWW(FileUtil.FILE_PREFIX + filePath);
             var result = www.bytes;
             www.Dispose();
             return result;
