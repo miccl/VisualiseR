@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using strange.extensions.context.api;
 using strange.extensions.mediation.impl;
 using UnityEngine;
 using VisualiseR.Common;
@@ -35,9 +34,6 @@ namespace VisualiseR.CodeReview
 
         [Inject]
         public ICodeMedium CodeMedium { get; set; }
-
-        [Inject(ContextKeys.CONTEXT_VIEW)]
-        public GameObject contextView { get; set; }
         
         [Inject]
         public CodeReviewSceneMenuIsShownSignal CodeReviewSceneMenuIsShownSignal { get; set; }

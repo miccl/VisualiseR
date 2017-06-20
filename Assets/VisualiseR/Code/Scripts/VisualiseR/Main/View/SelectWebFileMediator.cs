@@ -1,7 +1,4 @@
-﻿using strange.extensions.context.api;
-using strange.extensions.mediation.impl;
-using UnityEngine;
-using VisualiseR.Common;
+﻿using strange.extensions.mediation.impl;
 
 namespace VisualiseR.Main
 {
@@ -16,16 +13,12 @@ namespace VisualiseR.Main
         
         [Inject]
         public SelectionCanceledSignal SelectionCanceledSignal { get; set; }
-        
-        [Inject(ContextKeys.CONTEXT_VIEW)]
-        public GameObject _contextView { get; set; }
-
 
         public override void OnRegister()
         {
             _view.UrlSelected.AddListener(OnUrlSelected);
             _view.CanceledSignal.AddListener(OnCanceled);
-            _view._contextView = _contextView;
+            _view._contextView = contextView;
         }
 
         public override void OnRemove()
