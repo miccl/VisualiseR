@@ -9,6 +9,7 @@ namespace VisualiseR.Main
     public class SelectWebFileView : View
     {
         public Signal<string> UrlSelected = new Signal<string>();
+        public Signal CanceledSignal = new Signal();
 
         private InputField _urlInputField;
         public GameObject _contextView;
@@ -37,6 +38,7 @@ namespace VisualiseR.Main
 
         public void OnCancelButtonClick()
         {
+            CanceledSignal.Dispatch();
             Hide();
         }
 

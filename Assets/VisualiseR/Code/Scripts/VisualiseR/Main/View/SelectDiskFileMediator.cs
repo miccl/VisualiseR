@@ -11,6 +11,9 @@ namespace VisualiseR.Main
 
         [Inject]
         public LoadFilesSignal LoadFilesSignal { get; set; }
+        
+        [Inject]
+        public SelectionCanceledSignal SelectionCanceledSignal { get; set; }
 
 
         public override void OnRegister()
@@ -32,7 +35,7 @@ namespace VisualiseR.Main
             }
             else
             {
-                //TODO Hinweismeldung, dass nicht ausgewählt wurde?!
+                SelectionCanceledSignal.Dispatch();
             }
             Destroy();
         }

@@ -23,6 +23,9 @@ namespace VisualiseR.Main
 
         [Inject]
         public IPictureMedium Medium { get; set; }
+        
+        [Inject]
+        public SelectionCanceledSignal SelectionCanceledSignal { get; set; }
 
         public override void OnRegister()
         {
@@ -30,6 +33,7 @@ namespace VisualiseR.Main
             _view.SelectWebFileButtonClickedSignal.AddListener(OnSelectWebFileButtonClicked);
             _view.CreateRoomButtonClickedSignal.AddListener(OnCreateRoomButtonClick);
             MediumChangedSignal.AddListener(OnMediumChanged);
+            SelectionCanceledSignal.AddListener(OnSelectionCanceled);
             _view.ChoosenMedium = Medium;
         }
 
@@ -38,6 +42,7 @@ namespace VisualiseR.Main
             _view.SelectDiskFileButtonClickedSignal.RemoveListener(OnSelectDiskFileButtonClicked);
             _view.SelectWebFileButtonClickedSignal.RemoveListener(OnSelectWebFileButtonClicked);
             _view.CreateRoomButtonClickedSignal.RemoveListener(OnCreateRoomButtonClick);
+            SelectionCanceledSignal.RemoveListener(OnSelectionCanceled);
             MediumChangedSignal.RemoveListener(OnMediumChanged);
         }
 
@@ -60,12 +65,17 @@ namespace VisualiseR.Main
         {
             //TODO davor könnte beispielsweise eine Laderad kommen, bis dieser Aufruf getätigt wird
             _view.ChoosenMedium = pictureMedium;
-            _view.ChooseMediumDropdown.captionText.text = pictureMedium.Name;
+            _view._chooseMediumDropdown.captionText.text = pictureMedium.Name;
         }
 
         private void OnSelectWebFileButtonClicked()
         {
             SelectWebFileSignal.Dispatch();
+        }
+
+        private void OnSelectionCanceled()
+        {
+            _view.ChangeInteractibilityOfButtons(true);
         }
     }
 }

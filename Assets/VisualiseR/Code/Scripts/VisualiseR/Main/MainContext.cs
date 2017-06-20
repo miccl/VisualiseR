@@ -98,6 +98,7 @@ namespace VisualiseR.Main
         private void BindSignals()
         {
             injectionBinder.Bind<MediumChangedSignal>().ToSingleton();
+            injectionBinder.Bind<SelectionCanceledSignal>().ToSingleton();
 
         }
     }
