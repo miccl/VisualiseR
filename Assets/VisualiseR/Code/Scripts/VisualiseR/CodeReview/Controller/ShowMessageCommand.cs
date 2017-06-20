@@ -1,11 +1,7 @@
-using System.Net.Mime;
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
-using strange.extensions.context.impl;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {

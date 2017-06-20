@@ -46,3 +46,5 @@ Assets/VisualiseR/Code/Scripts/Conversion/.idea/
 Assets/VisualiseR/Code/Scripts/Conversion/testdata/
 Assets/VisualiseR/Code/.scannerwork/
 Assets/Community_Assets/Handcrafted Mobile/CurvedVRKeyboard/Examples/
+*.meta
+*.cs

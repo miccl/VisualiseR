@@ -1,10 +1,7 @@
 using System.IO;
 using System.Text;
 using strange.extensions.command.impl;
-using UnityEditor;
-using UnityEngine;
 using VisualiseR.Util;
-using FileUtil = VisualiseR.Util.FileUtil;
 
 namespace VisualiseR.CodeReview
 {

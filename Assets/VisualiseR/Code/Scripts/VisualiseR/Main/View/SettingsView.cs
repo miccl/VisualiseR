@@ -56,6 +56,7 @@ namespace VisualiseR.Main
         {
             SavePlayerName();
             SaveAvatar();
+            OnBackButtonClick();
         }
 
         private void SavePlayerName()
