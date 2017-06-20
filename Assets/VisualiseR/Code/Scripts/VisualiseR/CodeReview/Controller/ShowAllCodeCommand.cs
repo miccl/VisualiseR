@@ -12,9 +12,9 @@ namespace VisualiseR.CodeReview
         private static readonly JCsLogger Logger = new JCsLogger(typeof(ShowAllCodeCommand));
 
         private static readonly float SPAWN_DISTANCE = 20;
-        private static readonly float START_ANGLE = 0;
-        private static readonly float END_ANGLE = 180;
-        private static readonly float MIN_AGNLE_BETWEEN_ELEMENTS = 25;
+        private static readonly float START_ANGLE = 30;
+        private static readonly float END_ANGLE = 150;
+        private static readonly float MIN_AGNLE_BETWEEN_ELEMENTS = 30;
         private static readonly float MAX_STAGES = 3;
         private static readonly float START_POS_Y = 5;
         private static readonly float POS_Y_DISTANCE = 10;

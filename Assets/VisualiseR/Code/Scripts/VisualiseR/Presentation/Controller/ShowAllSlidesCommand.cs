@@ -13,8 +13,8 @@ namespace VisualiseR.Presentation
         private static readonly JCsLogger Logger = new JCsLogger(typeof(ShowAllSlidesCommand));
 
         private static readonly float SPAWN_DISTANCE = 20;
-        private static readonly float START_ANGLE = 180;
-        private static readonly float END_ANGLE = 360;
+        private static readonly float START_ANGLE = 210;
+        private static readonly float END_ANGLE = 330;
         private static readonly float MIN_ANGLE_BETWEEN_ELEMENTS = 30;
         private static readonly float MAX_STAGES = 3;
         private static readonly float START_POS_Y = 5;
