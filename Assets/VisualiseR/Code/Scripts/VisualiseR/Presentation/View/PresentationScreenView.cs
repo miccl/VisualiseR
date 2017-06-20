@@ -146,8 +146,10 @@ namespace VisualiseR.Presentation
         internal void LoadCurrentSlide()
         {
             var currentPos = _medium.CurrentPos;
+            LoadImageIntoTexture(_images[currentPos]);
+            
             photonView.RPC("OnSlidePosChanged",
-                PhotonTargets.All,
+                PhotonTargets.Others,
                 currentPos);
         }
 
