@@ -9,7 +9,6 @@ namespace VisualiseR.CodeReview
     public class InfoView : View
     {
         internal ICode _code;
-        private Text _titleText;
         private Text _nameText;
         private Text _pathText;
         private Text _sizeText;
@@ -22,7 +21,6 @@ namespace VisualiseR.CodeReview
         {
             base.Awake();
             var infoPanel = gameObject.transform.FindChild("InfoPanel");
-            _titleText = infoPanel.FindChild("Title").GetComponent<Text>();
             var centerPanel = infoPanel.FindChild("CenterPanel");
             _nameText = centerPanel.FindChild("NamePanel").FindChild("Text").GetComponent<Text>();
             _ratingText = centerPanel.FindChild("RatingPanel").FindChild("Text").GetComponent<Text>();

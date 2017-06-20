@@ -10,7 +10,6 @@ namespace VisualiseR.Common
     /// </summary>
     public class NetworkedPlayer : View
     {
-        private JCsLogger Logger;
 
         internal Signal<bool> InstantiatePlayer = new Signal<bool>();
 
@@ -23,7 +22,6 @@ namespace VisualiseR.Common
         protected override void Awake()
         {
             base.Awake();
-            Logger = new JCsLogger(typeof(NetworkedPlayer));
             _avatar = transform.Find("Avatar").gameObject;
         }
 

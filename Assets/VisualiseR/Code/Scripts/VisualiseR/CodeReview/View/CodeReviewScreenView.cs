@@ -17,24 +17,12 @@ namespace VisualiseR.CodeReview
         internal ICode _code;
         internal IPlayer _player;
 
-        private bool _isHeld;
         public bool IsFirst { get; set; }
-        private GameObject _gvrReticlePointer;
         private Text _infoText;
-        private GvrPointerGraphicRaycaster pointerScript;
 
 
         internal bool _isContextMenuShown = false;
         internal bool _isSceneMenuShown = false;
-
-        protected override void Awake()
-        {
-            base.Awake();
-            _isHeld = false;
-            _gvrReticlePointer = GameObject.Find("GvrReticlePointer");
-
-            pointerScript = GetComponent<GvrPointerGraphicRaycaster>();
-        }
 
         protected override void Start()
         {

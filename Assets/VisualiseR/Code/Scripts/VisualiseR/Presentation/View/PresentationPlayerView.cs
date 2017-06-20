@@ -25,8 +25,6 @@ namespace VisualiseR.Presentation
         private GameObject _globalElements;
         internal GameObject _contextView;
         private Transform _playerGlobal;
-        List<Vector3> _remainingClientPositions = new List<Vector3>();
-
         
         protected override void Awake()
         {
