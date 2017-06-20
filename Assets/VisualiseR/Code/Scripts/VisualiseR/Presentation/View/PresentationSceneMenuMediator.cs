@@ -43,9 +43,10 @@ namespace VisualiseR.Presentation
             _view.ShowPreviousSignal.AddListener(OnShowPrevious);
             _view.ShowAllSignal.AddListener(OnShowAll);
             _view.ShowTimerSignal.AddListener(OnShowTimerSignal);
-            _view.ShowLaserSignal.AddListener(OnShowLaser);
+            _view.ShowLaserSignal.AddListener(OnShowLaserClick);
             _view.ChangeClockTypesSignal.AddListener(OnClockTypeChanged);
             TimerRunDownSignal.AddListener(TimerRunDown);
+            ShowLaserSignal.AddListener(OnShowLaser);
         }
 
         private void OnShowPrevious(IPlayer player, ISlideMedium medium)
@@ -61,7 +62,7 @@ namespace VisualiseR.Presentation
             _view.ShowPreviousSignal.RemoveListener(OnShowPrevious);
             _view.ShowAllSignal.RemoveListener(OnShowAll);
             _view.ShowTimerSignal.RemoveListener(OnShowTimerSignal);
-            _view.ShowLaserSignal.AddListener(OnShowLaser);
+            _view.ShowLaserSignal.AddListener(OnShowLaserClick);
             _view.ChangeClockTypesSignal.AddListener(OnClockTypeChanged);
             TimerRunDownSignal.RemoveListener(TimerRunDown);
         }
@@ -97,7 +98,7 @@ namespace VisualiseR.Presentation
             ShowAllSignal.Dispatch();
         }
 
-        private void OnShowLaser(bool show)
+        private void OnShowLaserClick(bool show)
         {
             ShowLaserSignal.Dispatch(show);
         }
@@ -105,6 +106,12 @@ namespace VisualiseR.Presentation
         private void OnClockTypeChanged(ClockType type)
         {
             ChangeClockTypeSignal.Dispatch(type);
+        }
+
+        private void OnShowLaser(bool show)
+        {
+            _view._isLaserShown = show;
+            _view.ChangeLaserText();
         }
     }
 }

@@ -195,9 +195,14 @@ namespace VisualiseR.Presentation
         public void OnShowLaserButtonClick(BaseEventData data)
         {
             _isLaserShown = !_isLaserShown;
-            _showLaserButtonText.text = _isLaserShown ? "Hide Laser" : "Show Laser";
+//            ChangeLaserText();
             ShowLaserSignal.Dispatch(_isLaserShown);
             Hide();
+        }
+
+        internal void ChangeLaserText()
+        {
+            _showLaserButtonText.text = _isLaserShown ? "Hide Laser" : "Show Laser";
         }
 
 

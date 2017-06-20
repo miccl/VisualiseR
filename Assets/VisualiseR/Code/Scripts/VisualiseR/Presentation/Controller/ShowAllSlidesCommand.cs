@@ -21,6 +21,9 @@ namespace VisualiseR.Presentation
         private static readonly float POS_Y_DISTANCE = 10;
         private GameObject _simpleScreenParent;
 
+        [Inject]
+        public ShowLaserSignal ShowLaserSignal { get; set; }
+        
         [Inject(ContextKeys.CONTEXT_VIEW)]
         public GameObject _contextView { get; set; }
 
@@ -35,6 +38,7 @@ namespace VisualiseR.Presentation
         {
             var screen = DeactivateScreen();
             DeactivateWalls();
+            ShowLaserSignal.Dispatch(false);
             return screen;
         }
 
