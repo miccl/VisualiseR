@@ -15,7 +15,7 @@ namespace VisualiseR.Presentation
         private static readonly float SPAWN_DISTANCE = 20;
         private static readonly float START_ANGLE = 180;
         private static readonly float END_ANGLE = 360;
-        private static readonly float MIN_AGNLE_BETWEEN_ELEMENTS = 20;
+        private static readonly float MIN_ANGLE_BETWEEN_ELEMENTS = 30;
         private static readonly float MAX_STAGES = 3;
         private static readonly float START_POS_Y = 5;
         private static readonly float POS_Y_DISTANCE = 10;
@@ -74,7 +74,7 @@ namespace VisualiseR.Presentation
         private List<Vector3> GetPositions(ISlideMedium slides)
         {
             return ScreenPositionUtil.ComputeSpawnPositionsWithAngle(SPAWN_DISTANCE, slides.Slides.Count, START_ANGLE, END_ANGLE,
-                MIN_AGNLE_BETWEEN_ELEMENTS, MAX_STAGES, START_POS_Y, POS_Y_DISTANCE, Camera.main.transform.position.x, Camera.main.transform.position.z);
+                MIN_ANGLE_BETWEEN_ELEMENTS, MAX_STAGES, START_POS_Y, POS_Y_DISTANCE, Camera.main.transform.position.x, Camera.main.transform.position.z);
         }
 
         private void InstantiateSimpleScreenParent()

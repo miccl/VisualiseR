@@ -19,9 +19,10 @@ namespace VisualiseR.Presentation
 
         public override void Execute()
         {
-            var screen = ActivateScreen();
+            Debug.Log("Slide: " + _slide);
+            var screens = ActivateScreen();
             ActivateEnvironment();
-            PresentationScreenView screenView = screen.GetComponent<PresentationScreenView>();
+            PresentationScreenView screenView = screens.GetComponentInChildren<PresentationScreenView>();
             screenView._medium.SetCurrentSlide(_slide);
             Logger.InfoFormat("Selected slide '{0}'", _slide);
             SlidePositionChangedSignal.Dispatch();
@@ -29,9 +30,9 @@ namespace VisualiseR.Presentation
 
         private GameObject ActivateScreen()
         {
-            GameObject screen = _contextView.transform.Find("Screens").transform.gameObject;
-            screen.SetActive(true);
-            return screen;
+            GameObject screens = _contextView.transform.Find("Screens").transform.gameObject;
+            screens.SetActive(true);
+            return screens;
         }
 
         private void ActivateEnvironment()
