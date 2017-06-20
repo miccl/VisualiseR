@@ -6,7 +6,6 @@ namespace VisualiseR.Common
 {
     /// <summary>
     /// Handles connecting to the photon network and instantiating the player.
-    ///
     /// </summary>
     public class NetworkController : View
     {

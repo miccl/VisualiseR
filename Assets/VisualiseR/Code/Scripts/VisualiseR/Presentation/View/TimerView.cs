@@ -9,6 +9,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// View for the timer clock.
+    /// </summary>
     public class TimerView : View
     {
         public Signal TimerRunDownSignal = new Signal();

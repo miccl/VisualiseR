@@ -2,6 +2,9 @@
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// Mediator for the <see cref="TimerView"/>
+    /// </summary>
     public class TimerMediator : Mediator
     {
         [Inject]

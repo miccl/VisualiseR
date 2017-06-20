@@ -8,6 +8,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// View for the screen.
+    /// </summary>
     public class CodeReviewScreenView : View
     {
         public Signal<Code> NextCodeSignal = new Signal<Code>();

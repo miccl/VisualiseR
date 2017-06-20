@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// Mediator for the <see cref="PileView"/>
+    /// </summary>
     public class PileMediator : Mediator
     {
         [Inject]

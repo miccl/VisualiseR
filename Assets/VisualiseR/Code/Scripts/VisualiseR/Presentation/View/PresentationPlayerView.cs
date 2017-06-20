@@ -6,6 +6,10 @@ using VisualiseR.Util;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// View of the player.
+    /// Shows the laser.
+    /// </summary>
     public class PresentationPlayerView : View
     {
         public static readonly int AMOUNT_OF_SEATS = 5;

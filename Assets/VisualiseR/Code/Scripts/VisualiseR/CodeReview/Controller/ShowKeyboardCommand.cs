@@ -1,10 +1,12 @@
-﻿using System;
-using strange.extensions.command.impl;
+﻿using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using UnityEngine;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// Command to show the virtual keyboard.
+    /// </summary>
     public class ShowKeyboardCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(ShowKeyboardCommand));

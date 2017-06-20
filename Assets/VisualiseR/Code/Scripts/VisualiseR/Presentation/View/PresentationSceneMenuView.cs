@@ -8,6 +8,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// View of the scene menu.
+    /// </summary>
     public class PresentationSceneMenuView : View
     {
         private JCsLogger Logger;

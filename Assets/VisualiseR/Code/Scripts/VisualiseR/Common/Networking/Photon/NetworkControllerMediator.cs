@@ -3,6 +3,9 @@ using VisualiseR.Presentation;
 
 namespace VisualiseR.Common
 {
+    /// <summary>
+    /// Signal to instantiate the <see cref="NetworkController"/>
+    /// </summary>
     public class NetworkControllerMediator : Mediator
     {
         [Inject]

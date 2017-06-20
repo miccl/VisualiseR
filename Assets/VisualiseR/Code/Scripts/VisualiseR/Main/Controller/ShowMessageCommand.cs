@@ -5,6 +5,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// Shows a <see cref="Message"/>
+    ///  </summary>
     public class ShowMessageCommand : Command
     {
         [Inject]

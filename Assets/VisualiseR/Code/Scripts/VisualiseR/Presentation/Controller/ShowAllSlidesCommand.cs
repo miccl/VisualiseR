@@ -8,6 +8,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// Command to show all slides in the scene.
+    /// </summary>
     public class ShowAllSlidesCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(ShowAllSlidesCommand));

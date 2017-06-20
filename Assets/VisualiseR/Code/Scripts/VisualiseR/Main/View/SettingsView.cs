@@ -8,6 +8,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// View for the settings menu.
+    /// </summary>
     public class SettingsView : View
     {
         private const string CHOOSE_AVATAR_TEXT = "Choose a avatar...";

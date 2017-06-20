@@ -4,6 +4,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.Common
 {
+    /// <summary>
+    /// Command to instantiate the <see cref="Player"/>
+    /// </summary>
     public class InstantiatePlayerCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(InstantiatePlayerCommand));

@@ -5,6 +5,9 @@ using VisualiseR.CodeReview;
 
 namespace VisualiseR.Util
 {
+    /// <summary>
+    /// Helper class for working with directories.
+    /// </summary>
     public static class DirectoryUtil
     {
         public static bool IsValidNotEmptyDirectory(string directoryPath)

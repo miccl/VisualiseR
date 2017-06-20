@@ -8,6 +8,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// View of the context menu.
+    /// </summary>
     public class CodeReviewContextMenuView : View
     {
         public Signal<Code, Rate> CodeRatingSelected = new Signal<Code, Rate>();

@@ -6,6 +6,9 @@ using VisualiseR.Common;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// Command to show the scene menu.
+    /// </summary>
     public class ShowPresentationSceneMenuCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(ShowPresentationSceneMenuCommand));

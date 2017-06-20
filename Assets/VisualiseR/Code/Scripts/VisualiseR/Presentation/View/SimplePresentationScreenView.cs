@@ -9,6 +9,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// View of the simple screens used in the command <see cref="ShowAllSlidesCommand"/>
+    /// </summary>
     public class SimplePresentationScreenView : View
     {
         public Signal<Slide> SlideClickedSignal = new Signal<Slide>();

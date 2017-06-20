@@ -1,8 +1,10 @@
-﻿using System;
-using strange.extensions.mediation.impl;
+﻿using strange.extensions.mediation.impl;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// Mediator for the <see cref="CodeReviewContextMenuView"/>
+    /// </summary>
     public class CodeReviewContextMenuMediator : Mediator
     {
         [Inject]

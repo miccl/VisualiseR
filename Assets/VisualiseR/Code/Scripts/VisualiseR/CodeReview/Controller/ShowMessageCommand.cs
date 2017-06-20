@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// Command to show a fading message in the scene.
+    /// </summary>
     public class ShowMessageCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(ShowMessageCommand));

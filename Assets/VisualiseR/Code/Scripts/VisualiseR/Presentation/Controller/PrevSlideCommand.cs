@@ -4,6 +4,9 @@ using VisualiseR.Common;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// Command to get the previous slide.
+    /// </summary>
     public class PrevSlideCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(PrevSlideCommand));

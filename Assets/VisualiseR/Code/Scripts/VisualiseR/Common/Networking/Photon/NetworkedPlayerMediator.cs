@@ -2,6 +2,9 @@ using strange.extensions.mediation.impl;
 
 namespace VisualiseR.Common
 {
+    /// <summary>
+    /// Mediator for the <see cref="NetworkedPlayer"/>
+    /// </summary>
     public class NetworkedPlayerMediator : Mediator
     {
         [Inject]

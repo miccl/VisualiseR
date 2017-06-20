@@ -2,6 +2,9 @@
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// Mediator for the <see cref="HelpView"/>
+    /// </summary>
     public class HelpMediator : Mediator
     {
         [Inject]

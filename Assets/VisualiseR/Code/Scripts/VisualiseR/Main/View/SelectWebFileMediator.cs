@@ -2,6 +2,9 @@
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// Mediator for the <see cref="SelectWebFileView"/>
+    /// </summary>
     public class SelectWebFileMediator : Mediator
     {
         [Inject]

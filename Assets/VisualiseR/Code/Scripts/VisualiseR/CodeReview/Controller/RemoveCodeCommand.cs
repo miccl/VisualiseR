@@ -4,7 +4,7 @@ using VisualiseR.Util;
 namespace VisualiseR.CodeReview
 {
     /// <summary>
-    /// Delete
+    /// Command to remove code from the disk.
     /// </summary>
     public class RemoveCodeCommand : Command
     {

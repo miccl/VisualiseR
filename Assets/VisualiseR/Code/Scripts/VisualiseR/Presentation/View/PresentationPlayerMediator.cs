@@ -1,10 +1,11 @@
-﻿using strange.extensions.context.api;
-using strange.extensions.mediation.impl;
-using UnityEngine;
+﻿using strange.extensions.mediation.impl;
 using VisualiseR.Common;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// Mediator for the <see cref="PresentationPlayerView"/>
+    /// </summary>
     public class PresentationPlayerMediator : Mediator
     {
         [Inject]

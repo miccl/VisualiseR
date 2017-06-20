@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace VisualiseR.Util
 {
+    /// <summary>
+    /// Helper class for player pref.
+    /// </summary>
     public static class PlayerPrefsUtil
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(PlayerPrefsUtil));

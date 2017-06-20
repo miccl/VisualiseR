@@ -9,6 +9,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// Mediator for the <see cref="CodeReviewControllerView"/>
+    /// </summary>
     public class CodeReviewControllerMediator : Mediator
     {
         [Inject]

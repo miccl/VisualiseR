@@ -6,6 +6,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// View for the join room menu.
+    /// </summary>
     public class JoinRoomView : View
     {
         internal Signal<string> JoinRoomButtonClickSignal = new Signal<string>();

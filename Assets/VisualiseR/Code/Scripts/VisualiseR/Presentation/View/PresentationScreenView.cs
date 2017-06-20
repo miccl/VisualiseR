@@ -2,12 +2,14 @@ using System.Collections.Generic;
 using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
-using UnityEngine.UI;
 using VisualiseR.Common;
 using VisualiseR.Util;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// View of the main screen.
+    /// </summary>
     public class PresentationScreenView : View
     {
         private JCsLogger Logger;

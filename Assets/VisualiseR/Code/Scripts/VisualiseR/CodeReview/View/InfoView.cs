@@ -6,6 +6,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// View for the information screen.
+    /// </summary>
     public class InfoView : View
     {
         internal ICode _code;

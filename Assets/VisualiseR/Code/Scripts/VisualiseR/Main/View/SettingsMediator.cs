@@ -4,6 +4,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// Mediator for the <see cref="SettingsView"/>
+    /// </summary>
     public class SettingsMediator : Mediator
     {
         [Inject]

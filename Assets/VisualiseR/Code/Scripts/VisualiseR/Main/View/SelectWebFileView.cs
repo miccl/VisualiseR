@@ -2,10 +2,12 @@
 using strange.extensions.signal.impl;
 using UnityEngine;
 using UnityEngine.UI;
-using VisualiseR.Util;
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// View for the web file selection dialog.
+    /// </summary>
     public class SelectWebFileView : View
     {
         public Signal<string> UrlSelected = new Signal<string>();

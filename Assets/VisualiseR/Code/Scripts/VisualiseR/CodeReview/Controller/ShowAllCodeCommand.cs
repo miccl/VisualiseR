@@ -7,6 +7,10 @@ using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// Command to show all code fragments in the scene.
+    /// Uses <see cref="SimpleCodeReviewScreenView"/> for  the display.
+    /// </summary>
     public class ShowAllCodeCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(ShowAllCodeCommand));

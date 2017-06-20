@@ -6,6 +6,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// View for the main menu.
+    /// </summary>
     public class MainMenuView : View
     {
         public Signal<Message> MessageSignal = new Signal<Message>();

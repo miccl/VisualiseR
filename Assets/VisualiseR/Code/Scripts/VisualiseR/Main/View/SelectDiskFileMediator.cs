@@ -3,6 +3,9 @@ using VisualiseR.Common;
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// Mediator for the <see cref="SelectDiskFileView"/>
+    /// </summary>
     public class SelectDiskFileMediator : Mediator
     {
         [Inject]

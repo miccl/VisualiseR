@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace VisualiseR.Util
 {
+    /// <summary>
+    /// Helper class for enums.
+    /// </summary>
     public static class EnumUtil
     {
         public static T ToEnum<T>(this string value)

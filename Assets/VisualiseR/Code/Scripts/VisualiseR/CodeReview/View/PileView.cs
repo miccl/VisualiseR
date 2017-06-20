@@ -7,6 +7,10 @@ using UnityEngine.UI;
 
 namespace VisualiseR.CodeReview
 {
+    
+    /// <summary>
+    /// View for the rating piles.
+    /// </summary>
     public class PileView : View
     {
         public Signal<Rate> RatePileSelectedSignal = new Signal<Rate>();

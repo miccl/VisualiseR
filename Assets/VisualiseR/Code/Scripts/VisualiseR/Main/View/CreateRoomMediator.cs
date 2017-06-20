@@ -1,9 +1,11 @@
 ﻿using strange.extensions.mediation.impl;
-using UnityEngine;
 using VisualiseR.Common;
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// Mediator for the <see cref="CreateRoomView"/>
+    /// </summary>
     public class CreateRoomMediator : Mediator
     {
         [Inject]

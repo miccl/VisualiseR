@@ -2,6 +2,9 @@
 
 namespace VisualiseR.Util
 {
+    /// <summary>
+    /// Helper class for time.
+    /// </summary>
     public static class TimeUtil
     {
         private static readonly string TIME_FORMAT = "{0:0}:{1:00}";

@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace VisualiseR.Util
 {
+    /// <summary>
+    /// Helper class to calculate the positions of the screens.
+    /// </summary>
     public static class ScreenPositionUtil
     {
         public static List<Vector3> ComputeSpawnPositionsWithAngle(float spawnDistance, float angleBetweenElements,

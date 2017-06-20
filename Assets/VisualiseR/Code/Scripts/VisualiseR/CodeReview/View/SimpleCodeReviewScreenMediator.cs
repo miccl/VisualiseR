@@ -3,6 +3,9 @@ using VisualiseR.Common;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// Mediator for the <see cref="SimpleCodeReviewScreenView"/>
+    /// </summary>
     public class SimpleCodeReviewScreenMediator : Mediator
     {
         [Inject]

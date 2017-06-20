@@ -1,8 +1,10 @@
-﻿using System;
-using strange.extensions.command.impl;
+﻿using strange.extensions.command.impl;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// Command to save comment of a <see cref="Code"/>.
+    /// </summary>
     public class SaveCommentCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(SaveCommentSignal));

@@ -9,6 +9,9 @@ using VisualiseR.Main;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// Context for the code review scene.
+    /// </summary>
     public class CodeReviewContext : MVCSContext
     {
         public CodeReviewContext(MonoBehaviour view) : base(view)

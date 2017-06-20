@@ -5,6 +5,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// Command to export all ratings and comments from the code fragements to txt.
+    /// </summary>
     public class ExportToTxtCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(ExportToTxtCommand));

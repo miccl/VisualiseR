@@ -5,6 +5,9 @@ using JetBrains.Annotations;
 
 namespace VisualiseR.Util
 {
+    /// <summary>
+    /// Helper class for files.
+    /// </summary>
     public static class FileUtil
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(FileUtil));

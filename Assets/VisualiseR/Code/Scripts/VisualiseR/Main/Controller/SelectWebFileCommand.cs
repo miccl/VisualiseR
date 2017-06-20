@@ -5,9 +5,12 @@ using UnityEngine;
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// Command to select a web file.
+    /// Initialises the web file selection dialog.
+    /// </summary>
     public class SelectWebFileCommand : Command
     {
-        
         private static readonly JCsLogger Logger = new JCsLogger(typeof(SelectWebFileCommand));
 
         [Inject(ContextKeys.CONTEXT_VIEW)]

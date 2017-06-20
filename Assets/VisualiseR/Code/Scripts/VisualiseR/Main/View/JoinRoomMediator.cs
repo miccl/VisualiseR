@@ -2,6 +2,9 @@
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// Mediator for the <see cref="JoinRoomView"/>
+    /// </summary>
     public class JoinRoomMediator : Mediator
     {
         [Inject]

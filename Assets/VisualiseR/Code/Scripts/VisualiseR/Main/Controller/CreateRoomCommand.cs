@@ -7,8 +7,7 @@ using VisualiseR.Util;
 namespace VisualiseR.Main
 {
     /// <summary>
-    /// Creates a <see cref="IRoom"/>.
-    /// Constructs a Room with the choosen <see cref="RoomType"/> and <see cref="IPictureMedium"/>.
+    /// Command to construct a <see cref="IRoom"/> with the choosen <see cref="RoomType"/> and <see cref="IPictureMedium"/>.
     /// Adds the <see cref="IPlayer"/> to the Room .
     /// </summary>
     public class CreateRoomCommand : Command

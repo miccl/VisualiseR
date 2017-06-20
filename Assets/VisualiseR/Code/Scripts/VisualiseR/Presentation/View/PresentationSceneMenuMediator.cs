@@ -3,6 +3,9 @@ using VisualiseR.Common;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// Mediator for the <see cref="PresentationSceneMenuView"/>
+    /// </summary>
     public class PresentationSceneMenuMediator : Mediator
     {
         [Inject]

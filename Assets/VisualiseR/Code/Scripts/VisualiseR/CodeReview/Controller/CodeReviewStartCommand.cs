@@ -5,13 +5,12 @@ using UnityEngine.VR;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    ///  Command to initialises the scene.
+    /// </summary>
     public class CodeReviewStartCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(CodeReviewStartCommand));
-
-        [Inject(ContextKeys.CONTEXT_VIEW)]
-        public GameObject contextView { get; set; }
-
 
         public override void Execute()
         {

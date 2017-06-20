@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// Mediator for the <see cref="InfoView"/>
+    /// </summary>
     public class InfoMediator : Mediator
     {
         [Inject]

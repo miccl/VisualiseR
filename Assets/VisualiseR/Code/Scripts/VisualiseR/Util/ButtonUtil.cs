@@ -1,8 +1,10 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace VisualiseR.Util
 {
+    /// <summary>
+    /// Helper class for the buttons.
+    /// </summary>
     public static class ButtonUtil
     {
         public static readonly string SUBMIT = "Submit";

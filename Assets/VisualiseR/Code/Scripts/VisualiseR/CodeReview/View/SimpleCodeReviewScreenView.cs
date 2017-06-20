@@ -7,6 +7,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// View for the simple screens, which are used in the command <see cref="ShowAllCodeCommand"/>.
+    /// </summary>
     public class SimpleCodeReviewScreenView : View
     {
         public Signal<ICode, IPlayer> CodeSelectedSignal = new Signal<ICode, IPlayer>();

@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// Command to show the scene menu.
+    /// </summary>
     public class ShowCodeReviewSceneMenuCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(ShowCodeReviewSceneMenuCommand));

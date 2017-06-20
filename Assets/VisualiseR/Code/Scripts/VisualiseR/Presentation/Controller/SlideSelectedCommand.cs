@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// Command to show the selected slide on the main screen.
+    /// </summary>
     public class SlideSelectedCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(SlideSelectedCommand));

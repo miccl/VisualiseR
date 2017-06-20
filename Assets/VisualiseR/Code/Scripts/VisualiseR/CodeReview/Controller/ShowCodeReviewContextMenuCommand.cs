@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// Command to show the context menu.
+    /// </summary>
     public class ShowCodeReviewContextMenuCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(ShowCodeReviewContextMenuCommand));

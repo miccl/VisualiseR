@@ -1,5 +1,4 @@
-﻿using strange.examples.multiplecontexts.game;
-using strange.extensions.mediation.impl;
+﻿using strange.extensions.mediation.impl;
 using UnityEngine;
 using UnityEngine.UI;
 using VisualiseR.Util;
@@ -7,6 +6,9 @@ using VisualiseR.Util;
 namespace VisualiseR.Main
 
 {
+    /// <summary>
+    /// View for the about dialog.
+    /// </summary>
     public class AboutView : View
     {
         private static readonly string ABOUT_TEXT = "This is some about!!!";

@@ -3,6 +3,9 @@ using VisualiseR.Common;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// Acess list for the different types of players.
+    /// </summary>
     public static class AcessList
     {
         public static readonly List<PlayerType> NAVIGATE_CODE = new List<PlayerType> {PlayerType.Host};

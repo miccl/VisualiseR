@@ -5,9 +5,11 @@ using UnityEngine;
 
 namespace VisualiseR.Util
 {
+    /// <summary>
+    /// Helper class for web.
+    /// </summary>
     public static class WebUtil
     {
-
         private static readonly JCsLogger Logger = new JCsLogger(typeof(WebUtil));
 
         public static bool IsValidUrl([NotNull] string url)

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
@@ -10,6 +9,9 @@ using VisualiseR.Util;
 namespace VisualiseR.Main
 
 {
+    /// <summary>
+    /// View for the create room menu.
+    /// </summary>
     public class CreateRoomView : View
     {
         private static readonly string CHOOSE_MEDIUM_TEXT = " Choose pictureMedium...";

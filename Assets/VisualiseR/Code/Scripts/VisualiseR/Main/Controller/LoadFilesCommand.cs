@@ -8,7 +8,8 @@ using VisualiseR.Util;
 namespace VisualiseR.Main
 {
     /// <summary>
-    /// Loads the files from Disk and creates _medium model.
+    /// Command to load the files from disk.
+    /// Creates a  <see cref="IPictureMedium"/> model.
     /// </summary>
     public class LoadFilesCommand : Command
     {

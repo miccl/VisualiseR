@@ -8,6 +8,9 @@ using VisualiseR.Main;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// Context for the presentation scene.
+    /// </summary>
     public class PresentationContext : MVCSContext
     {
         public PresentationContext(MonoBehaviour view) : base(view)

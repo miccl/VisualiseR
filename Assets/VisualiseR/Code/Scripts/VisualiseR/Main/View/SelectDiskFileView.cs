@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// View for the disk file dialog.
+    /// Uses <see cref="FileBrowser"/>.
+    /// </summary>
     public class SelectDiskFileView : View
     {
         public Signal<string> SelectedFileSignal = new Signal<string>();

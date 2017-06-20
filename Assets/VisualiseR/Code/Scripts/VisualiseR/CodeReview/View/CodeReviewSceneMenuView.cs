@@ -7,12 +7,14 @@ using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// View of the scene menu.
+    /// </summary>
     public class CodeReviewSceneMenuView : View
     {
         public Signal ExportButtonClickSignal = new Signal();
         public Signal SceneMenuCanceledSignal = new Signal();
         public Signal ShowAllCodeSignal = new Signal();
-        public Signal<bool> ShowLaserSignal = new Signal<bool>();
 
         internal ICodeMedium _medium;
         private Text _showLaserButtonText;

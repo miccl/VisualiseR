@@ -1,9 +1,11 @@
-﻿using System;
-using strange.extensions.mediation.impl;
+﻿using strange.extensions.mediation.impl;
 using UnityEngine;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// Mediator for the <see cref="CodeReviewScreenView"/>
+    /// </summary>
     public class CodeReviewScreenMediator : Mediator
     {
         [Inject]

@@ -8,6 +8,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// Command to load the chosen files.
+    /// </summary>
     public class LoadFilesCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(LoadFilesCommand));

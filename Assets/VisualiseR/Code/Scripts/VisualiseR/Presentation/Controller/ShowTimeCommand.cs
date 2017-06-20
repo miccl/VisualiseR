@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// Command to show the time.
+    /// </summary>
     public class ShowTimeCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(ShowTimeCommand));
