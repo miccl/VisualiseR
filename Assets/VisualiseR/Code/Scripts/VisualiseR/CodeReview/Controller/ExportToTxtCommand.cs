@@ -31,7 +31,7 @@ namespace VisualiseR.CodeReview
 
         private string GetDirPath()
         {
-            string dirPath = FileUtil.GetDirectoryPath(_medium.GetCodeFragment(0).Pic.Path);
+            string dirPath = FileUtil.GetParentDirectory(_medium.GetCodeFragment(0).Pic.Path);
             string parentDirPath = DirectoryUtil.GetParentDirectory(dirPath);
             string filePath = parentDirPath + Path.DirectorySeparatorChar + FILE_NAME;
             FileUtil.CreateFileIfNotExists(filePath);

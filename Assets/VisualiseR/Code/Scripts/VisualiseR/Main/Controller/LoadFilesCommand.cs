@@ -73,7 +73,7 @@ namespace VisualiseR.Main
         /// Converts the file with the given file path.
         /// Valid file types are image (<see cref="FileUtil.ImageExtensions"/>), code (<see cref="FileUtil.CodeExtensions"/>)
         /// and pdf (<see cref="FileUtil.PdfExtensions"/>).
-        /// Otherwise <code>null</code> is returned.
+        /// Otherwise <c>null</c> is returned.
         /// </summary>
         /// <param name="filePath"></param>
         /// <returns></returns>

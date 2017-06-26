@@ -116,7 +116,6 @@ namespace VisualiseR.CodeReview
             injectionBinder.Bind<CommentChangedSignal>().ToSingleton();
             injectionBinder.Bind<CodeReviewSceneMenuIsShownSignal>().ToSingleton();
             injectionBinder.Bind<NextCodeSignal>().ToSingleton();
-            injectionBinder.Bind<ShowLaserSignal>().ToSingleton();
         }
     }
 }

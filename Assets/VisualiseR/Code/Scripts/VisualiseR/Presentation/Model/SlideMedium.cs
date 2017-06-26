@@ -34,11 +34,6 @@ namespace VisualiseR.Presentation
             return Slides.ElementAt(pos);
         }
 
-        public void SetCurrentSlide(ISlide slide)
-        {
-            CurrentPos = Slides.IndexOf(slide);
-        }
-
         public bool IsEmpty()
         {
             return String.IsNullOrEmpty(Name) && Slides.Count == 0;
@@ -71,6 +66,15 @@ namespace VisualiseR.Presentation
         {
             CurrentPos = Slides.Count - 1;
             return GetSlide(CurrentPos);
+        }
+
+        public bool SetCurrentSlide(ISlide slide)
+        {
+            var pos = Slides.IndexOf(slide);
+            if (pos == -1) return false;
+            
+            CurrentPos = pos;
+            return false;
         }
 
         public ISlide CurrentSlide()

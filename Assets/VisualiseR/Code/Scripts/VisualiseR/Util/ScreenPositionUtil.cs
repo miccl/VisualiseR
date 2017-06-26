@@ -10,6 +10,15 @@ namespace VisualiseR.Util
     /// </summary>
     public static class ScreenPositionUtil
     {
+        /// <summary>
+        /// Compute spawn positions with angle betweeenElements
+        /// </summary>
+        /// <param name="spawnDistance"></param>
+        /// <param name="angleBetweenElements"></param>
+        /// <param name="radius"></param>
+        /// <param name="startAngle"></param>
+        /// <param name="posY"></param>
+        /// <returns></returns>
         public static List<Vector3> ComputeSpawnPositionsWithAngle(float spawnDistance, float angleBetweenElements,
             int radius, float startAngle, float posY)
         {
@@ -17,7 +26,7 @@ namespace VisualiseR.Util
             float currAngle = 0;
             while (currAngle <= radius)
             {
-                Vector3? currPos = ComputeSpawnPositionFromStartPosition(spawnDistance, currAngle, startAngle, posY);
+                Vector3? currPos = ComputeSpawnPosition(spawnDistance, currAngle, startAngle, posY);
                 if (currPos == null)
                 {
                     break;
@@ -29,6 +38,15 @@ namespace VisualiseR.Util
             return positions;
         }
 
+        /// <summary>
+        /// Compute spawn positions with number of elements.
+        /// </summary>
+        /// <param name="spawnDistance"></param>
+        /// <param name="numberOfElements"></param>
+        /// <param name="radius"></param>
+        /// <param name="startAngle"></param>
+        /// <param name="posY"></param>
+        /// <returns></returns>
         public static List<Vector3> ComputeSpawnPositionsWithElements(float spawnDistance, int numberOfElements,
             int radius, float startAngle, float posY)
         {
@@ -38,7 +56,7 @@ namespace VisualiseR.Util
             float currentAngle = 0;
             for (int i = 0; i < numberOfElements; i++)
             {
-                Vector3? currPos = ComputeSpawnPositionFromStartPosition(spawnDistance, currentAngle, startAngle, posY);
+                Vector3? currPos = ComputeSpawnPosition(spawnDistance, currentAngle, startAngle, posY);
                 if (currPos == null)
                 {
                     break;
@@ -49,8 +67,21 @@ namespace VisualiseR.Util
             return positions;
         }
 
-        public static List<Vector3> ComputeSpawnPositionsWithAngle(float spawnDistance, int numberOfElements, float startAngle, float endAngle, float minAngleBetweenElements,
-            float maxStages, float startPosY, float posYDistance, float posX, float posZ)
+        /// <summary>
+        /// Compute spawn positions with angle.
+        /// </summary>
+        /// <param name="spawnDistance"></param>
+        /// <param name="numberOfElements"></param>
+        /// <param name="startAngle"></param>
+        /// <param name="endAngle"></param>
+        /// <param name="minAngleBetweenElements"></param>
+        /// <param name="maxStages"></param>
+        /// <param name="startPosY"></param>
+        /// <param name="posYDistance"></param>
+        /// <param name="posX"></param>
+        /// <param name="posZ"></param>
+        /// <returns></returns>
+        public static List<Vector3> ComputeSpawnPositionsWithAngle(float spawnDistance, int numberOfElements, float startAngle, float endAngle, float minAngleBetweenElements, float maxStages, float startPosY, float posYDistance, float posX, float posZ)
         {
             float radius = endAngle - startAngle;
             int stages = 1;
@@ -81,6 +112,19 @@ namespace VisualiseR.Util
 
         }
 
+        /// <summary>
+        /// Computes spawn positions.
+        /// </summary>
+        /// <param name="spawnDistance">distance between player and elements</param>
+        /// <param name="angleBetweenElements">angle between elements</param>
+        /// <param name="startAngle"></param>
+        /// <param name="endAngle"></param>
+        /// <param name="startPosY"></param>
+        /// <param name="posYDistance"></param>
+        /// <param name="yTimes"></param>
+        /// <param name="posX"></param>
+        /// <param name="posZ"></param>
+        /// <returns></returns>
         public static List<Vector3> ComputeSpawnPositions(float spawnDistance, float angleBetweenElements,
             float startAngle, float endAngle, float startPosY, float posYDistance, float yTimes, float posX, float posZ)
         {
@@ -101,15 +145,18 @@ namespace VisualiseR.Util
             return positions;
         }
 
+        /// <summary>
+        /// Computes spawn position from an start angle.
+        /// </summary>
+        /// <param name="spawnDistance"></param>
+        /// <param name="spawnAngle"></param>
+        /// <param name="startAngle"></param>
+        /// <param name="posY"></param>
+        /// <returns></returns>
         [CanBeNull]
-        public static Vector3? ComputeSpawnPositionFromStartPosition(float spawnDistance, float spawnAngle,
+        public static Vector3? ComputeSpawnPosition(float spawnDistance, float spawnAngle,
             float startAngle, float posY)
         {
-            if (spawnAngle > 360)
-            {
-                return null;
-            }
-
             float spawnAngleFromStartPosition = spawnAngle + startAngle;
 
             return ComputeSpawnPosition(spawnDistance, spawnAngleFromStartPosition, posY);

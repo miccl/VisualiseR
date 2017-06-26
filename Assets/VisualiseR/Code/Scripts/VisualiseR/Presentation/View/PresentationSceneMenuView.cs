@@ -40,6 +40,9 @@ namespace VisualiseR.Presentation
         
         internal bool _isLaserShown = false;
 
+        /// <summary>
+        /// Initialises the variables.
+        /// </summary>
         protected override void Awake()
         {
             base.Awake();
@@ -58,6 +61,12 @@ namespace VisualiseR.Presentation
         }
 
 
+        /// <summary>
+        /// Initialises the view.
+        /// </summary>
+        /// <param name="contextView"></param>
+        /// <param name="player"></param>
+        /// <param name="medium"></param>
         internal void Init(GameObject contextView, IPlayer player, ISlideMedium medium)
         {
             _contextView = contextView;
@@ -108,6 +117,10 @@ namespace VisualiseR.Presentation
             }
         }
 
+        /// <summary>
+        /// Called when the timer button has been clicked.
+        /// </summary>
+        /// <param name="data"></param>
         public void OnTimerButtonClick(BaseEventData data)
         {
             _mainPanel.SetActive(false);
@@ -115,18 +128,30 @@ namespace VisualiseR.Presentation
             ShowTimerSignal.Dispatch(true);
         }
 
+        /// <summary>
+        /// Called when the show button has been clicked.
+        /// </summary>
+        /// <param name="data"></param>
         public void OnShowButtonClick(BaseEventData data)
         {
             _mainPanel.SetActive(false);
             _showPanel.SetActive(true);
         }
 
+        /// <summary>
+        /// Called when the quit button has been clicked.
+        /// </summary>
+        /// <param name="data"></param>
         public void OnQuitButtonClick(BaseEventData data)
         {
             PhotonNetwork.LeaveRoom();
             UnityUtil.LoadScene("Main");
         }
 
+        /// <summary>
+        /// Called when the cancel button has been clicked.
+        /// </summary>
+        /// <param name="data"></param>
         public void OnCancelButtonClick(BaseEventData data)
         {
             Hide();
@@ -213,6 +238,9 @@ namespace VisualiseR.Presentation
             _mainPanel.SetActive(true);
         }
 
+        /// <summary>
+        /// Hides the view.
+        /// </summary>
         private void Hide()
         {
             _mainPanel.SetActive(true);

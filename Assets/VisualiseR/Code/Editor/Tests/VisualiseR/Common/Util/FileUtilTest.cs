@@ -123,7 +123,7 @@ namespace VisualiseR.Common
                 //when
 
                 //then
-                Assert.That(FileUtil.GetDirectoryPath(jpgFile), Is.EqualTo(expectedDirectory));
+                Assert.That(FileUtil.GetParentDirectory(jpgFile), Is.EqualTo(expectedDirectory));
             }
         }
 

@@ -192,13 +192,13 @@ namespace VisualiseR.Presentation
                 return;
             }
 
-            if (ButtonUtil.SubmitPressed())
+            if (ButtonUtil.IsSubmitButtonPressed())
             {
                 NextSlide();
                 return;
             }
 
-            if (ButtonUtil.CancelPressed())
+            if (ButtonUtil.IsCancelButtonPressed())
             {
                 ShowSceneMenu();
             }

@@ -1,7 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using VisualiseR.CodeReview;
+using VisualiseR.Main;
 
 namespace VisualiseR.Util
 {
@@ -10,18 +12,31 @@ namespace VisualiseR.Util
     /// </summary>
     public static class DirectoryUtil
     {
+        /// <summary>
+        /// Returns <c>true</c> if the directory of the given path is valid and not empty.
+        /// </summary>
+        /// <param name="directoryPath">full path of the directory.</param>
+        /// <returns><c>true</c> if the directory of the given path is valid and not empty.</returns>
         public static bool IsValidNotEmptyDirectory(string directoryPath)
         {
             return Directory.Exists(directoryPath) && !IsDirectoryEmpty(directoryPath);
         }
 
-
+        /// <summary>
+        /// Returns <c>true</c> if the directory is empty.
+        /// </summary>
+        /// <param name="directoryPath">path of the directory</param>
+        /// <returns></returns>
         public static bool IsDirectoryEmpty(string directoryPath)
         {
             return !Directory.GetFileSystemEntries(directoryPath).Any();
         }
 
-
+        /// <summary>
+        /// Creates a directory if it not already exists.
+        /// </summary>
+        /// <param name="directoryPath"><full path of the directory</param>
+        /// <returns></returns>
         public static DirectoryInfo CreateDirectoryIfNotExists(string directoryPath)
         {
             if (!Directory.Exists(directoryPath))
@@ -32,6 +47,7 @@ namespace VisualiseR.Util
         }
 
         /// <summary>
+        /// Creates all directories needed for 
         /// Returns directory of unrated.
         /// </summary>
         /// <param name="mediumName"></param>
@@ -40,13 +56,19 @@ namespace VisualiseR.Util
         public static DirectoryInfo CreateDirectorysForCodeReview(string mainDir)
         {
             var mainDirInfo = CreateDirectoryIfNotExists(mainDir);
-            CreateDirectoryIfNotExists(mainDirInfo.FullName + Path.DirectorySeparatorChar + Rate.Unrated);
-            CreateDirectoryIfNotExists(mainDirInfo.FullName + Path.DirectorySeparatorChar + Rate.Uncritical);
-            CreateDirectoryIfNotExists(mainDirInfo.FullName + Path.DirectorySeparatorChar + Rate.Minor);
-            CreateDirectoryIfNotExists(mainDirInfo.FullName + Path.DirectorySeparatorChar + Rate.Critical);
+            foreach(var rate in EnumUtil.GetValues<Rate>())
+            {
+                CreateDirectoryIfNotExists(mainDirInfo.FullName + Path.DirectorySeparatorChar + rate);
+            }
             return mainDirInfo;
         }
 
+        /// <summary>
+        /// Get the directory of a specific rating.
+        /// </summary>
+        /// <param name="mainDir"></param>
+        /// <param name="rate"></param>
+        /// <returns></returns>
         public static DirectoryInfo GetRatingDirectory(string mainDir, Rate rate)
         {
             var dirPath = mainDir + Path.DirectorySeparatorChar + rate;
@@ -55,7 +77,7 @@ namespace VisualiseR.Util
 
         /// <summary>
         /// Returns the parent directory path.
-        /// Returns null, if the directory doesn't exist.
+        /// Returns <c>null</c>, if the directory doesn't exist.
         /// </summary>
         /// <param name="dirPath"></param>
         /// <returns></returns>
@@ -67,6 +89,16 @@ namespace VisualiseR.Util
                 return null;
             }
             return Directory.GetParent(dirPath).FullName;
+        }
+
+        /// <summary>
+        /// Deletes directory.
+        /// </summary>
+        /// <param name="dirPath">path of the directory</param>
+        /// <exception cref="NotImplementedException"></exception>
+        public static void DeleteDirectory(string dirPath)
+        {
+            Directory.Delete(dirPath);
         }
     }
 }

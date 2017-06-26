@@ -6,6 +6,9 @@ using VisualiseR.Common;
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Serializable]
     public class PictureMedium : IPictureMedium
     {

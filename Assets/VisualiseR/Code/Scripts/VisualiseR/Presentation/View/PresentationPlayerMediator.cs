@@ -19,7 +19,7 @@ namespace VisualiseR.Presentation
         
         [Inject]
         public ShowLoadingAnimationSignal ShowLoadingAnimationSignal { get; set; }
-        
+                
         public override void OnRegister()
         {
             PlayerInstantiatedSignal.AddListener(OnPlayerInstantiated);
@@ -27,7 +27,6 @@ namespace VisualiseR.Presentation
             ShowLoadingAnimationSignal.AddListener(OnShowLoadingAnimation);
             _view._contextView = contextView;
         }
-
 
         public override void OnRemove()
         {

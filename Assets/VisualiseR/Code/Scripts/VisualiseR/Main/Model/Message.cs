@@ -2,6 +2,9 @@
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// Class for messages to show in the scenes.
+    /// </summary>
     public class Message : IMessage
     {
         public MessageType Type { get; set; }
