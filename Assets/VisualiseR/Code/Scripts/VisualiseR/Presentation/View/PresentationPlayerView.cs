@@ -20,13 +20,19 @@ namespace VisualiseR.Presentation
         private Transform _playerGlobal;
 
         internal GameObject _contextView;
+
         private GameObject _reticlePointer;
+
         private GameObject _laser;
+
         private GameObject _globalLaser;
+
         private GameObject _globalElements;
+
         private GameObject _globalReticlePointer;
 
         private bool _isLaserShown;
+
         private bool _firstFalse;
 
 
@@ -37,13 +43,32 @@ namespace VisualiseR.Presentation
             _playerGlobal = GameObject.Find("GvrNetworkedPlayer").transform;
 
         }
-        
+
         public void Init(Player player)
         {
             _player = player;
             InitView();
         }
-        
+
+        private void InitView()
+        {
+            _laser = transform.Find("GvrLaser").gameObject;
+            _reticlePointer = _laser.transform.Find("GvrReticlePointer").gameObject;
+            _globalElements = _contextView.transform.Find("GlobalElements").gameObject;
+            _globalReticlePointer = _globalElements.transform.Find("GvrReticlePointer").gameObject;
+
+            if (_player.IsHost())
+            {
+                _laser.SetActive(true);
+                _globalElements.SetActive(false);
+                ShowLaser(false);
+            }
+            else
+            {
+                _laser.SetActive(false);
+            }
+        }
+
         internal void AdjustPosition()
         {
 
@@ -101,8 +126,6 @@ namespace VisualiseR.Presentation
             Debug.Log("ANGEFRAGTE POSITION = " + r);
             Debug.Log("GROOSSE = " + remainingClientPositions.Count);
             Vector3 pos = remainingClientPositions[r];
-//          _remainingClientPositions.RemoveAt(r);
-//            Vector3 pos = new Vector3(-9.3f, 4.4f, 0.4f);
             return pos;
         }
 
@@ -130,25 +153,6 @@ namespace VisualiseR.Presentation
             return positions;
         }
 
-
-        private void InitView()
-        {
-            _laser = transform.Find("GvrLaser").gameObject;
-            _reticlePointer = _laser.transform.Find("GvrReticlePointer").gameObject;
-            _globalElements = _contextView.transform.Find("GlobalElements").gameObject;
-            _globalReticlePointer = _globalElements.transform.Find("GvrReticlePointer").gameObject;
-
-            if (_player.IsHost())
-            {
-                _laser.SetActive(true);
-                _globalElements.SetActive(false);
-                ShowLaser(false);
-            }
-            else
-            {
-                _laser.SetActive(false);
-            }
-        }
 
         internal void ShowLaser(bool show)
         {

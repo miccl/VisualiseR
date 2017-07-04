@@ -96,7 +96,7 @@ namespace VisualiseR.Test.Util
             Assert.IsFalse(Directory.Exists(criticalDirName), "Directory '{0}' should not exist ", criticalDirName);
             
             //when
-            var mainDir = DirectoryUtil.CreateDirectorysForCodeReview(mediumName);
+            DirectoryUtil.CreateDirectorysForCodeReview(mediumName);
             
             //then
             Assert.IsTrue(Directory.Exists(mediumName), "Directory '{0}' should exist ", mediumName);

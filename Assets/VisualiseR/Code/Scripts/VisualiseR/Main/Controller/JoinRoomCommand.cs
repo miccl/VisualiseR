@@ -54,7 +54,7 @@ namespace VisualiseR.Main
                 return false;
             }
 
-            if (!RoomExists(_roomName))
+            if (!RoomExists())
             {
                 string errorMessage = string.Format("Room with name '{0}' doesnt exist", _roomName);
                 Logger.Error(errorMessage);
@@ -65,7 +65,7 @@ namespace VisualiseR.Main
             return true;
         }
 
-        private bool RoomExists(string roomName)
+        private bool RoomExists()
         {
             //TODO check if room exists (similar to CreateRoomCommand)
             return true;

@@ -20,8 +20,9 @@ namespace VisualiseR.CodeReview
 
         public override void Execute()
         {
+            var oldComment = code.Comment;
             code.Comment = text;
-            Logger.InfoFormat("Comment {0} was added  to code {1}", text, code);
+            Logger.InfoFormat("Comment from code '{0}' was changed  from '{1}' to {2}", code, code.Comment, oldComment);
             CommentChangedSignal.Dispatch(code);
         }
     }

@@ -41,7 +41,7 @@ namespace VisualiseR.Util
             string fullPath = Application.persistentDataPath + fileName;
             File.WriteAllBytes(fullPath, www.bytes);
 
-            Logger.InfoFormat("Created file from web: {0}", fileName);
+            Logger.InfoFormat("Created file '{0}' from web ({1})", fileName, url);
 
             return fullPath;
         }
