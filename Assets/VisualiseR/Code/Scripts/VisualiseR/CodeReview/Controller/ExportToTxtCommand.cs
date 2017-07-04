@@ -43,7 +43,7 @@ namespace VisualiseR.CodeReview
             StringBuilder sb = new StringBuilder();
             foreach (var code in _medium.CodeFragments)
             {
-                sb.AppendLine(code.SaveCommentToTxt());
+                sb.AppendLine(code.SaveToTxt());
             }
             return sb.ToString();
         }

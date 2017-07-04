@@ -2,6 +2,9 @@
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// Presentation slide.
+    /// </summary>
     public interface ISlide
     {
         /// <summary>

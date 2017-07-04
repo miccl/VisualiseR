@@ -8,6 +8,9 @@ namespace VisualiseR.Common
     [Serializable]
     public class Player : IPlayer
     {
+        private static readonly JCsLogger Logger = new JCsLogger(typeof(Player));
+
+        
         public string Name { get; set; }
         public PlayerType Type { get; set; }
         public AvatarType Avatar { get; set; }

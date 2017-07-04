@@ -22,7 +22,7 @@ namespace Test.Common.Model
                 };
 
                 //when
-                var text = code.SaveCommentToTxt();
+                var text = code.SaveToTxt();
                 FileUtil.WriteFile(@"D:/Downloads/test.txt", text);
 
                 //then

@@ -16,7 +16,7 @@ namespace VisualiseR.CodeReview
             Rate = Rate.Unrated;
         }
 
-        public string SaveCommentToTxt()
+        public string SaveToTxt()
         {
             string text = "";
             text += string.Format("Name: {0} {1}", Name, Environment.NewLine);
