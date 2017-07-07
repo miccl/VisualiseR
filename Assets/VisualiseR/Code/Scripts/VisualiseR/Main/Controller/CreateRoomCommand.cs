@@ -98,15 +98,14 @@ namespace VisualiseR.Main
             if (String.IsNullOrEmpty(_RoomName))
             {
                 string errorMessage = "Room name wasn't choosen yet";
-                Logger.Error(errorMessage);
-
+                Logger.Info("Error:" + errorMessage);
                 ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
                 return false;
             }
             if (_medium.IsEmpty())
             {
                 string errorMessage = "PictureMedium wasn't choosen yet";
-                Logger.Error(errorMessage);
+                Logger.Info("Error:" + errorMessage);
                 ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
                 return false;
             }
@@ -114,7 +113,7 @@ namespace VisualiseR.Main
             if (RoomAlreadyExists())
             {
                 string errorMessage = string.Format("Room with name {0} already exists", _RoomName);
-                Logger.Error(errorMessage);
+                Logger.Info("Error:" + errorMessage);
                 ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
                 return false;
             }

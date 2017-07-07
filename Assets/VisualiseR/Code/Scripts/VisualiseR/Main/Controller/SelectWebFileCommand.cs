@@ -12,12 +12,14 @@ namespace VisualiseR.Main
     public class SelectWebFileCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(SelectWebFileCommand));
+        private Transform _menu;
 
         [Inject(ContextKeys.CONTEXT_VIEW)]
         public GameObject _contextView { get; set; }
 
         public override void Execute()
         {
+            _menu = _contextView.transform.Find("MenuCanvas");
             ShowWebFileView();
             Logger.InfoFormat("Web browser is shown");
         }

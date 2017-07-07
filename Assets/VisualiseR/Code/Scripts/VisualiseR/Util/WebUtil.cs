@@ -38,7 +38,7 @@ namespace VisualiseR.Util
             }
 
             string fileName = GetFileName(url);
-            string fullPath = Application.persistentDataPath + fileName;
+            string fullPath = Application.persistentDataPath + Path.DirectorySeparatorChar + fileName;
             File.WriteAllBytes(fullPath, www.bytes);
 
             Logger.InfoFormat("Created file '{0}' from web ({1})", fileName, url);

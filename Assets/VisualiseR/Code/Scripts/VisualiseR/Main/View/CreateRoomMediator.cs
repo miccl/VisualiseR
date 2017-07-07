@@ -65,7 +65,6 @@ namespace VisualiseR.Main
 
         private void OnMediumChanged(PictureMedium pictureMedium)
         {
-            //TODO davor könnte beispielsweise eine Laderad kommen, bis dieser Aufruf getätigt wird
             _view._choosenMedium = pictureMedium;
             _view._chooseMediumDropdown.captionText.text = pictureMedium.Name;
         }

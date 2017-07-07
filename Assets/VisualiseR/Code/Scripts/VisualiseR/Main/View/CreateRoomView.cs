@@ -89,13 +89,14 @@ namespace VisualiseR.Main
             if (index == _chooseMediumTypes.IndexOf(SELECT_WEB_FILE))
             {
                 SelectWebFileButtonClickedSignal.Dispatch();
+                return;
             }
 
             if (index == _chooseMediumTypes.IndexOf(SELECT_DISK_FILE))
             {
                 SelectDiskFileButtonClickedSignal.Dispatch();
+                ChangeInteractibilityOfButtons(false);
             }
-            ChangeInteractibilityOfButtons(false);
         }
 
         public void DisplayErrorMessage(string msg)
@@ -105,6 +106,7 @@ namespace VisualiseR.Main
 
         public void ChangeInteractibilityOfButtons(bool interactable)
         {
+            Debug.Log("HEY HOO: " + interactable);
             _roomNameInputField.interactable = interactable;
             _chooseMediumDropdown.interactable = interactable;
             _backButton.interactable = interactable;

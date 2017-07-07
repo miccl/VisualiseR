@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using JetBrains.Annotations;
 using strange.extensions.command.impl;
+using UnityEditor;
 using VisualiseR.Common;
 using VisualiseR.Util;
+using FileUtil = VisualiseR.Util.FileUtil;
 
 namespace VisualiseR.Main
 {
@@ -24,37 +27,83 @@ namespace VisualiseR.Main
         [Inject]
         public string uri { get; set; }
 
+        [Inject]
+        public FileType fileType { get; set; }
+
         public override void Execute()
         {
-            CheckIfValidFile();
-
             List<string> filePaths = new List<string>();
-            LoadFiles(filePaths);
-            var medium = ConstructMedium(Path.GetFileNameWithoutExtension(uri), filePaths);
+            var isValidInput = LoadFiles(filePaths);
+            if (!isValidInput)
+            {
+                return;
+            }
+            var medium = ConstructMedium(GetName(filePaths), filePaths);
 
             _MediumChangedSignal.Dispatch((PictureMedium) medium);
         }
 
-        private void LoadFiles(List<string> filePaths)
+        private string GetName(List<string> filePaths)
         {
-            if (WebUtil.IsValidUrl(uri))
+            if (fileType.Equals(FileType.Disk))
             {
-                filePaths.Add(WebUtil.DownloadFileFromWeb(uri));
+                return Path.GetFileNameWithoutExtension(uri);
             }
-            else
+
+            return FileUtil.GetFileNameWithoutExtension(filePaths[0]);
+        }
+
+        private bool LoadFiles(List<string> filePaths)
+        {
+            switch (fileType)
             {
-                TraverseFilesAndConvert(filePaths);
+                case FileType.Web:
+                    return LoadWebFile(filePaths);
+                default:
+                    return LoadDiskFile(filePaths);
             }
         }
 
-        private void CheckIfValidFile()
+        private bool LoadDiskFile(List<string> filePaths)
         {
-            if (!DirectoryUtil.IsValidNotEmptyDirectory(uri) && !WebUtil.IsValidUrl(uri))
+            if (!DirectoryUtil.IsValidNotEmptyDirectory(uri))
             {
-                ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Invalid Input",
-                    string.Format("The chosen uri '{0}'file was invalid", uri)));
-                throw new FileNotFoundException(uri);
+                return false;
             }
+            TraverseFilesAndConvert(filePaths);
+            return true;
+
+        }
+
+        private bool LoadWebFile(List<string> filePaths)
+        {
+            if (!IsValidWebFile())
+            {
+                return false;
+            }
+            filePaths.Add(WebUtil.DownloadFileFromWeb(uri));
+            return true;
+        }
+
+        private bool IsValidWebFile()
+        {
+            if (String.IsNullOrEmpty(uri))
+            {
+                string errorMessage = "Url was empty";
+                Logger.Info("Error:" + errorMessage);
+                ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
+                return false;
+            }
+            
+            if (!WebUtil.IsValidUrl(uri))
+            {
+                string errorMessage = "Url is invalid";
+                Logger.Info("Error:" + errorMessage);
+                ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
+                return false;
+            }
+
+            return true;
         }
 
         private void TraverseFilesAndConvert(List<string> convertedFilePaths)
@@ -71,8 +120,8 @@ namespace VisualiseR.Main
 
         /// <summary>
         /// Converts the file with the given file path.
-        /// Valid file types are image (<see cref="FileUtil.ImageExtensions"/>), code (<see cref="FileUtil.CodeExtensions"/>)
-        /// and pdf (<see cref="FileUtil.PdfExtensions"/>).
+        /// Valid file types are image (<see cref="Util.FileUtil.ImageExtensions"/>), code (<see cref="Util.FileUtil.CodeExtensions"/>)
+        /// and pdf (<see cref="Util.FileUtil.PdfExtensions"/>).
         /// Otherwise <c>null</c> is returned.
         /// </summary>
         /// <param name="filePath"></param>
@@ -99,7 +148,7 @@ namespace VisualiseR.Main
             Logger.WarnFormat("File ({0}) has no valid type and therefore could not be converted.", filePath);
             return null;
         }
-        
+
         private IPictureMedium ConstructMedium(string name, List<string> filePaths)
         {
             IPictureMedium medium = new PictureMedium

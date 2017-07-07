@@ -33,7 +33,7 @@ namespace VisualiseR.Main
 
         private void OnUrlSelected(string url)
         {
-           LoadFilesSignal.Dispatch(url);
+           LoadFilesSignal.Dispatch(url, FileType.Web);
         }
 
         private void OnCanceled()
