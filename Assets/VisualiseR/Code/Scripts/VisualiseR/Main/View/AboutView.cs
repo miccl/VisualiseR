@@ -11,7 +11,6 @@ namespace VisualiseR.Main
     /// </summary>
     public class AboutView : View
     {
-        private static readonly string ABOUT_TEXT = "This is some about!!!";
 
         private GameObject _mainMenuPanelView;
         internal Text _aboutText;
@@ -25,12 +24,6 @@ namespace VisualiseR.Main
             _mainMenuPanelView = menuCanvas.transform.FindChild("MainMenuPanel").gameObject;
 
 
-        }
-
-        protected override void Start()
-        {
-            base.Start();
-            _aboutText.text = ABOUT_TEXT;
         }
 
         public void OnBackButtonClick()
