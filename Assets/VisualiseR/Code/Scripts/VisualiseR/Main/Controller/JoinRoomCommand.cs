@@ -31,7 +31,7 @@ namespace VisualiseR.Main
 
             ConstructRoom();
 
-            PlayerPrefsUtil.saveObject(PlayerPrefsUtil.ROOM_KEY, Room);
+            PlayerPrefsUtil.SaveObject(PlayerPrefsUtil.ROOM_KEY, Room);
             UnityUtil.LoadScene(Room.Type);
         }
 

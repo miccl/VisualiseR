@@ -39,7 +39,7 @@ namespace VisualiseR.Util
         /// </summary>
         /// <param name="key"></param>
         /// <param name="o"></param>
-        public static void saveObject(string key, object o)
+        public static void SaveObject(string key, object o)
         {
             var m = new MemoryStream();
             var b = new BinaryFormatter();
@@ -80,36 +80,35 @@ namespace VisualiseR.Util
             Logger.DebugFormat("Saved value '{0}' under key '{1}' in player prefs", value, key);
             PlayerPrefs.SetInt(key, value);
         }
-        
+
         /// <summary>
         /// Retrieve value in <see cref="PlayerPrefs"/> identified by key.
         /// </summary>
         /// <param name="key"></param>
-        /// <param name="value"></param>
         public static string RetrieveValue(string key)
         {
             var value = PlayerPrefs.GetString(key);
             Logger.DebugFormat("Retrieved value '{0}' under key '{1}' from player prefs", value, key);
             return value;
         }
-        
+
         /// <summary>
         /// Retrieve value in <see cref="PlayerPrefs"/> identified by key.
         /// </summary>
         /// <param name="key"></param>
-        /// <param name="value"></param>
+        /// <param name="defaultValue"></param>
         public static string RetrieveValue(string key, string defaultValue)
         {
             var value = PlayerPrefs.GetString(key, defaultValue);
             Logger.DebugFormat("Retrieved value '{0}' under key '{1}' from player prefs", value, key);
             return value;
         }
-        
+
         /// <summary>
         /// Retrieve value in <see cref="PlayerPrefs"/> identified by key.
         /// </summary>
         /// <param name="key"></param>
-        /// <param name="value"></param>
+        /// <param name="defaultValue"></param>
         public static int RetrieveValue(string key, int defaultValue)
         {
             var value = PlayerPrefs.GetInt(key, defaultValue);

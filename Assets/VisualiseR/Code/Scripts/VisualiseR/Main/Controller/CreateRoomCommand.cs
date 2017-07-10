@@ -46,7 +46,7 @@ namespace VisualiseR.Main
 
             ConstructRoom();
 
-            PlayerPrefsUtil.saveObject(PlayerPrefsUtil.ROOM_KEY, Room);
+            PlayerPrefsUtil.SaveObject(PlayerPrefsUtil.ROOM_KEY, Room);
             ShowMessageSignal.Dispatch(new Message(MessageType.Info, "Sucess", string.Format("Room {0} was sucessfully created", _RoomName)));
             LoadScene();
         }
