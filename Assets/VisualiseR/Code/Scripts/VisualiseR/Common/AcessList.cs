@@ -21,7 +21,7 @@ namespace VisualiseR.Common
         /// <summary>
         /// Right to show the scene menu.
         /// </summary>
-        public static readonly List<PlayerType> SCENE_MENU = new List<PlayerType> {PlayerType.Host, PlayerType.Client};
+        public static readonly List<PlayerType> SCENE_MENU = new List<PlayerType> {PlayerType.Host};
 
         /// <summary>
         /// Right to show the context menu.
