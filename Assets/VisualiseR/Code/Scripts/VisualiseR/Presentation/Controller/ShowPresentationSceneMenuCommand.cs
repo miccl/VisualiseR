@@ -26,10 +26,12 @@ namespace VisualiseR.Presentation
         public PresentationSceneMenuIsShownSignal PresentationSceneMenuIsShownSignal { get; set; }
         public override void Execute()
         {
-            if (_player.HasRight(AcessList.SCENE_MENU))
+            if (!_player.HasRight(AcessList.SCENE_MENU))
             {
-                ShowSceneMenu();
+                Logger.InfoFormat(AcessList.ERROR_MESSAGE, _player, typeof(ShowPresentationSceneMenuCommand));
+                return;
             }
+            ShowSceneMenu();
         }
 
         private void ShowSceneMenu()

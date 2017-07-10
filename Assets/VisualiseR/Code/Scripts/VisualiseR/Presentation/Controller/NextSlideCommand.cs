@@ -24,7 +24,7 @@ namespace VisualiseR.Presentation
 
         public override void Execute()
         {
-            if (!_player.HasRight(AcessList.NAVIGATE))
+            if (!_player.HasRight(AcessList.NAVIGATE_MEDIUM))
             {
                 Logger.InfoFormat(AcessList.ERROR_MESSAGE, _player, typeof(NextSlideCommand));
                 return;
