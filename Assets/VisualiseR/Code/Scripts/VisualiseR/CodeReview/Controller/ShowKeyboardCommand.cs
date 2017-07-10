@@ -1,6 +1,7 @@
 ﻿using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace VisualiseR.CodeReview
 {
@@ -21,10 +22,11 @@ namespace VisualiseR.CodeReview
 
         public override void Execute()
         {
-            InstantiateContextMenu();
+            InstantiateKeyboard();
         }
-        
-        private void InstantiateContextMenu()
+
+
+        private void InstantiateKeyboard()
         {
             var keyboard = _contextView.transform.Find("Menus").transform.Find("Keyboard").gameObject;
             if (keyboard.activeSelf == show) return;
