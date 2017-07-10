@@ -66,7 +66,7 @@ namespace VisualiseR.Util
         /// <param name="value"></param>
         public static void SaveValue(string key, string value)
         {
-            Logger.InfoFormat("Saved value '{0}' under key '{1}' in player prefs", value, key);
+            Logger.DebugFormat("Saved value '{0}' under key '{1}' in player prefs", value, key);
             PlayerPrefs.SetString(key, value);
         }
 
@@ -77,7 +77,7 @@ namespace VisualiseR.Util
         /// <param name="value"></param>
         public static void SaveValue(string key, int value)
         {
-            Logger.InfoFormat("Saved value '{0}' under key '{1}' in player prefs", value, key);
+            Logger.DebugFormat("Saved value '{0}' under key '{1}' in player prefs", value, key);
             PlayerPrefs.SetInt(key, value);
         }
         
@@ -89,7 +89,7 @@ namespace VisualiseR.Util
         public static string RetrieveValue(string key)
         {
             var value = PlayerPrefs.GetString(key);
-            Logger.InfoFormat("Retrieved value '{0}' under key '{1}' from player prefs", value, key);
+            Logger.DebugFormat("Retrieved value '{0}' under key '{1}' from player prefs", value, key);
             return value;
         }
         
@@ -101,7 +101,7 @@ namespace VisualiseR.Util
         public static string RetrieveValue(string key, string defaultValue)
         {
             var value = PlayerPrefs.GetString(key, defaultValue);
-            Logger.InfoFormat("Retrieved value '{0}' under key '{1}' from player prefs", value, key);
+            Logger.DebugFormat("Retrieved value '{0}' under key '{1}' from player prefs", value, key);
             return value;
         }
         
@@ -113,7 +113,7 @@ namespace VisualiseR.Util
         public static int RetrieveValue(string key, int defaultValue)
         {
             var value = PlayerPrefs.GetInt(key, defaultValue);
-            Logger.InfoFormat("Retrieved value '{0}' under key '{1}' from player prefs", value, key);
+            Logger.DebugFormat("Retrieved value '{0}' under key '{1}' from player prefs", value, key);
             return value;
         }
 

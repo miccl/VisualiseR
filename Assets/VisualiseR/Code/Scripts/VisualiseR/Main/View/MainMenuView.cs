@@ -22,6 +22,7 @@ namespace VisualiseR.Main
         private GameObject _helpPanel;
         private GameObject _createRoomPanel;
         private GameObject _joinRoomPanel;
+        private GameObject _aboutPanel;
         private AudioSource _backgroundAudioSource;
         private bool _isMuted;
         private bool _fire1Pressed;
@@ -30,13 +31,13 @@ namespace VisualiseR.Main
         {
             base.Awake();
             GameObject menuCanvas = UnityUtil.FindGameObject("MenuCanvas");
-            _settingsPanel = menuCanvas.transform.FindChild("SettingsPanel").gameObject;
-            _helpPanel = menuCanvas.transform.FindChild("HelpPanel").gameObject;
-            _createRoomPanel = menuCanvas.transform.FindChild("CreateRoomPanel").gameObject;
-            _joinRoomPanel = menuCanvas.transform.FindChild("JoinRoomPanel").gameObject;
+            _settingsPanel = menuCanvas.transform.Find("SettingsPanel").gameObject;
+            _helpPanel = menuCanvas.transform.Find("HelpPanel").gameObject;
+            _createRoomPanel = menuCanvas.transform.Find("CreateRoomPanel").gameObject;
+            _joinRoomPanel = menuCanvas.transform.Find("JoinRoomPanel").gameObject;
+            _aboutPanel = menuCanvas.transform.Find("AboutPanel").gameObject;
 
             _backgroundAudioSource = menuCanvas.GetComponent<AudioSource>();
-
 
             _audioImage = transform.FindChild("AudioButton").GetComponent<Image>();
         }
@@ -90,6 +91,12 @@ namespace VisualiseR.Main
         public void OnHelpButtonClick()
         {
             _helpPanel.SetActive(true);
+            gameObject.SetActive(false);
+        }
+
+        public void OnAboutButtonClick()
+        {
+            _aboutPanel.SetActive(true);
             gameObject.SetActive(false);
         }
 
