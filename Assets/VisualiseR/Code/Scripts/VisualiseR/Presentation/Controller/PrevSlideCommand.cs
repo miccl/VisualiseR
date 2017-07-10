@@ -1,6 +1,7 @@
 ﻿using strange.extensions.command.impl;
 using VisualiseR.CodeReview;
 using VisualiseR.Common;
+using VisualiseR.Util;
 
 namespace VisualiseR.Presentation
 {
@@ -22,7 +23,7 @@ namespace VisualiseR.Presentation
 
         public override void Execute()
         {
-            if (!_player.HasRight(AcessList.NAVIGATE_CODE))
+            if (!_player.HasRight(AcessList.NAVIGATE))
             {
                 Logger.InfoFormat(AcessList.ERROR_MESSAGE, _player, typeof(PrevSlideCommand));
                 return;
