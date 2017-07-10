@@ -4,7 +4,7 @@ using VisualiseR.Common;
 namespace VisualiseR.Main
 {
     /// <summary>
-    /// Interface for the picture medium.
+    /// Represents a <see cref="IMedium"/> for pictures.
     /// </summary>
     public interface IPictureMedium : IMedium
     {
@@ -26,13 +26,17 @@ namespace VisualiseR.Main
         void RemovePicture(IPicture picture);
 
         /// <summary>
-        /// Returns the poicture on the given position.
+        /// Returns the picture on the given position.
         /// Returns <c>null</c>, if the position is invalid.
         /// </summary>
         /// <param name="pos"></param>
         /// <returns></returns>
         IPicture GetPicture(int pos);
 
+        /// <summary>
+        /// Returns <c>true</c>, if the picture is Empty.
+        /// </summary>
+        /// <returns></returns>
         bool IsEmpty();
     }
 }

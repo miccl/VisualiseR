@@ -1,7 +1,7 @@
 ﻿namespace VisualiseR.Main
 {
     /// <summary>
-    /// Interface for messages that are shown in the scene.
+    /// Represents a message in the scenes.
     /// </summary>
     public interface IMessage
     {

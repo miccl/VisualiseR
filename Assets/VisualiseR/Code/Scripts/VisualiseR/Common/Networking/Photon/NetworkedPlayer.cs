@@ -10,7 +10,6 @@ namespace VisualiseR.Common
     /// </summary>
     public class NetworkedPlayer : View
     {
-
         internal Signal<bool> InstantiatePlayer = new Signal<bool>();
 
         internal IPlayer _player;
@@ -47,7 +46,7 @@ namespace VisualiseR.Common
         internal void InitPlayer(Player player)
         {
             _player = player;
-            
+
             InitAvatar();
         }
 
@@ -65,7 +64,7 @@ namespace VisualiseR.Common
                 case AvatarType.Yellow:
                     color = Color.yellow;
                     break;
-                default: 
+                default:
                     color = Color.blue;
                     break;
             }
@@ -76,8 +75,11 @@ namespace VisualiseR.Common
         {
             _avatar.transform.Find("Head").GetComponent<MeshRenderer>().material.color = color;
         }
-
-// synchronsize with the others
+        
+        /// <summary>
+        /// Synchronise with other players.
+        /// </summary>
+        /// <param name="stream"></param>
         void OnPhotonSerializeView(PhotonStream stream)
         {
             if (stream.isWriting)

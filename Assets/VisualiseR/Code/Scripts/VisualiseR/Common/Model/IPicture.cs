@@ -20,6 +20,10 @@
         /// <returns></returns>
         bool IsEmpty();
 
+        /// <summary>
+        /// Returns important info of the picture.
+        /// </summary>
+        /// <returns></returns>
         string ToString();
 
     }
