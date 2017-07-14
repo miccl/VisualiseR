@@ -14,6 +14,8 @@ namespace VisualiseR.Main
     /// </summary>
     public class CreateRoomView : View
     {
+        private JCsLogger Logger;
+        
         private static readonly string CHOOSE_MEDIUM_TEXT = " Choose pictureMedium...";
         private static readonly string SELECT_DISK_FILE = "Choose disk file";
         private static readonly string SELECT_WEB_FILE = "Choose web file";
@@ -22,6 +24,8 @@ namespace VisualiseR.Main
         public Signal SelectWebFileButtonClickedSignal = new Signal();
         public Signal<string, RoomType, IPictureMedium> CreateRoomButtonClickedSignal =
             new Signal<string, RoomType, IPictureMedium>();
+        internal Signal<Message> ShowMessageSignal = new Signal<Message>();
+
 
         internal Dropdown _roomTypeDropdown;
         internal InputField _roomNameInputField;
@@ -34,10 +38,16 @@ namespace VisualiseR.Main
         private GameObject _mainMenuPanelView;
         private Button _backButton;
         private Button _createRoomButton;
+        private bool _onJoinedLobby;
+        private string _roomName;
 
         protected override void Awake()
         {
             base.Awake();
+            
+            Logger = new JCsLogger(typeof(JoinRoomView));
+
+            
             var createRoomPanel = UnityUtil.FindGameObject("CreateRoomPanel").transform.Find("CenterPanel");
             _roomTypeDropdown = createRoomPanel.Find("RoomTypePanel").GetComponentInChildren<Dropdown>();
             _roomNameInputField = createRoomPanel.Find("RoomNamePanel").GetComponentInChildren<InputField>();
@@ -56,6 +66,7 @@ namespace VisualiseR.Main
             base.Start();
             PopulateRoomTypeDropdown();
             PopulateChooseMediumDropdown();
+            PhotonNetwork.ConnectUsingSettings("0.1");
         }
 
         private void PopulateRoomTypeDropdown()
@@ -73,8 +84,13 @@ namespace VisualiseR.Main
 
         public void OnCreateRoomButtonClick()
         {
-            CreateRoomButtonClickedSignal.Dispatch(_roomNameInputField.text,
-                _roomTypes[_roomTypeDropdown.value].ToEnum<RoomType>(), _choosenMedium);
+            if (!_onJoinedLobby)
+            {
+                Debug.Log("HEYHO");
+                return;
+            }
+            _roomName = _roomNameInputField.text;
+            PhotonNetwork.CreateRoom(_roomName);
         }
 
         public void OnBackButtonClick()
@@ -115,6 +131,27 @@ namespace VisualiseR.Main
         public void SelectionCanceled()
         {
             _chooseMediumDropdown.value = 0;
+        }
+
+        void OnJoinedLobby()
+        {
+            _onJoinedLobby = true;
+        }
+
+        void OnCreatedRoom()
+        {
+            Logger.InfoFormat("Room '{0}' exists. Initiating joining room", _roomName);
+            PhotonNetwork.LeaveRoom();
+            CreateRoomButtonClickedSignal.Dispatch(_roomName,
+                _roomTypes[_roomTypeDropdown.value].ToEnum<RoomType>(), _choosenMedium);
+        }
+
+        void OnPhotonCreateRoomFailed()
+        {
+            string errorMessage = string.Format("Room with name {0} already exist", _roomName);
+            Logger.InfoFormat("Error: {0}", errorMessage);
+            ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
+
         }
     }
 }

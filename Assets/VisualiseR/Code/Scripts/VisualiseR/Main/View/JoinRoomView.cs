@@ -68,12 +68,9 @@ namespace VisualiseR.Main
 
         void OnPhotonJoinRoomFailed()
         {
-            Logger.InfoFormat("Room '{0}' doesn't exists.", _roomName);
             string errorMessage = string.Format("Room with name {0} does not exist", _roomName);
-            Logger.Info("Error:" + errorMessage);
+            Logger.InfoFormat("Error: {0}", errorMessage);
             ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
-
-            //TODO Infonachricht für den Kunden
         }
     }
 }
