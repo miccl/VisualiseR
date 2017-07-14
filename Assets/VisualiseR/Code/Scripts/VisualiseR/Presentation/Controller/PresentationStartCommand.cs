@@ -17,7 +17,7 @@ namespace VisualiseR.Presentation
 
         public override void Execute()
         {
-            Logger.Info("Starting code review scene");
+            Logger.Info("Starting presentation scene");
             VRSettings.enabled = true;
             CreateOrJoinRoom();
         }

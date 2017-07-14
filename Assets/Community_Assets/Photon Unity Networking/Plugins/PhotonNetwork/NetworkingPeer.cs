@@ -1564,7 +1564,7 @@ internal class NetworkingPeer : LoadBalancingPeer, IPhotonPeerListener
             }
             else
             {
-                Debug.LogError("Operation failed: " + operationResponse.ToStringFull() + " Server: " + this.Server);
+                Debug.Log("Operation failed: " + operationResponse.ToStringFull() + " Server: " + this.Server);
             }
         }
 

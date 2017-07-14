@@ -24,14 +24,11 @@ namespace VisualiseR.Main
 
         public override void Execute()
         {
-            if (!IsInputValid())
-            {
-                return;
-            }
 
             ConstructRoom();
 
             PlayerPrefsUtil.SaveObject(PlayerPrefsUtil.ROOM_KEY, Room);
+            ShowMessageSignal.Dispatch(new Message(MessageType.Info, "Sucess", string.Format("Room {0} was sucessfully joined", _roomName)));
             UnityUtil.LoadScene(Room.Type);
         }
 
@@ -42,33 +39,6 @@ namespace VisualiseR.Main
             //TODO let the user choose the room type
             Room.Type = RoomType.Presentation;
             
-        }
-
-        private bool IsInputValid()
-        {
-            if (String.IsNullOrEmpty(_roomName))
-            {
-                string errorMessage = "Room name wasn't choosen yet";
-                Logger.Error(errorMessage);
-                ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
-                return false;
-            }
-
-            if (!RoomExists())
-            {
-                string errorMessage = string.Format("Room with name '{0}' doesnt exist", _roomName);
-                Logger.Error(errorMessage);
-                ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
-                return false;
-            }
-
-            return true;
-        }
-
-        private bool RoomExists()
-        {
-            //TODO check if room exists (similar to CreateRoomCommand)
-            return true;
         }
     }
 }

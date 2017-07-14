@@ -106,6 +106,7 @@ namespace VisualiseR.Util
             try
             {
                 SceneManager.LoadScene(sceneName);
+                Logger.InfoFormat("Loading scene '{0}'", sceneName);
             }
             catch (Exception e)
             {
