@@ -211,5 +211,9 @@ namespace VisualiseR.Presentation
                 ShowSceneMenuSignal.Dispatch(_player, _medium);
             }
         }
+
+        void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) 
+        {
+        }
     }
 }

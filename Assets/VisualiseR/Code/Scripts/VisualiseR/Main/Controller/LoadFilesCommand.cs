@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using JetBrains.Annotations;
 using strange.extensions.command.impl;
-using UnityEditor;
 using VisualiseR.Common;
 using VisualiseR.Util;
 using FileUtil = VisualiseR.Util.FileUtil;

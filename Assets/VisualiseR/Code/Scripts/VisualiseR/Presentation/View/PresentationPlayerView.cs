@@ -13,9 +13,9 @@ namespace VisualiseR.Presentation
     public class PresentationPlayerView : View
     {
         public static readonly int AMOUNT_OF_SEATS = 5;
-        
+
         private JCsLogger Logger;
-        
+
         private Player _player;
         private Transform _playerGlobal;
 
@@ -41,7 +41,6 @@ namespace VisualiseR.Presentation
             base.Awake();
             Logger = new JCsLogger(typeof(PresentationPlayerView));
             _playerGlobal = GameObject.Find("GvrNetworkedPlayer").transform;
-
         }
 
         public void Init(Player player)
@@ -71,7 +70,6 @@ namespace VisualiseR.Presentation
 
         internal void AdjustPosition()
         {
-
             if (PhotonNetwork.isMasterClient)
             {
                 _playerGlobal.position = Positions.HOST_POS;
@@ -133,9 +131,9 @@ namespace VisualiseR.Presentation
         private List<Vector3> GetStandPositions()
         {
             List<Vector3> positions = new List<Vector3>();
-            
+
             var stand = GameObject.Find("Environment").transform.Find("Stand");
-            
+
             List<Transform> rows = new List<Transform>();
             rows.Add(stand.transform.Find("Row1"));
             rows.Add(stand.transform.Find("Row2"));
@@ -160,11 +158,11 @@ namespace VisualiseR.Presentation
             {
                 return;
             }
-            
+
             _isLaserShown = show;
             if (_player.IsHost())
             {
-                _laser.GetComponent<LineRenderer>().enabled = show;   
+                _laser.GetComponent<LineRenderer>().enabled = show;
                 _reticlePointer.GetComponent<MeshRenderer>().material.color = _isLaserShown ? Color.red : Color.white;
             }
             else
@@ -174,35 +172,35 @@ namespace VisualiseR.Presentation
 
             Logger.InfoFormat("Logger is {0}", _isLaserShown ? "shown" : "hidden");
         }
-        
-        void OnPhotonSerializeView(PhotonStream stream)
+
+        void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
-            if (stream.isWriting)
             {
-                if (_isLaserShown)
+                if (stream.isWriting)
                 {
-                    _firstFalse = true;
-                    
-                    stream.SendNext(true);
-                    stream.SendNext(_reticlePointer.transform.position);
-                }
-                else if (_firstFalse)
-                {
-                    stream.SendNext(false);
-                    _firstFalse = false;
-                }
-            }
-            else
-            {
-                var isLaserShown = (bool) stream.ReceiveNext();
-                ShowLaser(isLaserShown);
-                if (isLaserShown)
-                {
-                    _globalReticlePointer.transform.position = (Vector3) stream.ReceiveNext();
-                }
-            }
+                    if (_isLaserShown)
+                    {
+                        _firstFalse = true;
 
+                        stream.SendNext(true);
+                        stream.SendNext(_reticlePointer.transform.position);
+                    }
+                    else if (_firstFalse)
+                    {
+                        stream.SendNext(false);
+                        _firstFalse = false;
+                    }
+                }
+                else
+                {
+                    var isLaserShown = (bool) stream.ReceiveNext();
+                    ShowLaser(isLaserShown);
+                    if (isLaserShown)
+                    {
+                        _globalReticlePointer.transform.position = (Vector3) stream.ReceiveNext();
+                    }
+                }
+            }
         }
-
     }
 }

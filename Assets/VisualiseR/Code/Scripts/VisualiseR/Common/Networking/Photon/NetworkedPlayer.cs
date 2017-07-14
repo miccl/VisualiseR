@@ -75,26 +75,28 @@ namespace VisualiseR.Common
         {
             _avatar.transform.Find("Head").GetComponent<MeshRenderer>().material.color = color;
         }
-        
+
         /// <summary>
         /// Synchronise with other players.
         /// </summary>
         /// <param name="stream"></param>
-        void OnPhotonSerializeView(PhotonStream stream)
+        void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
-            if (stream.isWriting)
             {
-                stream.SendNext(_playerGlobal.position);
-                stream.SendNext(_playerGlobal.rotation);
-                stream.SendNext(_playerLocal.localPosition);
-                stream.SendNext(_playerLocal.localRotation);
-            }
-            else
-            {
-                transform.position = (Vector3) stream.ReceiveNext();
-                transform.rotation = (Quaternion) stream.ReceiveNext();
-                _avatar.transform.localPosition = (Vector3) stream.ReceiveNext();
-                _avatar.transform.localRotation = (Quaternion) stream.ReceiveNext();
+                if (stream.isWriting)
+                {
+                    stream.SendNext(_playerGlobal.position);
+                    stream.SendNext(_playerGlobal.rotation);
+                    stream.SendNext(_playerLocal.localPosition);
+                    stream.SendNext(_playerLocal.localRotation);
+                }
+                else
+                {
+                    transform.position = (Vector3) stream.ReceiveNext();
+                    transform.rotation = (Quaternion) stream.ReceiveNext();
+                    _avatar.transform.localPosition = (Vector3) stream.ReceiveNext();
+                    _avatar.transform.localRotation = (Quaternion) stream.ReceiveNext();
+                }
             }
         }
     }
