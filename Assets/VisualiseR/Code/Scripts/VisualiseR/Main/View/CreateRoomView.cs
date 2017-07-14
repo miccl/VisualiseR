@@ -106,11 +106,15 @@ namespace VisualiseR.Main
 
         public void ChangeInteractibilityOfButtons(bool interactable)
         {
-            Debug.Log("HEY HOO: " + interactable);
             _roomNameInputField.interactable = interactable;
             _chooseMediumDropdown.interactable = interactable;
             _backButton.interactable = interactable;
             _createRoomButton.interactable = interactable;
+        }
+
+        public void SelectionCanceled()
+        {
+            _chooseMediumDropdown.value = 0;
         }
     }
 }

@@ -36,6 +36,7 @@ namespace VisualiseR.Main
             var isValidInput = LoadFiles(filePaths);
             if (!isValidInput)
             {
+                _MediumChangedSignal.Dispatch(null);
                 return;
             }
             var medium = ConstructMedium(GetName(filePaths), filePaths);

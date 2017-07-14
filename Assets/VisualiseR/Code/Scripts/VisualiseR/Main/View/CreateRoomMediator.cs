@@ -65,8 +65,14 @@ namespace VisualiseR.Main
 
         private void OnMediumChanged(PictureMedium pictureMedium)
         {
+            if (pictureMedium == null)
+            {
+                OnSelectionCanceled();
+                return;
+            }
             _view._choosenMedium = pictureMedium;
             _view._chooseMediumDropdown.captionText.text = pictureMedium.Name;
+            _view.ChangeInteractibilityOfButtons(true);
         }
 
         private void OnSelectWebFileButtonClicked()
@@ -77,6 +83,7 @@ namespace VisualiseR.Main
         private void OnSelectionCanceled()
         {
             _view.ChangeInteractibilityOfButtons(true);
+            _view.SelectionCanceled();
         }
     }
 }

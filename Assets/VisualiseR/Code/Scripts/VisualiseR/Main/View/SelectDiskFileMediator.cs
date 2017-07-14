@@ -16,7 +16,7 @@ namespace VisualiseR.Main
         public LoadFilesSignal LoadFilesSignal { get; set; }
         
         [Inject]
-        public SelectionCanceledSignal SelectionFinishedSignal { get; set; }
+        public SelectionCanceledSignal SelectionCanceledSignal { get; set; }
 
 
         public override void OnRegister()
@@ -37,7 +37,10 @@ namespace VisualiseR.Main
             {
                 LoadFilesSignal.Dispatch(filePath, FileType.Disk);
             }
-            SelectionFinishedSignal.Dispatch();
+            else
+            {
+                SelectionCanceledSignal.Dispatch();
+            }
             Destroy();
         }
 

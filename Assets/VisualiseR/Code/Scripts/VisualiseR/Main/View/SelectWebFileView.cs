@@ -39,6 +39,7 @@ namespace VisualiseR.Main
         public void OnCancelButtonClick()
         {
             Hide();
+            CanceledSignal.Dispatch();
         }
 
         private void Hide()
