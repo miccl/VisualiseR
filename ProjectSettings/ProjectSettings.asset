@@ -226,7 +226,7 @@ PlayerSettings:
   - m_BuildTarget: Android
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 78c692064c1b42045b33e99d3542bc0b, type: 3}
+      m_Icon: {fileID: 2800000, guid: d2e7cf7fa1c17714b8f3a82297a8ecdf, type: 3}
       m_Width: 192
       m_Height: 192
     - serializedVersion: 2
