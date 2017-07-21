@@ -53,6 +53,7 @@ namespace VisualiseR.CodeReview
 
         private void SetViewValues()
         {
+            Preconditions.CheckNotNull(_code.Name, "Name may not be null");
             _nameText.text = _code.Name;
             _ratingText.text = _code.Rate.ToString();
             _pathText.text = FileUtil.GetParentDirectory(_code.OldPath);

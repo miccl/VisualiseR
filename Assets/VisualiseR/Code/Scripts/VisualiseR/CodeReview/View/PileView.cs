@@ -46,13 +46,13 @@ namespace VisualiseR.CodeReview
             UpdateView();
         }
 
-        public void AddCode(Code code)
+        internal void AddCode(Code code)
         {
             _codes.Add(code);
             UpdateView();
         }
 
-        public void RemoveCode(Code code)
+        internal void RemoveCode(Code code)
         {
             _codes.Remove(code);
             UpdateView();
