@@ -119,6 +119,29 @@ namespace VisualiseR.Presentation
 
             _isLoading = false;
             Logger.DebugFormat("Player (id '{0}'): Received all images from master", PhotonNetwork.player.ID);
+            RequestSlidePositionFromMaster();
+        }
+
+        private void RequestSlidePositionFromMaster()
+        {
+            photonView.RPC("OnSlidePositionRequest",
+                PhotonTargets.MasterClient,
+                PhotonNetwork.player.ID);
+            Logger.DebugFormat("Player (id '{0}'): Reqested slide position from master", PhotonNetwork.player.ID);
+        }
+
+        [PunRPC]
+        void OnSlidePositionRequest(int playerId)
+        {
+            photonView.RPC("OnSlidePositionReceived",
+                PhotonPlayer.Find(playerId),
+                _medium.CurrentPos);
+        }
+        
+        [PunRPC]
+        void OnSlidePositionReceived(int pos)
+        {
+            _currentPos = pos;
             LoadImageIntoTexture(_images[_currentPos]);
             ShowLoadingAnimationSignal.Dispatch(false, "");
         }
