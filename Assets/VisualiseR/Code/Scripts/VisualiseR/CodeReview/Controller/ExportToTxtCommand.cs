@@ -1,6 +1,9 @@
 using System.IO;
 using System.Text;
 using strange.extensions.command.impl;
+using strange.extensions.context.api;
+using strange.extensions.context.impl;
+using UnityEngine;
 using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
@@ -19,6 +22,9 @@ namespace VisualiseR.CodeReview
 
         [Inject]
         public ShowMessageSignal ShowMessageSignal { get; set; }
+        
+        [Inject(ContextKeys.CONTEXT_VIEW)]
+        public GameObject _contextView { get; set; }
 
         public override void Execute()
         {
@@ -27,6 +33,14 @@ namespace VisualiseR.CodeReview
             FileUtil.WriteFile(dirPath, text);
             Logger.InfoFormat("Exported informations in file '{0}'", dirPath);
             ShowMessageSignal.Dispatch(string.Format("Exported file to {0}", dirPath));
+            HideSceneMenu();
+        }
+
+        private void HideSceneMenu()
+        {
+            var sceneMenu = _contextView.transform.Find("Menus").transform.Find("CodeReviewSceneMenuCanvas")
+                .gameObject;
+            sceneMenu.SetActive(false);
         }
 
         private string GetDirPath()
