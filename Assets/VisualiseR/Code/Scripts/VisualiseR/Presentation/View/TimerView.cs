@@ -19,7 +19,7 @@ namespace VisualiseR.Presentation
 
         public ClockType _type = ClockType.Countdown;
         private float _timeLeft;
-        public float _timeFrom { get; private set; }
+        public float _timeFrom = 600;
         public bool stop = true;
         private float _minutes;
         private float _seconds;
