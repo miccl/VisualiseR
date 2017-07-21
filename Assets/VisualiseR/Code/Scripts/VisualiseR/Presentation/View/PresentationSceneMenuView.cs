@@ -14,7 +14,7 @@ namespace VisualiseR.Presentation
     public class PresentationSceneMenuView : View
     {
         private JCsLogger Logger;
-        
+
         public Signal OnContextMenuCanceled = new Signal();
         public Signal<TimerType> ChangeTimerStatusSignal = new Signal<TimerType>();
         public Signal<ClockType> ChangeClockTypesSignal = new Signal<ClockType>();
@@ -37,8 +37,10 @@ namespace VisualiseR.Presentation
         private Text _clockTypeButtonText;
 
         private TimerView _timerView;
-        
+
         internal bool _isLaserShown = false;
+        private Selectable _timeUpButton;
+        private Selectable _timeDownButton;
 
         /// <summary>
         /// Initialises the variables.
@@ -52,12 +54,14 @@ namespace VisualiseR.Presentation
             _timerPanel = gameObject.transform.FindChild("TimerPanel").gameObject;
             _showPanel = gameObject.transform.FindChild("ShowPanel").gameObject;
 
-            _startStopButtonText = _timerPanel.transform.Find("CenterPanel").Find("ButtonPanel")
-                .Find("StartStopButton").GetComponentInChildren<Text>();
-            _clockTypeButtonText = _timerPanel.transform.Find("BottomPanel").Find("TimerTypeButton").GetComponentInChildren<Text>();
-            _showLaserButtonText = _showPanel.transform.Find("CenterPanel").
-                Find("ShowLaserButton").GetComponentInChildren<Text>();
-
+            var buttonPanel = _timerPanel.transform.Find("CenterPanel").Find("ButtonPanel");
+            _startStopButtonText = buttonPanel.Find("StartStopButton").GetComponentInChildren<Text>();
+            _clockTypeButtonText = _timerPanel.transform.Find("BottomPanel").Find("TimerTypeButton")
+                .GetComponentInChildren<Text>();
+            _timeUpButton = buttonPanel.Find("UpButton").GetComponent<Selectable>();
+            _timeDownButton = buttonPanel.Find("DownButton").GetComponent<Selectable>();
+            _showLaserButtonText = _showPanel.transform.Find("CenterPanel").Find("ShowLaserButton")
+                .GetComponentInChildren<Text>();
         }
 
 
@@ -162,12 +166,16 @@ namespace VisualiseR.Presentation
             if (_clockTypeButtonText.text.Equals(ClockType.Countdown.ToString()))
             {
                 _clockTypeButtonText.text = ClockType.Stopwatch.ToString();
-            } else if (_clockTypeButtonText.text.Equals(ClockType.Stopwatch.ToString()))
+                _timeUpButton.interactable = false;
+                _timeDownButton.interactable = false;
+            }
+            else if (_clockTypeButtonText.text.Equals(ClockType.Stopwatch.ToString()))
             {
                 _clockTypeButtonText.text = ClockType.Countdown.ToString();
+                _timeUpButton.interactable = true;
+                _timeDownButton.interactable = true;
             }
             ChangeClockTypesSignal.Dispatch(_clockTypeButtonText.text.ToEnum<ClockType>());
-
         }
 
         public void OnTimerStartStopButton(BaseEventData data)
@@ -192,12 +200,18 @@ namespace VisualiseR.Presentation
 
         public void OnTimerUpButton(BaseEventData data)
         {
-            SetTimerSignal.Dispatch(60);
+            if (_timeUpButton.interactable)
+            {
+                SetTimerSignal.Dispatch(60);
+            }
         }
 
         public void OnTimerDownButton(BaseEventData data)
         {
-            SetTimerSignal.Dispatch(-60);
+            if (_timeDownButton.interactable)
+            {
+                SetTimerSignal.Dispatch(-60);
+            }
         }
 
         public void OnTimerCancelButton(BaseEventData data)
@@ -218,7 +232,7 @@ namespace VisualiseR.Presentation
             ShowAllSignal.Dispatch();
             Hide();
         }
-        
+
         public void OnShowLaserButtonClick(BaseEventData data)
         {
             _isLaserShown = !_isLaserShown;
