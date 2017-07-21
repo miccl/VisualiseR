@@ -43,8 +43,7 @@ namespace VisualiseR.Main
             _roomName = _roomNameInputField.text;
             if (_roomName != null && _onJoinedLobby)
             {
-                var joinedRoom = PhotonNetwork.JoinRoom(_roomName);
-//                JoinRoomButtonClickSignal.Dispatch(roomName);
+                PhotonNetwork.JoinRoom(_roomName);
             }
         }
 

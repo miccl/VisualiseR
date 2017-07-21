@@ -23,7 +23,7 @@ namespace VisualiseR.Main
         /// Removes a single picture to the <see cref="Pictures"/>.
         /// </summary>
         /// <param name="picture"></param>
-        void RemovePicture(IPicture picture);
+        bool RemovePicture(IPicture picture);
 
         /// <summary>
         /// Returns the picture on the given position.

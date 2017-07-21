@@ -43,9 +43,9 @@ namespace VisualiseR.Main
         /// Removes a single picture to the <see cref="Pictures"/>.
         /// </summary>
         /// <param name="picture"></param>
-        public void RemovePicture(IPicture picture)
+        public bool RemovePicture(IPicture picture)
         {
-            Pictures.Remove(picture);
+            return Pictures.Remove(picture);
         }
 
         public IPicture GetPicture(int pos)

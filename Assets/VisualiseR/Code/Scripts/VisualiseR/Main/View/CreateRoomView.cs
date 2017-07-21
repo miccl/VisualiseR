@@ -86,7 +86,6 @@ namespace VisualiseR.Main
         {
             if (!_onJoinedLobby)
             {
-                Debug.Log("HEYHO");
                 return;
             }
             _roomName = _roomNameInputField.text;
