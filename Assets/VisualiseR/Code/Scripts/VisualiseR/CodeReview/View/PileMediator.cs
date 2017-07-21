@@ -9,7 +9,7 @@ namespace VisualiseR.CodeReview
     public class PileMediator : Mediator
     {
         [Inject]
-        public PileView View { get; set; }
+        public PileView _view { get; set; }
 
         [Inject]
         public CodeRatingChangedSignal CodeRatingChangedSignal { get; set; }
@@ -24,7 +24,13 @@ namespace VisualiseR.CodeReview
         {
             CodeRatingChangedSignal.AddListener(OnCodeRatingChanged);
             RemoveCodeSignal.AddListener(OnRemoveCode);
-            View.RatePileSelectedSignal.AddListener(OnRatePileSelected);
+            _view.RatePileSelectedSignal.AddListener(OnRatePileSelected);
+            PileSelectedSignal.AddListener(OnPileSelected);
+        }
+
+        private void OnPileSelected(Rate rate)
+        {
+            _view.RatePileSelected(rate.Equals(_view._rate));
         }
 
 
@@ -32,7 +38,7 @@ namespace VisualiseR.CodeReview
         {
             CodeRatingChangedSignal.RemoveListener(OnCodeRatingChanged);
             RemoveCodeSignal.RemoveListener(OnRemoveCode);
-            View.RatePileSelectedSignal.RemoveListener(OnRatePileSelected);
+            _view.RatePileSelectedSignal.RemoveListener(OnRatePileSelected);
         }
 
         private void OnRatePileSelected(Rate rate)
@@ -42,21 +48,21 @@ namespace VisualiseR.CodeReview
 
         private void OnCodeRatingChanged(Code code)
         {
-            if (View._rate.Equals(code.Rate))
+            if (_view._rate.Equals(code.Rate))
             {
-                View.AddCode(code);
+                _view.AddCode(code);
             }
-            else if (View._codes.Contains(code))
+            else if (_view._codes.Contains(code))
             {
-                View.RemoveCode(code);
+                _view.RemoveCode(code);
             }
         }
 
         private void OnRemoveCode(Code code)
         {
-            if (View._rate.Equals(code.Rate))
+            if (_view._rate.Equals(code.Rate))
             {
-                View.RemoveCode(code);
+                _view.RemoveCode(code);
             }
         }
     }

@@ -4,6 +4,7 @@ using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
 using UnityEngine.UI;
+using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
@@ -21,6 +22,7 @@ namespace VisualiseR.CodeReview
         internal List<ICode> _codes;
         private GameObject _titlePanel;
         private Text _titleText;
+        internal Selectable _selectable;
 
 
         protected override void Awake()
@@ -28,6 +30,7 @@ namespace VisualiseR.CodeReview
             base.Awake();
             _titlePanel = gameObject.transform.FindChild("TitlePanel").gameObject;
             _titleText = _titlePanel.GetComponentInChildren<Text>();
+            _selectable = _titlePanel.GetComponent<Selectable>();
 
 
         }
@@ -35,6 +38,10 @@ namespace VisualiseR.CodeReview
         public void Init(Rate rate, List<ICode> codes)
         {
             _rate = rate;
+            if (rate.Equals(Rate.Unrated))
+            {
+                RatePileSelected(true);
+            }
             _codes = codes;
             UpdateView();
         }
@@ -58,6 +65,8 @@ namespace VisualiseR.CodeReview
 
         private void UpdateTitle()
         {
+            Preconditions.CheckNotNull(_rate, "Rate may not be null");
+            Preconditions.CheckNotNull(_codes, "Codes may not be null");
             _titleText.text = String.Format("{0} ({1})", _rate, _codes.Count);
 
         }
@@ -65,6 +74,16 @@ namespace VisualiseR.CodeReview
         public void OnClick()
         {
             RatePileSelectedSignal.Dispatch(_rate);
+        }
+
+        /// <summary>
+        /// Deactivates the pile, if it was selected.
+        /// Otherwise it activates it.
+        /// </summary>
+        /// <param name="selected"></param>
+        internal void RatePileSelected(bool selected)
+        {
+            _selectable.interactable = !selected;
         }
     }
 }
