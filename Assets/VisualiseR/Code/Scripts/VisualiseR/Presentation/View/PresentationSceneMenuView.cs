@@ -60,6 +60,7 @@ namespace VisualiseR.Presentation
                 .GetComponentInChildren<Text>();
             _timeUpButton = buttonPanel.Find("UpButton").GetComponent<Selectable>();
             _timeDownButton = buttonPanel.Find("DownButton").GetComponent<Selectable>();
+            
             _showLaserButtonText = _showPanel.transform.Find("CenterPanel").Find("ShowLaserButton")
                 .GetComponentInChildren<Text>();
         }

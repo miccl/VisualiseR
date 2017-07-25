@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using VisualiseR.CodeReview;
-using VisualiseR.Util;
 
 namespace VisualiseR.Common
 {

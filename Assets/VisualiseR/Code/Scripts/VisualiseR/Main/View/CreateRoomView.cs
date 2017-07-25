@@ -98,7 +98,6 @@ namespace VisualiseR.Main
             gameObject.SetActive(false);
         }
 
-        //TODO vielleicht überlegen, das woanders hin zu verlagern..., denn die view soll ja möglichst ohne logik bleiben.
         public void OnChooseRoomIndexChange(int index)
         {
             if (index == _chooseMediumTypes.IndexOf(SELECT_WEB_FILE))

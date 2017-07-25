@@ -54,27 +54,32 @@ namespace VisualiseR.Common
             {
                 //TODO abfangen, wenn ein Raum gejoined wurde, der nicht existiert...
                 RoomOptions roomOptions = InitRoomOptions();
+
+                PhotonNetwork.JoinOrCreateRoom(_roomName, roomOptions, TypedLobby.Default);
                 
-                if (PhotonNetwork.JoinOrCreateRoom(_roomName, roomOptions, TypedLobby.Default))
-                {
-                    Logger.InfoFormat("Created or joined room '{0}'", _roomName);
-                    return;
-                }
-                
-                Logger.ErrorFormat("Couldn't create or join the room '{0}'", _roomName);
-                UnityUtil.LoadScene("Main");
+//                Logger.ErrorFormat("Couldn't create or join the room '{0}'", _roomName);
+//                UnityUtil.LoadScene("Main");
             }
         }
 
         /// <summary>
-        /// Called when the player joined the room. 
+        /// Called when the player sucessfully joined the room. 
         /// Initalises the <see cref="NetworkedPlayer"/> into the scene.
         /// </summary>
         void OnJoinedRoom()
         {
+            Logger.InfoFormat("Joined room '{0}'", _roomName);
             PhotonNetwork.Instantiate("NetworkedPlayer", Vector3.zero, Quaternion.identity, 0);
         }
-
+        
+        /// <summary>
+        /// Called when the player sucessfully create the room.
+        /// </summary>
+        void OnCreatedRoom()
+        {
+            Logger.InfoFormat("Created room '{0}'", _roomName);
+        }
+        
         /// <summary>
         /// Initialises the room options.
         /// </summary>
@@ -83,7 +88,7 @@ namespace VisualiseR.Common
         {
             RoomOptions roomOptions = new RoomOptions
             {
-                IsVisible = true,
+                IsVisible = false,
                 MaxPlayers = (byte) MAX_PLAYER_COUNT
             };
             return roomOptions;
