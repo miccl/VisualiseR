@@ -23,6 +23,7 @@ namespace VisualiseR.Showroom
         public override void Execute()
         {
             ShowSceneMenu();
+            ShowroomSceneMenuIsShownSignal.Dispatch(_isShown);
         }
 
         private void ShowSceneMenu()
@@ -30,7 +31,20 @@ namespace VisualiseR.Showroom
             Logger.InfoFormat("Showing scene menu");
             var sceneMenu = _contextView.transform.Find("Menus").transform.Find("ShowroomSceneMenuCanvas").gameObject;
             sceneMenu.SetActive(_isShown);
-            ShowroomSceneMenuIsShownSignal.Dispatch(_isShown);
+            if (_isShown)
+            {
+////                var cameraPos = Camera.main.transform.position;
+////                var rotation = GetLookAtPosition(cameraPos);
+////                sceneMenu. = rotation;
+//                sceneMenu.transform.LookAt(Camera.main.transform);
+            }
+            
+        }
+
+        private static Quaternion GetLookAtPosition(Vector3 cameraPos)
+        {
+            Vector3 relativePos = Camera.main.transform.position - cameraPos;
+            return Quaternion.LookRotation(relativePos);
         }
     }
 }
