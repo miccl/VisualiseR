@@ -22,29 +22,32 @@ namespace VisualiseR.Showroom
 
         public override void Execute()
         {
+            Logger.InfoFormat("Showing scene menu");
             ShowSceneMenu();
             ShowroomSceneMenuIsShownSignal.Dispatch(_isShown);
         }
 
         private void ShowSceneMenu()
         {
-            Logger.InfoFormat("Showing scene menu");
-            var sceneMenu = _contextView.transform.Find("Menus").transform.Find("ShowroomSceneMenuCanvas").gameObject;
+            var sceneMenu = GameObject.Find("Menus").transform.Find("ShowroomSceneMenuCanvas").gameObject;
             sceneMenu.SetActive(_isShown);
             if (_isShown)
             {
-////                var cameraPos = Camera.main.transform.position;
-////                var rotation = GetLookAtPosition(cameraPos);
-////                sceneMenu. = rotation;
-//                sceneMenu.transform.LookAt(Camera.main.transform);
+                AdjustPositionAndRotation(sceneMenu);
             }
             
         }
 
-        private static Quaternion GetLookAtPosition(Vector3 cameraPos)
+        private static void AdjustPositionAndRotation(GameObject sceneMenu)
         {
-            Vector3 relativePos = Camera.main.transform.position - cameraPos;
-            return Quaternion.LookRotation(relativePos);
+            Vector3 shift = Camera.main.transform.forward.normalized * 4;
+            Vector3 pos = Camera.main.transform.position + shift;
+            sceneMenu.transform.position = pos;
+            
+            Vector3 relativePos = Camera.main.transform.position - pos;
+            sceneMenu.transform.rotation = Quaternion.LookRotation(relativePos);
+            sceneMenu.transform.Rotate(0, 180, 0);
         }
+
     }
 }

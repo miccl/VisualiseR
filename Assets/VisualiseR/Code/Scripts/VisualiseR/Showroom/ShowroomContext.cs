@@ -63,6 +63,8 @@ namespace VisualiseR.Showroom
         private void BindMediators()
         {
             mediationBinder.Bind<ShowroomPlayerView>().To<ShowroomPlayerMediator>();
+            mediationBinder.Bind<ShowroomSceneMenuView>().To<ShowroomSceneMenuMediator>();
+            mediationBinder.Bind<GroundView>().To<GroundMediator>();
         }
 
         private void BindCommands()
@@ -80,6 +82,8 @@ namespace VisualiseR.Showroom
                     .InSequence();
             }
             commandBinder.Bind<ShowShowroomSceneMenuSignal>().To<ShowShowroomSceneMenuCommand>();
+            commandBinder.Bind<InstantiateObjectSignal>().To<InstantiateObjectCommand>();
+            commandBinder.Bind<TeleportPlayerSignal>().To<TeleportPlayerCommand>();
         }
 
         private void BindSignals()

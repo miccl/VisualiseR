@@ -38,7 +38,7 @@ namespace VisualiseR.Showroom
 
         private void OnCancelButtonClicked()
         {
-            ShowShowroomSceneMenuSignal.Dispatch(!_view._isSceneMenuShown);
+            ShowShowroomSceneMenuSignal.Dispatch(true);
         }
 
         private void OnPlayerInstantiated(Player player)

@@ -1,6 +1,8 @@
 ﻿using strange.extensions.mediation.impl;
+using strange.extensions.signal.impl;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 using VisualiseR.Common;
 using VisualiseR.Presentation;
@@ -17,6 +19,8 @@ namespace VisualiseR.Showroom
         internal GameObject _contextView;
         private GameObject _mainPanel;
         private GameObject _objectPanel;
+        
+        internal Signal<ObjectType, Vector3> CreateObjectSignal = new Signal<ObjectType, Vector3>(); 
 
         /// <summary>
         /// Initialises the variables.
@@ -96,6 +100,12 @@ namespace VisualiseR.Showroom
             Hide();
         }
 
+        public void OnCubeObjectButton(BaseEventData data)
+        {
+            CreateObjectSignal.Dispatch(ObjectType.Cube, Camera.main.transform.position);
+            Hide();
+        }
+        
         /// <summary>
         /// Called when the object cancel button has been clicked.
         /// </summary>

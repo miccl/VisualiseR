@@ -47,6 +47,8 @@ namespace VisualiseR.Showroom
 
             if (ButtonUtil.IsSubmitButtonPressed())
             {
+//                var pos = GameObject.Find("GvrRecticlePointer").transform.position;
+                
                 //TODO
                 return;
             }
