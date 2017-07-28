@@ -28,19 +28,5 @@ namespace VisualiseR.Common
                 Assert.IsTrue(WebUtil.IsValidUrl(validUrl));
             }
         }
-
-        [TestFixture]
-        public class GetFileNameMethod
-        {
-            [Test]
-            public void testGetFileName()
-            {
-                //given
-                var url = "https://www.planwallpaper.com/static/images/desktop-year-of-the-tiger-images-wallpaper.jpg";
-                var expectedFileName = "desktop-year-of-the-tiger-images-wallpaper.jpg";
-                //then
-                Assert.That(WebUtil.GetFileName(url), Is.EqualTo(expectedFileName));
-            }
-        }
     }
 }

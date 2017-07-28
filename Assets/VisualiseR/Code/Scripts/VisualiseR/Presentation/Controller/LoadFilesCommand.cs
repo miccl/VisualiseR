@@ -8,12 +8,13 @@ using VisualiseR.Util;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// Command to load the chosen files.
+    /// </summary>
     public class LoadFilesCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(LoadFilesCommand));
         
-        private const string FILE_PREFIX = "file:///";
-
         [Inject]
         public Player _player { get; set; }
 
@@ -35,6 +36,11 @@ namespace VisualiseR.Presentation
 
         }
 
+        /// <summary>
+        /// Returns the picture of the given medium as list of bytes.
+        /// </summary>
+        /// <param name="medium"></param>
+        /// <returns></returns>
         private List<byte[]> GetFileBytes(ISlideMedium medium)
         {
             List<byte[]> images = new List<byte[]>();
@@ -45,9 +51,14 @@ namespace VisualiseR.Presentation
             return images;
         }
 
+        /// <summary>
+        /// Returns byte of the file.
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
         private byte[] loadFile(string filePath)
         {
-            WWW www = new WWW(FILE_PREFIX + filePath);
+            WWW www = new WWW(FileUtil.FILE_PREFIX + filePath);
             var result = www.bytes;
             www.Dispose();
             return result;

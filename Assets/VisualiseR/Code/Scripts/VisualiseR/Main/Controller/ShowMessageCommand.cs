@@ -5,6 +5,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// Shows a <see cref="Message"/>
+    ///  </summary>
     public class ShowMessageCommand : Command
     {
         [Inject]
@@ -15,8 +18,6 @@ namespace VisualiseR.Main
 
         public override void Execute()
         {
-            GameObject menuCanvas = UnityUtil.FindGameObject("MenuCanvas");
-
             var messagePanel = (GameObject) GameObject.Instantiate(Resources.Load("MessageCanvas"));
             messagePanel.transform.SetParent(contextView.transform);
 

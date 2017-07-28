@@ -2,6 +2,9 @@
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// Root for the main scene.
+    /// </summary>
     public class MainRoot : ContextView
     {
         void Awake()

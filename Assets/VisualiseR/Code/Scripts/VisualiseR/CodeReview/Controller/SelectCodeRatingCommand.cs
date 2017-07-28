@@ -6,6 +6,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// Command to save the rating of a <see cref="Code"/> and move it to the appropriate directory.
+    /// </summary>
     public class SelectCodeRatingCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(SelectCodeRatingCommand));

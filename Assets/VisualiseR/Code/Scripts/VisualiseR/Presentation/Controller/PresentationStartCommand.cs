@@ -5,6 +5,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// Command to initialise the presentation scene.
+    /// </summary>
     public class PresentationStartCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(PresentationStartCommand));
@@ -14,6 +17,7 @@ namespace VisualiseR.Presentation
 
         public override void Execute()
         {
+            Logger.Info("Starting presentation scene");
             VRSettings.enabled = true;
             CreateOrJoinRoom();
         }

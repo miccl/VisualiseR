@@ -13,8 +13,6 @@ namespace VisualiseR.Common
         // vielleicht in den .tests von strangeIoC gucken...
         // https://www.nunit.org/index.php?p=exceptionAsserts&r=2.5
 
-        IInjectionBinder injectionBinder;
-
         [Test]
         public void testWrongPath()
         {
@@ -27,39 +25,5 @@ namespace VisualiseR.Common
                 // then
                 Throws.TypeOf<FileNotFoundException>());
         }
-
-//        [Test]
-//        public void testFilePath()
-//        {
-//            // given
-//            var loadDiskCommand = new LoadFilesCommand {_directoryPath = "D:/VisualiseR_Test/imgres.jpg"};
-//
-//            //
-//
-//        }
-//
-//        [Test]
-//        public void testEmptyFolderPath()
-//        {
-//            // given
-//            var loadDiskCommand = new LoadFilesCommand {_directoryPath = "D:/VisualiseR_Test/EmptyDirectory"};
-//
-//            //when
-//            loadDiskCommand.Execute();
-//
-//            //then
-//        }
-//
-//        [Test]
-//        public void testFullFolderPath()
-//        {
-//            // given
-//            var loadDiskCommand = new LoadFilesCommand {_directoryPath = "D:/VisualiseR_Test/FullDirectory"};
-//
-//            //when
-//            loadDiskCommand.Execute();
-//
-//            //then
-//        }
     }
 }

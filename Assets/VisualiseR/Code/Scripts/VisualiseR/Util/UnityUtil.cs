@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -39,7 +37,7 @@ namespace VisualiseR.Util
 
 
         /// <summary>
-        ///
+        /// Alternative way to use getComponent
         /// </summary>
         ///
         /// <see href="https://forum.unity3d.com/threads/alternative-way-to-use-getcomponent.344890/">Source</see>
@@ -69,29 +67,38 @@ namespace VisualiseR.Util
             GameObject go = GameObject.Find(gameObjectName);
             if (go == null)
             {
-                Logger.ErrorFormat("Cannot find '{0}' script", gameObjectName);
+                Logger.ErrorFormat("Cannot find game object '{0}' ", gameObjectName);
             }
             return go;
         }
 
-        //TODO vielleicht kann man hier was sichereres machen
+        /// <summary>
+        /// Defensive <see cref="GameObject.Find"/> alternative.
+        /// Checks if the retrieved game object is null.
+        /// </summary>
+        /// <param name="gameObjectName"></param>
         public static GameObject FindGameObjectInChild(string gameObjectName)
         {
             GameObject go = GameObject.Find(gameObjectName);
             if (go == null)
             {
-                Logger.ErrorFormat("Cannot find '{0}' script", gameObjectName);
+                Logger.ErrorFormat("Cannot find game object '{0}' ", gameObjectName);
             }
             return go;
         }
 
-
+        /// <summary>
+        /// Loads a scene with given room type.
+        /// </summary>
+        /// <param name="type"></param>
         public static void LoadScene(RoomType type)
         {
             LoadScene(type.ToString());
+
         }
+
         /// <summary>
-        ///
+        /// Loads a scene with given name.
         /// </summary>
         /// <param name="sceneName"></param>
         public static void LoadScene(string sceneName)
@@ -99,6 +106,7 @@ namespace VisualiseR.Util
             try
             {
                 SceneManager.LoadScene(sceneName);
+                Logger.InfoFormat("Loading scene '{0}'", sceneName);
             }
             catch (Exception e)
             {

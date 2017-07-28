@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using strange.extensions.context.api;
 using strange.extensions.mediation.impl;
 using UnityEngine;
 using VisualiseR.Common;
@@ -10,6 +9,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// Mediator for the <see cref="CodeReviewControllerView"/>
+    /// </summary>
     public class CodeReviewControllerMediator : Mediator
     {
         [Inject]
@@ -35,15 +37,18 @@ namespace VisualiseR.CodeReview
 
         [Inject]
         public ICodeMedium CodeMedium { get; set; }
-
-        [Inject(ContextKeys.CONTEXT_VIEW)]
-        public GameObject contextView { get; set; }
         
         [Inject]
         public CodeReviewSceneMenuIsShownSignal CodeReviewSceneMenuIsShownSignal { get; set; }
 
         [Inject]
         public CodeReviewContextMenuIsShownSignal CodeReviewContextMenuIsShownSignal { get; set; }
+        
+        [Inject]
+        public ShowAllCodeSignal ShowAllCodeSignal { get; set; }
+        
+        [Inject]
+        public CodeSelectedSignal CodeSelectedSignal { get; set; }
 
         public override void OnRegister()
         {
@@ -54,6 +59,8 @@ namespace VisualiseR.CodeReview
             PileSelectedSignal.AddListener(OnPileSelected);
             CodeReviewSceneMenuIsShownSignal.AddListener(OnSceneMenuIsShown);
             CodeReviewContextMenuIsShownSignal.AddListener(OnContextMenuIsShown);
+            ShowAllCodeSignal.AddListener(OnShowAllCode);
+            CodeSelectedSignal.AddListener(OnCodeSelected);
 
             InitView();
         }
@@ -67,6 +74,8 @@ namespace VisualiseR.CodeReview
             PileSelectedSignal.RemoveListener(OnPileSelected);
             CodeReviewSceneMenuIsShownSignal.RemoveListener(OnSceneMenuIsShown);
             CodeReviewContextMenuIsShownSignal.RemoveListener(OnContextMenuIsShown);
+            ShowAllCodeSignal.RemoveListener(OnShowAllCode);
+            CodeSelectedSignal.RemoveListener(OnCodeSelected);
 
         }
 
@@ -81,9 +90,7 @@ namespace VisualiseR.CodeReview
             {
                 _view._rate = rate;
                 _view._codeFragmentsWithRate = _view._medium.GetCodeFragmentsWithRate(rate);
-                _view.ClearScreens();
-                _view.InitialiseScreens();
-                _view.RemoveScreensIfNeeded();
+                _view.ActivateOrDeactivateScreens();
                 if (_view._codeFragmentsWithRate.Count > 0)
                 {
                     NextCodeSignal.Dispatch((Code) _view._codeFragmentsWithRate[0]);
@@ -99,7 +106,7 @@ namespace VisualiseR.CodeReview
         {
             _view._isSceneMenuShown = isShown;
         }
-        
+
         private void OnContextMenuIsShown(bool isShown)
         {
             _view._isContextMenuShown = isShown;
@@ -109,7 +116,7 @@ namespace VisualiseR.CodeReview
         private void OnCodeRatingChanged(Code code)
         {
             _view._codeFragmentsWithRate.Remove(code);
-            _view.RemoveScreensIfNeeded();
+            _view.ActivateOrDeactivateScreens();
             GetNextCodeFragment(code);
         }
 
@@ -210,6 +217,16 @@ namespace VisualiseR.CodeReview
                 medium.AddCodeFragment(code);
             }
             return medium;
+        }
+
+        private void OnShowAllCode()
+        {
+            _view._isShowAll = true;
+        }
+
+        private void OnCodeSelected(Code code, Player player)
+        {
+            _view._isShowAll = false;
         }
     }
 }

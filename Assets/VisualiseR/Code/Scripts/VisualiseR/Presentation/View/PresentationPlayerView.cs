@@ -1,46 +1,73 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using strange.extensions.mediation.impl;
 using UnityEngine;
 using VisualiseR.Common;
-using Random = UnityEngine.Random;
+using VisualiseR.Util;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// View of the player.
+    /// Shows the laser.
+    /// </summary>
     public class PresentationPlayerView : View
     {
-        private static JCsLogger Logger;
-        
-        private GameObject _reticlePointer;
-        private GameObject _laser;
-        private bool _isLaserShown;
-        private bool _firstFalse;
-        private Player _player;
-        
         public static readonly int AMOUNT_OF_SEATS = 5;
 
-        private GameObject _globalReticlePointer;
-        private GameObject _globalLaser;
-        private GameObject _globalElements;
-        internal GameObject _contextView;
-        private Transform _playerGlobal;
-        List<Vector3> _remainingClientPositions = new List<Vector3>();
+        private JCsLogger Logger;
 
-        
+        private Player _player;
+        private Transform _playerGlobal;
+
+        internal GameObject _contextView;
+
+        private GameObject _reticlePointer;
+
+        private GameObject _laser;
+
+        private GameObject _globalLaser;
+
+        private GameObject _globalElements;
+
+        private GameObject _globalReticlePointer;
+
+        private bool _isLaserShown;
+
+        private bool _firstFalse;
+
+
         protected override void Awake()
         {
             base.Awake();
             Logger = new JCsLogger(typeof(PresentationPlayerView));
             _playerGlobal = GameObject.Find("GvrNetworkedPlayer").transform;
-
         }
-        
+
         public void Init(Player player)
         {
             _player = player;
             InitView();
         }
-        
+
+        private void InitView()
+        {
+            _laser = transform.Find("GvrLaser").gameObject;
+            _reticlePointer = _laser.transform.Find("GvrReticlePointer").gameObject;
+            _globalElements = _contextView.transform.Find("GlobalElements").gameObject;
+            _globalReticlePointer = _globalElements.transform.Find("GvrReticlePointer").gameObject;
+
+            if (_player.IsHost())
+            {
+                _laser.SetActive(true);
+                _globalElements.SetActive(false);
+                ShowLaser(false);
+            }
+            else
+            {
+                _laser.SetActive(false);
+            }
+        }
+
         internal void AdjustPosition()
         {
             if (PhotonNetwork.isMasterClient)
@@ -49,26 +76,33 @@ namespace VisualiseR.Presentation
             }
             else
             {
+                PlayDoorSqueek();
                 RequestPositionFromMaster();
             }
         }
-        
+
+        private void PlayDoorSqueek()
+        {
+            var door = UnityUtil.FindGameObject("Door");
+            var audioSource = door.GetComponent<GvrAudioSource>();
+            audioSource.Play();
+        }
+
         internal void RequestPositionFromMaster()
         {
-            GetComponent<PhotonView>().RPC("OnPositionRequest",
-                PhotonTargets.MasterClient,
-                PhotonNetwork.player.ID);
+            photonView.RPC("OnPositionRequest",
+                PhotonTargets.MasterClient);
             Logger.DebugFormat("Player (id '{0}'): Reqested position from master", PhotonNetwork.player.ID);
         }
 
         [PunRPC]
-        void OnPositionRequest(int playerId)
+        void OnPositionRequest(PhotonMessageInfo info)
         {
             Vector3 playerPos = GetRandomStandPosition();
-            GetComponent<PhotonView>().RPC("OnPositionReceived",
-                PhotonPlayer.Find(playerId),
+            photonView.RPC("OnPositionReceived",
+                PhotonPlayer.Find(info.sender.ID),
                 playerPos);
-            Logger.DebugFormat("Master: Send position (pos '{1}') to player (id '{0}')", playerId, playerPos);
+            Logger.DebugFormat("Master: Send position (pos '{1}') to player (id '{0}')", info.sender.ID, playerPos);
         }
 
         [PunRPC]
@@ -90,8 +124,6 @@ namespace VisualiseR.Presentation
             Debug.Log("ANGEFRAGTE POSITION = " + r);
             Debug.Log("GROOSSE = " + remainingClientPositions.Count);
             Vector3 pos = remainingClientPositions[r];
-//            remainingClientPositions.RemoveAt(r);
-//            Vector3 pos = new Vector3(-9.3f, 4.4f, 0.4f);
             return pos;
         }
 
@@ -99,9 +131,9 @@ namespace VisualiseR.Presentation
         private List<Vector3> GetStandPositions()
         {
             List<Vector3> positions = new List<Vector3>();
-            
+
             var stand = GameObject.Find("Environment").transform.Find("Stand");
-            
+
             List<Transform> rows = new List<Transform>();
             rows.Add(stand.transform.Find("Row1"));
             rows.Add(stand.transform.Find("Row2"));
@@ -120,35 +152,17 @@ namespace VisualiseR.Presentation
         }
 
 
-        private void InitView()
-        {
-            _laser = transform.Find("GvrLaser").gameObject;
-            _reticlePointer = _laser.transform.Find("GvrReticlePointer").gameObject;
-            _globalElements = _contextView.transform.Find("GlobalElements").gameObject;
-            _globalReticlePointer = _globalElements.transform.Find("GvrReticlePointer").gameObject;
-
-            if (_player.IsHost())
-            {
-                _laser.SetActive(true);
-                ShowLaser(false);
-            }
-            else
-            {
-                _laser.SetActive(false);
-            }
-        }
-
         internal void ShowLaser(bool show)
         {
             if (show == _isLaserShown)
             {
                 return;
             }
-            
+
             _isLaserShown = show;
             if (_player.IsHost())
             {
-                _laser.GetComponent<LineRenderer>().enabled = show;   
+                _laser.GetComponent<LineRenderer>().enabled = show;
                 _reticlePointer.GetComponent<MeshRenderer>().material.color = _isLaserShown ? Color.red : Color.white;
             }
             else
@@ -158,35 +172,35 @@ namespace VisualiseR.Presentation
 
             Logger.InfoFormat("Logger is {0}", _isLaserShown ? "shown" : "hidden");
         }
-        
+
         void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
-            if (stream.isWriting)
             {
-                if (_isLaserShown)
+                if (stream.isWriting)
                 {
-                    _firstFalse = true;
-                    
-                    stream.SendNext(true);
-                    stream.SendNext(_reticlePointer.transform.position);
-                }
-                else if (_firstFalse)
-                {
-                    stream.SendNext(false);
-                    _firstFalse = false;
-                }
-            }
-            else
-            {
-                var isLaserShown = (bool) stream.ReceiveNext();
-                ShowLaser(isLaserShown);
-                if (isLaserShown)
-                {
-                    _globalReticlePointer.transform.position = (Vector3) stream.ReceiveNext();
-                }
-            }
+                    if (_isLaserShown)
+                    {
+                        _firstFalse = true;
 
+                        stream.SendNext(true);
+                        stream.SendNext(_reticlePointer.transform.position);
+                    }
+                    else if (_firstFalse)
+                    {
+                        stream.SendNext(false);
+                        _firstFalse = false;
+                    }
+                }
+                else
+                {
+                    var isLaserShown = (bool) stream.ReceiveNext();
+                    ShowLaser(isLaserShown);
+                    if (isLaserShown)
+                    {
+                        _globalReticlePointer.transform.position = (Vector3) stream.ReceiveNext();
+                    }
+                }
+            }
         }
-
     }
 }

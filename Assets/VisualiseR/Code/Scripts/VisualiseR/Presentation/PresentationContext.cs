@@ -8,6 +8,9 @@ using VisualiseR.Main;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// Context for the presentation scene.
+    /// </summary>
     public class PresentationContext : MVCSContext
     {
         public PresentationContext(MonoBehaviour view) : base(view)
@@ -66,13 +69,13 @@ namespace VisualiseR.Presentation
         private void BindMediators()
         {
             mediationBinder.Bind<PresentationScreenView>().To<PresentationScreenMediator>();
-            mediationBinder.Bind<TimerView>().To<TimerMediator>();
-            mediationBinder.Bind<SimplePresentationScreenView>().To<SimplePresentationScreenMediator>();
-            mediationBinder.Bind<NetworkedPlayer>().To<NetworkedPlayerMediator>();
-            mediationBinder.Bind<NetworkController>().To<NetworkControllerMediator>();
             mediationBinder.Bind<PresentationSceneMenuView>().To<PresentationSceneMenuMediator>();
-            mediationBinder.Bind<SmallScreenView>().To<SmallScreenMediator>();
+            mediationBinder.Bind<SimplePresentationScreenView>().To<SimplePresentationScreenMediator>();
+            mediationBinder.Bind<TimerView>().To<TimerMediator>();
+            mediationBinder.Bind<NetworkController>().To<NetworkControllerMediator>();
+            mediationBinder.Bind<NetworkedPlayer>().To<NetworkedPlayerMediator>();
             mediationBinder.Bind<PresentationPlayerView>().To<PresentationPlayerMediator>();
+            mediationBinder.Bind<SmallScreenView>().To<SmallScreenMediator>();
         }
 
         private void BindCommands()
@@ -111,6 +114,7 @@ namespace VisualiseR.Presentation
             injectionBinder.Bind<CreateOrJoinSignal>().ToSingleton();
             injectionBinder.Bind<PresentationSceneMenuIsShownSignal>().ToSingleton();
             injectionBinder.Bind<ShowLaserSignal>().ToSingleton();
+            injectionBinder.Bind<ChangeClockTypeSignal>().ToSingleton();
         }
     }
 }

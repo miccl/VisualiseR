@@ -2,6 +2,9 @@
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// Mediator for the <see cref="JoinRoomView"/>
+    /// </summary>
     public class JoinRoomMediator : Mediator
     {
         [Inject]
@@ -9,20 +12,30 @@ namespace VisualiseR.Main
 
         [Inject]
         public JoinRoomSignal JoinRoomSignal { get; set; }
+        
+        [Inject]
+        public ShowMessageSignal ShowMessageSignal { get; set; }
 
         public override void OnRegister()
         {
             _view.JoinRoomButtonClickSignal.AddListener(OnJoinRoomButtonClicked);
+            _view.ShowMessageSignal.AddListener(OnShowMessage);
         }
 
         public override void OnRemove()
         {
             _view.JoinRoomButtonClickSignal.RemoveListener(OnJoinRoomButtonClicked);
+            _view.ShowMessageSignal.RemoveListener(OnShowMessage);
         }
 
         private void OnJoinRoomButtonClicked(string roomName)
         {
             JoinRoomSignal.Dispatch(roomName);
+        }
+
+        private void OnShowMessage(Message msg)
+        {
+            ShowMessageSignal.Dispatch(msg);
         }
     }
 }

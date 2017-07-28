@@ -1,10 +1,11 @@
-﻿using strange.extensions.context.api;
-using strange.extensions.mediation.impl;
-using UnityEngine;
+﻿using strange.extensions.mediation.impl;
 using VisualiseR.Common;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// Mediator for the <see cref="PresentationPlayerView"/>
+    /// </summary>
     public class PresentationPlayerMediator : Mediator
     {
         [Inject]
@@ -18,18 +19,14 @@ namespace VisualiseR.Presentation
         
         [Inject]
         public ShowLoadingAnimationSignal ShowLoadingAnimationSignal { get; set; }
-        
-        [Inject(ContextKeys.CONTEXT_VIEW)]
-        public GameObject _contextView { get; set; }
-
+                
         public override void OnRegister()
         {
             PlayerInstantiatedSignal.AddListener(OnPlayerInstantiated);
             ShowLaserSignal.AddListener(OnShowLaser);
             ShowLoadingAnimationSignal.AddListener(OnShowLoadingAnimation);
-            _view._contextView = _contextView;
+            _view._contextView = contextView;
         }
-
 
         public override void OnRemove()
         {

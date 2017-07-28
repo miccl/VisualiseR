@@ -6,10 +6,12 @@ using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// View for the information screen.
+    /// </summary>
     public class InfoView : View
     {
         internal ICode _code;
-        private Text _titleText;
         private Text _nameText;
         private Text _pathText;
         private Text _sizeText;
@@ -22,7 +24,6 @@ namespace VisualiseR.CodeReview
         {
             base.Awake();
             var infoPanel = gameObject.transform.FindChild("InfoPanel");
-            _titleText = infoPanel.FindChild("Title").GetComponent<Text>();
             var centerPanel = infoPanel.FindChild("CenterPanel");
             _nameText = centerPanel.FindChild("NamePanel").FindChild("Text").GetComponent<Text>();
             _ratingText = centerPanel.FindChild("RatingPanel").FindChild("Text").GetComponent<Text>();
@@ -52,9 +53,10 @@ namespace VisualiseR.CodeReview
 
         private void SetViewValues()
         {
+            Preconditions.CheckNotNull(_code.Name, "Name may not be null");
             _nameText.text = _code.Name;
             _ratingText.text = _code.Rate.ToString();
-            _pathText.text = FileUtil.GetDirectoryPath(_code.OldPath);
+            _pathText.text = FileUtil.GetParentDirectory(_code.OldPath);
             _sizeText.text = FileUtil.GetSizeInBytes(_code.OldPath);
             _ownerText.text = FileUtil.GetOwner(_code.OldPath);
             _lastModifiedText.text = FileUtil.GetLastModified(_code.OldPath);

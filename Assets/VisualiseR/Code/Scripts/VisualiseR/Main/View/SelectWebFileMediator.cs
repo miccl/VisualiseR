@@ -1,10 +1,10 @@
-﻿using strange.extensions.context.api;
-using strange.extensions.mediation.impl;
-using UnityEngine;
-using VisualiseR.Common;
+﻿using strange.extensions.mediation.impl;
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// Mediator for the <see cref="SelectWebFileView"/>
+    /// </summary>
     public class SelectWebFileMediator : Mediator
     {
         [Inject]
@@ -14,24 +14,31 @@ namespace VisualiseR.Main
         [Inject]
         public LoadFilesSignal LoadFilesSignal { get; set; }
         
-        [Inject(ContextKeys.CONTEXT_VIEW)]
-        public GameObject _contextView { get; set; }
-
+        [Inject]
+        public SelectionCanceledSignal SelectionCanceledSignal { get; set; }
 
         public override void OnRegister()
         {
             _view.UrlSelected.AddListener(OnUrlSelected);
-            _view._contextView = _contextView;
+            _view.CanceledSignal.AddListener(OnCanceled);
+            _view._contextView = contextView;
         }
 
         public override void OnRemove()
         {
             _view.UrlSelected.AddListener(OnUrlSelected);
+            _view.CanceledSignal.RemoveListener(OnCanceled);
+
         }
 
         private void OnUrlSelected(string url)
         {
-           LoadFilesSignal.Dispatch(url);
+           LoadFilesSignal.Dispatch(url, FileType.Web);
+        }
+
+        private void OnCanceled()
+        {
+            SelectionCanceledSignal.Dispatch();
         }
     }
 }

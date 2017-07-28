@@ -84,20 +84,39 @@ namespace VisualiseR.Test.Util
         {
             //given
             string mediumName = "D:/Downloads/VisualiseR_Test/CodeReview" + DateTime.Now.Ticks;
-            string unratedDirName = "D:/Downloads/VisualiseR_Test/CodeReview/Unrated";
-            string uncriticalDirName = "D:/Downloads/VisualiseR_Test/CodeReview/Uncritical";
-            string minorDirName = "D:/Downloads/VisualiseR_Test/CodeReview/Minor";
-            string criticalDirName = "D:/Downloads/VisualiseR_Test/CodeReview/Critical";
-
+            string unratedDirName = mediumName +  Path.DirectorySeparatorChar + "Unrated";
+            string uncriticalDirName = mediumName +  Path.DirectorySeparatorChar +  "Uncritical";
+            string minorDirName = mediumName +  Path.DirectorySeparatorChar +  "Minor";
+            string criticalDirName = mediumName +  Path.DirectorySeparatorChar +  "Critical";
+            
+            Assert.IsFalse(Directory.Exists(mediumName), "Directory '{0}' should not exist ", mediumName);
+            Assert.IsFalse(Directory.Exists(unratedDirName), "Directory '{0}' should not exist ", unratedDirName);
+            Assert.IsFalse(Directory.Exists(uncriticalDirName), "Directory '{0}' should not exist ", uncriticalDirName);
+            Assert.IsFalse(Directory.Exists(minorDirName), "Directory '{0}' should not exist ", minorDirName);
+            Assert.IsFalse(Directory.Exists(criticalDirName), "Directory '{0}' should not exist ", criticalDirName);
+            
             //when
-            var mainDirInfo = DirectoryUtil.CreateDirectorysForCodeReview(mediumName);
-
+            DirectoryUtil.CreateDirectorysForCodeReview(mediumName);
+            
+            //then
             Assert.IsTrue(Directory.Exists(mediumName), "Directory '{0}' should exist ", mediumName);
             Assert.IsTrue(Directory.Exists(unratedDirName), "Directory '{0}' should exist ", unratedDirName);
             Assert.IsTrue(Directory.Exists(uncriticalDirName), "Directory '{0}' should exist ", uncriticalDirName);
             Assert.IsTrue(Directory.Exists(minorDirName), "Directory '{0}' should exist ", minorDirName);
             Assert.IsTrue(Directory.Exists(criticalDirName), "Directory '{0}' should exist ", criticalDirName);
-            //then
+
+            DirectoryUtil.DeleteDirectory(unratedDirName);
+            DirectoryUtil.DeleteDirectory(uncriticalDirName);
+            DirectoryUtil.DeleteDirectory(minorDirName);
+            DirectoryUtil.DeleteDirectory(criticalDirName);
+            DirectoryUtil.DeleteDirectory(mediumName);
+
+            Assert.IsFalse(Directory.Exists(mediumName), "Directory '{0}' should not exist ", mediumName);
+            Assert.IsFalse(Directory.Exists(unratedDirName), "Directory '{0}' should not exist ", unratedDirName);
+            Assert.IsFalse(Directory.Exists(uncriticalDirName), "Directory '{0}' should not exist ", uncriticalDirName);
+            Assert.IsFalse(Directory.Exists(minorDirName), "Directory '{0}' should not exist ", minorDirName);
+            Assert.IsFalse(Directory.Exists(criticalDirName), "Directory '{0}' should not exist ", criticalDirName);
+
         }
     }
 }

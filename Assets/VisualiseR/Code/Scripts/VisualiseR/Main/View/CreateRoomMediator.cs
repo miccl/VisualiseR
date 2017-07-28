@@ -1,9 +1,12 @@
-﻿using strange.extensions.mediation.impl;
-using UnityEngine;
+﻿using System;
+using strange.extensions.mediation.impl;
 using VisualiseR.Common;
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// Mediator for the <see cref="CreateRoomView"/>
+    /// </summary>
     public class CreateRoomMediator : Mediator
     {
         [Inject]
@@ -11,7 +14,7 @@ namespace VisualiseR.Main
 
         [Inject]
         public SelectDiskFileSignal SelectDiskFileSignal { get; set; }
-        
+
         [Inject]
         public SelectWebFileSignal SelectWebFileSignal { get; set; }
 
@@ -24,13 +27,21 @@ namespace VisualiseR.Main
         [Inject]
         public IPictureMedium Medium { get; set; }
 
+        [Inject]
+        public SelectionCanceledSignal SelectionCanceledSignal { get; set; }
+
+        [Inject]
+        public ShowMessageSignal ShowMessageSignal { get; set; }
+
         public override void OnRegister()
         {
             _view.SelectDiskFileButtonClickedSignal.AddListener(OnSelectDiskFileButtonClicked);
             _view.SelectWebFileButtonClickedSignal.AddListener(OnSelectWebFileButtonClicked);
             _view.CreateRoomButtonClickedSignal.AddListener(OnCreateRoomButtonClick);
+            _view.ShowMessageSignal.AddListener(OnShowMessage);
             MediumChangedSignal.AddListener(OnMediumChanged);
-            _view.ChoosenMedium = Medium;
+            SelectionCanceledSignal.AddListener(OnSelectionCanceled);
+            _view._choosenMedium = Medium;
         }
 
         public override void OnRemove()
@@ -38,6 +49,8 @@ namespace VisualiseR.Main
             _view.SelectDiskFileButtonClickedSignal.RemoveListener(OnSelectDiskFileButtonClicked);
             _view.SelectWebFileButtonClickedSignal.RemoveListener(OnSelectWebFileButtonClicked);
             _view.CreateRoomButtonClickedSignal.RemoveListener(OnCreateRoomButtonClick);
+            _view.ShowMessageSignal.RemoveListener(OnShowMessage);
+            SelectionCanceledSignal.RemoveListener(OnSelectionCanceled);
             MediumChangedSignal.RemoveListener(OnMediumChanged);
         }
 
@@ -58,14 +71,30 @@ namespace VisualiseR.Main
 
         private void OnMediumChanged(PictureMedium pictureMedium)
         {
-            //TODO davor könnte beispielsweise eine Laderad kommen, bis dieser Aufruf getätigt wird
-            _view.ChoosenMedium = pictureMedium;
-            _view.ChooseMediumDropdown.captionText.text = pictureMedium.Name;
+            if (pictureMedium == null)
+            {
+                OnSelectionCanceled();
+                return;
+            }
+            _view._choosenMedium = pictureMedium;
+            _view._chooseMediumDropdown.captionText.text = pictureMedium.Name;
+            _view.ChangeInteractibilityOfButtons(true);
         }
 
         private void OnSelectWebFileButtonClicked()
         {
             SelectWebFileSignal.Dispatch();
+        }
+
+        private void OnSelectionCanceled()
+        {
+            _view.ChangeInteractibilityOfButtons(true);
+            _view.SelectionCanceled();
+        }
+
+        private void OnShowMessage(Message msg)
+        {
+            ShowMessageSignal.Dispatch(msg);
         }
     }
 }

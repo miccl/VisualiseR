@@ -54,19 +54,16 @@ namespace VisualiseR.Util
             public void SimpleSpawnPositions()
             {
                 //Start Position
-                Vector3? actualStartPosition = ScreenPositionUtil.ComputeSpawnPositionFromStartPosition(5, 0, 90, 2);
+                Vector3? actualStartPosition = ScreenPositionUtil.ComputeSpawnPosition(5, 0, 90, 2);
                 Vector3 expectedStartPosition = new Vector3(0, 2, 5);
-//                StringAssert.AreEqualIgnoringCase(actualStartPosition.ToString(), "hallo");
                 AssertVectorsAreEqual(expectedStartPosition, (Vector3) actualStartPosition);
 //                //Middle position
-                Vector3? actualMiddlePosition = ScreenPositionUtil.ComputeSpawnPositionFromStartPosition(5, 45, 90, 2);
+                Vector3? actualMiddlePosition = ScreenPositionUtil.ComputeSpawnPosition(5, 45, 90, 2);
                 Vector3 expectedMiddlePosition = new Vector3(-3.5f, 2f, 3.5f);
                 AssertVectorsAreEqual(expectedMiddlePosition, (Vector3) actualMiddlePosition);
-//                StringAssert.AreEqualIgnoringCase(actualMiddlePosition.ToString(),"E" + expectedMiddlePosition);
-//                Assert.IsTrue(actualMiddlePosition == expectedMiddlePosition);
 
                 //End position
-                Vector3? actualEndPosition = ScreenPositionUtil.ComputeSpawnPositionFromStartPosition(5, 90, 90, 2);
+                Vector3? actualEndPosition = ScreenPositionUtil.ComputeSpawnPosition(5, 90, 90, 2);
                 Vector3 expectedEndPosition = new Vector3(-5, 2, 0);
                 if (actualEndPosition != null) AssertVectorsAreEqual(expectedEndPosition, (Vector3) actualEndPosition);
             }

@@ -5,6 +5,9 @@ using VisualiseR.Common;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// Command to set the selected <see cref="_code"/> as the current shown code on the main screen.
+    /// </summary>
     public class CodeSelectedCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(CodeSelectedCommand));

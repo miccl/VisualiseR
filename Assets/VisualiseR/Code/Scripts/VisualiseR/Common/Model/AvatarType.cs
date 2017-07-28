@@ -2,6 +2,9 @@
 
 namespace VisualiseR.Common
 {
+    /// <summary>
+    /// Types of avatar.
+    /// </summary>
     [Serializable]
     public enum AvatarType
     {

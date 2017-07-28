@@ -2,20 +2,23 @@
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using UnityEngine;
-using UnityEngine.Rendering;
 using VisualiseR.Common;
 using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// Command to show all code fragments in the scene.
+    /// Uses <see cref="SimpleCodeReviewScreenView"/> for  the display.
+    /// </summary>
     public class ShowAllCodeCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(ShowAllCodeCommand));
 
         private static readonly float SPAWN_DISTANCE = 20;
-        private static readonly float START_ANGLE = 0;
-        private static readonly float END_ANGLE = 180;
-        private static readonly float MIN_AGNLE_BETWEEN_ELEMENTS = 20;
+        private static readonly float START_ANGLE = 30;
+        private static readonly float END_ANGLE = 150;
+        private static readonly float MIN_AGNLE_BETWEEN_ELEMENTS = 30;
         private static readonly float MAX_STAGES = 3;
         private static readonly float START_POS_Y = 5;
         private static readonly float POS_Y_DISTANCE = 10;
@@ -109,7 +112,6 @@ namespace VisualiseR.CodeReview
             screen.name = "SimpleScreen_" + codePos;
             screen.transform.SetParent(_simpleScreenParent.transform);
 
-            //TODO direkte verbindung verhindern
             SimpleCodeReviewScreenView screenView = screen.GetComponent<SimpleCodeReviewScreenView>();
             screenView.Init(code, player);
         }

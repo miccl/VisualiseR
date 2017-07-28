@@ -2,6 +2,9 @@
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// Mediator for the <see cref="MainMenuView"/>
+    /// </summary>
     public class MainMenuMediator : Mediator
     {
         [Inject]

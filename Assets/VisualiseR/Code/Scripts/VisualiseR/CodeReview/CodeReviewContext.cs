@@ -9,6 +9,9 @@ using VisualiseR.Main;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// Context for the code review scene.
+    /// </summary>
     public class CodeReviewContext : MVCSContext
     {
         public CodeReviewContext(MonoBehaviour view) : base(view)
@@ -65,14 +68,13 @@ namespace VisualiseR.CodeReview
 
         private void BindServices()
         {
-            // TODO
         }
 
         private void BindMediators()
         {
+            mediationBinder.Bind<CodeReviewControllerView>().To<CodeReviewControllerMediator>();
             mediationBinder.Bind<CodeReviewScreenView>().To<CodeReviewScreenMediator>();
             mediationBinder.Bind<CodeReviewContextMenuView>().To<CodeReviewContextMenuMediator>();
-            mediationBinder.Bind<CodeReviewControllerView>().To<CodeReviewControllerMediator>();
             mediationBinder.Bind<PileView>().To<PileMediator>();
             mediationBinder.Bind<InfoView>().To<InfoMediator>();
             mediationBinder.Bind<CodeReviewSceneMenuView>().To<CodeReviewSceneMenuMediator>();
@@ -102,6 +104,7 @@ namespace VisualiseR.CodeReview
             commandBinder.Bind<ShowAllCodeSignal>().To<ShowAllCodeCommand>();
             commandBinder.Bind<CodeSelectedSignal>().To<CodeSelectedCommand>();
             commandBinder.Bind<ShowKeyboardSignal>().To<ShowKeyboardCommand>();
+            commandBinder.Bind<ShowMessageSignal>().To<ShowMessageCommand>();
         }
 
         private void BindSignals()
@@ -113,7 +116,6 @@ namespace VisualiseR.CodeReview
             injectionBinder.Bind<CommentChangedSignal>().ToSingleton();
             injectionBinder.Bind<CodeReviewSceneMenuIsShownSignal>().ToSingleton();
             injectionBinder.Bind<NextCodeSignal>().ToSingleton();
-            injectionBinder.Bind<ShowLaserSignal>().ToSingleton();
         }
     }
 }

@@ -7,17 +7,20 @@ using VisualiseR.Util;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// View of the main screen.
+    /// </summary>
     public class PresentationScreenView : View
     {
-        private static JCsLogger Logger;
-
-        private const string FILE_PREFIX = "file:///";
+        private JCsLogger Logger;
 
         internal Signal<IPlayer, ISlideMedium> NextSlideSignal = new Signal<IPlayer, ISlideMedium>();
         internal Signal<IPlayer, ISlideMedium> PrevSlideSignal = new Signal<IPlayer, ISlideMedium>();
         internal Signal<IPlayer, ISlideMedium> ShowSceneMenuSignal = new Signal<IPlayer, ISlideMedium>();
         internal Signal<bool, string> ShowLoadingAnimationSignal = new Signal<bool, string>();
+        
         private List<byte[]> _images = new List<byte[]>();
+        
         private int _currentPos;
         private bool _isLoading;
         internal bool _isSceneMenuShown = false;
@@ -38,7 +41,6 @@ namespace VisualiseR.Presentation
             _images = images;
 
             SetupMedium();
-            
         }
 
 
@@ -64,7 +66,7 @@ namespace VisualiseR.Presentation
 
         internal void RequestDataFromMaster(int playerId, int pos)
         {
-            GetComponent<PhotonView>().RPC("OnDataRequest",
+            photonView.RPC("OnDataRequest",
                 PhotonTargets.MasterClient,
                 playerId, pos);
             Logger.DebugFormat("Player (id '{0}'): Reqested data (pos '{1}') from master", playerId, pos);
@@ -77,26 +79,23 @@ namespace VisualiseR.Presentation
             byte[] Image = null;
             if (pos == 0)
             {
-                GetComponent<PhotonView>().RPC("OnSyncing",
+                photonView.RPC("OnSyncing",
                     PhotonPlayer.Find(playerId),
                     _images.Count);
             }
-            
+
             if (pos <= _images.Count - 1)
             {
                 Pos = pos;
                 Image = _images[Pos];
             }
-            GetComponent<PhotonView>().RPC("OnDataReceived",
+
+            photonView.RPC("OnDataReceived",
                 PhotonPlayer.Find(playerId),
                 Pos, Image);
-            Logger.DebugFormat("Master: Send data (pos '{1}') to player (id '{0}')", playerId, pos);            
-            //TODO interesting other alternative
-//            GetComponent<PhotonView>().RPC("OnDataReceived",
-//                PhotonTargets.OthersBuffered,
-//                Pos, Image);
+            Logger.DebugFormat("Master: Send data (pos '{1}') to player (id '{0}')", playerId, pos);
         }
-        
+
         [PunRPC]
         void OnSyncing(int imageCount)
         {
@@ -120,6 +119,29 @@ namespace VisualiseR.Presentation
 
             _isLoading = false;
             Logger.DebugFormat("Player (id '{0}'): Received all images from master", PhotonNetwork.player.ID);
+            RequestSlidePositionFromMaster();
+        }
+
+        private void RequestSlidePositionFromMaster()
+        {
+            photonView.RPC("OnSlidePositionRequest",
+                PhotonTargets.MasterClient,
+                PhotonNetwork.player.ID);
+            Logger.DebugFormat("Player (id '{0}'): Reqested slide position from master", PhotonNetwork.player.ID);
+        }
+
+        [PunRPC]
+        void OnSlidePositionRequest(int playerId)
+        {
+            photonView.RPC("OnSlidePositionReceived",
+                PhotonPlayer.Find(playerId),
+                _medium.CurrentPos);
+        }
+        
+        [PunRPC]
+        void OnSlidePositionReceived(int pos)
+        {
+            _currentPos = pos;
             LoadImageIntoTexture(_images[_currentPos]);
             ShowLoadingAnimationSignal.Dispatch(false, "");
         }
@@ -149,8 +171,10 @@ namespace VisualiseR.Presentation
         internal void LoadCurrentSlide()
         {
             var currentPos = _medium.CurrentPos;
+            LoadImageIntoTexture(_images[currentPos]);
+            
             photonView.RPC("OnSlidePosChanged",
-                PhotonTargets.All,
+                PhotonTargets.Others,
                 currentPos);
         }
 
@@ -186,20 +210,20 @@ namespace VisualiseR.Presentation
                 return;
             }
 
-            if (Input.GetButtonDown(ButtonUtil.SUBMIT) || Input.GetButtonDown("Fire1"))
+            if (_isSceneMenuShown)
             {
-                if (!_isSceneMenuShown)
-                {
-                    NextSlide();
-                }
+                return;
             }
-            
-            if (Input.GetButtonDown(ButtonUtil.CANCEL))
+
+            if (ButtonUtil.IsSubmitButtonPressed())
             {
-                if (!_isSceneMenuShown)
-                {
-                    ShowSceneMenu();
-                }
+                NextSlide();
+                return;
+            }
+
+            if (ButtonUtil.IsCancelButtonPressed())
+            {
+                ShowSceneMenu();
             }
         }
 
@@ -211,7 +235,7 @@ namespace VisualiseR.Presentation
             }
         }
 
-        void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) 
         {
         }
     }

@@ -10,8 +10,6 @@ namespace VisualiseR.Common
     /// </summary>
     public class NetworkedPlayer : View
     {
-        private static JCsLogger Logger;
-
         internal Signal<bool> InstantiatePlayer = new Signal<bool>();
 
         internal IPlayer _player;
@@ -23,7 +21,6 @@ namespace VisualiseR.Common
         protected override void Awake()
         {
             base.Awake();
-            Logger = new JCsLogger(typeof(NetworkedPlayer));
             _avatar = transform.Find("Avatar").gameObject;
         }
 
@@ -40,7 +37,7 @@ namespace VisualiseR.Common
                 transform.localPosition = Vector3.zero;
                 transform.localRotation = Quaternion.identity;
 
-//                _avatar.SetActive(false);
+                _avatar.SetActive(false);
 
                 InstantiatePlayer.Dispatch(PhotonNetwork.isMasterClient);
             }
@@ -49,9 +46,8 @@ namespace VisualiseR.Common
         internal void InitPlayer(Player player)
         {
             _player = player;
-            
+
             InitAvatar();
-            //TODO avatar und n
         }
 
         private void InitAvatar()
@@ -59,9 +55,6 @@ namespace VisualiseR.Common
             Color color;
             switch (_player.Avatar)
             {
-                case AvatarType.Blue:
-                    color = Color.blue;
-                    break;
                 case AvatarType.Green:
                     color = Color.green;
                     break;
@@ -83,22 +76,27 @@ namespace VisualiseR.Common
             _avatar.transform.Find("Head").GetComponent<MeshRenderer>().material.color = color;
         }
 
-// synchronsize with the others
+        /// <summary>
+        /// Synchronise with other players.
+        /// </summary>
+        /// <param name="stream"></param>
         void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
-            if (stream.isWriting)
             {
-                stream.SendNext(_playerGlobal.position);
-                stream.SendNext(_playerGlobal.rotation);
-                stream.SendNext(_playerLocal.localPosition);
-                stream.SendNext(_playerLocal.localRotation);
-            }
-            else
-            {
-                transform.position = (Vector3) stream.ReceiveNext();
-                transform.rotation = (Quaternion) stream.ReceiveNext();
-                _avatar.transform.localPosition = (Vector3) stream.ReceiveNext();
-                _avatar.transform.localRotation = (Quaternion) stream.ReceiveNext();
+                if (stream.isWriting)
+                {
+                    stream.SendNext(_playerGlobal.position);
+                    stream.SendNext(_playerGlobal.rotation);
+                    stream.SendNext(_playerLocal.localPosition);
+                    stream.SendNext(_playerLocal.localRotation);
+                }
+                else
+                {
+                    transform.position = (Vector3) stream.ReceiveNext();
+                    transform.rotation = (Quaternion) stream.ReceiveNext();
+                    _avatar.transform.localPosition = (Vector3) stream.ReceiveNext();
+                    _avatar.transform.localRotation = (Quaternion) stream.ReceiveNext();
+                }
             }
         }
     }

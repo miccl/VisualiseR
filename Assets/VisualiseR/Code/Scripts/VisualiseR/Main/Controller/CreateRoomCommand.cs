@@ -7,8 +7,7 @@ using VisualiseR.Util;
 namespace VisualiseR.Main
 {
     /// <summary>
-    /// Creates a <see cref="IRoom"/>.
-    /// Constructs a Room with the choosen <see cref="RoomType"/> and <see cref="IPictureMedium"/>.
+    /// Command to construct a <see cref="IRoom"/> with the choosen <see cref="RoomType"/> and <see cref="IPictureMedium"/>.
     /// Adds the <see cref="IPlayer"/> to the Room .
     /// </summary>
     public class CreateRoomCommand : Command
@@ -47,7 +46,7 @@ namespace VisualiseR.Main
 
             ConstructRoom();
 
-            PlayerPrefsUtil.saveObject(PlayerPrefsUtil.ROOM_KEY, Room);
+            PlayerPrefsUtil.SaveObject(PlayerPrefsUtil.ROOM_KEY, Room);
             ShowMessageSignal.Dispatch(new Message(MessageType.Info, "Sucess", string.Format("Room {0} was sucessfully created", _RoomName)));
             LoadScene();
         }
@@ -65,12 +64,8 @@ namespace VisualiseR.Main
 
         private bool RoomAlreadyExists()
         {
-            //TODO machen
+            //TODO depending on room type 
 
-            if (_RoomType.Equals(RoomType.Presentation))
-            {
-//                return PhotonNetwork.CreateRoom(_RoomName);
-            }
             return false;
         }
 
@@ -103,15 +98,14 @@ namespace VisualiseR.Main
             if (String.IsNullOrEmpty(_RoomName))
             {
                 string errorMessage = "Room name wasn't choosen yet";
-                Logger.Error(errorMessage);
-
+                Logger.Info("Error:" + errorMessage);
                 ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
                 return false;
             }
             if (_medium.IsEmpty())
             {
                 string errorMessage = "PictureMedium wasn't choosen yet";
-                Logger.Error(errorMessage);
+                Logger.Info("Error:" + errorMessage);
                 ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
                 return false;
             }
@@ -119,7 +113,7 @@ namespace VisualiseR.Main
             if (RoomAlreadyExists())
             {
                 string errorMessage = string.Format("Room with name {0} already exists", _RoomName);
-                Logger.Error(errorMessage);
+                Logger.Info("Error:" + errorMessage);
                 ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
                 return false;
             }

@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
@@ -7,27 +9,32 @@ using VisualiseR.Util;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// View for the timer clock.
+    /// </summary>
     public class TimerView : View
     {
         public Signal TimerRunDownSignal = new Signal();
         public Signal<bool> ShowTimerSignal = new Signal<bool>();
 
+        public ClockType _type = ClockType.Countdown;
         private float _timeLeft;
-        public float _timeFrom { get; private set; }
+        public float _timeFrom = 600;
         public bool stop = true;
-
         private float _minutes;
         private float _seconds;
 
         private Text _timerText;
 
-        private GvrAudioSource audioSource;
-        
+        private GvrAudioSource _audioSource;
+        private Animation _animation;
+
         protected override void Awake()
         {
             base.Awake();
             _timerText = transform.GetComponentInChildren<Text>();
-            audioSource = GetComponent<GvrAudioSource>();
+            _audioSource = GetComponent<GvrAudioSource>();
+            _animation = GetComponent<Animation>();
         }
 
         protected override void Start()
@@ -45,6 +52,11 @@ namespace VisualiseR.Presentation
 
         public void StartTimer()
         {
+            if (_type.Equals(ClockType.Countdown) && (_timeFrom <= 0 || _timeLeft <= 0))
+            {
+                return;
+            }
+
             stop = false;
             Update();
             StartCoroutine(runTimer());
@@ -59,14 +71,31 @@ namespace VisualiseR.Presentation
         public void ResetTimer()
         {
             StopTimer();
-            _timeLeft = _timeFrom;
+            switch (_type)
+            {
+                case ClockType.Stopwatch:
+                    _timeLeft = 0;
+                    break;
+                default:
+                    _timeLeft = _timeFrom;
+                    break;
+            }
             DisplayTime();
         }
 
         void Update()
         {
             if (stop) return;
-            _timeLeft -= Time.deltaTime;
+            switch (_type)
+            {
+                case ClockType.Stopwatch:
+                    _timeLeft += Time.deltaTime;
+                    break;
+                default:
+                    _timeLeft -= Time.deltaTime;
+                    break;
+            }
+
 
             if (_timeLeft < 0)
             {
@@ -78,15 +107,19 @@ namespace VisualiseR.Presentation
         {
             StopTimer();
             _timeLeft = 0;
-            audioSource.Play();
-            Blink();
+            _audioSource.Play();
+            _animation.Play();
             TimerRunDownSignal.Dispatch();
+            StartCoroutine(StopAfterSeconds());
         }
 
-        private void Blink()
+        private IEnumerator StopAfterSeconds()
         {
-            
+            yield return new WaitForSeconds(5f);
+            _audioSource.Stop();
+            _animation.Stop();
         }
+
 
         private IEnumerator runTimer()
         {
@@ -106,6 +139,17 @@ namespace VisualiseR.Presentation
         public void Show(bool isShown)
         {
             ShowTimerSignal.Dispatch(isShown);
+        }
+
+        public void ChangeClockType(ClockType type)
+        {
+            if (_type.Equals(type))
+            {
+                return;
+            }
+
+            _type = type;
+            ResetTimer();
         }
     }
 }

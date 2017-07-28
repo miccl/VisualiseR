@@ -2,7 +2,10 @@
 
 namespace VisualiseR.Presentation
 {
-    public class ChangeTimerStatusSignal: Signal<TimerTypes>
+    /// <summary>
+    /// Signals that the timer status has changed.
+    /// </summary>
+    public class ChangeTimerStatusSignal: Signal<TimerType>
     {
 
     }

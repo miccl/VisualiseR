@@ -2,6 +2,9 @@
 
 namespace VisualiseR.Util
 {
+    /// <summary>
+    /// Drag and dropable object.
+    /// </summary>
     public class DDObject : MonoBehaviour, DragDropHandler
     {
         private bool IsHeld;

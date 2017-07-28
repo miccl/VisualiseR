@@ -1,9 +1,13 @@
 ﻿using strange.extensions.command.impl;
 using VisualiseR.CodeReview;
 using VisualiseR.Common;
+using VisualiseR.Util;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// Command to get the previous slide.
+    /// </summary>
     public class PrevSlideCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(PrevSlideCommand));
@@ -17,12 +21,11 @@ namespace VisualiseR.Presentation
         [Inject]
         public SlidePositionChangedSignal SlidePositionChangedSignal { get; set; }
 
-
         public override void Execute()
         {
-            if (!_player.HasRight(AcessList.NavigateCodeRight))
+            if (!_player.HasRight(AcessList.NAVIGATE_MEDIUM))
             {
-                Logger.InfoFormat(AcessList.errorMessageFormat, _player, typeof(PrevSlideCommand));
+                Logger.InfoFormat(AcessList.ERROR_MESSAGE, _player, typeof(PrevSlideCommand));
                 return;
             }
 

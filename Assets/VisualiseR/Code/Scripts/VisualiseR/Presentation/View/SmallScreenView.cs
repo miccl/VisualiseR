@@ -7,11 +7,15 @@ using VisualiseR.Util;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// View for the small screens to show the current or next slide.
+    /// Placed on the speakers desk for the speaker.
+    /// </summary>
     public class SmallScreenView : View
     {
         [SerializeField] private bool isMain;
 
-        private static JCsLogger Logger;
+        private JCsLogger Logger;
 
         private const string FILE_PREFIX = "file:///";
 

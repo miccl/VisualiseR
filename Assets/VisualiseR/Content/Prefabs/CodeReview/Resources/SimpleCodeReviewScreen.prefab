@@ -23,9 +23,9 @@ GameObject:
   - component: {fileID: 64972276180022934}
   - component: {fileID: 23839417588035726}
   - component: {fileID: 223492135773600790}
-  - component: {fileID: 114199588713780058}
   - component: {fileID: 114479767203547428}
   - component: {fileID: 114228623558342476}
+  - component: {fileID: 114389435089609630}
   m_Layer: 0
   m_Name: SimpleCodeReviewScreen
   m_TagString: Untagged
@@ -86,23 +86,6 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114199588713780058
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1609028098721250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 739800cd36aba44e9b04ce977e5784bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  raycastMode: 0
-  ignoreReversedGraphics: 1
-  blockingObjects: 0
-  blockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!114 &114228623558342476
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -114,6 +97,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f4aa4eec1dd1844a8ec4337b58e6f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114389435089609630
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1609028098721250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb5dd43baba2d4dc1bab789615567e3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  raycastMode: 0
+  raycasterEventMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!114 &114479767203547428
 MonoBehaviour:
   m_ObjectHideFlags: 1

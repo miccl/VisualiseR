@@ -2,7 +2,10 @@
 
 namespace VisualiseR.Main
 {
-    public class LoadFilesSignal : Signal<string>
+    /// <summary>
+    /// Signal to instantiate the <see cref="LoadFilesCommand"/>
+    /// </summary>
+    public class LoadFilesSignal : Signal<string, FileType>
     {
     }
 }

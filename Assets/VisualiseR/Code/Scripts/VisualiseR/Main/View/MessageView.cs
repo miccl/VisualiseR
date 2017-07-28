@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// View for the message dialogs.
+    /// </summary>
     public class MessageView : View
     {
         private Transform _messagePanel;

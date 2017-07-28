@@ -2,6 +2,9 @@
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// Mediator for the <see cref="PresentationPlayerView"/>
+    /// </summary>
     public class SimplePresentationScreenMediator : Mediator
     {
         [Inject]

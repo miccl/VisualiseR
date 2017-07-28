@@ -1,11 +1,14 @@
 ﻿using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using UnityEngine;
-using VisualiseR.CodeReview;
 using VisualiseR.Common;
+using VisualiseR.Util;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// Command to show the scene menu.
+    /// </summary>
     public class ShowPresentationSceneMenuCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(ShowPresentationSceneMenuCommand));
@@ -23,10 +26,12 @@ namespace VisualiseR.Presentation
         public PresentationSceneMenuIsShownSignal PresentationSceneMenuIsShownSignal { get; set; }
         public override void Execute()
         {
-            if (_player.HasRight(AcessList.SceneMenu))
+            if (!_player.HasRight(AcessList.SCENE_MENU))
             {
-                ShowSceneMenu();
+                Logger.InfoFormat(AcessList.ERROR_MESSAGE, _player, typeof(ShowPresentationSceneMenuCommand));
+                return;
             }
+            ShowSceneMenu();
         }
 
         private void ShowSceneMenu()

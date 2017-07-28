@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// View for the disk file dialog.
+    /// Uses <see cref="FileBrowser"/>.
+    /// </summary>
     public class SelectDiskFileView : View
     {
         public Signal<string> SelectedFileSignal = new Signal<string>();
@@ -13,7 +17,6 @@ namespace VisualiseR.Main
         [SerializeField] private Texture2D file, folder, back, drive;
 
         private FileBrowser fb;
-        private string output;
 
         internal void Init()
         {
@@ -38,26 +41,23 @@ namespace VisualiseR.Main
 
         void OnGUI()
         {
-            if (fb != null)
+            if (fb != null && fb.draw())
             {
-                if (fb.draw())
+                //true is returned when a file has been selected
+                //the output file is a member if the FileInfo class, if cancel was selected the value is null
+                var selectedFile = fb.outputFile;
+                if (selectedFile == null)
                 {
-                    //true is returned when a file has been selected
-                    //the output file is a member if the FileInfo class, if cancel was selected the value is null
-                    var selectedFile = fb.outputFile;
-                    if (selectedFile == null)
-                    {
-                        SelectedFileSignal.Dispatch(null);
-                        Debug.Log("Cancel hit");
-                        return;
-                    }
+                    SelectedFileSignal.Dispatch(null);
+                    Debug.Log("Cancel hit");
+                    return;
+                }
 
-                    var output = selectedFile.Directory;
-                    if (output != null)
-                    {
-                        Debug.Log("Ouput File = \"" + output.FullName + "\"");
-                        SelectedFileSignal.Dispatch(output.FullName);
-                    }
+                var output = selectedFile.Directory;
+                if (output != null)
+                {
+                    Debug.Log("Ouput File = \"" + output.FullName + "\"");
+                    SelectedFileSignal.Dispatch(output.FullName);
                 }
             }
         }

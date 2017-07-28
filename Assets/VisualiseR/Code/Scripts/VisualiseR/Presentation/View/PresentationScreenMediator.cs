@@ -5,6 +5,9 @@ using VisualiseR.Common;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// Mediator for the <see cref="PresentationScreenView"/>
+    /// </summary>
     public class PresentationScreenMediator : Mediator
     {
         [Inject]

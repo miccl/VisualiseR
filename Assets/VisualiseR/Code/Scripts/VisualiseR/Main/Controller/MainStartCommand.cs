@@ -4,7 +4,7 @@ using UnityEngine.VR;
 namespace VisualiseR.Main
 {
     /// <summary>
-    /// Initialises the scene 'main'.
+    /// Command to initialise the main scene.
     /// </summary>
     public class MainStartCommand : Command
     {

@@ -8,6 +8,9 @@ using VisualiseR.Common;
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// Context for the main scene.
+    /// </summary>
     public class MainContext : MVCSContext
     {
         public MainContext(MonoBehaviour view) : base(view)
@@ -87,17 +90,18 @@ namespace VisualiseR.Main
                     .Once();
             }
 
-            commandBinder.Bind<SelectDiskFileSignal>().To<SelectDiskFileCommand>();
-            commandBinder.Bind<SelectWebFileSignal>().To<SelectWebFileCommand>();
-            commandBinder.Bind<LoadFilesSignal>().To<LoadFilesCommand>();
             commandBinder.Bind<CreateRoomSignal>().To<CreateRoomCommand>();
             commandBinder.Bind<JoinRoomSignal>().To<JoinRoomCommand>();
+            commandBinder.Bind<SelectWebFileSignal>().To<SelectWebFileCommand>();
+            commandBinder.Bind<SelectDiskFileSignal>().To<SelectDiskFileCommand>();
+            commandBinder.Bind<LoadFilesSignal>().To<LoadFilesCommand>();
             commandBinder.Bind<ShowMessageSignal>().To<ShowMessageCommand>();
         }
 
         private void BindSignals()
         {
             injectionBinder.Bind<MediumChangedSignal>().ToSingleton();
+            injectionBinder.Bind<SelectionCanceledSignal>().ToSingleton();
 
         }
     }

@@ -1,12 +1,13 @@
-﻿using strange.examples.multiplecontexts.game;
-using strange.extensions.mediation.impl;
+﻿using strange.extensions.mediation.impl;
 using UnityEngine;
 using UnityEngine.UI;
 using VisualiseR.Util;
 
 namespace VisualiseR.Main
-
 {
+    /// <summary>
+    /// View for the help dialog.
+    /// </summary>
     public class HelpView : View
     {
         private static readonly string HELP_TEXT = "Here is some help. You are welcome!";

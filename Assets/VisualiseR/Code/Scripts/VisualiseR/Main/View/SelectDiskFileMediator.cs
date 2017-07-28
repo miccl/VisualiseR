@@ -3,6 +3,9 @@ using VisualiseR.Common;
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// Mediator for the <see cref="SelectDiskFileView"/>
+    /// </summary>
     public class SelectDiskFileMediator : Mediator
     {
         [Inject]
@@ -11,6 +14,9 @@ namespace VisualiseR.Main
 
         [Inject]
         public LoadFilesSignal LoadFilesSignal { get; set; }
+        
+        [Inject]
+        public SelectionCanceledSignal SelectionCanceledSignal { get; set; }
 
 
         public override void OnRegister()
@@ -24,15 +30,16 @@ namespace VisualiseR.Main
             _view.SelectedFileSignal.RemoveListener(OnFileSelected);
         }
 
+
         private void OnFileSelected(string filePath)
         {
             if (filePath != null)
             {
-                LoadFilesSignal.Dispatch(filePath);
+                LoadFilesSignal.Dispatch(filePath, FileType.Disk);
             }
             else
             {
-                //TODO Hinweismeldung, dass nicht ausgewählt wurde?!
+                SelectionCanceledSignal.Dispatch();
             }
             Destroy();
         }

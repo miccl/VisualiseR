@@ -3,14 +3,16 @@ using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
 using VisualiseR.Common;
+using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// View for the simple screens, which are used in the command <see cref="ShowAllCodeCommand"/>.
+    /// </summary>
     public class SimpleCodeReviewScreenView : View
     {
         public Signal<ICode, IPlayer> CodeSelectedSignal = new Signal<ICode, IPlayer>();
-
-        private const string FILE_PREFIX = "file:///";
 
         internal ICode _code;
         internal IPlayer _player;
@@ -44,7 +46,7 @@ namespace VisualiseR.CodeReview
 
         IEnumerator LoadImageIntoTexture(string path)
         {
-            WWW www = new WWW(FILE_PREFIX + path);
+            WWW www = new WWW(FileUtil.FILE_PREFIX + path);
             yield return www;
             Texture2D tex = new Texture2D(4, 4, TextureFormat.DXT1, false);
             www.LoadImageIntoTexture(tex);

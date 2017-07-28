@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// Command to show the loading animation.
+    /// </summary>
     public class ShowLoadingAnimationCommand : Command
     {
         [Inject]

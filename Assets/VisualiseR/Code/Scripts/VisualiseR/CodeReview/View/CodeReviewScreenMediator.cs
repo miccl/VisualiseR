@@ -1,9 +1,11 @@
-﻿using System;
-using strange.extensions.mediation.impl;
+﻿using strange.extensions.mediation.impl;
 using UnityEngine;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// Mediator for the <see cref="CodeReviewScreenView"/>
+    /// </summary>
     public class CodeReviewScreenMediator : Mediator
     {
         [Inject]
@@ -14,9 +16,6 @@ namespace VisualiseR.CodeReview
         
         [Inject]
         public CodeReviewSceneMenuIsShownSignal CodeReviewSceneMenuIsShownSignal { get; set; }
-
-        [Inject]
-        public CodeRatingChangedSignal CodeRatingChangedSignal { get; set; }
 
         [Inject]
         public NextCodeSignal NextCodeSignal { get; set; }
@@ -34,7 +33,6 @@ namespace VisualiseR.CodeReview
             _view.ShowContextMenuSignal.AddListener(OnShowContextMenu);
             CodeReviewContextMenuIsShownSignal.AddListener(OnContextMenuIsShown);
             CodeReviewSceneMenuIsShownSignal.AddListener(OnSceneMenuIsShown);
-            CodeRatingChangedSignal.AddListener(OnCodeRatingChanged);
         }
 
         public override void OnRemove()
@@ -43,8 +41,6 @@ namespace VisualiseR.CodeReview
             _view.ShowContextMenuSignal.RemoveListener(OnShowContextMenu);
             CodeReviewContextMenuIsShownSignal.RemoveListener(OnContextMenuIsShown);
             CodeReviewSceneMenuIsShownSignal.RemoveListener(OnSceneMenuIsShown);
-            CodeRatingChangedSignal.RemoveListener(OnCodeRatingChanged);
-
         }
 
         private void OnShowContextMenu(GameObject gameObject, Code code)
@@ -61,16 +57,6 @@ namespace VisualiseR.CodeReview
         {
             _view.ChangeCode(code);
         }
-
-        private void OnCodeRatingChanged(Code code)
-        {
-            if (_view._code.Equals(code))
-            {
-//                RemoveCodeSignal.Dispatch(code);
-//                TODO verstecken und dem entsprechenden Stapel zuweisen
-            }
-        }
-
 
         private void OnContextMenuIsShown(bool isShown)
         {

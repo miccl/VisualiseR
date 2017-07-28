@@ -6,6 +6,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.Main
 {
+    /// <summary>
+    /// View for the main menu.
+    /// </summary>
     public class MainMenuView : View
     {
         public Signal<Message> MessageSignal = new Signal<Message>();
@@ -15,11 +18,11 @@ namespace VisualiseR.Main
         [SerializeField] private Sprite audioOffSprite;
         [SerializeField] private Sprite audioOnSprite;
 
-        private bool isAudioOn = true;
-        private Image audioImage;
+        private Image _audioImage;
         private GameObject _helpPanel;
         private GameObject _createRoomPanel;
         private GameObject _joinRoomPanel;
+        private GameObject _aboutPanel;
         private AudioSource _backgroundAudioSource;
         private bool _isMuted;
         private bool _fire1Pressed;
@@ -28,15 +31,15 @@ namespace VisualiseR.Main
         {
             base.Awake();
             GameObject menuCanvas = UnityUtil.FindGameObject("MenuCanvas");
-            _settingsPanel = menuCanvas.transform.FindChild("SettingsPanel").gameObject;
-            _helpPanel = menuCanvas.transform.FindChild("HelpPanel").gameObject;
-            _createRoomPanel = menuCanvas.transform.FindChild("CreateRoomPanel").gameObject;
-            _joinRoomPanel = menuCanvas.transform.FindChild("JoinRoomPanel").gameObject;
+            _settingsPanel = menuCanvas.transform.Find("SettingsPanel").gameObject;
+            _helpPanel = menuCanvas.transform.Find("HelpPanel").gameObject;
+            _createRoomPanel = menuCanvas.transform.Find("CreateRoomPanel").gameObject;
+            _joinRoomPanel = menuCanvas.transform.Find("JoinRoomPanel").gameObject;
+            _aboutPanel = menuCanvas.transform.Find("AboutPanel").gameObject;
 
             _backgroundAudioSource = menuCanvas.GetComponent<AudioSource>();
 
-
-            audioImage = transform.FindChild("AudioButton").GetComponent<Image>();
+            _audioImage = transform.FindChild("AudioButton").GetComponent<Image>();
         }
 
         protected override void Start()
@@ -76,12 +79,12 @@ namespace VisualiseR.Main
             _backgroundAudioSource.mute = isMuted;
             if (!isMuted)
             {
-                audioImage.sprite = audioOnSprite;
+                _audioImage.sprite = audioOnSprite;
                 _backgroundAudioSource.PlayDelayed(0);
             }
             else
             {
-                audioImage.sprite = audioOffSprite;
+                _audioImage.sprite = audioOffSprite;
             }
         }
 
@@ -91,15 +94,15 @@ namespace VisualiseR.Main
             gameObject.SetActive(false);
         }
 
+        public void OnAboutButtonClick()
+        {
+            _aboutPanel.SetActive(true);
+            gameObject.SetActive(false);
+        }
+
         public void OnQuitButtonClick()
         {
             Application.Quit();
-
-//#if UNITY_EDITOR
-//        EditorApplication.isPlaying = false;
-//#else
-//        Application.Quit();
-//#endif
         }
     }
 }

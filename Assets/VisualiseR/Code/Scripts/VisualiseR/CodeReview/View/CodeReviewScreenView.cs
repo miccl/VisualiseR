@@ -4,37 +4,26 @@ using strange.extensions.signal.impl;
 using UnityEngine;
 using UnityEngine.UI;
 using VisualiseR.Common;
+using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
 {
+    /// <summary>
+    /// View for the screen.
+    /// </summary>
     public class CodeReviewScreenView : View
     {
         public Signal<Code> NextCodeSignal = new Signal<Code>();
         public Signal<GameObject, Code> ShowContextMenuSignal = new Signal<GameObject, Code>();
 
-        private const string FILE_PREFIX = "file:///";
-
         internal ICode _code;
         internal IPlayer _player;
 
-        private bool _isHeld;
         public bool IsFirst { get; set; }
-        private GameObject _gvrReticlePointer;
         private Text _infoText;
-        private GvrPointerGraphicRaycaster pointerScript;
-
 
         internal bool _isContextMenuShown = false;
         internal bool _isSceneMenuShown = false;
-
-        protected override void Awake()
-        {
-            base.Awake();
-            _isHeld = false;
-            _gvrReticlePointer = GameObject.Find("GvrReticlePointer");
-
-            pointerScript = GetComponent<GvrPointerGraphicRaycaster>();
-        }
 
         protected override void Start()
         {
@@ -50,29 +39,34 @@ namespace VisualiseR.CodeReview
 
         internal void LoadCode()
         {
-            if (_code != null)
+            if (!gameObject.activeSelf)
             {
-                LoadPictureIntoTexture(_code.Pic);
+                return;
             }
+            
+            if (_code == null)
+            {
+                return;
+            }
+            
+            LoadPictureIntoTexture(_code.Pic);
         }
 
         internal void LoadPictureIntoTexture(IPicture pic)
         {
-            if (pic != null)
-            {
-                StartCoroutine(LoadImageIntoTexture(pic.Path));
-            }
-            else
+            if (pic == null)
             {
                 Debug.LogError("No Picture to load");
+                return;
             }
+            StartCoroutine(LoadImageIntoTexture(pic.Path));
         }
 
         IEnumerator LoadImageIntoTexture(string path)
         {
-            WWW www = new WWW(FILE_PREFIX + path);
+            WWW www = new WWW(FileUtil.FILE_PREFIX + path);
             yield return www;
-            Texture2D tex = new Texture2D(4, 4, TextureFormat.DXT1, false);
+            Texture2D tex = new Texture2D(6, 4, TextureFormat.RGBA32, false);
             www.LoadImageIntoTexture(tex);
             GetComponent<Renderer>().material.mainTexture = tex;
             www.Dispose();

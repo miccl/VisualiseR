@@ -26,7 +26,7 @@ def read_input(argv):
         output_path = argv[1]
         return input_path, output_path
     except IndexError:
-        print('usage: python pdf_conversion.py <input_path> <output_path>')
+        print('Usage: python pdf_conversion.py <input_path> <output_path>')
         sys.exit(1)
 
 
@@ -40,7 +40,7 @@ def check_input(input_path, output_path):
     """
     if not (os.path.isfile(input_path)):
         if not (is_pdf_file(input_path)):
-            print_error("The input path is not valid.")
+            print("Error: The input path '%s'is not valid." % input_path)
             sys.exit(1)
 
     create_directory(os.path.dirname(output_path))
@@ -85,15 +85,6 @@ def execute_image_magick(input_file, output_file, density=DENSITY, quality=QUALI
     magick_command = 'magick convert '
     parameters = '-density {0} {1} -quality {2} {3}'.format(density, input_file, quality, output_file)
     os.system(magick_command + parameters)
-
-
-def print_error(s):
-    """
-    Prints error message and terminates the application.
-    :param s: string to print.
-    """
-    print("Error:", s)
-    sys.exit(1)
 
 
 if __name__ == "__main__":
