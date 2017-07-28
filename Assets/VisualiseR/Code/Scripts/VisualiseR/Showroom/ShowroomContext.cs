@@ -3,6 +3,7 @@ using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using UnityEngine;
+using VisualiseR.Common;
 
 namespace VisualiseR.Showroom
 {
@@ -51,6 +52,7 @@ namespace VisualiseR.Showroom
         /// </summary>
         private void BindModels()
         {
+            injectionBinder.Bind<IPlayer>().To<Player>().ToSingleton();
         }
 
         private void BindServices()
@@ -60,6 +62,7 @@ namespace VisualiseR.Showroom
 
         private void BindMediators()
         {
+            mediationBinder.Bind<ShowroomPlayerView>().To<ShowroomPlayerMediator>();
         }
 
         private void BindCommands()
@@ -76,10 +79,13 @@ namespace VisualiseR.Showroom
                     .Once()
                     .InSequence();
             }
+            commandBinder.Bind<ShowShowroomSceneMenuSignal>().To<ShowShowroomSceneMenuCommand>();
         }
 
         private void BindSignals()
         {
+            injectionBinder.Bind<PlayerInstantiatedSignal>().ToSingleton();
+            injectionBinder.Bind<ShowroomSceneMenuIsShownSignal>().ToSingleton();
         }
     }
 }

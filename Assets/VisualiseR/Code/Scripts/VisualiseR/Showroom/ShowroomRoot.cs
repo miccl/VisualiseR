@@ -3,7 +3,7 @@
 namespace VisualiseR.Showroom
 {
     /// <summary>
-    /// Root for the presentation scene.
+    /// Root for the showroom scene.
     /// </summary>
     public class ShowroomRoot : ContextView
     {
