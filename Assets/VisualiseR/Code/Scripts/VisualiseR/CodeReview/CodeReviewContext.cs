@@ -23,7 +23,7 @@ namespace VisualiseR.CodeReview
         }
 
         /// <summary>
-        /// Unbinds the default EventCommandBinder and rebind the SignalCommandBinder.
+        /// Unbinds the default EventCommandBinder and rebinds to the SignalCommandBinder.
         /// </summary>
         protected override void addCoreComponents()
         {
@@ -55,7 +55,7 @@ namespace VisualiseR.CodeReview
 
 
         /// <summary>
-        /// BInd Models
+        /// Bind Models
         /// </summary>
         private void BindModels()
         {
