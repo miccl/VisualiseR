@@ -1,7 +1,5 @@
-﻿using System.Security.Cryptography;
-using strange.extensions.mediation.impl;
+﻿using strange.extensions.mediation.impl;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace VisualiseR.Util
 {
@@ -16,6 +14,7 @@ namespace VisualiseR.Util
 
         void Start()
         {
+            base.Start();
             Init();
         }
 
