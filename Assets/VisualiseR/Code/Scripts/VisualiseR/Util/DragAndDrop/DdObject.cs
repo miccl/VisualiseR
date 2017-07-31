@@ -1,5 +1,7 @@
-﻿using strange.extensions.mediation.impl;
+﻿using System.Security.Cryptography;
+using strange.extensions.mediation.impl;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace VisualiseR.Util
 {
@@ -20,7 +22,6 @@ namespace VisualiseR.Util
         public void Init()
         {
             IsHeld = false;
-            GetComponent<Renderer>().material.color = Color.yellow;
             Reticle = GameObject.Find("GvrReticlePointer");
         }
 
@@ -28,7 +29,7 @@ namespace VisualiseR.Util
         {
             if (!ddIsActive) return;
             IsHeld = true;
-            GetComponent<Renderer>().material.color = Color.blue;
+            ChangeColorValue(1.25f);
         }
 
         public void HandleGazeTriggerEnd()
@@ -36,7 +37,7 @@ namespace VisualiseR.Util
             if (!ddIsActive) return;
 
             IsHeld = false;
-            GetComponent<Renderer>().material.color = Color.yellow;
+            ChangeColorValue(0.8f);
         }
 
         void Update()
@@ -49,6 +50,15 @@ namespace VisualiseR.Util
                 float distance = Vector3.Distance(Reticle.transform.position, transform.position);
                 transform.position = ray.GetPoint(distance);
             }
+        }
+
+        private void ChangeColorValue(float rate)
+        {
+            var color = GetComponent<Renderer>().material.color;
+            color.a*=rate;
+            color.b*=rate;
+            color.g*=rate;
+            GetComponent<Renderer>().material.color = color;
         }
     }
 }

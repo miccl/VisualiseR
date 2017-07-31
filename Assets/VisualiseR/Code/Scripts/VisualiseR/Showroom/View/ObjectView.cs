@@ -1,13 +1,16 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.EventSystems;
 using VisualiseR.Util;
 
 namespace VisualiseR.Showroom
 {
-    public class ObjectView : DdObject
+    public class ObjectView : DdObject, IPointerClickHandler
     {
         private JCsLogger Logger;
 
         private EditMode __editMode;
+
         internal EditMode _editMode
         {
             get { return __editMode; }
@@ -17,6 +20,20 @@ namespace VisualiseR.Showroom
                 {
                     __editMode = value;
                     ChangeEditMode();
+                }
+            }
+        }
+
+        private float _colorValue = 0;
+        private float ColorValue
+        {
+            get { return _colorValue; }
+            set
+            {
+                _colorValue = value;
+                if (value > 1)
+                {
+                    _colorValue = 0;
                 }
             }
         }
@@ -52,6 +69,25 @@ namespace VisualiseR.Showroom
                     Logger.Error("Invalid edit mode was choosen");
                     break;
             }
+        }
+
+        public void OnClick(BaseEventData data)
+        {
+        }
+
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (_editMode.Equals(EditMode.Coloring))
+            {
+                ChangeObjectColor();
+            }
+        }
+
+        private void ChangeObjectColor()
+        {
+            GetComponent<Renderer>().material.color = HSBColor.ToColor(new HSBColor(ColorValue, 1, 1));
+            ColorValue += 0.1f;
         }
     }
 }
