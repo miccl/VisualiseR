@@ -10,13 +10,13 @@ namespace VisualiseR.Showroom
     public class ShowShowroomSceneMenuCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(ShowShowroomSceneMenuCommand));
-        
+
         [Inject]
         public bool _isShown { get; set; }
-        
+
         [Inject(ContextKeys.CONTEXT_VIEW)]
         public GameObject _contextView { get; set; }
-        
+
         [Inject]
         public ShowroomSceneMenuIsShownSignal ShowroomSceneMenuIsShownSignal { get; set; }
 
@@ -24,7 +24,14 @@ namespace VisualiseR.Showroom
         {
             Logger.InfoFormat("Showing scene menu");
             ShowSceneMenu();
+            ShowObjects();
             ShowroomSceneMenuIsShownSignal.Dispatch(_isShown);
+        }
+
+        private void ShowObjects()
+        {
+            var objects = _contextView.transform.Find("Objects").gameObject;
+            objects.SetActive(!_isShown);
         }
 
         private void ShowSceneMenu()
@@ -35,7 +42,6 @@ namespace VisualiseR.Showroom
             {
                 AdjustPositionAndRotation(sceneMenu);
             }
-            
         }
 
         private static void AdjustPositionAndRotation(GameObject sceneMenu)
@@ -43,11 +49,14 @@ namespace VisualiseR.Showroom
             Vector3 shift = Camera.main.transform.forward.normalized * 4;
             Vector3 pos = Camera.main.transform.position + shift;
             sceneMenu.transform.position = pos;
-            
+            if (sceneMenu.transform.position.y < 0)
+            {
+                sceneMenu.transform.position = new Vector3(pos.x, 0, pos.z);
+            }
+
             Vector3 relativePos = Camera.main.transform.position - pos;
             sceneMenu.transform.rotation = Quaternion.LookRotation(relativePos);
             sceneMenu.transform.Rotate(0, 180, 0);
         }
-
     }
 }

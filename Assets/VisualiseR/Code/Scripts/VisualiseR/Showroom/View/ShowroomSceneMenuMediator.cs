@@ -1,5 +1,6 @@
 ﻿using strange.extensions.mediation.impl;
 using UnityEngine;
+using VisualiseR.CodeReview;
 
 namespace VisualiseR.Showroom
 {
@@ -14,16 +15,22 @@ namespace VisualiseR.Showroom
         [Inject]
         public ChangeEditModeSignal ChangeEditModeSignal { get; set; }
         
+        [Inject]
+        public ShowShowroomSceneMenuSignal ShowShowroomSceneMenuSignal { get; set; }
+        
         public override void OnRegister()
         {
             _view.CreateObjectSignal.AddListener(OnCreateObject);
             _view.ChangeEditModeSignal.AddListener(OnChangeEditMode);
+            _view.ShowSceneMenuSignal.AddListener(OnShowSceneMenu);
         }
 
         public override void OnRemove()
         {
             _view.CreateObjectSignal.RemoveListener(OnCreateObject);
             _view.ChangeEditModeSignal.RemoveListener(OnChangeEditMode);
+            _view.ShowSceneMenuSignal.AddListener(OnShowSceneMenu);
+
         }
 
         private void OnCreateObject(ObjectType type)
@@ -34,6 +41,11 @@ namespace VisualiseR.Showroom
         private void OnChangeEditMode(EditMode mode)
         {
             ChangeEditModeSignal.Dispatch(mode);
+        }
+
+        private void OnShowSceneMenu(bool show)
+        {
+            ShowShowroomSceneMenuSignal.Dispatch(show);
         }
     }
 }

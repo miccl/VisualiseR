@@ -23,7 +23,7 @@ namespace VisualiseR.Showroom
 
         internal Signal<ObjectType> CreateObjectSignal = new Signal<ObjectType>();
         internal Signal<EditMode> ChangeEditModeSignal = new Signal<EditMode>();
-
+        public Signal<bool> ShowSceneMenuSignal = new Signal<bool>(); 
         /// <summary>
         /// Initialises the variables.
         /// </summary>
@@ -200,7 +200,7 @@ namespace VisualiseR.Showroom
             _objectPanel.SetActive(false);
             _editModePanel.SetActive(false);
 
-            gameObject.SetActive(false);
+            ShowSceneMenuSignal.Dispatch(false);
         }
     }
 }
