@@ -11,19 +11,29 @@ namespace VisualiseR.Showroom
         [Inject]
         public InstantiateObjectSignal InstantiateObjectSignal { get; set; }
         
+        [Inject]
+        public ChangeEditModeSignal ChangeEditModeSignal { get; set; }
+        
         public override void OnRegister()
         {
             _view.CreateObjectSignal.AddListener(OnCreateObject);
+            _view.ChangeEditModeSignal.AddListener(OnChangeEditMode);
         }
 
         public override void OnRemove()
         {
             _view.CreateObjectSignal.RemoveListener(OnCreateObject);
+            _view.ChangeEditModeSignal.RemoveListener(OnChangeEditMode);
         }
 
         private void OnCreateObject(ObjectType type)
         {
             InstantiateObjectSignal.Dispatch(type);
+        }
+
+        private void OnChangeEditMode(EditMode mode)
+        {
+            ChangeEditModeSignal.Dispatch(mode);
         }
     }
 }

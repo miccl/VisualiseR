@@ -65,6 +65,7 @@ namespace VisualiseR.Showroom
             mediationBinder.Bind<ShowroomPlayerView>().To<ShowroomPlayerMediator>();
             mediationBinder.Bind<ShowroomSceneMenuView>().To<ShowroomSceneMenuMediator>();
             mediationBinder.Bind<GroundView>().To<GroundMediator>();
+            mediationBinder.Bind<ObjectView>().To<ObjectMediator>();
         }
 
         private void BindCommands()
@@ -90,6 +91,7 @@ namespace VisualiseR.Showroom
         {
             injectionBinder.Bind<PlayerInstantiatedSignal>().ToSingleton();
             injectionBinder.Bind<ShowroomSceneMenuIsShownSignal>().ToSingleton();
+            injectionBinder.Bind<ChangeEditModeSignal>().ToSingleton();
         }
     }
 }

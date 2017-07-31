@@ -19,8 +19,10 @@ namespace VisualiseR.Showroom
         internal GameObject _contextView;
         private GameObject _mainPanel;
         private GameObject _objectPanel;
-        
-        internal Signal<ObjectType> CreateObjectSignal = new Signal<ObjectType>(); 
+        private GameObject _editModePanel;
+
+        internal Signal<ObjectType> CreateObjectSignal = new Signal<ObjectType>();
+        internal Signal<EditMode> ChangeEditModeSignal = new Signal<EditMode>();
 
         /// <summary>
         /// Initialises the variables.
@@ -32,6 +34,7 @@ namespace VisualiseR.Showroom
 
             _mainPanel = gameObject.transform.FindChild("MainPanel").gameObject;
             _objectPanel = gameObject.transform.FindChild("ObjectPanel").gameObject;
+            _editModePanel = gameObject.transform.FindChild("EditModePanel").gameObject;
         }
 
 
@@ -40,7 +43,6 @@ namespace VisualiseR.Showroom
         /// </summary>
         /// <param name="contextView"></param>
         /// <param name="player"></param>
-        /// <param name="medium"></param>
         internal void Init(GameObject contextView, IPlayer player)
         {
             _contextView = contextView;
@@ -69,6 +71,12 @@ namespace VisualiseR.Showroom
                 OnObjectCancelButton(null);
                 return;
             }
+            
+            if (_editModePanel.activeSelf)
+            {
+                OnEditModeCancelButton(null);
+                return;
+            }
         }
 
         /// <summary>
@@ -79,6 +87,16 @@ namespace VisualiseR.Showroom
         {
             _mainPanel.SetActive(false);
             _objectPanel.SetActive(true);
+        }
+
+        /// <summary>
+        /// Called when the object button has been clicked.
+        /// </summary>
+        /// <param name="data"></param>
+        public void OnEditModeButtonClick(BaseEventData data)
+        {
+            _mainPanel.SetActive(false);
+            _editModePanel.SetActive(true);
         }
 
         /// <summary>
@@ -104,7 +122,7 @@ namespace VisualiseR.Showroom
         {
             CreateObject(ObjectType.Cube);
         }
-        
+
         public void OnSphereObjectButton(BaseEventData data)
         {
             CreateObject(ObjectType.Sphere);
@@ -146,6 +164,33 @@ namespace VisualiseR.Showroom
             Hide();
         }
 
+        public void OnDragAndDropButton(BaseEventData data)
+        {
+            ChangeEditMode(EditMode.DragAndDrop);
+        }
+        
+        public void OnColorButton(BaseEventData data)
+        {
+            ChangeEditMode(EditMode.Coloring);
+        }
+        
+        public void OnRotateButton(BaseEventData data)
+        {
+            ChangeEditMode(EditMode.Rotate);
+        }
+
+        private void ChangeEditMode(EditMode mode)
+        {
+            ChangeEditModeSignal.Dispatch(mode);
+            Hide();
+        }
+
+        public void OnEditModeCancelButton(BaseEventData data)
+        {
+            _editModePanel.SetActive(false);
+            _mainPanel.SetActive(true);
+        }
+
         /// <summary>
         /// Hides the view.
         /// </summary>
@@ -153,6 +198,7 @@ namespace VisualiseR.Showroom
         {
             _mainPanel.SetActive(true);
             _objectPanel.SetActive(false);
+            _editModePanel.SetActive(false);
 
             gameObject.SetActive(false);
         }

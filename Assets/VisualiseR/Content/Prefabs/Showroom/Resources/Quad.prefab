@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33097947402808726}
   - component: {fileID: 64335383253925848}
   - component: {fileID: 23237024545801972}
-  - component: {fileID: 114965780632384458}
+  - component: {fileID: 114562947317645312}
   m_Layer: 0
   m_Name: Quad
   m_TagString: Untagged
@@ -96,7 +96,7 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114965780632384458
+--- !u!114 &114562947317645312
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -104,6 +104,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1418814432166300}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7504ba07f51440ad983362f7ee97ef89, type: 3}
+  m_Script: {fileID: 11500000, guid: f85f57d1dda1452a8aea11405964f65e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
