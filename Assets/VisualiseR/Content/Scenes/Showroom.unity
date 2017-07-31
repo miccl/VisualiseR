@@ -778,6 +778,10 @@ Prefab:
       propertyPath: m_OrthographicSize
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 11900000, guid: 46b12845355544642bf8f9d0cb373af7, type: 2}
+      propertyPath: m_Orthographic
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 46b12845355544642bf8f9d0cb373af7, type: 2}
   m_IsPrefabParent: 0
@@ -3135,7 +3139,7 @@ GameObject:
   - component: {fileID: 1561318498}
   - component: {fileID: 1561318497}
   m_Layer: 0
-  m_Name: DragAndDroputton
+  m_Name: DragAndDropButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

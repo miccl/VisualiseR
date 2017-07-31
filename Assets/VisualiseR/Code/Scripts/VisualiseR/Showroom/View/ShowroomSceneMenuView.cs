@@ -2,10 +2,8 @@
 using strange.extensions.signal.impl;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 using VisualiseR.Common;
-using VisualiseR.Presentation;
 using VisualiseR.Util;
 
 namespace VisualiseR.Showroom
@@ -23,7 +21,11 @@ namespace VisualiseR.Showroom
 
         internal Signal<ObjectType> CreateObjectSignal = new Signal<ObjectType>();
         internal Signal<EditMode> ChangeEditModeSignal = new Signal<EditMode>();
-        public Signal<bool> ShowSceneMenuSignal = new Signal<bool>(); 
+        public Signal<bool> ShowSceneMenuSignal = new Signal<bool>();
+        private Selectable _dragAndDropButton;
+        private Selectable _colorButton;
+        private Selectable _rotationButton;
+
         /// <summary>
         /// Initialises the variables.
         /// </summary>
@@ -35,6 +37,18 @@ namespace VisualiseR.Showroom
             _mainPanel = gameObject.transform.FindChild("MainPanel").gameObject;
             _objectPanel = gameObject.transform.FindChild("ObjectPanel").gameObject;
             _editModePanel = gameObject.transform.FindChild("EditModePanel").gameObject;
+            _dragAndDropButton = _editModePanel.transform.Find("CenterPanel").Find("DragAndDropButton")
+                .GetComponent<Selectable>();
+            _colorButton = _editModePanel.transform.Find("CenterPanel").Find("ColorButton")
+                .GetComponent<Selectable>();
+            _rotationButton = _editModePanel.transform.Find("CenterPanel").Find("RotationButton")
+                .GetComponent<Selectable>();
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            _dragAndDropButton.interactable = false;
         }
 
 
@@ -56,7 +70,7 @@ namespace VisualiseR.Showroom
                 Cancel();
             }
         }
-        
+
         private void Cancel()
         {
             Logger.InfoFormat("Cancel button clicked");
@@ -71,7 +85,7 @@ namespace VisualiseR.Showroom
                 OnObjectCancelButton(null);
                 return;
             }
-            
+
             if (_editModePanel.activeSelf)
             {
                 OnEditModeCancelButton(null);
@@ -167,16 +181,25 @@ namespace VisualiseR.Showroom
         public void OnDragAndDropButton(BaseEventData data)
         {
             ChangeEditMode(EditMode.DragAndDrop);
+            _dragAndDropButton.interactable = false;
+            _colorButton.interactable = true;
+            _rotationButton.interactable = true;
         }
-        
+
         public void OnColorButton(BaseEventData data)
         {
             ChangeEditMode(EditMode.Coloring);
+            _dragAndDropButton.interactable = true;
+            _colorButton.interactable = false;
+            _rotationButton.interactable = true;
         }
-        
+
         public void OnRotateButton(BaseEventData data)
         {
             ChangeEditMode(EditMode.Rotate);
+            _dragAndDropButton.interactable = true;
+            _colorButton.interactable = true;
+            _rotationButton.interactable = false;
         }
 
         private void ChangeEditMode(EditMode mode)
