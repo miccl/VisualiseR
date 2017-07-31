@@ -40,6 +40,7 @@ namespace VisualiseR.Main
         private Button _createRoomButton;
         private bool _onJoinedLobby;
         private string _roomName;
+        private Selectable _chooseMediumDropdownSelectable;
 
         protected override void Awake()
         {
@@ -53,6 +54,8 @@ namespace VisualiseR.Main
             _roomNameInputField = createRoomPanel.Find("RoomNamePanel").GetComponentInChildren<InputField>();
             _chooseMediumDropdown = createRoomPanel.Find("ChooseMediumPanel").
                 GetComponentInChildren<Dropdown>();
+            _chooseMediumDropdownSelectable = createRoomPanel.Find("ChooseMediumPanel").
+                GetComponentInChildren<Selectable>();
             var buttonPanel = createRoomPanel.Find("ButtonPanel");
             _backButton = buttonPanel.Find("BackButton").GetComponent<Button>();
             _createRoomButton = buttonPanel.Find("CreateRoomButton").GetComponent<Button>();
@@ -96,6 +99,28 @@ namespace VisualiseR.Main
         {
             _mainMenuPanelView.SetActive(true);
             gameObject.SetActive(false);
+        }
+
+        public void OnRoomTypeIndexChange(int index)
+        {
+            if (index == _roomTypes.IndexOf(RoomType.CodeReview.ToString()))
+            {
+                _chooseMediumDropdownSelectable.interactable = true;
+                return;
+            }
+            
+            if (index == _roomTypes.IndexOf(RoomType.Presentation.ToString()))
+            {
+                _chooseMediumDropdownSelectable.interactable = true;
+                return;
+            }
+            
+            if (index == _roomTypes.IndexOf(RoomType.Showroom.ToString()))
+            {
+                _chooseMediumDropdownSelectable.interactable = false;
+                return;
+            }
+
         }
 
         public void OnChooseRoomIndexChange(int index)

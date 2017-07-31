@@ -1,5 +1,4 @@
 ﻿using System;
-using strange.examples.multiplecontexts.main;
 using strange.extensions.command.impl;
 using VisualiseR.Common;
 using VisualiseR.Util;
@@ -38,7 +37,7 @@ namespace VisualiseR.Main
             Logger.DebugFormat("RoomName: {0}", _RoomName);
             Logger.DebugFormat("RoomType: {0}", _RoomType);
             Logger.DebugFormat("pictureMedium: {0}", _medium);
-            
+
             if (!IsInputValid())
             {
                 return;
@@ -47,18 +46,21 @@ namespace VisualiseR.Main
             ConstructRoom();
 
             PlayerPrefsUtil.SaveObject(PlayerPrefsUtil.ROOM_KEY, Room);
-            ShowMessageSignal.Dispatch(new Message(MessageType.Info, "Sucess", string.Format("Room {0} was sucessfully created", _RoomName)));
+            ShowMessageSignal.Dispatch(new Message(MessageType.Info, "Sucess",
+                string.Format("Room {0} was sucessfully created", _RoomName)));
             LoadScene();
         }
 
         private void LoadScene()
         {
-            if (!_RoomType.Equals(RoomType.Presentation) && !_RoomType.Equals(RoomType.CodeReview))
+            if (!_RoomType.Equals(RoomType.Presentation) && !_RoomType.Equals(RoomType.CodeReview) &&
+                !_RoomType.Equals(RoomType.Showroom))
             {
-                ShowMessageSignal.Dispatch(new Message(MessageType.Info, "Not implemenented yet", "Scene coming soon (TM)"));
+                ShowMessageSignal.Dispatch(new Message(MessageType.Info, "Not implemenented yet",
+                    "Scene coming soon (TM)"));
                 return;
             }
-            
+
             UnityUtil.LoadScene(_RoomType);
         }
 
@@ -102,7 +104,7 @@ namespace VisualiseR.Main
                 ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
                 return false;
             }
-            if (_medium.IsEmpty())
+            if (!_RoomType.Equals(RoomType.Showroom) && _medium.IsEmpty())
             {
                 string errorMessage = "PictureMedium wasn't choosen yet";
                 Logger.Info("Error:" + errorMessage);
