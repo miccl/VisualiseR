@@ -6,13 +6,18 @@ namespace VisualiseR.Util
     /// <summary>
     /// Drag and dropable object.
     /// </summary>
-    public class DDObject : View, DragDropHandler
+    public class DdObject : View, DragDropHandler
     {
         private bool IsHeld;
         private GameObject Reticle;
         internal bool ddIsActive = true;
 
         void Start()
+        {
+            Init();
+        }
+
+        public void Init()
         {
             IsHeld = false;
             GetComponent<Renderer>().material.color = Color.yellow;

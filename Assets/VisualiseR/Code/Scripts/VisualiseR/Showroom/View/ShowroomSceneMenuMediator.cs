@@ -21,9 +21,9 @@ namespace VisualiseR.Showroom
             _view.CreateObjectSignal.RemoveListener(OnCreateObject);
         }
 
-        private void OnCreateObject(ObjectType type, Vector3 pos)
+        private void OnCreateObject(ObjectType type)
         {
-            InstantiateObjectSignal.Dispatch(type, pos);
+            InstantiateObjectSignal.Dispatch(type);
         }
     }
 }

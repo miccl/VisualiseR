@@ -2,6 +2,11 @@
 {
     public enum ObjectType
     {
-        Cube
+        Cube,
+        Sphere,
+        Capsule,
+        Cylinder,
+        Plane,
+        Quad
     }
 }

@@ -1,13 +1,12 @@
-﻿using strange.extensions.mediation.impl;
-using VisualiseR.Util;
+﻿using VisualiseR.Util;
 
 namespace VisualiseR.Showroom
 {
-    public class ObjectView : DDObject
+    public class ObjectView : DdObject
     {
         private void Start()
         {
-            base.ddIsActive = false;
+            base.Init();
         }
     }
 }

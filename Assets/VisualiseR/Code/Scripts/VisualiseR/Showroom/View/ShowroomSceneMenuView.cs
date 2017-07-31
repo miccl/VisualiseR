@@ -20,7 +20,7 @@ namespace VisualiseR.Showroom
         private GameObject _mainPanel;
         private GameObject _objectPanel;
         
-        internal Signal<ObjectType, Vector3> CreateObjectSignal = new Signal<ObjectType, Vector3>(); 
+        internal Signal<ObjectType> CreateObjectSignal = new Signal<ObjectType>(); 
 
         /// <summary>
         /// Initialises the variables.
@@ -102,10 +102,34 @@ namespace VisualiseR.Showroom
 
         public void OnCubeObjectButton(BaseEventData data)
         {
-            CreateObjectSignal.Dispatch(ObjectType.Cube, Camera.main.transform.position);
-            Hide();
+            CreateObject(ObjectType.Cube);
         }
         
+        public void OnSphereObjectButton(BaseEventData data)
+        {
+            CreateObject(ObjectType.Sphere);
+        }
+
+        public void OnCapsuleObjectButton(BaseEventData data)
+        {
+            CreateObject(ObjectType.Capsule);
+        }
+
+        public void OnCylinderObjectButton(BaseEventData data)
+        {
+            CreateObject(ObjectType.Cylinder);
+        }
+
+        public void OnPlaneObjectButton(BaseEventData data)
+        {
+            CreateObject(ObjectType.Plane);
+        }
+
+        public void OnQuadObjectButton(BaseEventData data)
+        {
+            CreateObject(ObjectType.Quad);
+        }
+
         /// <summary>
         /// Called when the object cancel button has been clicked.
         /// </summary>
@@ -114,6 +138,12 @@ namespace VisualiseR.Showroom
         {
             _objectPanel.SetActive(false);
             _mainPanel.SetActive(true);
+        }
+
+        private void CreateObject(ObjectType type)
+        {
+            CreateObjectSignal.Dispatch(type);
+            Hide();
         }
 
         /// <summary>

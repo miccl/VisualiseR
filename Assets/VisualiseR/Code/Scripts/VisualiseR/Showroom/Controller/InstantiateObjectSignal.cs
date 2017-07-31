@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace VisualiseR.Showroom
 {
-    public class InstantiateObjectSignal : Signal<ObjectType, Vector3>
+    public class InstantiateObjectSignal : Signal<ObjectType>
     {
         
     }
