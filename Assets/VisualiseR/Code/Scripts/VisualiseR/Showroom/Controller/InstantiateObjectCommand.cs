@@ -1,13 +1,20 @@
 ﻿using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using UnityEngine;
+using VisualiseR.Util;
 
 namespace VisualiseR.Showroom
 {
+    /// <summary>
+    /// Command to instantiate a object prefab in the scene.
+    /// </summary>
     public class InstantiateObjectCommand : Command
     {
         [Inject]
         public ObjectType _objectType { get; set; }
+        
+        [Inject]
+        public IObject Object { get; set; }
         
         [Inject(ContextKeys.CONTEXT_VIEW)]
         public GameObject _contextView { get; set; }

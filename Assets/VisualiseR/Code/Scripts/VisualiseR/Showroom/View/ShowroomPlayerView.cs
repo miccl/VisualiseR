@@ -9,7 +9,6 @@ namespace VisualiseR.Showroom
 {
     /// <summary>
     /// View of the player.
-    /// Shows the laser.
     /// </summary>
     public class ShowroomPlayerView : View
     {
@@ -24,8 +23,6 @@ namespace VisualiseR.Showroom
         internal Signal CancelButtonPressedSignal = new Signal();
         
         internal bool _isSceneMenuShown = false;
-
-
 
         protected override void Awake()
         {

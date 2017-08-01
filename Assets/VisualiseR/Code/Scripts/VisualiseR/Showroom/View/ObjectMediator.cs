@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace VisualiseR.Showroom
 {
+    /// <summary>
+    /// Mediator for the <see cref="ObjectView"/>
+    /// </summary>
     public class ObjectMediator : Mediator
     {
         [Inject]

@@ -5,24 +5,16 @@ using UnityEngine.EventSystems;
 
 namespace VisualiseR.Showroom
 {
+    /// <summary>
+    /// View for the ground.
+    /// </summary>
     public class GroundView : View
     {
         public Signal OnClickSignal = new Signal();
-        
+
         public void OnClick(BaseEventData data)
         {
             OnClickSignal.Dispatch();
         }
-        
-//        private void AdjustPlayerPosition()
-//        {
-//            var pos = Camera.main.transform.forward * 5;
-//            GameObject player = GameObject.FindGameObjectWithTag("Player");
-//            
-//            player.transform.position = player.transform.position +  new Vector3(pos.x, 0, pos.z);
-//            
-//        }
-
-
     }
 }

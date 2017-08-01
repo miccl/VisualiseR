@@ -6,7 +6,7 @@ using UnityEngine.VR;
 namespace VisualiseR.CodeReview
 {
     /// <summary>
-    ///  Command to initialises the scene.
+    ///  Command to initialise the scene.
     /// </summary>
     public class CodeReviewStartCommand : Command
     {

@@ -4,6 +4,9 @@ using VisualiseR.CodeReview;
 
 namespace VisualiseR.Showroom
 {
+    /// <summary>
+    /// Mediator for the <see cref="ShowroomSceneMenuView"/>
+    /// </summary>
     public class ShowroomSceneMenuMediator : Mediator
     {
         [Inject]

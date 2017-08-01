@@ -7,6 +7,9 @@ using VisualiseR.Util;
 
 namespace VisualiseR.Showroom
 {
+    /// <summary>
+    /// View for objects in the scene.
+    /// </summary>
     public class ObjectView : DdObject, IPointerClickHandler
     {
         private JCsLogger Logger;

@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace VisualiseR.Showroom
 {
+    /// <summary>
+    /// Command to teleport a player to an other position.
+    /// The position ist based on the players current position and his view angle (<see cref="Camera.main"/>)
+    /// </summary>
     public class TeleportPlayerCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(ShowShowroomSceneMenuCommand));

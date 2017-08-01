@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace VisualiseR.Showroom
 {
+    /// <summary>
+    /// Command to rotate a object.
+    /// </summary>
     public class RotateObjectCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(RotateObjectCommand));

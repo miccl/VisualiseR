@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace VisualiseR.Showroom
 {
+    /// <summary>
+    /// Mediator for the <see cref="GroundMediator"/>
+    /// </summary>
     public class GroundMediator : Mediator
     {
         [Inject]
