@@ -12,18 +12,18 @@ namespace VisualiseR.Showroom
         public GameObject _gameObject { get; set; }
         
         [Inject]
-        public int rotationValue { get; set; }
+        public int _rotationValue { get; set; }
        
         
         public override void Execute()
         {
-            rotationValue = rotationValue % (8+1);
+            _rotationValue = _rotationValue % (8+1);
             RotateObject();
         }
 
         private void RotateObject()
         {
-            string binaryValue = Convert.ToString(rotationValue, 2);
+            string binaryValue = Convert.ToString(_rotationValue, 2);
             int rotationX = Int32.Parse(binaryValue[binaryValue.Length - 1].ToString());
             int rotationY = binaryValue.Length >= 2 ? Int32.Parse(binaryValue[binaryValue.Length - 2].ToString()) : 0;
             int rotationZ = binaryValue.Length == 3 ? Int32.Parse(binaryValue[0].ToString()) : 0;
