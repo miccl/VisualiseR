@@ -1,4 +1,5 @@
 ﻿using strange.extensions.mediation.impl;
+using UnityEngine;
 
 namespace VisualiseR.Showroom
 {
@@ -10,8 +11,12 @@ namespace VisualiseR.Showroom
         [Inject]
         public ChangeEditModeSignal ChangeEditModeSignal { get; set; }
         
+        [Inject]
+        public RotateObjectSignal RotateObjectSignal { get; set; }
+        
         public override void OnRegister()
         {
+            _view.RotateObjectSignal.AddListener(OnRotateObject);
             ChangeEditModeSignal.AddListener(OnChangedEditMode);
         }
 
@@ -23,6 +28,11 @@ namespace VisualiseR.Showroom
         private void OnChangedEditMode(EditMode editMode)
         {
             _view._editMode = editMode;
+        }
+
+        private void OnRotateObject(GameObject go, int rotateValue)
+        {
+            RotateObjectSignal.Dispatch(go, rotateValue);
         }
     }
 }
