@@ -40,14 +40,14 @@ namespace VisualiseR.Showroom
             _view._editMode = editMode;
         }
 
-        private void OnRotateObject(GameObject go, int rotateValue)
+        private void OnRotateObject(IObject o, GameObject go, int rotateValue)
         {
-            RotateObjectSignal.Dispatch(go, rotateValue);
+            RotateObjectSignal.Dispatch((Object) o, go, rotateValue);
         }
 
-        private void OnColorObject(GameObject go, float colorValue)
+        private void OnColorObject(IObject o, GameObject go, float colorValue)
         {
-            ColorObjectSignal.Dispatch(go, colorValue);
+            ColorObjectSignal.Dispatch((Object) o, go, colorValue);
         }
     }
 }

@@ -53,6 +53,7 @@ namespace VisualiseR.Showroom
         private void BindModels()
         {
             injectionBinder.Bind<IPlayer>().To<Player>().ToSingleton();
+            injectionBinder.Bind<IObject>().To<Object>().ToSingleton();
         }
 
         private void BindServices()

@@ -6,7 +6,7 @@ namespace VisualiseR.Showroom
     /// <summary>
     /// Signal to instantiate the <see cref="RotateObjectCommand"/>
     /// </summary>
-    public class RotateObjectSignal : Signal<GameObject, int>
+    public class RotateObjectSignal : Signal<Object, GameObject, int>
     {
         
     }

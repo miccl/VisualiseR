@@ -33,11 +33,17 @@ namespace VisualiseR.Showroom
         private void InstantiateObject()
         {
             Vector3 pos = Camera.main.transform.position + Camera.main.transform.forward.normalized * 3;
+            Quaternion rotation = Quaternion.identity;
 
-            var screen = (GameObject) GameObject.Instantiate(Resources.Load(_objectType.ToString()), pos, Quaternion.identity);
-            screen.name = _objectType.ToString();
-            
-            screen.transform.SetParent(_contextView.transform.Find("Objects"));
+            var go = (GameObject) GameObject.Instantiate(Resources.Load(_objectType.ToString()), pos, rotation);
+            go.name = _objectType.ToString();
+            go.transform.SetParent(_contextView.transform.Find("Objects"));
+
+            Object.Type = _objectType;
+            Object.Position = pos;
+            Object.Rotation = rotation;
+//            Object.Color = HSBColor.
+            go.GetComponent<ObjectView>().Init(Object);
         }
     }
 }

@@ -14,8 +14,10 @@ namespace VisualiseR.Showroom
     {
         private JCsLogger Logger;
 
-        public Signal<GameObject, int> RotateObjectSignal = new Signal<GameObject, int>();
-        public Signal<GameObject, float> ColorObjectSignal = new Signal<GameObject, float>();
+        internal IObject Object;
+
+        public Signal<IObject, GameObject, int> RotateObjectSignal = new Signal<IObject, GameObject, int>();
+        public Signal<IObject, GameObject, float> ColorObjectSignal = new Signal<IObject, GameObject, float>();
         
         private EditMode __editMode;
 
@@ -47,15 +49,31 @@ namespace VisualiseR.Showroom
         {
             base.Start();
             base.Init();
-            _editMode = EditMode.DragAndDrop;
+            _editMode = EditMode.Positioning;
             ddIsActive = true;
+        }
+        
+        public void Init(IObject obj)
+        {
+            Object = obj;
+        }
+
+        private new void Update()
+        {
+            base.Update();
+            if (Object == null) return;
+            if (transform.hasChanged)
+            {
+                Object.Position = transform.position;
+                transform.hasChanged = false;
+            }
         }
 
         internal void ChangeEditMode()
         {
             switch (_editMode)
             {
-                case EditMode.DragAndDrop:
+                case EditMode.Positioning:
                     ddIsActive = true;
                     break;
                 case EditMode.Coloring:
@@ -94,13 +112,13 @@ namespace VisualiseR.Showroom
 
         private void ChangeObjectColor()
         {
-            ColorObjectSignal.Dispatch(gameObject, _colorValue);
+            ColorObjectSignal.Dispatch(Object, gameObject, _colorValue);
             _colorValue += 0.1f;
         }
 
         private void ChangeObjectRotation()
         {
-            RotateObjectSignal.Dispatch(gameObject, _rotationValue);
+            RotateObjectSignal.Dispatch(Object, gameObject, _rotationValue);
             _rotationValue++;
         }
     }

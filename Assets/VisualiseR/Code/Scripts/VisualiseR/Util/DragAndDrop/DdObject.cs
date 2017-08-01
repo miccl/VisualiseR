@@ -39,7 +39,7 @@ namespace VisualiseR.Util
             ChangeColorValue(0.8f);
         }
 
-        void Update()
+        public void Update()
         {
             if (!ddIsActive) return;
 
