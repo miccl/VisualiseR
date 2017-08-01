@@ -12,6 +12,7 @@ namespace VisualiseR.Showroom
         private JCsLogger Logger;
 
         public Signal<GameObject, int> RotateObjectSignal = new Signal<GameObject, int>();
+        public Signal<GameObject, float> ColorObjectSignal = new Signal<GameObject, float>();
         
         private EditMode __editMode;
 
@@ -30,20 +31,7 @@ namespace VisualiseR.Showroom
         }
 
         private float _colorValue = 0;
-        private float ColorValue
-        {
-            get { return _colorValue; }
-            set
-            {
-                _colorValue = value;
-                if (value > 1)
-                {
-                    _colorValue = 0;
-                }
-            }
-        }
-
-        private int RotationValue = 0;
+        private int _rotationValue = 0;
 
 
         private void Awake()
@@ -103,17 +91,14 @@ namespace VisualiseR.Showroom
 
         private void ChangeObjectColor()
         {
-            var color = HSBColor.ToColor(new HSBColor(ColorValue, 1, 1));
-            GetComponent<Renderer>().material.color = color;
-            Logger.DebugFormat("Changing color of object '{0}' to {1}", this, color);
-
-            ColorValue += 0.1f;
+            ColorObjectSignal.Dispatch(gameObject, _colorValue);
+            _colorValue += 0.1f;
         }
 
         private void ChangeObjectRotation()
         {
-            RotateObjectSignal.Dispatch(gameObject, RotationValue);
-            RotationValue++;
+            RotateObjectSignal.Dispatch(gameObject, _rotationValue);
+            _rotationValue++;
         }
     }
 }

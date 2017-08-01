@@ -86,6 +86,7 @@ namespace VisualiseR.Showroom
             commandBinder.Bind<InstantiateObjectSignal>().To<InstantiateObjectCommand>();
             commandBinder.Bind<TeleportPlayerSignal>().To<TeleportPlayerCommand>();
             commandBinder.Bind<RotateObjectSignal>().To<RotateObjectCommand>();
+            commandBinder.Bind<ColorObjectSignal>().To<ColorObjectCommand>();
         }
 
         private void BindSignals()
