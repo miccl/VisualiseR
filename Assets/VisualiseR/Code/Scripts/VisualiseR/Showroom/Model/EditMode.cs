@@ -2,7 +2,7 @@
 {
     public enum EditMode
     {
-        DragAndDrop,
+        Positioning,
         Coloring,
         Rotate
     }

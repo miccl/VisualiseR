@@ -155,11 +155,6 @@ namespace VisualiseR.Showroom
             CreateObject(ObjectType.Cylinder);
         }
 
-        public void OnPlaneObjectButton(BaseEventData data)
-        {
-            CreateObject(ObjectType.Plane);
-        }
-
         public void OnQuadObjectButton(BaseEventData data)
         {
             CreateObject(ObjectType.Quad);
@@ -183,7 +178,7 @@ namespace VisualiseR.Showroom
 
         public void OnDragAndDropButton(BaseEventData data)
         {
-            ChangeEditMode(EditMode.DragAndDrop);
+            ChangeEditMode(EditMode.Positioning);
             _dragAndDropButton.interactable = false;
             _colorButton.interactable = true;
             _rotationButton.interactable = true;

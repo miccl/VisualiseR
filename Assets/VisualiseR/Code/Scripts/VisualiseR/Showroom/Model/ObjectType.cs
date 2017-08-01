@@ -6,7 +6,6 @@
         Sphere,
         Capsule,
         Cylinder,
-        Plane,
         Quad
     }
 }
