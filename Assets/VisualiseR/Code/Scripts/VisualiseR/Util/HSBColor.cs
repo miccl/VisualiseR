@@ -12,34 +12,36 @@ namespace VisualiseR.Util
     [Serializable]
     public struct HSBColor
     {
-        public float h;
-        public float s;
-        public float b;
-        public float a;
+        public float H;
+        public float S;
+        public float B;
+        public float A;
+
+        private static readonly double TOLERANCE = 0.1f;
 
         public HSBColor(float h, float s, float b, float a)
         {
-            this.h = h;
-            this.s = s;
-            this.b = b;
-            this.a = a;
+            H = h;
+            S = s;
+            B = b;
+            A = a;
         }
 
         public HSBColor(float h, float s, float b)
         {
-            this.h = h;
-            this.s = s;
-            this.b = b;
-            this.a = 1f;
+            H = h;
+            S = s;
+            B = b;
+            A = 1f;
         }
 
         public HSBColor(Color col)
         {
             HSBColor temp = FromColor(col);
-            h = temp.h;
-            s = temp.s;
-            b = temp.b;
-            a = temp.a;
+            H = temp.H;
+            S = temp.S;
+            B = temp.B;
+            A = temp.A;
         }
 
         public static HSBColor FromColor(Color color)
@@ -62,51 +64,51 @@ namespace VisualiseR.Util
 
             if (max > min)
             {
-                if (g == max)
+                if (Math.Abs(g - max) < TOLERANCE)
                 {
-                    ret.h = (b - r) / dif * 60f + 120f;
+                    ret.H = (b - r) / dif * 60f + 120f;
                 }
-                else if (b == max)
+                else if (Math.Abs(b - max) < TOLERANCE)
                 {
-                    ret.h = (r - g) / dif * 60f + 240f;
+                    ret.H = (r - g) / dif * 60f + 240f;
                 }
                 else if (b > g)
                 {
-                    ret.h = (g - b) / dif * 60f + 360f;
+                    ret.H = (g - b) / dif * 60f + 360f;
                 }
                 else
                 {
-                    ret.h = (g - b) / dif * 60f;
+                    ret.H = (g - b) / dif * 60f;
                 }
-                if (ret.h < 0)
+                if (ret.H < 0)
                 {
-                    ret.h = ret.h + 360f;
+                    ret.H = ret.H + 360f;
                 }
             }
             else
             {
-                ret.h = 0;
+                ret.H = 0;
             }
 
-            ret.h *= 1f / 360f;
-            ret.s = (dif / max) * 1f;
-            ret.b = max;
+            ret.H *= 1f / 360f;
+            ret.S = (dif / max) * 1f;
+            ret.B = max;
 
             return ret;
         }
-
+        
         public static Color ToColor(HSBColor hsbColor)
         {
-            float r = hsbColor.b;
-            float g = hsbColor.b;
-            float b = hsbColor.b;
-            if (hsbColor.s != 0)
+            float r = hsbColor.B;
+            float g = hsbColor.B;
+            float b = hsbColor.B;
+            if (Math.Abs(hsbColor.S) > TOLERANCE)
             {
-                float max = hsbColor.b;
-                float dif = hsbColor.b * hsbColor.s;
-                float min = hsbColor.b - dif;
+                float max = hsbColor.B;
+                float dif = hsbColor.B * hsbColor.S;
+                float min = hsbColor.B - dif;
 
-                float h = hsbColor.h * 360f;
+                float h = hsbColor.H * 360f;
 
                 if (h < 60f)
                 {
@@ -152,7 +154,7 @@ namespace VisualiseR.Util
                 }
             }
 
-            return new Color(Mathf.Clamp01(r), Mathf.Clamp01(g), Mathf.Clamp01(b), hsbColor.a);
+            return new Color(Mathf.Clamp01(r), Mathf.Clamp01(g), Mathf.Clamp01(b), hsbColor.A);
         }
 
         public Color ToColor()
@@ -162,7 +164,7 @@ namespace VisualiseR.Util
 
         public override string ToString()
         {
-            return "H:" + h + " S:" + s + " B:" + b;
+            return "H:" + H + " S:" + S + " B:" + B;
         }
 
         public static HSBColor Lerp(HSBColor a, HSBColor b, float t)
@@ -171,39 +173,39 @@ namespace VisualiseR.Util
 
             //check special case black (color.b==0): interpolate neither hue nor saturation!
             //check special case grey (color.s==0): don't interpolate hue!
-            if (a.b == 0)
+            if (Math.Abs(a.B) < TOLERANCE)
             {
-                h = b.h;
-                s = b.s;
+                h = b.H;
+                s = b.S;
             }
-            else if (b.b == 0)
+            else if (Math.Abs(b.B) < TOLERANCE)
             {
-                h = a.h;
-                s = a.s;
+                h = a.H;
+                s = a.S;
             }
             else
             {
-                if (a.s == 0)
+                if (Math.Abs(a.S) < TOLERANCE)
                 {
-                    h = b.h;
+                    h = b.H;
                 }
-                else if (b.s == 0)
+                else if (Math.Abs(b.S) < TOLERANCE)
                 {
-                    h = a.h;
+                    h = a.H;
                 }
                 else
                 {
                     // works around bug with LerpAngle
-                    float angle = Mathf.LerpAngle(a.h * 360f, b.h * 360f, t);
+                    float angle = Mathf.LerpAngle(a.H * 360f, b.H * 360f, t);
                     while (angle < 0f)
                         angle += 360f;
                     while (angle > 360f)
                         angle -= 360f;
                     h = angle / 360f;
                 }
-                s = Mathf.Lerp(a.s, b.s, t);
+                s = Mathf.Lerp(a.S, b.S, t);
             }
-            return new HSBColor(h, s, Mathf.Lerp(a.b, b.b, t), Mathf.Lerp(a.a, b.a, t));
+            return new HSBColor(h, s, Mathf.Lerp(a.B, b.B, t), Mathf.Lerp(a.A, b.A, t));
         }
 
         public static void Test()

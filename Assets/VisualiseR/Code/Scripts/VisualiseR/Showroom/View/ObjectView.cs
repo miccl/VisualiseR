@@ -77,8 +77,6 @@ namespace VisualiseR.Showroom
                     ddIsActive = true;
                     break;
                 case EditMode.Coloring:
-                    ddIsActive = false;
-                    break;
                 case EditMode.Rotate:
                     ddIsActive = false;
                     break;

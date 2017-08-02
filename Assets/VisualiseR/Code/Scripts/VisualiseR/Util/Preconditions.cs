@@ -2,7 +2,10 @@
 
 namespace VisualiseR.Util
 {
-    public class Preconditions
+    /// <summary>
+    /// Helper class to check preconditions.
+    /// </summary>
+    public static class Preconditions
     {
         /// <summary>
         /// Ensures that an object reference passed as a parameter to the calling method is not null.

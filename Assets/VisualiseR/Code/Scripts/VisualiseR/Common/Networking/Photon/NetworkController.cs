@@ -56,9 +56,6 @@ namespace VisualiseR.Common
                 RoomOptions roomOptions = InitRoomOptions();
 
                 PhotonNetwork.JoinOrCreateRoom(_roomName, roomOptions, TypedLobby.Default);
-                
-//                Logger.ErrorFormat("Couldn't create or join the room '{0}'", _roomName);
-//                UnityUtil.LoadScene("Main");
             }
         }
 
