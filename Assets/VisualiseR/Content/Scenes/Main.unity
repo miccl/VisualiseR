@@ -485,9 +485,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Wait just a moment. I get you some help... \nWelp... No one is coming\n\nThe
-    application is available under github.com/miccl/Visualiser \nMaybe you find some
-    help there :)\n\nAh and thanks for using this app. Hope you enjoy it.\n\n"
+  m_Text: "To use this app you need the following:\n   - mobile vr device (put your
+    phone in the device after room \n     creation)\n   - bluetooth controller with
+    2 buttons (submit, cancel)\n\nFor more information see: github.com/miccl/Visualiser
+    \nThanks for using this app. Hope you enjoy it.\n\n"
 --- !u!222 &145489565
 CanvasRenderer:
   m_ObjectHideFlags: 0
