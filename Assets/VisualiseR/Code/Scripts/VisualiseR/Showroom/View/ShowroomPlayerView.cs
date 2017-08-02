@@ -3,6 +3,7 @@ using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
 using VisualiseR.Common;
+using VisualiseR.Main;
 using VisualiseR.Util;
 
 namespace VisualiseR.Showroom
@@ -21,8 +22,10 @@ namespace VisualiseR.Showroom
         internal GameObject _contextView;
 
         internal Signal CancelButtonPressedSignal = new Signal();
+        internal Signal CaptureScreenshotSignal = new Signal();
         
         internal bool _isSceneMenuShown = false;
+        public EditMode _editMode;
 
         protected override void Awake()
         {
@@ -44,15 +47,14 @@ namespace VisualiseR.Showroom
 
             if (ButtonUtil.IsSubmitButtonPressed())
             {
-//                var pos = GameObject.Find("GvrRecticlePointer").transform.position;
-                
-                //TODO
+                CaptureScreenShot();
                 return;
             }
 
             if (ButtonUtil.IsCancelButtonPressed())
             {
                 CancelButtonPressedSignal.Dispatch();
+                return;
             }
 
         }
@@ -63,6 +65,14 @@ namespace VisualiseR.Showroom
                 if (stream.isWriting)
                 {
                 }
+            }
+        }
+
+        private void CaptureScreenShot()
+        {
+            if (_editMode.Equals(EditMode.Screenshot))
+            {
+                CaptureScreenshotSignal.Dispatch();
             }
         }
     }

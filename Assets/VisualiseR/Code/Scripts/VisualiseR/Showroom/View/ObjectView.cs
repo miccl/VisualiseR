@@ -83,7 +83,6 @@ namespace VisualiseR.Showroom
                     ddIsActive = false;
                     break;
                 default:
-                    Logger.Error("Invalid edit mode was choosen");
                     break;
             }
         }

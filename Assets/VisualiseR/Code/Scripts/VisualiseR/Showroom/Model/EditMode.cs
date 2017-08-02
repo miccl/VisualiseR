@@ -4,6 +4,7 @@
     {
         Positioning,
         Coloring,
-        Rotate
+        Rotate,
+        Screenshot
     }
 }

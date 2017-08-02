@@ -4,6 +4,7 @@ using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using UnityEngine;
 using VisualiseR.Common;
+using VisualiseR.Main;
 
 namespace VisualiseR.Showroom
 {
@@ -88,6 +89,7 @@ namespace VisualiseR.Showroom
             commandBinder.Bind<TeleportPlayerSignal>().To<TeleportPlayerCommand>();
             commandBinder.Bind<RotateObjectSignal>().To<RotateObjectCommand>();
             commandBinder.Bind<ColorObjectSignal>().To<ColorObjectCommand>();
+            commandBinder.Bind<CaptureScreenshotSignal>().To<CaptureScreenshotCommand>();
         }
 
         private void BindSignals()

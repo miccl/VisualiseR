@@ -10,7 +10,7 @@ namespace VisualiseR.Showroom
     /// </summary>
     public class ColorObjectCommand : Command
     {
-        private static readonly JCsLogger Logger = new JCsLogger(typeof(RotateObjectCommand));
+        private static readonly JCsLogger Logger = new JCsLogger(typeof(ColorObjectCommand));
 
         [Inject]
         public Object _object { get; set; }

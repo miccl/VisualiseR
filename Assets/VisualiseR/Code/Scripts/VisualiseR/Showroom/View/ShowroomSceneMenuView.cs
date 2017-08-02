@@ -28,6 +28,7 @@ namespace VisualiseR.Showroom
         private Selectable _dragAndDropButton;
         private Selectable _colorButton;
         private Selectable _rotationButton;
+        private Selectable _screenshotButton;
 
         /// <summary>
         /// Initialises the variables.
@@ -40,11 +41,14 @@ namespace VisualiseR.Showroom
             _mainPanel = gameObject.transform.FindChild("MainPanel").gameObject;
             _objectPanel = gameObject.transform.FindChild("ObjectPanel").gameObject;
             _editModePanel = gameObject.transform.FindChild("EditModePanel").gameObject;
+            
             _dragAndDropButton = _editModePanel.transform.Find("CenterPanel").Find("DragAndDropButton")
                 .GetComponent<Selectable>();
             _colorButton = _editModePanel.transform.Find("CenterPanel").Find("ColorButton")
                 .GetComponent<Selectable>();
             _rotationButton = _editModePanel.transform.Find("CenterPanel").Find("RotationButton")
+                .GetComponent<Selectable>();
+            _screenshotButton = _editModePanel.transform.Find("BottomPanel").Find("ScreenshotButton")
                 .GetComponent<Selectable>();
         }
 
@@ -179,31 +183,37 @@ namespace VisualiseR.Showroom
         public void OnDragAndDropButton(BaseEventData data)
         {
             ChangeEditMode(EditMode.Positioning);
-            _dragAndDropButton.interactable = false;
-            _colorButton.interactable = true;
-            _rotationButton.interactable = true;
         }
 
         public void OnColorButton(BaseEventData data)
         {
             ChangeEditMode(EditMode.Coloring);
-            _dragAndDropButton.interactable = true;
-            _colorButton.interactable = false;
-            _rotationButton.interactable = true;
         }
 
         public void OnRotateButton(BaseEventData data)
         {
             ChangeEditMode(EditMode.Rotate);
-            _dragAndDropButton.interactable = true;
-            _colorButton.interactable = true;
-            _rotationButton.interactable = false;
+        }
+
+        public void OnScreenshotButton(BaseEventData data)
+        {
+            ChangeEditMode(EditMode.Screenshot);
         }
 
         private void ChangeEditMode(EditMode mode)
         {
             ChangeEditModeSignal.Dispatch(mode);
+            ChangeEditModeInteractivity(mode);
+            Logger.DebugFormat("Changed edit mode to {0}", mode);
             Hide();
+        }
+
+        private void ChangeEditModeInteractivity(EditMode mode)
+        {
+            _dragAndDropButton.interactable = !mode.Equals(EditMode.Positioning);
+            _colorButton.interactable = !mode.Equals(EditMode.Coloring);
+            _rotationButton.interactable = !mode.Equals(EditMode.Rotate);
+            _screenshotButton.interactable = !mode.Equals(EditMode.Screenshot);
         }
 
         public void OnEditModeCancelButton(BaseEventData data)
