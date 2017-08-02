@@ -2278,7 +2278,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 545369454}
   m_Template: {fileID: 1585972641}
   m_CaptionText: {fileID: 188925466}
@@ -10185,7 +10185,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 2}
-  m_SizeDelta: {x: 0, y: 255}
+  m_SizeDelta: {x: 0, y: 290}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1922102172
 MonoBehaviour:

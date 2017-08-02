@@ -87,9 +87,10 @@ namespace VisualiseR.Main
 
         public void OnCreateRoomButtonClick()
         {
-            if (!_onJoinedLobby)
+            while (!_onJoinedLobby)
             {
-                return;
+                Debug.Log("YIHHAAAA");
+//                return;
             }
             _roomName = _roomNameInputField.text;
             PhotonNetwork.CreateRoom(_roomName);
