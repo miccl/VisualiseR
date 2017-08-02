@@ -57,6 +57,11 @@ namespace VisualiseR.Showroom
             Vector3 relativePos = Camera.main.transform.position - pos;
             sceneMenu.transform.rotation = Quaternion.LookRotation(relativePos);
             sceneMenu.transform.Rotate(0, 180, 0);
+            SetXAxisToZero(sceneMenu);
+        }
+
+        private static void SetXAxisToZero(GameObject sceneMenu)
+        {
             var rot = sceneMenu.transform.eulerAngles;
             rot.x = 0;
             sceneMenu.transform.eulerAngles = rot;

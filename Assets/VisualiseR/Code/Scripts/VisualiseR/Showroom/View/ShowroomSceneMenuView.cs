@@ -155,9 +155,9 @@ namespace VisualiseR.Showroom
             CreateObject(ObjectType.Cylinder);
         }
 
-        public void OnQuadObjectButton(BaseEventData data)
+        public void OnDoorObjectButton(BaseEventData data)
         {
-            CreateObject(ObjectType.Quad);
+            CreateObject(ObjectType.Door);
         }
 
         /// <summary>

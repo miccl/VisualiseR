@@ -6,6 +6,6 @@
         Sphere,
         Capsule,
         Cylinder,
-        Quad
+        Door
     }
 }
