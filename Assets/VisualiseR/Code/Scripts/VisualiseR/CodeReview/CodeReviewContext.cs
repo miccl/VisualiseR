@@ -14,10 +14,19 @@ namespace VisualiseR.CodeReview
     /// </summary>
     public class CodeReviewContext : MVCSContext
     {
+        /// <summary>
+        /// Ctor.
+        /// </summary>
+        /// <param name="view"></param>
         public CodeReviewContext(MonoBehaviour view) : base(view)
         {
         }
 
+        /// <summary>
+        /// Ctor.
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="flags"></param>
         public CodeReviewContext(MonoBehaviour view, ContextStartupFlags flags) : base(view, flags)
         {
         }
@@ -83,18 +92,7 @@ namespace VisualiseR.CodeReview
 
         private void BindCommands()
         {
-            if (this == firstContext)
-            {
-                commandBinder.Bind<CodeReviewStartSignal>().To<CodeReviewStartCommand>().Once();
-            }
-            else
-            {
-                commandBinder.Bind<CodeReviewStartSignal>()
-                    .To<CodeReviewStartCommand>()
-                    .Once()
-                    .InSequence();
-            }
-
+            commandBinder.Bind<CodeReviewStartSignal>().To<CodeReviewStartCommand>().Once();
             commandBinder.Bind<ShowSceneMenuSignal>().To<ShowCodeReviewSceneMenuCommand>();
             commandBinder.Bind<SelectCodeRatingSignal>().To<SelectCodeRatingCommand>();
             commandBinder.Bind<SaveCommentSignal>().To<SaveCommentCommand>();

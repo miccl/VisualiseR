@@ -4,7 +4,6 @@ using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using UnityEngine;
 using VisualiseR.Common;
-using VisualiseR.Main;
 
 namespace VisualiseR.Showroom
 {
@@ -13,15 +12,26 @@ namespace VisualiseR.Showroom
     /// </summary>
     public class ShowroomContext : MVCSContext
     {
+        /// <summary>
+        /// Ctor.
+        /// </summary>
+        /// <param name="view"></param>
         public ShowroomContext(MonoBehaviour view) : base(view)
         {
         }
 
+        /// <summary>
+        /// Ctor.
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="flags"></param>
         public ShowroomContext(MonoBehaviour view, ContextStartupFlags flags) : base(view, flags)
         {
         }
 
-        // Unbind the default EventCommandBinder and rebind the SignalCommandBinder
+        /// <summary>
+        /// Unbinds the default EventCommandBinder and rebinds to the SignalCommandBinder.
+        /// </summary>
         protected override void addCoreComponents()
         {
             base.addCoreComponents();
@@ -29,7 +39,10 @@ namespace VisualiseR.Showroom
             injectionBinder.Bind<ICommandBinder>().To<SignalCommandBinder>().ToSingleton();
         }
 
-        // Override Start so that we can fire the PresentationStartSignal
+        /// <summary>
+        /// Override Start so that we can fire the PresentationStartSignal
+        /// </summary>
+        /// <returns></returns>
         public override IContext Start()
         {
             base.Start();
@@ -72,18 +85,7 @@ namespace VisualiseR.Showroom
 
         private void BindCommands()
         {
-            if (this == firstContext)
-            {
-                commandBinder.Bind<ShowroomStartSignal>().To<ShowroomStartCommand>().Once();
-            }
-            else
-            {
-                commandBinder.Bind<ShowroomStartSignal>()
-//                    .To<KillAudioListenerCommand>()
-                    .To<ShowroomStartCommand>()
-                    .Once()
-                    .InSequence();
-            }
+            commandBinder.Bind<ShowroomStartSignal>().To<ShowroomStartCommand>().Once();
             commandBinder.Bind<ShowShowroomSceneMenuSignal>().To<ShowShowroomSceneMenuCommand>();
             commandBinder.Bind<InstantiateObjectSignal>().To<InstantiateObjectCommand>();
             commandBinder.Bind<TeleportPlayerSignal>().To<TeleportPlayerCommand>();
