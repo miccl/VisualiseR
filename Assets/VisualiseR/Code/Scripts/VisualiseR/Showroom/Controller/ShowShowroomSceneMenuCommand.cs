@@ -49,14 +49,17 @@ namespace VisualiseR.Showroom
             Vector3 shift = Camera.main.transform.forward.normalized * 4;
             Vector3 pos = Camera.main.transform.position + shift;
             sceneMenu.transform.position = pos;
-            if (sceneMenu.transform.position.y < 0)
+            if (sceneMenu.transform.localPosition.y < 0)
             {
-                sceneMenu.transform.position = new Vector3(pos.x, 0, pos.z);
+                sceneMenu.transform.localPosition = new Vector3(sceneMenu.transform.localPosition.x, 0, sceneMenu.transform.localPosition.z);
             }
 
             Vector3 relativePos = Camera.main.transform.position - pos;
             sceneMenu.transform.rotation = Quaternion.LookRotation(relativePos);
             sceneMenu.transform.Rotate(0, 180, 0);
+            var rot = sceneMenu.transform.eulerAngles;
+            rot.x = 0;
+            sceneMenu.transform.eulerAngles = rot;
         }
     }
 }
