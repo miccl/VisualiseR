@@ -90,6 +90,7 @@ namespace VisualiseR.Showroom
             commandBinder.Bind<RotateObjectSignal>().To<RotateObjectCommand>();
             commandBinder.Bind<ColorObjectSignal>().To<ColorObjectCommand>();
             commandBinder.Bind<CaptureScreenshotSignal>().To<CaptureScreenshotCommand>();
+            commandBinder.Bind<ShowScreenMessageSignal>().To<ShowScreenMessageCommand>();
         }
 
         private void BindSignals()

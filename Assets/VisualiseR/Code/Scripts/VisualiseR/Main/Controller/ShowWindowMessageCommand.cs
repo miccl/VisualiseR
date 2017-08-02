@@ -8,7 +8,7 @@ namespace VisualiseR.Main
     /// <summary>
     /// Shows a <see cref="Message"/>
     ///  </summary>
-    public class ShowMessageCommand : Command
+    public class ShowWindowMessageCommand : Command
     {
         [Inject]
         public Message _message { get; set; }

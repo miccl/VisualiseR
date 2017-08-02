@@ -95,7 +95,7 @@ namespace VisualiseR.Main
             commandBinder.Bind<SelectWebFileSignal>().To<SelectWebFileCommand>();
             commandBinder.Bind<SelectDiskFileSignal>().To<SelectDiskFileCommand>();
             commandBinder.Bind<LoadFilesSignal>().To<LoadFilesCommand>();
-            commandBinder.Bind<ShowMessageSignal>().To<ShowMessageCommand>();
+            commandBinder.Bind<ShowWindowMessageSignal>().To<ShowWindowMessageCommand>();
         }
 
         private void BindSignals()

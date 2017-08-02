@@ -3,14 +3,14 @@ using strange.extensions.context.api;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace VisualiseR.CodeReview
+namespace VisualiseR.Common
 {
     /// <summary>
     /// Command to show a fading message in the scene.
     /// </summary>
-    public class ShowMessageCommand : Command
+    public class ShowScreenMessageCommand : Command
     {
-        private static readonly JCsLogger Logger = new JCsLogger(typeof(ShowMessageCommand));
+        private static readonly JCsLogger Logger = new JCsLogger(typeof(ShowScreenMessageCommand));
         private GameObject _messageCanvas;
 
         [Inject]
@@ -30,7 +30,7 @@ namespace VisualiseR.CodeReview
             _messageCanvas = Camera.main.transform.Find("Message").gameObject;
             _messageCanvas.SetActive(true);
             _messageCanvas.GetComponentInChildren<Text>().text = _message;
-            _messageCanvas.GetComponent<Animation>().Play();
+//            _messageCanvas.GetComponent<Animation>().Play();
         }
     }
 }

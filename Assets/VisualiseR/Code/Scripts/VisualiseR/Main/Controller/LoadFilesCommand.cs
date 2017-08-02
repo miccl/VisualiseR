@@ -21,7 +21,7 @@ namespace VisualiseR.Main
         public MediumChangedSignal _MediumChangedSignal { get; set; }
 
         [Inject]
-        public ShowMessageSignal ShowMessageSignal { get; set; }
+        public ShowWindowMessageSignal ShowWindowMessageSignal { get; set; }
 
         [Inject]
         public string uri { get; set; }
@@ -91,7 +91,7 @@ namespace VisualiseR.Main
             {
                 string errorMessage = "Url was empty";
                 Logger.Info("Error:" + errorMessage);
-                ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
+                ShowWindowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
                 return false;
             }
             
@@ -99,7 +99,7 @@ namespace VisualiseR.Main
             {
                 string errorMessage = "Url is invalid";
                 Logger.Info("Error:" + errorMessage);
-                ShowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
+                ShowWindowMessageSignal.Dispatch(new Message(MessageType.Error, "Error", errorMessage));
                 return false;
             }
 

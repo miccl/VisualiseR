@@ -1,6 +1,6 @@
 ﻿using strange.extensions.signal.impl;
 
-namespace VisualiseR.Main
+namespace VisualiseR.Showroom
 {
     public class CaptureScreenshotSignal : Signal
     {
