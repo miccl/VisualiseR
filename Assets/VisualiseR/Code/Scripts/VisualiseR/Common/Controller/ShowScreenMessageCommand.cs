@@ -30,7 +30,7 @@ namespace VisualiseR.Common
             _messageCanvas = Camera.main.transform.Find("Message").gameObject;
             _messageCanvas.SetActive(true);
             _messageCanvas.GetComponentInChildren<Text>().text = _message;
-//            _messageCanvas.GetComponent<Animation>().Play();
+            _messageCanvas.GetComponent<Animation>().Play();
         }
     }
 }

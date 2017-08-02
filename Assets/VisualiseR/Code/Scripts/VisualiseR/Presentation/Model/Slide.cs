@@ -3,6 +3,9 @@ using VisualiseR.Common;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// Presentation slide.
+    /// </summary>
     [Serializable]
     public class Slide : ISlide
     {

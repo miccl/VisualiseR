@@ -5,6 +5,10 @@ using VisualiseR.Common;
 
 namespace VisualiseR.Showroom
 {
+    /// <summary>
+    /// Command to capture a screenshot of the players view.
+    /// Screenshot gets saved on the device on which the application is running.
+    /// </summary>
     public class CaptureScreenshotCommand : Command
     {
         private static readonly JCsLogger Logger = new JCsLogger(typeof(CaptureScreenshotCommand));
