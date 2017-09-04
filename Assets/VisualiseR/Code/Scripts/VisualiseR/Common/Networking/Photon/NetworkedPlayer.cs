@@ -1,4 +1,5 @@
-﻿using strange.extensions.mediation.impl;
+﻿using System.Runtime.InteropServices;
+using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
 
@@ -16,12 +17,17 @@ namespace VisualiseR.Common
 
         private Transform _playerGlobal;
         private Transform _playerLocal;
+        
         private GameObject _avatar;
+        private GameObject _head;
+        private TextMesh _name;
 
         protected override void Awake()
         {
             base.Awake();
             _avatar = transform.Find("Avatar").gameObject;
+            _head = _avatar.transform.Find("Head").gameObject;
+            _name = _avatar.transform.Find("Name").GetComponent<TextMesh>();
         }
 
         protected override void Start()
@@ -47,33 +53,37 @@ namespace VisualiseR.Common
         {
             _player = player;
 
-            InitAvatar();
+            Color color = GetAvatarColor();
+            DyeAvatar(color);
+
+            InitPlayerName();
         }
 
-        private void InitAvatar()
+        private Color GetAvatarColor()
         {
-            Color color;
             switch (_player.Avatar)
             {
                 case AvatarType.Green:
-                    color = Color.green;
-                    break;
+                    return Color.green;
                 case AvatarType.Red:
-                    color = Color.red;
-                    break;
+                    return Color.red;
                 case AvatarType.Yellow:
-                    color = Color.yellow;
-                    break;
+                    return Color.yellow;
                 default:
-                    color = Color.blue;
-                    break;
+                    return Color.blue;
             }
-            DyeAvatar(color);
         }
 
         private void DyeAvatar(Color color)
         {
-            _avatar.transform.Find("Head").GetComponent<MeshRenderer>().material.color = color;
+            _head.GetComponent<MeshRenderer>().material.color = color;
+            _name.color = color;
+
+        }
+
+        private void InitPlayerName()
+        {
+            _name.text = _player.Name;
         }
 
         /// <summary>
