@@ -93,12 +93,9 @@ namespace VisualiseR.CodeReview
 
         internal void SetupMedium()
         {
-            Debug.Log("MEDIUM:" + _medium.ToString());
             if (_medium != null && !_medium.IsEmpty())
             {
                 _codeFragmentsWithRate = _medium.GetCodeFragmentsWithRate(Rate.Unrated);
-                Debug.Log("HALLO:" + _medium.CodeFragments.Count);
-                Debug.Log("HALLO2: " + _codeFragmentsWithRate.Count);
                 InitialiseScreens();
                 InitialisePiles();
                 InstantiateInfoScreen();

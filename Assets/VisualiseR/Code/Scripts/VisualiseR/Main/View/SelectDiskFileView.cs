@@ -10,6 +10,8 @@ namespace VisualiseR.Main
     /// </summary>
     public class SelectDiskFileView : View
     {
+        private JCsLogger Logger;
+
         public Signal<string> SelectedFileSignal = new Signal<string>();
 
         [SerializeField] private GUISkin _skin;
@@ -17,6 +19,12 @@ namespace VisualiseR.Main
         [SerializeField] private Texture2D file, folder, back, drive;
 
         private FileBrowser fb;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            Logger = new JCsLogger(typeof(SelectDiskFileView));
+        }
 
         internal void Init()
         {
@@ -49,14 +57,14 @@ namespace VisualiseR.Main
                 if (selectedFile == null)
                 {
                     SelectedFileSignal.Dispatch(null);
-                    Debug.Log("Cancel hit");
+                    Logger.Debug("Cancel hit");
                     return;
                 }
 
                 var output = selectedFile.Directory;
                 if (output != null)
                 {
-                    Debug.Log("Ouput File = \"" + output.FullName + "\"");
+                    Logger.DebugFormat("Ouput File ='{0}'", output.FullName);
                     SelectedFileSignal.Dispatch(output.FullName);
                 }
             }

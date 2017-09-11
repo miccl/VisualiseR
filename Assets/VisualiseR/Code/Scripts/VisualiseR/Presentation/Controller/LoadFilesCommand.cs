@@ -111,7 +111,6 @@ namespace VisualiseR.Presentation
                         Path = filePath
                     }
                 });
-                Debug.Log(filePath);
             }
         }
     }

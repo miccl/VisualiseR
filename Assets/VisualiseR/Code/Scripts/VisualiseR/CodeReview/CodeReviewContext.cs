@@ -93,10 +93,10 @@ namespace VisualiseR.CodeReview
         private void BindCommands()
         {
             commandBinder.Bind<CodeReviewStartSignal>().To<CodeReviewStartCommand>().Once();
-            commandBinder.Bind<ShowSceneMenuSignal>().To<ShowCodeReviewSceneMenuCommand>();
-            commandBinder.Bind<SelectCodeRatingSignal>().To<SelectCodeRatingCommand>();
-            commandBinder.Bind<SaveCommentSignal>().To<SaveCommentCommand>();
             commandBinder.Bind<RemoveCodeSignal>().To<RemoveCodeCommand>();
+            commandBinder.Bind<SaveCommentSignal>().To<SaveCommentCommand>();
+            commandBinder.Bind<SelectCodeRatingSignal>().To<SelectCodeRatingCommand>();
+            commandBinder.Bind<ShowSceneMenuSignal>().To<ShowCodeReviewSceneMenuCommand>();
             commandBinder.Bind<ShowCodeReviewContextMenuSignal>().To<ShowCodeReviewContextMenuCommand>();
             commandBinder.Bind<ExportToTxtSignal>().To<ExportToTxtCommand>();
             commandBinder.Bind<ShowAllCodeSignal>().To<ShowAllCodeCommand>();

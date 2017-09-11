@@ -46,7 +46,7 @@ namespace VisualiseR.Main
         {
             base.Awake();
             
-            Logger = new JCsLogger(typeof(JoinRoomView));
+            Logger = new JCsLogger(typeof(CreateRoomView));
 
             
             var createRoomPanel = UnityUtil.FindGameObject("CreateRoomPanel").transform.Find("CenterPanel");
@@ -89,8 +89,7 @@ namespace VisualiseR.Main
         {
             while (!_onJoinedLobby)
             {
-                Debug.Log("YIHHAAAA");
-//                return;
+                Logger.Debug("Still not joined");
             }
             _roomName = _roomNameInputField.text;
             PhotonNetwork.CreateRoom(_roomName);
