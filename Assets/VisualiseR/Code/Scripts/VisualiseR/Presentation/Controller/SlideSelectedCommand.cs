@@ -22,7 +22,6 @@ namespace VisualiseR.Presentation
 
         public override void Execute()
         {
-            Debug.Log("Slide: " + _slide);
             var screens = ActivateScreen();
             ActivateEnvironment();
             PresentationScreenView screenView = screens.GetComponentInChildren<PresentationScreenView>();
