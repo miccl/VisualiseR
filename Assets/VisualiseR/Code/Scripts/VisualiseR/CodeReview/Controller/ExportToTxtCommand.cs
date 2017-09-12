@@ -2,8 +2,8 @@ using System.IO;
 using System.Text;
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
-using strange.extensions.context.impl;
 using UnityEngine;
+using VisualiseR.Common;
 using VisualiseR.Util;
 
 namespace VisualiseR.CodeReview
@@ -21,7 +21,10 @@ namespace VisualiseR.CodeReview
         public CodeMedium _medium { get; set; }
 
         [Inject]
-        public ShowMessageSignal ShowMessageSignal { get; set; }
+        public ShowScreenMessageSignal ShowScreenMessageSignal { get; set; }
+
+        [Inject]
+        public CodeReviewSceneMenuIsShownSignal CodeReviewSceneMenuIsShownSignal { get; set; }
         
         [Inject(ContextKeys.CONTEXT_VIEW)]
         public GameObject _contextView { get; set; }
@@ -31,8 +34,10 @@ namespace VisualiseR.CodeReview
             string dirPath = GetDirPath();
             string text = GetText();
             FileUtil.WriteFile(dirPath, text);
-            Logger.InfoFormat("Exported informations in file '{0}'", dirPath);
-            ShowMessageSignal.Dispatch(string.Format("Exported file to {0}", dirPath));
+            
+            var logMsg = string.Format("Exported informations in file '{0}'", dirPath);
+            Logger.InfoFormat(logMsg);
+            ShowScreenMessageSignal.Dispatch(logMsg);
             HideSceneMenu();
         }
 
@@ -41,6 +46,7 @@ namespace VisualiseR.CodeReview
             var sceneMenu = _contextView.transform.Find("Menus").transform.Find("CodeReviewSceneMenuCanvas")
                 .gameObject;
             sceneMenu.SetActive(false);
+            CodeReviewSceneMenuIsShownSignal.Dispatch(false);
         }
 
         private string GetDirPath()

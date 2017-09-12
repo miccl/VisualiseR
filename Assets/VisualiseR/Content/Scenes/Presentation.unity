@@ -971,6 +971,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
+  _timeFrom: 600
   stop: 1
 --- !u!114 &244164969
 MonoBehaviour:

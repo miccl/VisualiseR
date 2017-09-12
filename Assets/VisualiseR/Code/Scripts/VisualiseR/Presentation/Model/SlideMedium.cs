@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace VisualiseR.Presentation
 {
+    /// <summary>
+    /// Medium for the presentation scene.
+    /// </summary>
     [Serializable]
     public class SlideMedium : ISlideMedium
     {

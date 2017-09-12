@@ -10,7 +10,6 @@ namespace VisualiseR.Main
     /// </summary>
     public class HelpView : View
     {
-        private static readonly string HELP_TEXT = "Here is some help. You are welcome!";
 
         private GameObject _mainMenuPanelView;
         internal Text HelpText;
@@ -25,13 +24,7 @@ namespace VisualiseR.Main
 
 
         }
-
-        protected override void Start()
-        {
-            base.Start();
-            HelpText.text = HELP_TEXT;
-        }
-
+ 
         public void OnBackButtonClick()
         {
             _mainMenuPanelView.SetActive(true);

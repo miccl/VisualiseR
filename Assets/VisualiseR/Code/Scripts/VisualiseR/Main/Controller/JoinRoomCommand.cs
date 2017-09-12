@@ -20,7 +20,7 @@ namespace VisualiseR.Main
         public IRoom Room { get; set; }
 
         [Inject]
-        public ShowMessageSignal ShowMessageSignal { get; set; }
+        public ShowWindowMessageSignal ShowWindowMessageSignal { get; set; }
 
         public override void Execute()
         {
@@ -28,7 +28,7 @@ namespace VisualiseR.Main
             ConstructRoom();
 
             PlayerPrefsUtil.SaveObject(PlayerPrefsUtil.ROOM_KEY, Room);
-            ShowMessageSignal.Dispatch(new Message(MessageType.Info, "Sucess", string.Format("Room {0} was sucessfully joined", _roomName)));
+            ShowWindowMessageSignal.Dispatch(new Message(MessageType.Info, "Sucess", string.Format("Room {0} was sucessfully joined", _roomName)));
             UnityUtil.LoadScene(Room.Type);
         }
 

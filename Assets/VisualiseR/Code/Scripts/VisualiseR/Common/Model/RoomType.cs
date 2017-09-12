@@ -10,8 +10,8 @@ namespace VisualiseR.Common
     {
         CodeReview,
         Presentation,
-        LiveCoding,
+        Showroom,
         ArchitecturalReview,
-        Showroom
+        LiveCoding
     }
 }

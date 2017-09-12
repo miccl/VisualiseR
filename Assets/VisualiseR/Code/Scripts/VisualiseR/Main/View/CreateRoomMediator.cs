@@ -31,7 +31,7 @@ namespace VisualiseR.Main
         public SelectionCanceledSignal SelectionCanceledSignal { get; set; }
 
         [Inject]
-        public ShowMessageSignal ShowMessageSignal { get; set; }
+        public ShowWindowMessageSignal ShowWindowMessageSignal { get; set; }
 
         public override void OnRegister()
         {
@@ -94,7 +94,7 @@ namespace VisualiseR.Main
 
         private void OnShowMessage(Message msg)
         {
-            ShowMessageSignal.Dispatch(msg);
+            ShowWindowMessageSignal.Dispatch(msg);
         }
     }
 }

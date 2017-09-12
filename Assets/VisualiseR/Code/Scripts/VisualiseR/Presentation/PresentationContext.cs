@@ -13,15 +13,26 @@ namespace VisualiseR.Presentation
     /// </summary>
     public class PresentationContext : MVCSContext
     {
+        /// <summary>
+        /// Ctor.
+        /// </summary>
+        /// <param name="view"></param>
         public PresentationContext(MonoBehaviour view) : base(view)
         {
         }
 
+        /// <summary>
+        /// Ctor.
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="flags"></param>
         public PresentationContext(MonoBehaviour view, ContextStartupFlags flags) : base(view, flags)
         {
         }
 
-        // Unbind the default EventCommandBinder and rebind the SignalCommandBinder
+        /// <summary>
+        /// Unbinds the default EventCommandBinder and rebinds to the SignalCommandBinder.
+        /// </summary>
         protected override void addCoreComponents()
         {
             base.addCoreComponents();
@@ -29,7 +40,10 @@ namespace VisualiseR.Presentation
             injectionBinder.Bind<ICommandBinder>().To<SignalCommandBinder>().ToSingleton();
         }
 
-        // Override Start so that we can fire the PresentationStartSignal
+        /// <summary>
+        /// Override Start so that we can fire the PresentationStartSignal
+        /// </summary>
+        /// <returns></returns>
         public override IContext Start()
         {
             base.Start();
@@ -63,7 +77,6 @@ namespace VisualiseR.Presentation
 
         private void BindServices()
         {
-            // TODO
         }
 
         private void BindMediators()
@@ -80,18 +93,7 @@ namespace VisualiseR.Presentation
 
         private void BindCommands()
         {
-            if (this == firstContext)
-            {
-                commandBinder.Bind<PresentationStartSignal>().To<PresentationStartCommand>().Once();
-            }
-            else
-            {
-                commandBinder.Bind<PresentationStartSignal>()
-//                    .To<KillAudioListenerCommand>()
-                    .To<PresentationStartCommand>()
-                    .Once()
-                    .InSequence();
-            }
+            commandBinder.Bind<PresentationStartSignal>().To<PresentationStartCommand>().Once();
             commandBinder.Bind<NextSlideSignal>().To<NextSlideCommand>();
             commandBinder.Bind<PrevSlideSignal>().To<PrevSlideCommand>();
             commandBinder.Bind<ShowAllSignal>().To<ShowAllSlidesCommand>();

@@ -121,8 +121,6 @@ namespace VisualiseR.Presentation
             // Jedoch wird der initialisierte Wert aus unerfindlichen Gründen vergessen...?!
             var remainingClientPositions = GetStandPositions();
             int r = Random.Range(0, remainingClientPositions.Count);
-            Debug.Log("ANGEFRAGTE POSITION = " + r);
-            Debug.Log("GROOSSE = " + remainingClientPositions.Count);
             Vector3 pos = remainingClientPositions[r];
             return pos;
         }

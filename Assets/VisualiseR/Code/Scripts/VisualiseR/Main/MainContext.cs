@@ -13,15 +13,26 @@ namespace VisualiseR.Main
     /// </summary>
     public class MainContext : MVCSContext
     {
+        /// <summary>
+        /// Ctor.
+        /// </summary>
+        /// <param name="view"></param>
         public MainContext(MonoBehaviour view) : base(view)
         {
         }
 
+        /// <summary>
+        /// Ctor.
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="flags"></param>
         public MainContext(MonoBehaviour view, ContextStartupFlags flags) : base(view, flags)
         {
         }
 
-        // Unbind the default EventCommandBinder and rebind the SignalCommandBinder
+        /// <summary>
+        /// Unbinds the default EventCommandBinder and rebinds to the SignalCommandBinder.
+        /// </summary>
         protected override void addCoreComponents()
         {
             base.addCoreComponents();
@@ -29,7 +40,10 @@ namespace VisualiseR.Main
             injectionBinder.Bind<ICommandBinder>().To<SignalCommandBinder>().ToSingleton();
         }
 
-        // Override Start so that we can fire the PresentationStartSignal
+        /// <summary>
+        /// Override Start so that we can fire the PresentationStartSignal
+        /// </summary>
+        /// <returns></returns>
         override public IContext Start()
         {
             base.Start();
@@ -78,24 +92,13 @@ namespace VisualiseR.Main
 
         private void BindCommands()
         {
-            if (this == firstContext)
-            {
-                commandBinder.Bind<MainStartSignal>().To<MainStartCommand>().Once();
-            }
-            else
-            {
-                commandBinder.Bind<MainStartSignal>()
-                    .To<KillAudioListenerCommand>()
-                    .To<MainStartCommand>()
-                    .Once();
-            }
-
+            commandBinder.Bind<MainStartSignal>().To<MainStartCommand>().Once();
             commandBinder.Bind<CreateRoomSignal>().To<CreateRoomCommand>();
             commandBinder.Bind<JoinRoomSignal>().To<JoinRoomCommand>();
             commandBinder.Bind<SelectWebFileSignal>().To<SelectWebFileCommand>();
             commandBinder.Bind<SelectDiskFileSignal>().To<SelectDiskFileCommand>();
             commandBinder.Bind<LoadFilesSignal>().To<LoadFilesCommand>();
-            commandBinder.Bind<ShowMessageSignal>().To<ShowMessageCommand>();
+            commandBinder.Bind<ShowWindowMessageSignal>().To<ShowWindowMessageCommand>();
         }
 
         private void BindSignals()

@@ -14,16 +14,25 @@ namespace VisualiseR.CodeReview
     /// </summary>
     public class CodeReviewContext : MVCSContext
     {
+        /// <summary>
+        /// Ctor.
+        /// </summary>
+        /// <param name="view"></param>
         public CodeReviewContext(MonoBehaviour view) : base(view)
         {
         }
 
+        /// <summary>
+        /// Ctor.
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="flags"></param>
         public CodeReviewContext(MonoBehaviour view, ContextStartupFlags flags) : base(view, flags)
         {
         }
 
         /// <summary>
-        /// Unbinds the default EventCommandBinder and rebind the SignalCommandBinder.
+        /// Unbinds the default EventCommandBinder and rebinds to the SignalCommandBinder.
         /// </summary>
         protected override void addCoreComponents()
         {
@@ -55,7 +64,7 @@ namespace VisualiseR.CodeReview
 
 
         /// <summary>
-        /// BInd Models
+        /// Bind Models
         /// </summary>
         private void BindModels()
         {
@@ -83,28 +92,17 @@ namespace VisualiseR.CodeReview
 
         private void BindCommands()
         {
-            if (this == firstContext)
-            {
-                commandBinder.Bind<CodeReviewStartSignal>().To<CodeReviewStartCommand>().Once();
-            }
-            else
-            {
-                commandBinder.Bind<CodeReviewStartSignal>()
-                    .To<CodeReviewStartCommand>()
-                    .Once()
-                    .InSequence();
-            }
-
-            commandBinder.Bind<ShowSceneMenuSignal>().To<ShowCodeReviewSceneMenuCommand>();
-            commandBinder.Bind<SelectCodeRatingSignal>().To<SelectCodeRatingCommand>();
-            commandBinder.Bind<SaveCommentSignal>().To<SaveCommentCommand>();
+            commandBinder.Bind<CodeReviewStartSignal>().To<CodeReviewStartCommand>().Once();
             commandBinder.Bind<RemoveCodeSignal>().To<RemoveCodeCommand>();
+            commandBinder.Bind<SaveCommentSignal>().To<SaveCommentCommand>();
+            commandBinder.Bind<SelectCodeRatingSignal>().To<SelectCodeRatingCommand>();
+            commandBinder.Bind<ShowSceneMenuSignal>().To<ShowCodeReviewSceneMenuCommand>();
             commandBinder.Bind<ShowCodeReviewContextMenuSignal>().To<ShowCodeReviewContextMenuCommand>();
             commandBinder.Bind<ExportToTxtSignal>().To<ExportToTxtCommand>();
             commandBinder.Bind<ShowAllCodeSignal>().To<ShowAllCodeCommand>();
             commandBinder.Bind<CodeSelectedSignal>().To<CodeSelectedCommand>();
             commandBinder.Bind<ShowKeyboardSignal>().To<ShowKeyboardCommand>();
-            commandBinder.Bind<ShowMessageSignal>().To<ShowMessageCommand>();
+            commandBinder.Bind<ShowScreenMessageSignal>().To<ShowScreenMessageCommand>();
         }
 
         private void BindSignals()

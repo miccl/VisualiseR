@@ -113,7 +113,7 @@ namespace VisualiseR.Presentation
                     PhotonNetwork.player.ID,
                     image.Length, pos);
                 RequestDataFromMaster(PhotonNetwork.player.ID, ++pos);
-                DisplaySyncProgress(pos);
+                DisplayProgress(pos);
                 return;
             }
 
@@ -146,7 +146,7 @@ namespace VisualiseR.Presentation
             ShowLoadingAnimationSignal.Dispatch(false, "");
         }
 
-        private void DisplaySyncProgress(int pos)
+        private void DisplayProgress(int pos)
         {
             string text = string.Format("Syncing ... ({0}/{1})", pos, _imageCount);
             ShowLoadingAnimationSignal.Dispatch(true, text);
