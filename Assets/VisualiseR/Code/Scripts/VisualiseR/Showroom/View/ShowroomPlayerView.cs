@@ -40,11 +40,6 @@ namespace VisualiseR.Showroom
 
         private void Update()
         {
-            if (_player == null || !_player.IsHost())
-            {
-                return;
-            }
-
             if (ButtonUtil.IsSubmitButtonPressed())
             {
                 CaptureScreenShot();
