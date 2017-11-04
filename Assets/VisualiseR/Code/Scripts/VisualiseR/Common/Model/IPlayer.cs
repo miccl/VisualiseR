@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace VisualiseR.Common
 {
@@ -34,5 +35,11 @@ namespace VisualiseR.Common
         /// </summary>
         /// <returns></returns>
         bool IsHost();
+
+        /// <summary>
+        /// Returns color of the avatar.
+        /// </summary>
+        /// <returns></returns>
+        Color GetAvatarColor();
     }
 }

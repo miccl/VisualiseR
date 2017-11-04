@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using strange.extensions.mediation.impl;
+﻿using strange.extensions.mediation.impl;
 using strange.extensions.signal.impl;
 using UnityEngine;
 
@@ -17,7 +16,7 @@ namespace VisualiseR.Common
 
         private Transform _playerGlobal;
         private Transform _playerLocal;
-        
+
         private GameObject _avatar;
         private GameObject _head;
         private TextMesh _name;
@@ -53,15 +52,15 @@ namespace VisualiseR.Common
         {
             _player = player;
 
-            Color color = GetAvatarColor();
+            Color color = _player.GetAvatarColor();
             DyeAvatar(color);
 
             InitPlayerName();
         }
 
-        private Color GetAvatarColor()
+        public Color GetAvatarColor(AvatarType type)
         {
-            switch (_player.Avatar)
+            switch (type)
             {
                 case AvatarType.Green:
                     return Color.green;
@@ -78,7 +77,6 @@ namespace VisualiseR.Common
         {
             _head.GetComponent<MeshRenderer>().material.color = color;
             _name.color = color;
-
         }
 
         private void InitPlayerName()
@@ -92,21 +90,23 @@ namespace VisualiseR.Common
         /// <param name="stream"></param>
         void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
+            if (stream.isWriting)
             {
-                if (stream.isWriting)
-                {
-                    stream.SendNext(_playerGlobal.position);
-                    stream.SendNext(_playerGlobal.rotation);
-                    stream.SendNext(_playerLocal.localPosition);
-                    stream.SendNext(_playerLocal.localRotation);
-                }
-                else
-                {
-                    transform.position = (Vector3) stream.ReceiveNext();
-                    transform.rotation = (Quaternion) stream.ReceiveNext();
-                    _avatar.transform.localPosition = (Vector3) stream.ReceiveNext();
-                    _avatar.transform.localRotation = (Quaternion) stream.ReceiveNext();
-                }
+                stream.SendNext(_playerGlobal.position);
+                stream.SendNext(_playerGlobal.rotation);
+                stream.SendNext(_playerLocal.localPosition);
+                stream.SendNext(_playerLocal.localRotation);
+                stream.SendNext((int) _player.Avatar);
+                stream.SendNext(_player.Name);
+            }
+            else
+            {
+                transform.position = (Vector3) stream.ReceiveNext();
+                transform.rotation = (Quaternion) stream.ReceiveNext();
+                _avatar.transform.localPosition = (Vector3) stream.ReceiveNext();
+                _avatar.transform.localRotation = (Quaternion) stream.ReceiveNext();
+                _head.GetComponent<Material>().color = GetAvatarColor((AvatarType) (int) stream.ReceiveNext());
+                _name.text = (string) stream.ReceiveNext();
             }
         }
     }

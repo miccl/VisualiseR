@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace VisualiseR.Common
 {
@@ -71,6 +72,25 @@ namespace VisualiseR.Common
         public bool IsHost()
         {
             return Type.Equals(PlayerType.Host);
+        }
+
+        /// <summary>
+        /// Returns color of the avatar.
+        /// </summary>
+        /// <returns></returns>
+        public Color GetAvatarColor()
+        {
+            switch (Avatar)
+            {
+                case AvatarType.Green:
+                    return Color.green;
+                case AvatarType.Red:
+                    return Color.red;
+                case AvatarType.Yellow:
+                    return Color.yellow;
+                default:
+                    return Color.blue;
+            }
         }
     }
 }
