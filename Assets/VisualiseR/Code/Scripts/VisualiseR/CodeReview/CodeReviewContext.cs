@@ -1,5 +1,4 @@
-﻿using strange.examples.signals;
-using strange.extensions.command.api;
+﻿using strange.extensions.command.api;
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
@@ -107,7 +106,6 @@ namespace VisualiseR.CodeReview
 
         private void BindSignals()
         {
-            injectionBinder.Bind<ScoreChangedSignal>().ToSingleton();
             injectionBinder.Bind<CodeReviewContextMenuIsShownSignal>().ToSingleton();
             injectionBinder.Bind<CodeRatingChangedSignal>().ToSingleton();
             injectionBinder.Bind<PileSelectedSignal>().ToSingleton();
